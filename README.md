@@ -26,7 +26,7 @@ RPR_ShowConsoleMsg("Hello from inside, world!")
 
 ### `reapy` from outside
 
-To use `reapy` from outside REAPER, you need to load and execute the ReaScript [reapy/reascript_api/dist_api/enable_reapy.py](reapy/reascript_api/dist_api/enable_reapy.py).
+To use `reapy` from outside REAPER, you need to load and execute the ReaScript [reapy/reascript_api/dist_api/enable_reapy.py](reapy/reascript_api/dist_api/enable_reapy.py). It sets up a local server inside REAPER. Every import of `reapy` outside REAPER will become a client of this server and request ReaScript API calls from it.
 
 Then you can use `reapy` as any other Python module in your projects, and interact with REAPER from outside.
 
