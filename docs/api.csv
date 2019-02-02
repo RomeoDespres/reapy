@@ -18,7 +18,7 @@ Audio_Quit,TODO
 AudioAccessorValidateState,TODO
 BypassFxAllTracks,TODO
 ClearAllRecArmed,TODO
-ClearConsole,TODO
+ClearConsole,core.project.Project.clear_console
 ClearPeakCache,TODO
 ColorFromNative,core.reaper.rgb_from_native
 ColorToNative,core.reaper.rgb_to_native
