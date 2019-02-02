@@ -14,10 +14,13 @@ Then from anywhere (i.e. inside or outside REAPER) you can run the following:
 >>> from reapy import CURRENT_PROJECT as project
 >>> project.cursor_position
 0.0
+>>> project.cursor_position = 1
 >>> from reapy import reascript_api as RPR
 >>> RPR.GetCursorPosition()
-0.0
->>> 
+1.0
+>>> RPR.SetEditCurPos(2, False, False)
+>>> project.cursor_position
+2.0
 ```
 
 ## Author
