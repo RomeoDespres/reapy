@@ -6,22 +6,61 @@
 
 ### Installing
 
-No installer is available yet. Note that to use `reapy` from outside REAPER, you need to load and execute the ReaScript [reapy/reascript_api/dist_api/enable_reapy.py](reapy/reascript_api/dist_api/enable_reapy.py).
+No installer is available yet.
 
-Then from anywhere (i.e. inside or outside REAPER) you can run the following:
+### `reapy` from inside
+
+Import `reapy` and use it instead of `reaper_python` in your ReaScripts.
+
+```python
+from reapy import CURRENT_PROJECT as project
+project.print("Hello from inside, world!")
+```
+
+This Hello World is equivalent to the following.
+
+```python
+from reaper_python import *
+RPR_ShowConsoleMsg("Hello from inside, world!")
+```
+
+### `reapy` from outside
+
+To use `reapy` from outside REAPER, you need to load and execute the ReaScript [reapy/reascript_api/dist_api/enable_reapy.py](reapy/reascript_api/dist_api/enable_reapy.py).
+
+Then you can use `reapy` as any other Python module in your projects, and interact with REAPER from outside.
+
+```python
+from reapy import CURRENT_PROJECT as project
+project.print("Hello from outside, world!")
+```
+## Usage
+
+### ReaScript API
+
+All ReaScript API functions are available in `reapy` in the sub-module `reapy.reascript_api`. Note that in ReaScript Python API, all function names start with `"RPR_"`. That unnecessary pseudo-namespace has been removed in `reapy`. Thus, you shall call `reapy.reascript_api.GetCursorPosition` in order to trigger `reaper_python.RPR_GetCursorPosition`. See example below.
+
+```python
+>>> from reapy import reascript_api as RPR
+>>> RPR.GetCursorPosition()
+0.0
+>>> RPR.SetEditCurPos(1, True, True)
+>>> RPR.GetCursorPosition()
+1.0
+```
+### `reapy` API
+
+The purpose of `reapy` is to provide a more pythonic API as a substitute for ReaScript API. Below is the `reapy` way of executing the example above.
 
 ```python
 >>> from reapy import CURRENT_PROJECT as project
 >>> project.cursor_position
 0.0
 >>> project.cursor_position = 1
->>> from reapy import reascript_api as RPR
->>> RPR.GetCursorPosition()
-1.0
->>> RPR.SetEditCurPos(2, False, False)
 >>> project.cursor_position
-2.0
+1.0
 ```
+The table [api.csv](docs/api.csv) matches ReaScript functions with their `reapy` counterparts.
 
 ## Author
 
