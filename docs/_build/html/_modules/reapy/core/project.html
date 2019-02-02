@@ -1,0 +1,438 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reapy.core.project &#8212; reapy  documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reapy.core.project</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span>  <span class="n">reaper</span>
+
+<span class="kn">import</span> <span class="nn">io</span>
+
+
+<div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">any_track_solo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Test whether any track is soloed in project.</span>
+<span class="sd">        </span>
+<span class="sd">        :returns: any_track_solo Whether any track is soloed in </span>
+<span class="sd">        project.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">any_track_solo</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_AnyTrackSolo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">any_track_solo</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bpi</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return project BPI (numerator of time signature).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bpi : float</span>
+<span class="sd">            Numerator of time signature.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_signature</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bpm</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return project BPM (beats per minute).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bpm : float</span>
+<span class="sd">            Project BPM (beats per minute).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">time_signature</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        
+    <span class="nd">@bpm</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">bpm</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bpm</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set project BPM (beats per minute).</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bpm : float</span>
+<span class="sd">            Tempo in beats per minute.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_SetCurrentBPM</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">bpm</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cursor_position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_GetCursorPositionEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">position</span>
+
+    <span class="nd">@cursor_position</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">cursor_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_SetEditCurPos</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return project length in seconds.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        length : float</span>
+<span class="sd">            Project length in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_GetProjectLength</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">length</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">selected_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return list of all selected items.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        items : list of MediaItem</span>
+<span class="sd">            List of all selected items.</span>
+
+<span class="sd">        See also</span>
+<span class="sd">        --------</span>
+<span class="sd">        ReaProject.get_selected_item</span>
+<span class="sd">            Return a specific selected item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_items</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">count_selected_items</span><span class="p">()</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_get_selected_item</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_items</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">items</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">time_signature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return project time signature.</span>
+
+<span class="sd">        This does not reflect tempo envelopes but is purely what is set in the</span>
+<span class="sd">        project settings.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bpm : float</span>
+<span class="sd">            Project BPM (beats per minute)</span>
+<span class="sd">        bpi : float</span>
+<span class="sd">            Project BPI (numerator of time signature)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">bpm</span><span class="p">,</span> <span class="n">bpi</span> <span class="o">=</span> <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_GetProjectTimeSignature2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">bpm</span><span class="p">,</span> <span class="n">bpi</span>
+        
+<div class="viewcode-block" id="Project.add_marker"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.add_marker">[docs]</a>    <span class="k">def</span> <span class="nf">add_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create new marker and return its index.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        position : float</span>
+<span class="sd">            Marker position in seconds.</span>
+<span class="sd">        name : str, optional</span>
+<span class="sd">            Marker name.</span>
+<span class="sd">        color : int, tuple, optional</span>
+<span class="sd">            Marker color. Integers correspond to REAPER native colors.</span>
+<span class="sd">            Tuple must be RGB triplets of integers between 0 and 255.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        marker_id : int</span>
+<span class="sd">            The marker index.</span>
+<span class="sd">            </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        If a marker with the same position and name already exists, no</span>
+<span class="sd">        new marker will be created, and the existing marker index will</span>
+<span class="sd">        be returned.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">reaper</span><span class="o">.</span><span class="n">get_native_color</span><span class="p">(</span><span class="o">*</span><span class="n">color</span><span class="p">)</span>
+        <span class="n">marker_id</span> <span class="o">=</span> <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_AddProjectMarker2</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">marker_id</span></div>
+    
+<div class="viewcode-block" id="Project.add_region"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.add_region">[docs]</a>    <span class="k">def</span> <span class="nf">add_region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create new marker and return its index.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start : float</span>
+<span class="sd">            Region start in seconds.</span>
+<span class="sd">        end : float</span>
+<span class="sd">            Region end in seconds.</span>
+<span class="sd">        name : str, optional</span>
+<span class="sd">            Region name.</span>
+<span class="sd">        color : int, tuple, optional</span>
+<span class="sd">            Marker color. Integers correspond to REAPER native colors.</span>
+<span class="sd">            Tuple must be RGB triplets of integers between 0 and 255.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        region_id : int</span>
+<span class="sd">            The region index.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">color</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="n">reaper</span><span class="o">.</span><span class="n">rgb_to_native</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+        <span class="n">region_id</span> <span class="o">=</span> <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_AddProjectMarker</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">region_id</span></div>
+
+<div class="viewcode-block" id="Project.clear_console"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.clear_console">[docs]</a>    <span class="k">def</span> <span class="nf">clear_console</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Clear Reaper console.</span>
+
+<span class="sd">        See also</span>
+<span class="sd">        --------</span>
+<span class="sd">        ReaProject.show_console_message</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_ClearConsole</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Project.count_selected_items"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.count_selected_items">[docs]</a>    <span class="k">def</span> <span class="nf">count_selected_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of selected media items.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        n_items : int</span>
+<span class="sd">            Number of selected media items.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_items</span> <span class="o">=</span> <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_CountSelectedMediaItems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n_items</span></div>
+
+<div class="viewcode-block" id="Project.glue_items"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.glue_items">[docs]</a>    <span class="k">def</span> <span class="nf">glue_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">within_time_selection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Glue items (action shortcut).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        within_time_selection : bool</span>
+<span class="sd">            If True, glue items within time selection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">action_id</span> <span class="o">=</span> <span class="mi">41588</span> <span class="k">if</span> <span class="n">within_time_selection</span> <span class="k">else</span> <span class="mi">40362</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">perform_action</span><span class="p">(</span><span class="n">action_id</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Project.perform_action"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.perform_action">[docs]</a>    <span class="k">def</span> <span class="nf">perform_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Perform action with ID `action_id` in the main Actions section.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        action_id : int</span>
+<span class="sd">            Action ID in the main Actions section.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_Main_OnCommand</span><span class="p">(</span><span class="n">action_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Project.print"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Alias to ReaProject.show_console_message.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">show_console_message</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Project.select_all_items"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.select_all_items">[docs]</a>    <span class="k">def</span> <span class="nf">select_all_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Select or unselect all items, depending on `selected`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selected : bool</span>
+<span class="sd">            Whether to select or unselect items.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_SelectAllMediaItems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">selected</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Project.show_console_message"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.show_console_message">[docs]</a>    <span class="k">def</span> <span class="nf">show_console_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print a message to the Reaper console.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        args : tuple</span>
+<span class="sd">            Values to print.</span>
+<span class="sd">        sep : str, optional</span>
+<span class="sd">            String inserted between values (default=&quot; &quot;).</span>
+<span class="sd">        end : str, optional</span>
+<span class="sd">            String appended after the last value (default=&quot;\n&quot;).</span>
+
+<span class="sd">        See also</span>
+<span class="sd">        --------</span>
+<span class="sd">        ReaProject.clear_console</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">)</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+        <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_ShowConsoleMsg</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Project.show_message_box"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.project.Project.show_message_box">[docs]</a>    <span class="k">def</span> <span class="nf">show_message_box</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;ok&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show message box.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        text : str</span>
+<span class="sd">            Box message</span>
+<span class="sd">        title : str</span>
+<span class="sd">            Box title</span>
+<span class="sd">        type : str</span>
+<span class="sd">            One of the following values.</span>
+<span class="sd">            </span>
+<span class="sd">            &quot;ok&quot;</span>
+<span class="sd">            &quot;ok-cancel&quot;</span>
+<span class="sd">            &quot;abort-retry-ignore&quot;</span>
+<span class="sd">            &quot;yes-no-cancel&quot;</span>
+<span class="sd">            &quot;yes-no&quot;</span>
+<span class="sd">            &quot;retry-cancel&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        status : str</span>
+<span class="sd">            One of the following values.</span>
+
+<span class="sd">            &quot;ok&quot;</span>
+<span class="sd">            &quot;cancel&quot;</span>
+<span class="sd">            &quot;abort&quot;</span>
+<span class="sd">            &quot;retry&quot;</span>
+<span class="sd">            &quot;ignore&quot;</span>
+<span class="sd">            &quot;yes&quot;</span>
+<span class="sd">            &quot;no&quot;   </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">all_types</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;ok&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;ok-cancel&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;abort-retry-ignore&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">&quot;yes-no-cancel&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+            <span class="s2">&quot;yes-no&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+            <span class="s2">&quot;retry-cancel&quot;</span><span class="p">:</span> <span class="mi">5</span>
+        <span class="p">}</span>
+        <span class="n">all_status</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+            <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;cancel&quot;</span><span class="p">,</span>
+            <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;abort&quot;</span><span class="p">,</span>
+            <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;retry&quot;</span><span class="p">,</span>
+            <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+            <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+            <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;no&quot;</span>
+        <span class="p">}</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_ShowMessageBox</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">all_types</span><span class="p">[</span><span class="nb">type</span><span class="p">])</span>
+        <span class="n">status</span> <span class="o">=</span> <span class="n">all_status</span><span class="p">[</span><span class="n">status</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">status</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_selected_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return index-th selected item.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        index : int</span>
+<span class="sd">            Item index.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        item : Item</span>
+<span class="sd">            index-th selected item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item_id</span> <span class="o">=</span> <span class="n">reascript_api</span><span class="o">.</span><span class="n">RPR_GetSelectedMediaItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">Item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+
+<span class="kn">from</span> <span class="nn">.item</span> <span class="k">import</span> <span class="n">Item</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">reapy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Roméo Després.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

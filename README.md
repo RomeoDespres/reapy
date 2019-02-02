@@ -1,0 +1,1 @@
+`reapy` is a nice pythonic wrapper around the terribly non-pythonic [ReaScript Python API](https://www.reaper.fm/sdk/reascript/reascripthelp.html#p "ReaScript Python API documentation") for [REAPER](https://www.reaper.fm/ "REAPER").
