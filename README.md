@@ -6,45 +6,21 @@
 
 ### Installing
 
-And repeat
+No installer is available yet. Note that to use `reapy` from outside REAPER, you need to load and execute the ReaScript [reapy/reascript_api/dist_api/enable_reapy.py](reapy/reascript_api/dist_api/enable_reapy.py).
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+Then from anywhere (i.e. inside or outside REAPER) you can run the following:
 
 ```python
 >>> from reapy import CURRENT_PROJECT as project
 >>> project.cursor_position
 0.0
->>> from reapy import reascript_api as RPR
->>> RPR.GetCursorPosition()
+>>> from reapy.reascript_api import *
+>>> RPR_GetCursorPosition()
 0.0
 >>> 
 ```
 
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Authors
+## Author
 
 * **Roméo Després** - *Initial work* - [RomeoDespres](https://github.com/RomeoDespres)
 
