@@ -1,4 +1,4 @@
-from reapy import reascript_api
+from reapy import reascript_api as RPR
 
 import wave
 
@@ -40,7 +40,7 @@ class Source:
         filename : str
             Source file name.
         """
-        _, filename, _ = reascript_api.RPR_GetMediaSourceFileName(self.id, "", 10**5)
+        _, filename, _ = RPR.GetMediaSourceFileName(self.id, "", 10**5)
         return filename
 
     @property
@@ -57,7 +57,7 @@ class Source:
         length : float
             Source length in `unit`.
         """
-        length, _, is_quantized = reascript_api.RPR_GetMediaSourceLength(self.id, 0)
+        length, _, is_quantized = RPR.GetMediaSourceLength(self.id, 0)
         if is_quantized:
             if unit == "beats":
                 return length
@@ -79,7 +79,7 @@ class Source:
         sample_rate : int
             Source sample rate.
         """
-        sample_rate =  reascript_api.RPR_GetMediaSourceSampleRate(self.id)
+        sample_rate =  RPR.GetMediaSourceSampleRate(self.id)
         return sample_rate
 
     @property
@@ -92,5 +92,5 @@ class Source:
         type : str
             Source type.
         """
-        _, type, _ = reascript_api.RPR_GetMediaSourceType(self.id, "", 10**5)
+        _, type, _ = RPR.GetMediaSourceType(self.id, "", 10**5)
         return type

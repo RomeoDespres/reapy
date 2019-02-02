@@ -1,5 +1,5 @@
-from reapy import reascript_api
-from . import  reaper
+from reapy import reascript_api as RPR
+from . import reaper
 
 import io
 
@@ -19,7 +19,7 @@ class Project:
         any_track_solo : bool
             Whether any track is soloed in project.
         """
-        any_track_solo = bool(reascript_api.RPR_AnyTrackSolo(self.id))
+        any_track_solo = bool(RPR.AnyTrackSolo(self.id))
         return any_track_solo
 
     @property
@@ -56,16 +56,16 @@ class Project:
         bpm : float
             Tempo in beats per minute.
         """
-        reascript_api.RPR_SetCurrentBPM(self.id, bpm, True)
+        RPR.SetCurrentBPM(self.id, bpm, True)
 
     @property
     def cursor_position(self):
-        position = reascript_api.RPR_GetCursorPositionEx(self.id)
+        position = RPR.GetCursorPositionEx(self.id)
         return position
 
     @cursor_position.setter
     def cursor_position(self, position):
-        reascript_api.RPR_SetEditCurPos(position, True, True)
+        RPR.SetEditCurPos(position, True, True)
 
     @property
     def length(self):
@@ -77,7 +77,7 @@ class Project:
         length : float
             Project length in seconds.
         """
-        length = reascript_api.RPR_GetProjectLength(self.id)
+        length = RPR.GetProjectLength(self.id)
         return length
 
     @property
@@ -116,7 +116,7 @@ class Project:
         bpi : float
             Project BPI (numerator of time signature)
         """
-        _, bpm, bpi = reascript_api.RPR_GetProjectTimeSignature2(self.id, 0, 0)
+        _, bpm, bpi = RPR.GetProjectTimeSignature2(self.id, 0, 0)
         return bpm, bpi
         
     def add_marker(self, position, name="", color=0):
@@ -146,7 +146,7 @@ class Project:
         """
         if isinstance(color, tuple):
             color = reaper.get_native_color(*color)
-        marker_id = reascript_api.RPR_AddProjectMarker2(
+        marker_id = RPR.AddProjectMarker2(
             self.id, False, position, 0, name, -1, color
         )
         return marker_id
@@ -174,7 +174,7 @@ class Project:
         """
         if isinstance(color, tuple):
             color = reaper.rgb_to_native(color)
-        region_id = reascript_api.RPR_AddProjectMarker(
+        region_id = RPR.AddProjectMarker(
             self.id, True, start, end, name, -1, color
         )
         return region_id
@@ -187,7 +187,7 @@ class Project:
         --------
         ReaProject.show_console_message
         """
-        reascript_api.RPR_ClearConsole()
+        RPR.ClearConsole()
 
     def count_selected_items(self):
         """
@@ -198,7 +198,7 @@ class Project:
         n_items : int
             Number of selected media items.
         """
-        n_items = reascript_api.RPR_CountSelectedMediaItems(self.id)
+        n_items = RPR.CountSelectedMediaItems(self.id)
         return n_items
 
     def glue_items(self, within_time_selection=False):
@@ -222,7 +222,7 @@ class Project:
         action_id : int
             Action ID in the main Actions section.
         """
-        reascript_api.RPR_Main_OnCommand(action_id, 0)
+        RPR.Main_OnCommand(action_id, 0)
 
     def print(self, *args, **kwargs):
         """
@@ -239,7 +239,7 @@ class Project:
         selected : bool
             Whether to select or unselect items.
         """
-        reascript_api.RPR_SelectAllMediaItems(self.id, selected)
+        RPR.SelectAllMediaItems(self.id, selected)
 
     def show_console_message(self, *args, sep=" ", end="\n"):
         """
@@ -262,7 +262,7 @@ class Project:
         print(*args, sep=sep, end=end, file=file)
         file.seek(0)
         txt = file.read()
-        reascript_api.RPR_ShowConsoleMsg(txt)
+        RPR.ShowConsoleMsg(txt)
 
     def show_message_box(self, text="", title="", type="ok"):
         """
@@ -314,7 +314,7 @@ class Project:
             6: "yes",
             7: "no"
         }
-        status = reascript_api.RPR_ShowMessageBox(self.id, text, title, all_types[type])
+        status = RPR.ShowMessageBox(self.id, text, title, all_types[type])
         status = all_status[status]
         return status
 
@@ -332,7 +332,7 @@ class Project:
         item : Item
             index-th selected item.
         """
-        item_id = reascript_api.RPR_GetSelectedMediaItem(self.id, index)
+        item_id = RPR.GetSelectedMediaItem(self.id, index)
         item = Item(item_id)
         return item
 

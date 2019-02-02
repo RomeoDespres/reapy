@@ -1,4 +1,4 @@
-from reapy import reascript_api
+from reapy import reascript_api as RPR
 
 
 class Track:
@@ -15,7 +15,7 @@ class Track:
         item : Item
             New item on track.
         """
-        item_id = reascript_api.RPR_AddMediaItemToTrack(self.id)
+        item_id = RPR.AddMediaItemToTrack(self.id)
         item = Item(item_id)
         return item
         
