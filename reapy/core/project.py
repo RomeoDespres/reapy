@@ -1,3 +1,6 @@
+import reapy
+if not reapy._INSIDE:
+    from reapy.reascript_api.dist_api.api_function import APISequence
 from reapy import reascript_api as RPR
 from . import reaper
 
@@ -96,9 +99,15 @@ class Project:
             Return a specific selected item.
         """
         n_items = self.count_selected_items()
-        items = [
-            self._get_selected_item(i) for i in range(n_items)
-        ]
+        if not reapy._INSIDE:
+            function_names = ["RPR_GetSelectedMediaItem"]*n_items
+            args = [(self.id, i) for i in range(n_items)]
+            ids = APISequence(*function_names)(*args)
+            items = [Item(item_id) for item_id in ids]
+        else:
+            items = [
+                self._get_selected_item(i) for i in range(n_items)
+            ]
         return items
 
     @property

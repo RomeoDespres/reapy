@@ -1,50 +1,44 @@
-from . import _PORT, call_requests 
+from reaper_python import *
 
-import socket
-
-
-def _non_blocking(f):
-    """
-    Modify a socket method so that it returns `None` when time out is reached.
-    """
-    def g(*args, **kwargs):
-        try:
-            return f(*args, **kwargs)
-        except socket.timeout:
-            pass
-    return g
+from . import _PORT, call_requests, Socket
 
 
-class Server(socket.socket):
+class Server(Socket):
 
     def __init__(self):
         super(Server, self).__init__()
-        self._buffer_size = 4096
         self.bind(("", _PORT))
         self.listen()
         self.connections = {}
         self.settimeout(.0001)
-        
-    @_non_blocking
+    
+    @Socket._non_blocking
     def _get_request(self, connection):
-        request = connection.recv(self._buffer_size)
-        if not request: # Means client has disconnected.
+        try:
+            request = connection.recv()
+        except ConnectionAbortedError: # Client has disconnected
             [address] = [
                 a for a, c in self.connections.items() if c is connection
             ]
-            return "SERVER.disconnect", (address,)
-        else: # Process request
-            return call_requests.decode_request(request)
+            # Pretend client has nicely requested to disconnect
+            return [{"name": "self.disconnect", "args": (address,)}]
+        request = call_requests.decode_request(request)
+        return request
             
-    def _send_error(self, connection, error):
-        error = call_requests.encode_error(error)
-        connection.send(error)
+    def _process_request(self, request):
+        result = [0]*len(request)
+        for i, r in enumerate(request):
+            try:
+                result[i] = eval(r["name"])(*r["args"])
+            except Exception as error:
+                result[i] = error
+        return result
         
     def _send_result(self, connection, result):
         result = call_requests.encode_result(result)
         connection.send(result)
         
-    @_non_blocking
+    @Socket._non_blocking
     def accept(self):
         connection, address = super(Server, self).accept()
         self.connections[address] = connection
@@ -64,10 +58,13 @@ class Server(socket.socket):
             if request is not None:
                 requests[address] = request
         return requests
-    
-    def send_errors(self, errors):
-        for address, error in errors.items():
-            self._send_error(self.connections[address], error)
+        
+    def process_requests(self, requests):
+        results = {}
+        for address, request in requests.items():
+            result = self._process_request(request)
+            results[address] = result
+        return results
     
     def send_results(self, results):
         for address, result in results.items():

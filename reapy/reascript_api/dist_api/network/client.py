@@ -1,28 +1,27 @@
-from . import _PORT, call_requests
+from . import _PORT, call_requests, Socket
 
-import socket
 
-class Client(socket.socket):
+class Client(Socket):
 
     def __init__(self):
         super(Client, self).__init__()
-        self._buffer_size = 4096
         self.connect()
 
     def connect(self):
         super(Client, self).connect(("localhost", _PORT))
-        self.address = self.recv(self._buffer_size).decode("ascii")
+        self.address = self.recv().decode("ascii")
         self.is_connected = True
         
     def disconnect(self):
-        self.send_request("SERVER.disconnect", (self.address,))
+        self.send_request("self.disconnect", (self.address,))
         self.is_connected = False
     
     def get_result(self):
         if not self.is_connected:
             raise DisconnectedError
-        result = self.recv(self._buffer_size)
-        return call_requests.decode_result(result)
+        result = self.recv()
+        result = call_requests.decode_result(result)
+        return result
     
     def send_request(self, function_name, args=()):
         if not self.is_connected:
