@@ -3,7 +3,9 @@ from reapy import reascript_api as RPR
 
 class Track:
 
-    def __init__(self, id):
+    def __init__(self, id, project=None):
+        if isinstance(id, int):
+            id = RPR.GetTrack(project.id, id)
         self.id = id
         
     def add_item(self):

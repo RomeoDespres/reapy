@@ -98,7 +98,7 @@ class Project:
         """
         n_items = self.count_selected_items()
         if not reapy.is_inside_reaper():
-            function_names = ["RPR_GetSelectedMediaItem"]*n_items
+            function_names = ["RPR.GetSelectedMediaItem"]*n_items
             args = [(self.id, i) for i in range(n_items)]
             ids = APISequence(*function_names)(*args)
             items = [Item(item_id) for item_id in ids]
@@ -186,16 +186,6 @@ class Project:
         )
         return region_id
 
-    def clear_console(self):
-        """
-        Clear Reaper console.
-
-        See also
-        --------
-        ReaProject.show_console_message
-        """
-        RPR.ClearConsole()
-
     def count_selected_items(self):
         """
         Return the number of selected media items.
@@ -229,7 +219,7 @@ class Project:
         action_id : int
             Action ID in the main Actions section.
         """
-        RPR.Main_OnCommand(action_id, 0)
+        RPR.Main_OnCommandEx(action_id, 0, self.id)
         
     def select_all_items(self, selected=True):
         """
@@ -241,60 +231,6 @@ class Project:
             Whether to select or unselect items.
         """
         RPR.SelectAllMediaItems(self.id, selected)
-
-    def show_message_box(self, text="", title="", type="ok"):
-        """
-        Show message box.
-
-        Parameters
-        ----------
-        text : str
-            Box message
-        title : str
-            Box title
-        type : str
-            One of the following values.
-            
-            "ok"
-            "ok-cancel"
-            "abort-retry-ignore"
-            "yes-no-cancel"
-            "yes-no"
-            "retry-cancel"
-
-        Returns
-        -------
-        status : str
-            One of the following values.
-
-            "ok"
-            "cancel"
-            "abort"
-            "retry"
-            "ignore"
-            "yes"
-            "no"   
-        """
-        all_types = {
-            "ok": 0,
-            "ok-cancel": 1,
-            "abort-retry-ignore": 2,
-            "yes-no-cancel": 3,
-            "yes-no": 4,
-            "retry-cancel": 5
-        }
-        all_status = {
-            1: "ok",
-            2: "cancel",
-            3: "abort",
-            4: "retry",
-            5: "ignore",
-            6: "yes",
-            7: "no"
-        }
-        status = RPR.ShowMessageBox(text, title, all_types[type])
-        status = all_status[status]
-        return status
 
     def _get_selected_item(self, index):
         """

@@ -67,7 +67,20 @@ class Source:
             if unit == "beats":
                 raise NotImplementedError
             elif unit == "seconds":
-                return length        
+                return length
+
+    @property
+    def n_channels(self):
+        """
+        Return number of channels in source media.
+        
+        Returns
+        -------
+        n_channels : int
+            Number of channels in source media.
+        """
+        n_channels = RPR.GetMediaSourceNumChannels(self.id)
+        return n_channels
 
     @property
     def sample_rate(self):
@@ -79,7 +92,7 @@ class Source:
         sample_rate : int
             Source sample rate.
         """
-        sample_rate =  RPR.GetMediaSourceSampleRate(self.id)
+        sample_rate = RPR.GetMediaSourceSampleRate(self.id)
         return sample_rate
 
     @property

@@ -33,6 +33,16 @@ def add_reascript(path, section_id=0, commit=True):
     if action_id == 0:
         raise ValueError("Script at {} wasn't successfully added.".format(path))
     return action_id
+    
+def clear_console():
+    """
+    Clear Reaper console.
+
+    See also
+    --------
+    ReaProject.show_console_message
+    """
+    RPR.ClearConsole()
 
 def get_exe_dir():
     """
@@ -76,6 +86,17 @@ def get_ini_file():
     """
     path = RPR.get_ini_file()
     return path
+    
+def perform_action(action_id):
+    """
+    Perform action with ID `action_id` in the main Actions section.
+
+    Parameters
+    ----------
+    action_id : int
+        Action ID in the main Actions section.
+    """
+    RPR.Main_OnCommand(action_id, 0)
     
 def print(*args, **kwargs):
     """
@@ -179,3 +200,57 @@ def show_console_message(*args, sep=" ", end="\n"):
     file.seek(0)
     txt = file.read()
     RPR.ShowConsoleMsg(txt)
+    
+def show_message_box(text="", title="", type="ok"):
+    """
+    Show message box.
+
+    Parameters
+    ----------
+    text : str
+        Box message
+    title : str
+        Box title
+    type : str
+        One of the following values.
+        
+        "ok"
+        "ok-cancel"
+        "abort-retry-ignore"
+        "yes-no-cancel"
+        "yes-no"
+        "retry-cancel"
+
+    Returns
+    -------
+    status : str
+        One of the following values.
+
+        "ok"
+        "cancel"
+        "abort"
+        "retry"
+        "ignore"
+        "yes"
+        "no"   
+    """
+    all_types = {
+        "ok": 0,
+        "ok-cancel": 1,
+        "abort-retry-ignore": 2,
+        "yes-no-cancel": 3,
+        "yes-no": 4,
+        "retry-cancel": 5
+    }
+    all_status = {
+        1: "ok",
+        2: "cancel",
+        3: "abort",
+        4: "retry",
+        5: "ignore",
+        6: "yes",
+        7: "no"
+    }
+    status = RPR.ShowMessageBox(text, title, all_types[type])
+    status = all_status[status]
+    return status

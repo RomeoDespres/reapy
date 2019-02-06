@@ -35,6 +35,18 @@ class Item:
         param_name = "D_LENGTH"
         length = self._get_info_value(param_name)
         return length
+        
+    @length.setter
+    def length(self, length):
+        """
+        Set item length.
+        
+        Parameters
+        ----------
+        length : float
+            New item length in seconds.
+        """
+        RPR.SetMediaItemLength(self.id, length, True)
 
     @property
     def position(self):
@@ -50,8 +62,30 @@ class Item:
         return position
 
     @position.setter
-    def position(self, value):
-        RPR.SetitemPosition(self.id, value, False)
+    def position(self, position):
+        """
+        Set media item position to `position`.
+        
+        Parameters
+        ----------
+        position : float
+            New item position in seconds.
+        """
+        RPR.SetMediaItemPosition(self.id, position, False)
+        
+    @property
+    def project(self):
+        """
+        Return item parent project.
+        
+        Returns
+        -------
+        project : Project
+            Item parent project.
+        """
+        project_id = RPR.GetItemProjectContext(self.id)
+        project = Project(project_id)
+        return project
 
     @property
     def takes(self):
@@ -67,6 +101,41 @@ class Item:
             self._get_take(i) for i in range(self.count_takes())
         ]
         return takes
+        
+    @property
+    def track(self):
+        """
+        Return parent track of item.
+        
+        Returns
+        -------
+        track : Track
+            Parent track of item.
+        """
+        track_id = RPR.GetMediaItemTrack(self.id)
+        track = Track(track_id)
+        return track
+        
+    @track.setter
+    def track(self, track):
+        """
+        Move item to track `track`.
+        
+        Parameters
+        ----------
+        track : Track, int
+            If Track, destination track for item. If int, track index.
+            
+        Raises
+        ------
+        Exception
+            If operation failed within REAPER.
+        """
+        if isisintance(track, int):
+            track = Track(track, project=self.project)
+        success = RPR.MoveMediaItemToTrack(self.id, track.id)
+        if not success:
+            raise Exception("Couldn't move item to track.")
         
     def add_take(self):
         """
@@ -115,4 +184,6 @@ class Item:
         take = Take(take_id)
         return take
 
+from .project import Project
 from .take import Take
+from .track import Track

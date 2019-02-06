@@ -42,7 +42,7 @@ def disable_dist_api():
     message = (
         "reapy will be disabled as soon as you restart REAPER."
     )
-    reapy.Project().show_message_box(message)
+    reapy.show_message_box(message)
 
 def enable_dist_api():
     if not reapy.is_inside_reaper():
@@ -56,7 +56,7 @@ def enable_dist_api():
         "reapy successfully enabled!\n\nPlease restart REAPER.\n\nYou will then be "
         "able to import reapy from the outside."
     )
-    reapy.Project().show_message_box(message)
+    reapy.show_message_box(message)
     
 def get_activate_reapy_server_path():
     path = os.path.join(

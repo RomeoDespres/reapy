@@ -56,10 +56,25 @@ class Take:
         """
         start_offset = self._get_info_value("D_STARTOFFS")
         return start_offset
+        
+    @property
+    def track(self):
+        """
+        Return parent track of take.
+        
+        Returns
+        -------
+        track : Track
+            Parent track of take.
+        """
+        track_id = RPR.GetMediaItemTake_Track(self.id)
+        track = Track(track_id)
+        return track
 
     def _get_info_value(self, param_name):
         value = RPR.GettakeInfo_Value(self.id, param_name)
         return value
 
 from .item import Item
+from .track import Track
 from .source import Source
