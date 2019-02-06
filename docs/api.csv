@@ -234,8 +234,8 @@ GetProjectPath,TODO
 GetProjectPathEx,TODO
 GetProjectStateChangeCount,TODO
 GetProjectTimeOffset,TODO
-GetProjectTimeSignature,TODO
-GetProjectTimeSignature2,TODO
+GetProjectTimeSignature,DEPRECATED
+GetProjectTimeSignature2,reapy.core.project.Project.bpm;reapy.core.project.Project.bpi
 GetProjExtState,TODO
 GetResourcePath,TODO
 GetSelectedEnvelope,TODO
