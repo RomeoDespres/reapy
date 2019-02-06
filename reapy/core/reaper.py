@@ -29,7 +29,7 @@ def add_reascript(path, section_id=0, commit=True):
     if action_id == 0:
         raise ValueError("Script at {} wasn't successfully added.".format(path))
 
-def get_exe_path():
+def get_exe_dir():
     """
     Return REAPER.exe directory (e.g. "C:\Program Files\REAPER").
     
@@ -39,6 +39,18 @@ def get_exe_path():
         Path to REAPER.exe directory.
     """
     path = RPR.GetExePath()
+    return path
+    
+def get_ini_file():
+    """
+    Return path to REAPER.ini file.
+    
+    Returns
+    -------
+    path : str
+        Path to REAPER.ini file.
+    """
+    path = RPR.get_ini_file()
     return path
     
 def remove_reascript(path, section_id=0, commit=True):
