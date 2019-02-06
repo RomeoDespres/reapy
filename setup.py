@@ -7,7 +7,7 @@ with open(path.join(here, "README.md")) as f:
     long_description = f.read()
 
 setup(
-    name="reapy",
+    name="python-reapy",
     version="0.1.0.dev1",
     description="A pythonic wrapper for REAPER's ReaScript Python API",
     long_description=long_description,

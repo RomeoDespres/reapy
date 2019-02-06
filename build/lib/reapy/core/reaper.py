@@ -1,4 +1,4 @@
-from reapy import reascript_api
+from reapy import reascript_api as RPR
 
 def add_reascript(path, section_id=0, commit=True):
     """
@@ -23,7 +23,7 @@ def add_reascript(path, section_id=0, commit=True):
     """
     if not os.path.isfile(path):
         raise FileNotFoundError(path)
-    action_id = reascript_api.RPR_AddRemoveReaScript(
+    action_id = RPR.AddRemoveReaScript(
         True, section_id, path, commit
     )
     if action_id == 0:
@@ -38,7 +38,7 @@ def get_exe_path():
     path : str
         Path to REAPER.exe directory.
     """
-    path = reascript_api.RPR_GetExePath()
+    path = RPR.GetExePath()
     return path
     
 def remove_reascript(path, section_id=0, commit=True):
@@ -57,7 +57,7 @@ def remove_reascript(path, section_id=0, commit=True):
         `commit=False` for the first `n-1` calls and `commit=True` for
         the last call.
     """
-    success = reascript_api.RPR_AddRemoveReaScript(
+    success = RPR.AddRemoveReaScript(
         False, section_id, path, commit
     )
     if not success:
@@ -77,7 +77,7 @@ def rgb_from_native(native_color):
     r, g, b : (int, int, int)
         RGB values between 0 and 255.
     """
-    _, r, g, b = reascript_api.RPR_ColorFromNative(native_color, 0, 0, 0)
+    _, r, g, b = RPR.ColorFromNative(native_color, 0, 0, 0)
     return r, g, b
     
 def rgb_to_native(rgb):
@@ -94,5 +94,5 @@ def rgb_to_native(rgb):
     native_color : int
         Native color.
     """
-    native_color = reascript_api.RPR_ColorToNative(*rgb)
+    native_color = RPR.ColorToNative(*rgb)
     return native_color

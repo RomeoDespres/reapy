@@ -18,10 +18,17 @@ def main_loop():
 def generate_api_module():
     filepath = os.path.join(sys.path[0], "generated_api.py")
     with open(filepath, "w") as file:
+<<<<<<< HEAD
         file.write("from .api_function import APIFunction as _APIFunction\n\n")
         for name in _ft:
             file.write(
                 "{name} = _APIFunction(\"RPR_{name}\")\n".format(name=name)
+=======
+        file.write("from .api_function import APIFunction\n\n")
+        for name in _ft:
+            file.write(
+                "{name} = APIFunction(\"RPR_{name}\")\n".format(name=name)
+>>>>>>> 2e6af04aaab5355e80ef3da42726ae9008b86f89
             )
 
 if __name__ == "__main__":

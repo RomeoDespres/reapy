@@ -1,15 +1,24 @@
 from reaper_python import *
 
+<<<<<<< HEAD
 from . import call_requests
 from .socket import Socket
 
 import socket
+=======
+from . import _PORT, call_requests, Socket
+
+>>>>>>> 2e6af04aaab5355e80ef3da42726ae9008b86f89
 
 class Server(Socket):
 
     def __init__(self, port):
         super(Server, self).__init__()
+<<<<<<< HEAD
         self.bind(("", port))
+=======
+        self.bind(("", _PORT))
+>>>>>>> 2e6af04aaab5355e80ef3da42726ae9008b86f89
         self.listen()
         self.connections = {}
         self.settimeout(.0001)
@@ -18,16 +27,25 @@ class Server(Socket):
     def _get_request(self, connection):
         try:
             request = connection.recv()
+<<<<<<< HEAD
         except (ConnectionAbortedError, ConnectionResetError): # Client has disconnected
+=======
+        except ConnectionAbortedError: # Client has disconnected
+>>>>>>> 2e6af04aaab5355e80ef3da42726ae9008b86f89
             [address] = [
                 a for a, c in self.connections.items() if c is connection
             ]
             # Pretend client has nicely requested to disconnect
+<<<<<<< HEAD
             return [{"name": "DISCONNECT", "args": (address,)}]
+=======
+            return [{"name": "self.disconnect", "args": (address,)}]
+>>>>>>> 2e6af04aaab5355e80ef3da42726ae9008b86f89
         request = call_requests.decode_request(request)
         return request
             
     def _process_request(self, request):
+<<<<<<< HEAD
         result = [None]*len(request)
         for i, r in enumerate(request):
             try:
@@ -35,6 +53,12 @@ class Server(Socket):
                     self.disconnect(r["args"][0])
                 else:
                     result[i] = eval(r["name"])(*r["args"])
+=======
+        result = [0]*len(request)
+        for i, r in enumerate(request):
+            try:
+                result[i] = eval(r["name"])(*r["args"])
+>>>>>>> 2e6af04aaab5355e80ef3da42726ae9008b86f89
             except Exception as error:
                 result[i] = error
         return result

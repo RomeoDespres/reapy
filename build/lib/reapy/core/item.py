@@ -1,4 +1,4 @@
-from reapy import reascript_api
+from reapy import reascript_api as RPR
 
 
 class Item:
@@ -19,7 +19,7 @@ class Item:
         take : Take
             Active take of the item.
         """
-        take = Take(reascript_api.RPR_GetActiveTake(self.id))
+        take = Take(RPR.GetActiveTake(self.id))
         return take
 
     @property
@@ -46,12 +46,12 @@ class Item:
         position : float
             Item position in seconds.
         """
-        position = reascript_api.RPR_GetitemInfo_Value(self.id, "D_POSITION")
+        position = RPR.GetitemInfo_Value(self.id, "D_POSITION")
         return position
 
     @position.setter
     def position(self, value):
-        reascript_api.RPR_SetitemPosition(self.id, value, False)
+        RPR.SetitemPosition(self.id, value, False)
 
     @property
     def takes(self):
@@ -77,7 +77,7 @@ class Item:
         take : Take
             New take in item.
         """
-        take_id = reascript_api.RPR_AddTakeToMediaItem(self.id)
+        take_id = RPR.AddTakeToMediaItem(self.id)
         take = Take(take_id)
         return take
 
@@ -90,11 +90,11 @@ class Item:
         n_takes : int
             Number of takes of media item.
         """
-        n_takes = reascript_api.RPR_GetitemNumTakes(self.id)
+        n_takes = RPR.GetitemNumTakes(self.id)
         return n_takes
 
     def _get_info_value(self, param_name):
-        value = reascript_api.RPR_GetitemInfo_Value(self.id, param_name)
+        value = RPR.GetitemInfo_Value(self.id, param_name)
         return value
     
     def _get_take(self, i):
@@ -111,7 +111,7 @@ class Item:
         take : Take
             i-th take of media item.
         """
-        take_id = reascript_api.RPR_GetitemTake(self.id, i)
+        take_id = RPR.GetitemTake(self.id, i)
         take = Take(take_id)
         return take
 

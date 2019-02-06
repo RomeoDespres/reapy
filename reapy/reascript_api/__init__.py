@@ -2,7 +2,11 @@ import reapy
 
 import sys
 
+<<<<<<< HEAD
 if reapy.is_inside_reaper():
+=======
+if reapy._INSIDE:
+>>>>>>> 2e6af04aaab5355e80ef3da42726ae9008b86f89
     # Import functions without the useless starting "RPR_".
     import reaper_python as _RPR
     for key in _RPR.__dict__:

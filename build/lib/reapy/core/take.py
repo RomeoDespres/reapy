@@ -1,4 +1,4 @@
-from reapy import reascript_api
+from reapy import reascript_api as RPR
 
 
 class Take:
@@ -28,7 +28,7 @@ class Take:
         item : item
             Parent item.
         """
-        item = Item(reascript_api.RPR_Gettake_Item(self.id))
+        item = Item(RPR.Gettake_Item(self.id))
         return item
 
     @property
@@ -41,7 +41,7 @@ class Take:
         source : Source
             Take source.
         """
-        source = Source(reascript_api.RPR_GetMediaItemTake_Source(self.id))
+        source = Source(RPR.GetMediaItemTake_Source(self.id))
         return source
 
     @property
@@ -58,7 +58,7 @@ class Take:
         return start_offset
 
     def _get_info_value(self, param_name):
-        value = reascript_api.RPR_GettakeInfo_Value(self.id, param_name)
+        value = RPR.GettakeInfo_Value(self.id, param_name)
         return value
 
 from .item import Item
