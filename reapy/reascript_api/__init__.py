@@ -11,4 +11,4 @@ if reapy.is_inside_reaper():
     __all__ = list(_RPR._ft)
 else:
     from .dist_api import *
-    __all__ = reapy.reascript_api.dist_api.generated_api.__all__
+    from reapy_generated_api import __all__

@@ -2,6 +2,8 @@ from .errors import DisabledDistAPIError, UndefinedExtStateError
 from urllib import request
 from urllib.error import URLError
 
+import reapy
+
 import json
 
 class WebInterface:
@@ -38,7 +40,7 @@ class ExtendedState:
 
     def __getitem__(self, key):
         url = self._url.format(method="GET", key=key)
-        string = request.urlopen(url).read()
+        string = request.urlopen(url).read().decode("utf-8")
         value = string.split("\t")[-1][:-1]
         if not value:
             raise UndefinedExtStateError(key)

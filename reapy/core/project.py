@@ -3,9 +3,6 @@ import reapy
 if not reapy.is_inside_reaper():
     from reapy.reascript_api.dist_api.api_function import APISequence
 from reapy import reascript_api as RPR
-from . import reaper
-
-import io
 
 
 class Project:
@@ -155,7 +152,7 @@ class Project:
         be returned.
         """
         if isinstance(color, tuple):
-            color = reaper.get_native_color(*color)
+            color = reapy.get_native_color(*color)
         marker_id = RPR.AddProjectMarker2(
             self.id, False, position, 0, name, -1, color
         )
@@ -183,7 +180,7 @@ class Project:
             The region index.
         """
         if isinstance(color, tuple):
-            color = reaper.rgb_to_native(color)
+            color = reapy.rgb_to_native(color)
         region_id = RPR.AddProjectMarker(
             self.id, True, start, end, name, -1, color
         )
@@ -233,13 +230,7 @@ class Project:
             Action ID in the main Actions section.
         """
         RPR.Main_OnCommand(action_id, 0)
-
-    def print(self, *args, **kwargs):
-        """
-        Alias to ReaProject.show_console_message.
-        """
-        self.show_console_message(*args, **kwargs)
-
+        
     def select_all_items(self, selected=True):
         """
         Select or unselect all items, depending on `selected`.
@@ -250,29 +241,6 @@ class Project:
             Whether to select or unselect items.
         """
         RPR.SelectAllMediaItems(self.id, selected)
-
-    def show_console_message(self, *args, sep=" ", end="\n"):
-        """
-        Print a message to the Reaper console.
-
-        Parameters
-        ----------
-        args : tuple
-            Values to print.
-        sep : str, optional
-            String inserted between values (default=" ").
-        end : str, optional
-            String appended after the last value (default="\n").
-
-        See also
-        --------
-        ReaProject.clear_console
-        """
-        file = io.StringIO()
-        print(*args, sep=sep, end=end, file=file)
-        file.seek(0)
-        txt = file.read()
-        RPR.ShowConsoleMsg(txt)
 
     def show_message_box(self, text="", title="", type="ok"):
         """
@@ -324,7 +292,7 @@ class Project:
             6: "yes",
             7: "no"
         }
-        status = RPR.ShowMessageBox(self.id, text, title, all_types[type])
+        status = RPR.ShowMessageBox(text, title, all_types[type])
         status = all_status[status]
         return status
 

@@ -165,7 +165,7 @@ GetEnvelopePointEx,TODO
 GetEnvelopeScalingMode,TODO
 GetEnvelopeStateChunk,TODO
 GetExePath,core.reaper.get_exe_path
-GetExtState,TODO
+GetExtState,reaper.get_ext_state
 GetFocusedFX,TODO
 GetFreeDiskSpaceForRecordPath,TODO
 GetFXEnvelope,TODO
@@ -454,7 +454,7 @@ SetEditCurPos2,TODO
 SetEnvelopePoint,TODO
 SetEnvelopePointEx,TODO
 SetEnvelopeStateChunk,TODO
-SetExtState,TODO
+SetExtState,reaper.set_ext_state
 SetGlobalAutomationOverride,TODO
 SetItemStateChunk,TODO
 SetMasterTrackVisibility,TODO

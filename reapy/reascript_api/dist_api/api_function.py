@@ -1,11 +1,12 @@
 import reapy
 
-from .network import Client, WebInterface
-
 if reapy.is_inside_reaper():
     from reaper_python import *
 else:
-    _CLIENT = Client(WebInterface().get_reapy_server_port())
+    from .network import Client, WebInterface
+    from reapy.config.config import DEFAULT_WEB_INTERFACE_PORT
+    WEB_INTERFACE = WebInterface(DEFAULT_WEB_INTERFACE_PORT)
+    CLIENT = Client(WEB_INTERFACE.get_reapy_server_port())
 
 
 class APISequence:
@@ -17,8 +18,8 @@ class APISequence:
         if reapy.is_inside_reaper():
             results = [eval(n)(*a) for n, a in zip(self._names, args)]
         else:
-            _CLIENT.send_request(self._names, args)
-            results = _CLIENT.get_result()
+            CLIENT.send_request(self._names, args)
+            results = CLIENT.get_result()
         return results
     
     def __repr__(self):

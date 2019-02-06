@@ -1,5 +1,9 @@
 from reapy import reascript_api as RPR
 
+import io, os
+
+_original_print = print
+
 def add_reascript(path, section_id=0, commit=True):
     """
     Add a ReaScript and return the new action ID.
@@ -28,6 +32,7 @@ def add_reascript(path, section_id=0, commit=True):
     )
     if action_id == 0:
         raise ValueError("Script at {} wasn't successfully added.".format(path))
+    return action_id
 
 def get_exe_dir():
     """
@@ -41,6 +46,25 @@ def get_exe_dir():
     path = RPR.GetExePath()
     return path
     
+def get_ext_state(section, key):
+    """
+    Get the extended state value for a specific section and key.
+    
+    Parameters
+    ----------
+    section : str
+        Extended state section.
+    key : str
+        Extended state key for section `section`.
+    
+    Returns
+    -------
+    value : str
+        Extended state value.
+    """
+    value = RPR.GetExtState(section, key)
+    return value
+    
 def get_ini_file():
     """
     Return path to REAPER.ini file.
@@ -52,6 +76,12 @@ def get_ini_file():
     """
     path = RPR.get_ini_file()
     return path
+    
+def print(*args, **kwargs):
+    """
+    Alias to ReaProject.show_console_message.
+    """
+    show_console_message(*args, **kwargs)
     
 def remove_reascript(path, section_id=0, commit=True):
     """
@@ -108,3 +138,44 @@ def rgb_to_native(rgb):
     """
     native_color = RPR.ColorToNative(*rgb)
     return native_color
+
+def set_ext_state(section, key, value, persist=False):
+    """
+    Set the extended state value for a specific section and key.
+    
+    Parameters
+    ----------
+    section : str
+        Extended state section.
+    key : str
+        Extended state key for section `section`.
+    value : str
+        Extended state value for section `section` and key `key`.
+    persist : bool
+        Whether the value should be stored and reloaded the next time
+        REAPER is opened.
+    """
+    RPR.SetExtState(section, key, value, persist)
+    
+def show_console_message(*args, sep=" ", end="\n"):
+    """
+    Print a message to the Reaper console.
+
+    Parameters
+    ----------
+    args : tuple
+        Values to print.
+    sep : str, optional
+        String inserted between values (default=" ").
+    end : str, optional
+        String appended after the last value (default="\n").
+
+    See also
+    --------
+    ReaProject.clear_console
+    """
+    file = io.StringIO()
+    _original_print(*args, sep=sep, end=end, file=file)
+    file.seek(0)
+    txt = file.read()
+    RPR.ShowConsoleMsg(txt)
