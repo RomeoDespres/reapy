@@ -11,35 +11,32 @@
 ```
 pip install python-reapy
 ```
-2. Enable from REAPER.
 
-
-### `reapy` from inside
-
-Import `reapy` and use it instead of `reaper_python` in your ReaScripts.
+2. Then in REAPER, execute a new ReaScript containing the following:
 
 ```python
-from reapy import CURRENT_PROJECT as project
-project.print("Hello from inside, world!")
+import reapy
+reapy.config.enable_dist_api()
 ```
 
-This Hello World is equivalent to the following.
+You can create new ReaScripts by going to *Actions > Show action list > Reascript : New...*.
+
+3. You're all set! You can now import `reapy` from inside or outside REAPER as any standard Python module.
+
+Instead of creating a new ReaScript containing:
 
 ```python
 from reaper_python import *
-RPR_ShowConsoleMsg("Hello from inside, world!")
+RPR_ShowConsoleMsg("Hello world!")
 ```
 
-### `reapy` from outside
-
-To use `reapy` from outside REAPER, you need to load and execute the ReaScript [enable_reapy.py](reapy/reascript_api/dist_api/enable_reapy.py). It sets up a local server inside REAPER. Every import of `reapy` outside REAPER will become a client of this server and request ReaScript API calls from it.
-
-Then you can use `reapy` as any other Python module in your projects, and interact with REAPER from outside.
+you can open your usual Python shell and type:
 
 ```python
-from reapy import CURRENT_PROJECT as project
-project.print("Hello from outside, world!")
+>>> import reapy
+>>> reapy.print("Hello world!")
 ```
+
 ## Usage
 
 ### ReaScript API
