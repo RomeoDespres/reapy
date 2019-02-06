@@ -6,7 +6,13 @@
 
 ### Installing
 
-No installer is available yet.
+1. First install from `pip`:
+
+```
+pip install python-reapy
+```
+2. Enable from REAPER.
+
 
 ### `reapy` from inside
 
