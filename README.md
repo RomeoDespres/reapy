@@ -67,9 +67,7 @@ The table [api.csv](docs/api.csv) matches ReaScript functions with their `reapy`
 
 ## Author
 
-* **Roméo Després** - *Initial work* - [RomeoDespres](https://github.com/RomeoDespres)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+**Roméo Després** - [RomeoDespres](https://github.com/RomeoDespres)
 
 ## License
 
