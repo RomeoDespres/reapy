@@ -11,8 +11,10 @@ else:
 
 class APISequence:
 
-    def __init__(self, *function_names):
-        self._names = function_names
+    def __init__(self, *functions):
+        if functions and isinstance(functions[0], APISequence):
+            functions = sum(f._names for f in functions)
+        self._names = functions
         
     def __call__(self, *args):
         if reapy.is_inside_reaper():
