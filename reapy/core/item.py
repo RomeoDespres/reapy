@@ -1,4 +1,7 @@
+import reapy
 from reapy import reascript_api as RPR
+if not reapy.is_inside_reaper():
+    from reapy.reascript_api.dist_api.api_function import APISequence
 
 
 class Item:
@@ -97,9 +100,16 @@ class Item:
         takes : list
             List of all takes of media item.
         """
-        takes = [
-            self._get_take(i) for i in range(self.count_takes())
-        ]
+        n_takes = self.count_takes()
+        if not reapy.is_inside_reaper():
+            functions = [RPR.GetItemTake]*n_takes
+            args = [(self.id, i) for i in range(n_takes)]
+            ids = APISequence(*functions)(*args)
+            takes = [Take(take_id) for take_id in ids]
+        else:
+            takes = [
+                self._get_take(i) for i in range(n_takes)
+            ]
         return takes
         
     @property

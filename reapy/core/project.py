@@ -98,9 +98,9 @@ class Project:
         """
         n_items = self.count_selected_items()
         if not reapy.is_inside_reaper():
-            function_names = ["RPR.GetSelectedMediaItem"]*n_items
+            functions = [RPR.GetSelectedMediaItem]*n_items
             args = [(self.id, i) for i in range(n_items)]
-            ids = APISequence(*function_names)(*args)
+            ids = APISequence(*functions)(*args)
             items = [Item(item_id) for item_id in ids]
         else:
             items = [
