@@ -88,7 +88,7 @@ class Project:
 
         Returns
         -------
-        items : list of MediaItem
+        items : list of Item
             List of all selected items.
 
         See also
@@ -97,15 +97,10 @@ class Project:
             Return a specific selected item.
         """
         n_items = self.count_selected_items()
-        if not reapy.is_inside_reaper():
-            functions = [RPR.GetSelectedMediaItem]*n_items
-            args = [(self.id, i) for i in range(n_items)]
-            ids = APISequence(*functions)(*args)
-            items = [Item(item_id) for item_id in ids]
-        else:
-            items = [
-                self._get_selected_item(i) for i in range(n_items)
-            ]
+        functions = [RPR.GetSelectedMediaItem]*n_items
+        args = [(self.id, i) for i in range(n_items)]
+        ids = APISequence(*functions)(*args)
+        items = [Item(item_id) for item_id in ids]
         return items
 
     @property
@@ -125,6 +120,23 @@ class Project:
         """
         _, bpm, bpi = RPR.GetProjectTimeSignature2(self.id, 0, 0)
         return bpm, bpi
+    
+    @property    
+    def tracks(self):
+        """
+        Return list of project tracks.
+        
+        Returns
+        -------
+        tracks : list of Track
+            List of project tracks.
+        """
+        n_tracks = self.count_tracks()
+        functions = [RPR.GetTrack]*n_tracks
+        args = [(self.id, i) for i in range(n_tracks)]
+        ids = APISequence(*functions)(*args)
+        tracks = [Track(track_id) for track_id in ids]
+        return tracks
         
     def add_marker(self, position, name="", color=0):
         """
@@ -197,6 +209,18 @@ class Project:
         """
         n_items = RPR.CountSelectedMediaItems(self.id)
         return n_items
+        
+    def count_tracks(self):
+        """
+        Return the number of tracks in project.
+        
+        Returns
+        -------
+        n_tracks : int
+            Number of tracks in project.
+        """
+        n_tracks = RPR.CountTracks(self.id)
+        return n_tracks
 
     def glue_items(self, within_time_selection=False):
         """

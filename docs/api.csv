@@ -277,7 +277,7 @@ GetTempoTimeSigMarker,TODO
 GetToggleCommandState,TODO
 GetToggleCommandStateEx,TODO
 GetTooltipWindow,TODO
-GetTrack,TODO
+GetTrack,reapy.core.project.Project.tracks
 GetTrackAutomationMode,TODO
 GetTrackColor,TODO
 GetTrackDepth,TODO
