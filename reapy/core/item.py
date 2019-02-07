@@ -101,15 +101,10 @@ class Item:
             List of all takes of media item.
         """
         n_takes = self.count_takes()
-        if not reapy.is_inside_reaper():
-            functions = [RPR.GetItemTake]*n_takes
-            args = [(self.id, i) for i in range(n_takes)]
-            ids = APISequence(*functions)(*args)
-            takes = [Take(take_id) for take_id in ids]
-        else:
-            takes = [
-                self._get_take(i) for i in range(n_takes)
-            ]
+        functions = [RPR.GetItemTake]*n_takes
+        args = [(self.id, i) for i in range(n_takes)]
+        ids = APISequence(*functions)(*args)
+        takes = [Take(take_id) for take_id in ids]
         return takes
         
     @property
