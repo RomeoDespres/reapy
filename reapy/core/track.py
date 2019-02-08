@@ -41,6 +41,20 @@ class Track:
         native_color = reapy.rgb_to_native(color)
         RPR.SetTrackColor(self.id, native_color)
         
+    @property
+    def name(self):
+        """
+        Return track name.
+        
+        Returns
+        -------
+        name : str
+            Track name ("MASTER" for master track, "Track N" if track
+            has no name).
+        """
+        _, _, name, _ = RPR.GetTrackName(self.id, "", 2048)
+        return name
+        
     def add_item(self):
         """
         Create new item on track and return it.
