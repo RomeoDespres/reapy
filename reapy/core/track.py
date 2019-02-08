@@ -38,7 +38,8 @@ class Track:
             Triplet of integers between 0 and 255 corresponding to RGB
             values.
         """
-        native_color = reapy.rgb_to_native(*color)
+        native_color = reapy.rgb_to_native(color)
+        RPR.SetTrackColor(self.id, native_color)
         
     def add_item(self):
         """
