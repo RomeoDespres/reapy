@@ -42,6 +42,23 @@ class Track:
         RPR.SetTrackColor(self.id, native_color)
         
     @property
+    def items(self):
+        """
+        Return list of items on track.
+
+        Returns
+        -------
+        items : list of Item
+            List of items on track.
+        """
+        n_items = self.count_items()
+        functions = [RPR.GetTrackMediaItem]*n_items
+        args = [(self.id, i) for i in range(n_items)]
+        ids = APISequence(*functions)(*args)
+        items = [Item(item_id) for item_id in ids]
+        return items
+        
+    @property
     def name(self):
         """
         Return track name.

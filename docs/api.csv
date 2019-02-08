@@ -36,7 +36,7 @@ CountTCPFXParms,TODO
 CountTempoTimeSigMarkers,TODO
 CountTrackEnvelopes,TODO
 CountTrackMediaItems,reapy.core.track.Track.count_items
-CountTracks,TODO
+CountTracks,reapy.core.project.Project.count_tracks
 CreateNewMIDIItemInProj,TODO
 CreateTakeAudioAccessor,TODO
 CreateTrackAudioAccessor,TODO
@@ -285,7 +285,7 @@ GetTrackEnvelope,TODO
 GetTrackEnvelopeByChunkName,TODO
 GetTrackEnvelopeByName,TODO
 GetTrackGUID,TODO
-GetTrackMediaItem,TODO
+GetTrackMediaItem,reapy.core.track.Track.items
 GetTrackMIDILyrics,TODO
 GetTrackMIDINoteName,TODO
 GetTrackMIDINoteNameEx,TODO
