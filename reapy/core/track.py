@@ -68,5 +68,17 @@ class Track:
         item = Item(item_id)
         return item
         
+    def count_items(self):
+        """
+        Return number of items on track.
+        
+        Returns
+        -------
+        n_items : int
+            Number of items on track.
+        """
+        n_items = RPR.CountTrackMediaItems(self.id)
+        return n_items
+        
         
 from .item import Item

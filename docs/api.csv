@@ -35,7 +35,7 @@ CountTakes,TODO
 CountTCPFXParms,TODO
 CountTempoTimeSigMarkers,TODO
 CountTrackEnvelopes,TODO
-CountTrackMediaItems,TODO
+CountTrackMediaItems,reapy.core.track.Track.count_items
 CountTracks,TODO
 CreateNewMIDIItemInProj,TODO
 CreateTakeAudioAccessor,TODO
