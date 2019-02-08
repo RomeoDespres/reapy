@@ -138,6 +138,11 @@ class Project:
         tracks = [Track(track_id) for track_id in ids]
         return tracks
         
+    def add_item(self, start=None, end=None, length=None, quantize=False):
+        message = "`end` and `length` can't be both specified"
+        assert end is None or length is None, message
+        # TODO
+        
     def add_marker(self, position, name="", color=0):
         """
         Create new marker and return its index.
