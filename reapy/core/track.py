@@ -27,6 +27,19 @@ class Track:
         r, g, b = reapy.rgb_from_native(native_color)
         return r, g, b
         
+    @color.setter
+    def color(self, color):
+        """
+        Set track color to `color`
+        
+        Parameters
+        ----------
+        color : tuple
+            Triplet of integers between 0 and 255 corresponding to RGB
+            values.
+        """
+        native_color = reapy.rgb_to_native(*color)
+        
     def add_item(self):
         """
         Create new item on track and return it.
