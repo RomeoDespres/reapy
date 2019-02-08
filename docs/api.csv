@@ -290,7 +290,7 @@ GetTrackMIDILyrics,TODO
 GetTrackMIDINoteName,TODO
 GetTrackMIDINoteNameEx,TODO
 GetTrackMIDINoteRange,TODO
-GetTrackName,TODO
+GetTrackName,reapy.core.track.Track.name
 GetTrackNumMediaItems,TODO
 GetTrackNumSends,TODO
 GetTrackReceiveName,TODO
