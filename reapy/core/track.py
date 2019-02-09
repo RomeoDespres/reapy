@@ -97,5 +97,10 @@ class Track:
         n_items = RPR.CountTrackMediaItems(self.id)
         return n_items
         
+    def delete(self):
+        """
+        Delete track.
+        """
+        RPR.DeleteTrack(self.id)
         
 from .item import Item

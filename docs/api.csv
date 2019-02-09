@@ -101,7 +101,7 @@ DeleteProjectMarker,TODO
 DeleteProjectMarkerByIndex,TODO
 DeleteTakeStretchMarkers,TODO
 DeleteTempoTimeSigMarker,TODO
-DeleteTrack,TODO
+DeleteTrack,reapy.core.track.Track.delete
 DeleteTrackMediaItem,TODO
 DestroyAudioAccessor,TODO
 Dock_UpdateDockID,TODO
