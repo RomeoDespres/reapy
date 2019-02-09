@@ -230,8 +230,8 @@ GetPlayState,TODO
 GetPlayStateEx,TODO
 GetProjectLength,reapy.core.project.Project.length
 GetProjectName,reapy.core.project.Project.name
-GetProjectPath,TODO
-GetProjectPathEx,TODO
+GetProjectPath,reapy.core.project.Project.path
+GetProjectPathEx,reapy.core.project.Project.path
 GetProjectStateChangeCount,TODO
 GetProjectTimeOffset,TODO
 GetProjectTimeSignature,DEPRECATED

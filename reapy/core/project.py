@@ -93,6 +93,19 @@ class Project:
         """
         _, name, _ = RPR.GetProjectName(self.id, "", 2048)
         return name
+        
+    @property
+    def path(self):
+        """
+        Return project path.
+        
+        Returns
+        -------
+        path : str
+            Project path.
+        """
+        _, path, _ = RPR.GetProjectPathEx(self.id, "", 2048)
+        return path
 
     @property
     def selected_items(self):
