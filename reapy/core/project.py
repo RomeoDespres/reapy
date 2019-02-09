@@ -80,6 +80,19 @@ class Project:
         """
         length = RPR.GetProjectLength(self.id)
         return length
+        
+    @property
+    def name(self):
+        """
+        Return project name.
+        
+        Returns
+        -------
+        name : str
+            Project name.
+        """
+        _, name, _ = RPR.GetProjectName(self.id, "", 2048)
+        return name
 
     @property
     def selected_items(self):
@@ -138,7 +151,7 @@ class Project:
         tracks = [Track(track_id) for track_id in ids]
         return tracks
         
-    def add_item(self, start=None, end=None, length=None, quantize=False):
+    def add_midi_item(self, start=None, end=None, length=None, quantize=False):
         message = "`end` and `length` can't be both specified"
         assert end is None or length is None, message
         # TODO
