@@ -1,7 +1,9 @@
 import reapy
 from reapy import reascript_api as RPR
 if not reapy.is_inside_reaper():
-    from reapy.reascript_api.dist_api.api_function import APISequence
+    from reapy.reascript_api.dist_api.dist_program import Program
+else:
+    from reapy.tools.program import Program
 
 
 class Item:

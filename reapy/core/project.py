@@ -1,7 +1,9 @@
 import reapy
 
 if not reapy.is_inside_reaper():
-    from reapy.reascript_api.dist_api.api_function import APISequence
+    from reapy.reascript_api.dist_api.dist_program import Program
+else:
+    from reapy.tools.program import Program
 from reapy import reascript_api as RPR
 
 
@@ -122,11 +124,14 @@ class Project:
         ReaProject.get_selected_item
             Return a specific selected item.
         """
-        n_items = self.count_selected_items()
-        functions = [RPR.GetSelectedMediaItem]*n_items
-        args = [(self.id, i) for i in range(n_items)]
-        ids = APISequence(*functions)(*args)
-        items = [Item(item_id) for item_id in ids]
+        code = """
+        n_items = RPR.CountSelectedMediaItems(project_id)
+        item_ids = [
+            RPR.GetSelectedMediaItem(project_id, i) for i in range(n_items)
+        ]
+        """
+        item_ids = Program(code, "item_ids").run(project_id=self.id)
+        items = [Item(item_id) for item_id in item_ids]
         return items
 
     @property
