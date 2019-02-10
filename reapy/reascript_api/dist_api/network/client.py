@@ -1,7 +1,7 @@
-from . import call_requests
 from .socket import Socket
 from .errors import DisconnectedClientError
 
+import json
 
 class Client(Socket):
 
@@ -12,21 +12,24 @@ class Client(Socket):
     def connect(self, port):
         super(Client, self).connect(("localhost", port))
         self.address = self.recv().decode("ascii")
-        self.is_connected = True
         
-    def disconnect(self):
-        self.send_request("DISCONNECT", (self.address,))
-        self.is_connected = False
-    
-    def get_result(self):
-        if not self.is_connected:
-            raise DisconnectedError
-        result = self.recv()
-        result = call_requests.decode_result(result)
+    def run_program(self, program, input):
+        program = program.to_dict()
+        request = {"program": program, "input": input}
+        request = json.dumps(request).encode()
+        self.send(request)
+        result = self.get_result()
         return result
     
-    def send_request(self, function_name, args=()):
-        if not self.is_connected:
-            raise DisconnectedClientError
-        request = call_requests.encode_request(function_name, args)
-        self.send(request)
+    def get_result(self):
+        result = json.loads(self.recv().decode())
+        if result["type"] == "error":
+            error = result["value"]
+            try:
+                raise eval(error["name"])(*error["args"])
+            except NameError as e:
+                if error["name"] == "NameError":
+                    raise e
+                raise Exception(error["name"], *error["args"])
+        return result["value"]
+

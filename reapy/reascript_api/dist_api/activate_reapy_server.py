@@ -20,9 +20,7 @@ def generate_api_module():
     filepath = os.path.join(tempfile.gettempdir(), "reapy_generated_api.py")
     with open(filepath, "w") as file:
         lines = [
-            "from reapy.reascript_api.dist_api.api_function import (",
-            "   APIFunction as _APIFunction",
-            ")",
+            "from reapy.reascript_api.dist_api.api_function import Program",
             "",
             "__all__ = ["
         ]
@@ -31,7 +29,7 @@ def generate_api_module():
         file.write("\n".join(lines))
         for name in function_names:
             file.write(
-                "{name} = _APIFunction(\"RPR.{name}\")\n".format(name=name)
+                "{name} = Program.from_function(\"RPR.{name}\")\n".format(name=name)
             )
             
 def get_new_reapy_server():

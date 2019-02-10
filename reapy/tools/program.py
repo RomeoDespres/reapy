@@ -1,6 +1,8 @@
+import reapy
+
 class Program:
     
-    def __init__(self, code, input, output):
+    def __init__(self, code, *output):
         """
         Build program.
         
@@ -18,7 +20,6 @@ class Program:
             returned after execution.
         """
         self._code = self.parse_code(code)
-        self._input = input
         self._output = tuple(output)
         
     def to_dict(self):
@@ -31,11 +32,7 @@ class Program:
             dict representation of program. A new program with same state can
             be created from `rep` with `Program(**rep)`.
         """
-        return {
-            "code": self._code,
-            "input": self._input,
-            "output": self._output
-        }
+        return (self._code,) + self._output
         
     def parse_code(self, code):
         """
@@ -60,7 +57,7 @@ class Program:
         code = "\n".join(lines)
         return code
         
-    def run(self):
+    def run(self, **input):
         """
         Run program and return output.
         
@@ -69,15 +66,6 @@ class Program:
         output : tuple
             Output values.
         """
-        exec(self._code, globals(), self._input)
-        output = tuple(self._input[o] for o in self._output)
+        exec(self._code, globals(), input)
+        output = tuple(input[o] for o in self._output)
         return output
-        
-        
-class DistProgram(Program):
-    
-    def run(self):
-        if reapy.is_inside_reaper():
-            return super(DistProgram, self).run()
-        else:
-            return CLIENT.run_program(self)

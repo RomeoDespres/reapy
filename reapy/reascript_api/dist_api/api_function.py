@@ -1,4 +1,5 @@
 import reapy
+from reapy.tools import program
 
 if reapy.is_inside_reaper():
     from reaper_python import *
@@ -8,27 +9,18 @@ else:
     WEB_INTERFACE = WebInterface(DEFAULT_WEB_INTERFACE_PORT)
     CLIENT = Client(WEB_INTERFACE.get_reapy_server_port())
 
+class Program(program.Program):
 
-class DistFunc:
-
-    def __init__(self, f=None, name=None):
+    @staticmethod
+    def from_function(function_name):
+        code = "result = {}(*args, **kwargs)".format(function_name)
+        program = Program(code, "result")
+        def g(*args, **kwargs):
+            return program.run(args=args, kwargs=kwargs)[0]
+        return g
+    
+    def run(self, **input):
         if reapy.is_inside_reaper():
-            self._function = f
+            return super(DistProgram, self).run(**input)
         else:
-            self._name = f.__name__ if name is None else name
-            
-    def __call__(self, *args, **kwargs):
-        if reapy.is_inside_reaper():
-            result = self._function(*args, **kwargs)
-        else:
-            CLIENT.send_request(self._name)
-            result = CLIENT.get_result()
-        return result
-        
-class ComposedDistFunc(DistFunc):
-
-    def __init__(self, *functions):
-        self._functions = functions
-        
-    def __call__(self, *args):
-        if reapy
+            return CLIENT.run_program(self, input)

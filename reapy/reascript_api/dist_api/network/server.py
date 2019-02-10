@@ -1,10 +1,9 @@
 from reapy import reascript_api as RPR
+from reapy.tools.program import Program
 
-from . import call_requests
 from .socket import Socket
 
-import socket
-
+import json, socket
 
 class Server(Socket):
 
@@ -19,29 +18,40 @@ class Server(Socket):
     def _get_request(self, connection):
         try:
             request = connection.recv()
+            request = json.loads(request.decode())
         except (ConnectionAbortedError, ConnectionResetError): # Client has disconnected
             [address] = [
                 a for a, c in self.connections.items() if c is connection
             ]
             # Pretend client has nicely requested to disconnect
-            return [{"name": "DISCONNECT", "args": (address,)}]
-        request = call_requests.decode_request(request)
+            code = "server.disconnect(address)"
+            program = Program(code).to_dict()
+            input = {"address": address, "server": self}
+            request = {"program": program, "input": input}
         return request
             
     def _process_request(self, request):
-        result = [None]*len(request)
-        for i, r in enumerate(request):
-            try:
-                if r["name"] == "DISCONNECT":
-                    self.disconnect(r["args"][0])
-                else:
-                    result[i] = eval(r["name"])(*r["args"])
-            except Exception as error:
-                result[i] = error
+        program = Program(*request["program"])
+        result = {}
+        try:
+            result["value"] = program.run(RPR=RPR, **request["input"])
+            result["type"] = "result"
+        except Exception as error:
+            # Errors are sent back to the client instead of raised in REAPER
+            # (which would cause the server to crash).
+            result["value"] = error
+            result["type"] = "error"
+            RPR.ShowConsoleMsg(result)
         return result
         
     def _send_result(self, connection, result):
-        result = call_requests.encode_result(result)
+        if result["type"] == "error":
+            error = result["value"]
+            result["value"] = {
+                "name": error.__class__.__name__,
+                "args": error.args
+            }
+        result = json.dumps(result).encode()
         connection.send(result)
         
     @Socket._non_blocking
