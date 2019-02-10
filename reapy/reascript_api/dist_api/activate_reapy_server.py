@@ -20,7 +20,7 @@ def generate_api_module():
     filepath = os.path.join(tempfile.gettempdir(), "reapy_generated_api.py")
     with open(filepath, "w") as file:
         lines = [
-            "from reapy.reascript_api.dist_api.api_function import Program",
+            "from reapy.reascript_api.dist_api.dist_program import Program",
             "",
             "__all__ = ["
         ]
