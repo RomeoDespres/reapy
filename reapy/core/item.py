@@ -2,7 +2,6 @@ import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import Program
 
-
 class Item:
 
     def __init__(self, id):
@@ -99,11 +98,12 @@ class Item:
         takes : list
             List of all takes of media item.
         """
-        n_takes = self.count_takes()
-        functions = [RPR.GetItemTake]*n_takes
-        args = [(self.id, i) for i in range(n_takes)]
-        ids = APISequence(*functions)(*args)
-        takes = [Take(take_id) for take_id in ids]
+        code = """
+        n_takes = RPR.GetMediaItemNumTakes(item_id)
+        take_ids = [RPR.GetMediaItemTake(item_id, i) for i in range(n_takes)]
+        """
+        take_ids = Program(code, "take_ids").run(item_id=self.id)[0]
+        takes = [Take(take_id) for take_id in take_ids]
         return takes
         
     @property
@@ -163,7 +163,7 @@ class Item:
         n_takes : int
             Number of takes of media item.
         """
-        n_takes = RPR.GetitemNumTakes(self.id)
+        n_takes = RPR.GetMediaItemNumTakes(self.id)
         return n_takes
 
     def _get_info_value(self, param_name):
@@ -184,7 +184,7 @@ class Item:
         take : Take
             i-th take of media item.
         """
-        take_id = RPR.GetitemTake(self.id, i)
+        take_id = RPR.GetItemTake(self.id, i)
         take = Take(take_id)
         return take
 

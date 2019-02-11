@@ -1,6 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
-
+from reapy.tools import Program
 
 class Track:
 
@@ -51,11 +51,14 @@ class Track:
         items : list of Item
             List of items on track.
         """
-        n_items = self.count_items()
-        functions = [RPR.GetTrackMediaItem]*n_items
-        args = [(self.id, i) for i in range(n_items)]
-        ids = APISequence(*functions)(*args)
-        items = [Item(item_id) for item_id in ids]
+        code = """
+        n_items = RPR.CountTrackMediaItems(track_id)
+        item_ids = [
+            RPR.GetTrackMediaItem(track_id, i) for i in range(n_items)
+        ]
+        """
+        item_ids = Program(code, "item_ids").run(track_id=self.id)[0]
+        items = [Item(item_id) for item_id in item_ids]
         return items
         
     @property
