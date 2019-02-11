@@ -1,3 +1,4 @@
+import reapy
 from reapy import reascript_api as RPR
 from reapy.tools.program import Program
 
@@ -33,8 +34,9 @@ class Server(Socket):
     def _process_request(self, request):
         program = Program(*request["program"])
         result = {}
+        request["input"].update({"RPR": RPR, "reapy": reapy})
         try:
-            result["value"] = program.run(RPR=RPR, **request["input"])
+            result["value"] = program.run(**request["input"])
             result["type"] = "result"
         except Exception as error:
             # Errors are sent back to the client instead of raised in REAPER

@@ -66,6 +66,6 @@ class Program:
         output : tuple
             Output values.
         """
-        exec(self._code, globals(), input)
+        exec(self._code, input)
         output = tuple(input[o] for o in self._output)
         return output

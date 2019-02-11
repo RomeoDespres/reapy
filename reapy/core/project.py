@@ -162,11 +162,12 @@ class Project:
         tracks : list of Track
             List of project tracks.
         """
-        n_tracks = self.count_tracks()
-        functions = [RPR.GetTrack]*n_tracks
-        args = [(self.id, i) for i in range(n_tracks)]
-        ids = APISequence(*functions)(*args)
-        tracks = [Track(track_id) for track_id in ids]
+        code = """
+        n_tracks = RPR.CountTracks(project_id)
+        track_ids = [RPR.GetTrack(project_id, i) for i in range(n_tracks)]
+        """
+        track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
+        tracks = [Track(track_id) for track_id in track_ids]
         return tracks
         
     def add_midi_item(self, start=None, end=None, length=None, quantize=False):
