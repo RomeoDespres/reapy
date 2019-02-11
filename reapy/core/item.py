@@ -170,7 +170,7 @@ class Item:
         return n_takes
 
     def _get_info_value(self, param_name):
-        value = RPR.GetitemInfo_Value(self.id, param_name)
+        value = RPR.GetItemInfo_Value(self.id, param_name)
         return value
     
     def _get_take(self, i):

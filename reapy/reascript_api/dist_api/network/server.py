@@ -41,7 +41,6 @@ class Server(Socket):
             # (which would cause the server to crash).
             result["value"] = error
             result["type"] = "error"
-            RPR.ShowConsoleMsg(result)
         return result
         
     def _send_result(self, connection, result):

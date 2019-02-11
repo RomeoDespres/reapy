@@ -130,7 +130,7 @@ class Project:
             RPR.GetSelectedMediaItem(project_id, i) for i in range(n_items)
         ]
         """
-        item_ids = Program(code, "item_ids").run(project_id=self.id)
+        item_ids = Program(code, "item_ids").run(project_id=self.id)[0]
         items = [Item(item_id) for item_id in item_ids]
         return items
 
