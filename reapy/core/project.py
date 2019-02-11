@@ -1,9 +1,6 @@
 import reapy
-
-if not reapy.is_inside_reaper():
-    from reapy.reascript_api.dist_api.api_function import APISequence
 from reapy import reascript_api as RPR
-
+from reapy.tools import Program
 
 class Project:
 
@@ -122,11 +119,14 @@ class Project:
         ReaProject.get_selected_item
             Return a specific selected item.
         """
-        n_items = self.count_selected_items()
-        functions = [RPR.GetSelectedMediaItem]*n_items
-        args = [(self.id, i) for i in range(n_items)]
-        ids = APISequence(*functions)(*args)
-        items = [Item(item_id) for item_id in ids]
+        code = """
+        n_items = RPR.CountSelectedMediaItems(project_id)
+        item_ids = [
+            RPR.GetSelectedMediaItem(project_id, i) for i in range(n_items)
+        ]
+        """
+        item_ids = Program(code, "item_ids").run(project_id=self.id)[0]
+        items = [Item(item_id) for item_id in item_ids]
         return items
 
     @property
@@ -157,11 +157,12 @@ class Project:
         tracks : list of Track
             List of project tracks.
         """
-        n_tracks = self.count_tracks()
-        functions = [RPR.GetTrack]*n_tracks
-        args = [(self.id, i) for i in range(n_tracks)]
-        ids = APISequence(*functions)(*args)
-        tracks = [Track(track_id) for track_id in ids]
+        code = """
+        n_tracks = RPR.CountTracks(project_id)
+        track_ids = [RPR.GetTrack(project_id, i) for i in range(n_tracks)]
+        """
+        track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
+        tracks = [Track(track_id) for track_id in track_ids]
         return tracks
         
     def add_midi_item(self, start=None, end=None, length=None, quantize=False):
@@ -306,3 +307,4 @@ class Project:
         return item
 
 from .item import Item
+from .track import Track
