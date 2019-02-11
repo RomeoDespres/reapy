@@ -47,8 +47,12 @@ class Socket:
         length = int.from_bytes(length, "little")
         if length == 0:
             raise ConnectionAbortedError
-        # Then receive the data
-        data = self._socket.recv(length)
+        # Then receive data (split it into smaller bits if too big)
+        data = b""
+        max_size = 2**32
+        for _ in range(length // max_size):
+            data += self._socket.recv(max_size)
+        data += self._socket.recv(length % max_size)
         return data
     
     def send(self, data):
