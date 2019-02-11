@@ -10,5 +10,5 @@ if reapy.is_inside_reaper():
             exec("{} = _RPR.__dict__['{}']".format(key[4:], key))
     __all__ = list(_RPR._ft)
 else:
+    from .dist_api import __all__
     from .dist_api import *
-    from reapy_generated_api import __all__

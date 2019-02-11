@@ -1,11 +1,6 @@
 import reapy
-
-if not reapy.is_inside_reaper():
-    from reapy.reascript_api.dist_api.dist_program import Program
-else:
-    from reapy.tools.program import Program
 from reapy import reascript_api as RPR
-
+from reapy.tools import Program
 
 class Project:
 

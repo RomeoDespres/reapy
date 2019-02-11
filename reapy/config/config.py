@@ -62,7 +62,6 @@ def get_activate_reapy_server_path():
     path = os.path.join(
         os.path.dirname(reapy.__file__),
         "reascript_api",
-        "dist_api",
         "activate_reapy_server.py"
     )
     return path

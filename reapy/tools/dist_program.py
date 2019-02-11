@@ -1,13 +1,12 @@
 import reapy
-from reapy.tools import program
 
-if reapy.is_inside_reaper():
-    from reaper_python import *
-else:
-    from .network import Client, WebInterface
+if not reapy.is_inside_reaper():
+    from reapy.reascript_api.network import Client, WebInterface
     from reapy.config.config import DEFAULT_WEB_INTERFACE_PORT
     WEB_INTERFACE = WebInterface(DEFAULT_WEB_INTERFACE_PORT)
     CLIENT = Client(WEB_INTERFACE.get_reapy_server_port())
+
+from . import program
 
 class Program(program.Program):
 
