@@ -67,7 +67,7 @@ The table [api.csv](docs/api.csv) matches ReaScript functions with their `reapy`
 
 ### Speed
 
-When used as a more pythonic API from inside REAPER, `reapy` has almost identical performance than native ReaScript API. Yet when it is used from the outside, the performance is much worse. More precisely, since external API calls are processed in a `defer` loop inside REAPER, there can only be around 30 to 60 of them per second.
+When used from inside REAPER, `reapy` has almost identical performance than native ReaScript API. Yet when it is used from the outside, the performance is quite worse. More precisely, since external API calls are processed in a `defer` loop inside REAPER, there can only be around 30 to 60 of them per second.
 
 In a time-critical context, you can make use of the `reapy.tools.Program` feature. It allows to execute arbitrary code inside REAPER, with input and output sent over the local network.
 
