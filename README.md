@@ -65,7 +65,7 @@ The purpose of `reapy` is to provide a more pythonic API as a substitute for Rea
 ```
 The table [api.csv](docs/api.csv) matches ReaScript functions with their `reapy` counterparts.
 
-### Speed
+### Performance
 
 When used from inside REAPER, `reapy` has almost identical performance than native ReaScript API. Yet when it is used from the outside, the performance is quite worse. More precisely, since external API calls are processed in a `defer` loop inside REAPER, there can only be around 30 to 60 of them per second.
 
