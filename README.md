@@ -65,6 +65,30 @@ The purpose of `reapy` is to provide a more pythonic API as a substitute for Rea
 ```
 The table [api.csv](docs/api.csv) matches ReaScript functions with their `reapy` counterparts.
 
+### Speed
+
+When used as a more pythonic API from inside REAPER, `reapy` has almost identical performance than native ReaScript API. Yet when it is used from the outside, the performance is much worse. More precisely, since external API calls are processed in a `defer` loop inside REAPER, there can only be around 30 to 60 of them per second.
+
+In a time-critical context, you can make use of the `reapy.tools.Program` feature. It allows to execute arbitrary code inside REAPER, with input and output sent over the local network.
+
+In the example below, one can see how to make use of `Program` to improve efficiency. Input parameters are passed to the program as `Program.run` keyword arguments. Required output values are specified as `Project` positional arguments after `code` (first positional argument).
+
+Note that the modules `reapy` and `reascript_api` (as `RPR`) are always available in `Program`s. Any other needed module must be explicitly imported in the `code`.
+
+```python
+>>> import reapy
+>>> project = reapy.Project() # Current project
+>>> # Unefficient (and useless) call
+>>> start = time.time(); bpms = [project.bpm for _ in range(100)] # Takes at least 3 seconds!
+>>> # Efficient call
+>>> from reapy.tools import Program
+>>> code = """
+... project = reapy.Project(project_id)
+... bpms = [project.bpm for _ in range(100)]
+... """
+>>> [bpms] = Program(code, "bpms").run(project_id = project.id) # Takes 1/30 seconds (= one distant call)
+```
+
 ## Author
 
 **Roméo Després** - [RomeoDespres](https://github.com/RomeoDespres)
@@ -72,4 +96,5 @@ The table [api.csv](docs/api.csv) matches ReaScript functions with their `reapy`
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+
 
