@@ -105,6 +105,20 @@ class Project:
         return path
 
     @property
+    def play_state(self):
+        """
+        Return project play state.
+        
+        Returns
+        -------
+        state : {"play", "pause", "record"}
+            Project play state.
+        """
+        states = {1: "play", 2: "pause", 4: "record"}
+        state = states[RPR.GetPlayStateEx(self.id)]
+        return state
+
+    @property
     def selected_items(self):
         """
         Return list of all selected items.

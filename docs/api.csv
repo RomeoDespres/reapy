@@ -226,8 +226,8 @@ GetPlayPosition,TODO
 GetPlayPosition2,TODO
 GetPlayPosition2Ex,TODO
 GetPlayPositionEx,TODO
-GetPlayState,TODO
-GetPlayStateEx,TODO
+GetPlayState,reapy.core.project.Project.play_state
+GetPlayStateEx,reapy.core.project.Project.play_state
 GetProjectLength,reapy.core.project.Project.length
 GetProjectName,reapy.core.project.Project.name
 GetProjectPath,reapy.core.project.Project.path
