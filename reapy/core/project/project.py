@@ -142,6 +142,19 @@ class Project:
         item_ids = Program(code, "item_ids").run(project_id=self.id)[0]
         items = [Item(item_id) for item_id in item_ids]
         return items
+        
+    @property
+    def time_selection(self):
+        """
+        Return project time selection.
+        
+        Returns
+        -------
+        time_selection : TimeSelection
+            Project time selection.
+        """
+        time_selection = TimeSelection(self)
+        return time_selection
 
     @property
     def time_signature(self):
@@ -320,5 +333,6 @@ class Project:
         item = Item(item_id)
         return item
 
-from .item import Item
-from .track import Track
+from ..item import Item
+from ..track import Track
+from .time_selection import TimeSelection
