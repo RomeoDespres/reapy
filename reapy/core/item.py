@@ -188,6 +188,6 @@ class Item:
         take = Take(take_id)
         return take
 
-from .project import Project
+from .project.project import Project
 from .take import Take
 from .track import Track

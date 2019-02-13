@@ -45,16 +45,16 @@ class TimeSelection:
             Time selection end in seconds.
         """
         code = """
-        infos = RPR.GetSet_LoopTimeRange2(
+        infos = list(RPR.GetSet_LoopTimeRange2(
             project_id, False, False, 0, 0, False
-        )
+        ))
         infos[1], infos[4] = True, end
         RPR.GetSet_LoopTimeRange2(*infos)
         """
         Program(code).run(project_id=self.project_id, end=end)
         
     @property
-    def length(self)
+    def length(self):
         """
         Return time selection length in seconds.
         
@@ -79,9 +79,9 @@ class TimeSelection:
             Time selection length in seconds.
         """
         code = """
-        infos = RPR.GetSet_LoopTimeRange2(
+        infos = list(RPR.GetSet_LoopTimeRange2(
             project_id, False, False, 0, 0, False
-        )
+        ))
         infos[1], infos[4] = True, infos[3] + length
         RPR.GetSet_LoopTimeRange2(*infos)
         """
@@ -112,13 +112,13 @@ class TimeSelection:
             New time selection start.
         """
         code = """
-        infos = RPR.GetSet_LoopTimeRange2(
+        infos = list(RPR.GetSet_LoopTimeRange2(
             project_id, False, False, 0, 0, False
-        )
+        ))
         infos[1], infos[3] = True, start
         RPR.GetSet_LoopTimeRange2(*infos)
         """
-        Program(code).run(project_id=self.project_id)
+        Program(code).run(project_id=self.project_id, start=start)
         
         
 
