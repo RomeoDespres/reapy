@@ -146,5 +146,22 @@ class TimeSelection:
         """
         Program(code).run(project_id=self.project_id, start=start)
         
+    def shift(self, direction=""):
+        """
+        Shift time selection.
+        
+        Parameters
+        ----------
+        direction : {"right", "left"}
+            Direction to which time selection will be shifted. Nothing
+            happens if direction is neither "right" nor "left". Note
+            that the shift size depends on whether snap is enabled
+            and of the zoom level.
+        """
+        if direction == "right":
+            RPR.Loop_OnArrow(self.project_id, 1)
+        elif direction == "left":
+            RPR.Loop_OnArrow(self.project_id, -1)
+        
         
 

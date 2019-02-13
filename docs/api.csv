@@ -257,7 +257,7 @@ GetSetMediaTrackInfo_String,TODO
 GetSetProjectAuthor,TODO
 GetSetProjectGrid,TODO
 GetSetProjectNotes,TODO
-GetSetRepeat,TODO
+GetSetRepeat,reapy.core.project.time_selection.TimeSelection.looping
 GetSetRepeatEx,reapy.core.project.time_selection.TimeSelection.looping
 GetSetTrackGroupMembership,TODO
 GetSetTrackGroupMembershipHigh,TODO
@@ -338,7 +338,7 @@ joystick_getinfo,TODO
 joystick_getpov,TODO
 joystick_update,TODO
 LICE_ClipLine,TODO
-Loop_OnArrow,TODO
+Loop_OnArrow,reapy.core.project.time_selection.shift
 Main_OnCommand,reapy.perform_action
 Main_OnCommandEx,reapy.core.project.Project.perform_action
 Main_openProject,TODO
