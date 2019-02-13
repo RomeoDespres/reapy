@@ -244,8 +244,8 @@ GetSelectedTrack,TODO
 GetSelectedTrack2,TODO
 GetSelectedTrackEnvelope,TODO
 GetSet_ArrangeView2,TODO
-GetSet_LoopTimeRange,TODO
-GetSet_LoopTimeRange2,TODO
+GetSet_LoopTimeRange,reapy.core.project.Project.time_selection
+GetSet_LoopTimeRange2,reapy.core.project.Project.time_selection
 GetSetAutomationItemInfo,TODO
 GetSetEnvelopeState,TODO
 GetSetEnvelopeState2,TODO
