@@ -5,7 +5,7 @@ if reapy.is_inside_reaper():
 
 from .socket import Socket
 
-import json, socket
+import json, socket, traceback
 
 class Server(Socket):
 
@@ -39,20 +39,14 @@ class Server(Socket):
         try:
             result["value"] = program.run(**request["input"])
             result["type"] = "result"
-        except Exception as error:
+        except Exception:
             # Errors are sent back to the client instead of raised in REAPER
             # (which would cause the server to crash).
-            result["value"] = error
+            result["traceback"] = traceback.format_exc()
             result["type"] = "error"
         return result
         
     def _send_result(self, connection, result):
-        if result["type"] == "error":
-            error = result["value"]
-            result["value"] = {
-                "name": error.__class__.__name__,
-                "args": error.args
-            }
         result = json.dumps(result).encode()
         connection.send(result)
         

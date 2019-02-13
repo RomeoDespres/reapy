@@ -13,7 +13,16 @@ class DisconnectedClientError(Exception):
     def __init__(self):
         message = "Client disconnected. Call self.connect to reconnect."
         super(DisconnectedClientError, self).__init__(message)
-        
+
+
+class DistError(Exception):
+    
+    def __init__(self, tb_string):
+        message = (
+            "\n\nAn error occurred while running a Program in the server. "
+            "Traceback was :\n\n{}"
+        ).format(tb_string)
+        super(DistError, self).__init__(message)
         
 class UndefinedExtStateError(Exception):
     
