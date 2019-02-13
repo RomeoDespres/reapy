@@ -88,6 +88,32 @@ class TimeSelection:
         Program(code).run(project_id=self.project_id, length=length)
         
     @property
+    def looping(self):
+        """
+        Return whether looping is enabled.
+        
+        Returns
+        -------
+        looping : bool
+            Whether looping is enabled.
+        """
+        looping = bool(RPR.GetSetRepeatEx(self.project_id, -1))
+        return looping
+        
+    @looping.setter
+    def looping(self, looping):
+        """
+        Sets whether time selection should loop.
+        
+        Parameters
+        ----------
+        looping : bool
+            Whether time selection should loop.
+        """
+        looping = 1 if looping else 0
+        RPR.GetSetRepeatEx(self.project_id, looping)
+        
+    @property
     def start(self):
         """
         Return time selection start in seconds.

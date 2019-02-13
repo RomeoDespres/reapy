@@ -258,7 +258,7 @@ GetSetProjectAuthor,TODO
 GetSetProjectGrid,TODO
 GetSetProjectNotes,TODO
 GetSetRepeat,TODO
-GetSetRepeatEx,TODO
+GetSetRepeatEx,reapy.core.project.time_selection.TimeSelection.looping
 GetSetTrackGroupMembership,TODO
 GetSetTrackGroupMembershipHigh,TODO
 GetSetTrackState,TODO
