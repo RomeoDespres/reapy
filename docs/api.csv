@@ -344,7 +344,7 @@ Main_OnCommandEx,reapy.core.project.Project.perform_action
 Main_openProject,TODO
 Main_SaveProject,reapy.core.project.Project.save
 Main_UpdateLoopInfo,TODO
-MarkProjectDirty,TODO
+MarkProjectDirty,reapy.core.project.Project.mark_dirty
 MarkTrackItemsDirty,TODO
 Master_GetPlayRate,reapy.core.project.Project.play_rate
 Master_GetPlayRateAtTime,TODO

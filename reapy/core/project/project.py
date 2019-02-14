@@ -220,6 +220,12 @@ class Project:
         """
         length = RPR.GetProjectLength(self.id)
         return length
+        
+    def mark_dirty(self):
+        """
+        Mark project as dirty (i.e. needing save).
+        """
+        RPR.MarkProjectDirty(self.id)
          
     @property
     def name(self):
