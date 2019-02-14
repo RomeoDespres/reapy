@@ -7,6 +7,66 @@ class Project:
     def __init__(self, id=0):
         self.id = id
         
+    def add_marker(self, position, name="", color=0):
+        """
+        Create new marker and return its index.
+        
+        Parameters
+        ----------
+        position : float
+            Marker position in seconds.
+        name : str, optional
+            Marker name.
+        color : int, tuple, optional
+            Marker color. Integers correspond to REAPER native colors.
+            Tuple must be RGB triplets of integers between 0 and 255.
+            
+        Returns
+        -------
+        marker_id : int
+            The marker index.
+            
+        Notes
+        -----
+        If a marker with the same position and name already exists, no
+        new marker will be created, and the existing marker index will
+        be returned.
+        """
+        if isinstance(color, tuple):
+            color = reapy.get_native_color(*color)
+        marker_id = RPR.AddProjectMarker2(
+            self.id, False, position, 0, name, -1, color
+        )
+        return marker_id
+    
+    def add_region(self, start, end, name=""):
+        """
+        Create new marker and return its index.
+        
+        Parameters
+        ----------
+        start : float
+            Region start in seconds.
+        end : float
+            Region end in seconds.
+        name : str, optional
+            Region name.
+        color : int, tuple, optional
+            Marker color. Integers correspond to REAPER native colors.
+            Tuple must be RGB triplets of integers between 0 and 255.
+            
+        Returns
+        -------
+        region_id : int
+            The region index.
+        """
+        if isinstance(color, tuple):
+            color = reapy.rgb_to_native(color)
+        region_id = RPR.AddProjectMarker(
+            self.id, True, start, end, name, -1, color
+        )
+        return region_id
+        
     @property
     def any_track_solo(self):
         """
@@ -55,15 +115,85 @@ class Project:
             Tempo in beats per minute.
         """
         RPR.SetCurrentBPM(self.id, bpm, True)
+        
+    def count_selected_items(self):
+        """
+        Return the number of selected media items.
+
+        Returns
+        -------
+        n_items : int
+            Number of selected media items.
+        """
+        n_items = RPR.CountSelectedMediaItems(self.id)
+        return n_items
+        
+    def count_tracks(self):
+        """
+        Return the number of tracks in project.
+        
+        Returns
+        -------
+        n_tracks : int
+            Number of tracks in project.
+        """
+        n_tracks = RPR.CountTracks(self.id)
+        return n_tracks
 
     @property
     def cursor_position(self):
+        """
+        Return edit cursor position in seconds.
+        
+        Returns
+        -------
+        position : float
+            Edit cursor position in seconds.
+        """
         position = RPR.GetCursorPositionEx(self.id)
         return position
 
     @cursor_position.setter
     def cursor_position(self, position):
+        """
+        Set edit cursor position.
+        
+        Parameters
+        ----------
+        position : float
+            New edit cursor position in seconds.
+        """
         RPR.SetEditCurPos(position, True, True)
+        
+    def get_selected_item(self, index):
+        """
+        Return index-th selected item.
+
+        Parameters
+        ----------
+        index : int
+            Item index.
+
+        Returns
+        -------
+        item : Item
+            index-th selected item.
+        """
+        item_id = RPR.GetSelectedMediaItem(self.id, index)
+        item = Item(item_id)
+        return item
+        
+    def glue_items(self, within_time_selection=False):
+        """
+        Glue items (action shortcut).
+
+        Parameters
+        ----------
+        within_time_selection : bool
+            If True, glue items within time selection.
+        """
+        action_id = 41588 if within_time_selection else 40362
+        self.perform_action(action_id)
 
     @property
     def length(self):
@@ -77,7 +207,7 @@ class Project:
         """
         length = RPR.GetProjectLength(self.id)
         return length
-        
+         
     @property
     def name(self):
         """
@@ -103,6 +233,17 @@ class Project:
         """
         _, path, _ = RPR.GetProjectPathEx(self.id, "", 2048)
         return path
+        
+    def perform_action(self, action_id):
+        """
+        Perform action with ID `action_id` in the main Actions section.
+
+        Parameters
+        ----------
+        action_id : int
+            Action ID in the main Actions section.
+        """
+        RPR.Main_OnCommandEx(action_id, 0, self.id)
 
     @property
     def play_state(self):
@@ -117,6 +258,28 @@ class Project:
         states = {1: "play", 2: "pause", 4: "record"}
         state = states[RPR.GetPlayStateEx(self.id)]
         return state
+        
+    def save(self, force_save_as=False):
+        """
+        Save project.
+        
+        Parameters
+        ----------
+        force_save_as : bool
+            Force using "Save as" instead of "Save".
+        """
+        RPR.Main_SaveProject(self.id, force_save_as)
+        
+    def select_all_items(self, selected=True):
+        """
+        Select or unselect all items, depending on `selected`.
+
+        Parameters
+        ----------
+        selected : bool
+            Whether to select or unselect items.
+        """
+        RPR.SelectAllMediaItems(self.id, selected)
 
     @property
     def selected_items(self):
@@ -191,142 +354,7 @@ class Project:
         track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
         tracks = [Track(track_id) for track_id in track_ids]
         return tracks
-        
-    def add_marker(self, position, name="", color=0):
-        """
-        Create new marker and return its index.
-        
-        Parameters
-        ----------
-        position : float
-            Marker position in seconds.
-        name : str, optional
-            Marker name.
-        color : int, tuple, optional
-            Marker color. Integers correspond to REAPER native colors.
-            Tuple must be RGB triplets of integers between 0 and 255.
-            
-        Returns
-        -------
-        marker_id : int
-            The marker index.
-            
-        Notes
-        -----
-        If a marker with the same position and name already exists, no
-        new marker will be created, and the existing marker index will
-        be returned.
-        """
-        if isinstance(color, tuple):
-            color = reapy.get_native_color(*color)
-        marker_id = RPR.AddProjectMarker2(
-            self.id, False, position, 0, name, -1, color
-        )
-        return marker_id
-    
-    def add_region(self, start, end, name=""):
-        """
-        Create new marker and return its index.
-        
-        Parameters
-        ----------
-        start : float
-            Region start in seconds.
-        end : float
-            Region end in seconds.
-        name : str, optional
-            Region name.
-        color : int, tuple, optional
-            Marker color. Integers correspond to REAPER native colors.
-            Tuple must be RGB triplets of integers between 0 and 255.
-            
-        Returns
-        -------
-        region_id : int
-            The region index.
-        """
-        if isinstance(color, tuple):
-            color = reapy.rgb_to_native(color)
-        region_id = RPR.AddProjectMarker(
-            self.id, True, start, end, name, -1, color
-        )
-        return region_id
 
-    def count_selected_items(self):
-        """
-        Return the number of selected media items.
-
-        Returns
-        -------
-        n_items : int
-            Number of selected media items.
-        """
-        n_items = RPR.CountSelectedMediaItems(self.id)
-        return n_items
-        
-    def count_tracks(self):
-        """
-        Return the number of tracks in project.
-        
-        Returns
-        -------
-        n_tracks : int
-            Number of tracks in project.
-        """
-        n_tracks = RPR.CountTracks(self.id)
-        return n_tracks
-
-    def glue_items(self, within_time_selection=False):
-        """
-        Glue items (action shortcut).
-
-        Parameters
-        ----------
-        within_time_selection : bool
-            If True, glue items within time selection.
-        """
-        action_id = 41588 if within_time_selection else 40362
-        self.perform_action(action_id)
-
-    def perform_action(self, action_id):
-        """
-        Perform action with ID `action_id` in the main Actions section.
-
-        Parameters
-        ----------
-        action_id : int
-            Action ID in the main Actions section.
-        """
-        RPR.Main_OnCommandEx(action_id, 0, self.id)
-        
-    def select_all_items(self, selected=True):
-        """
-        Select or unselect all items, depending on `selected`.
-
-        Parameters
-        ----------
-        selected : bool
-            Whether to select or unselect items.
-        """
-        RPR.SelectAllMediaItems(self.id, selected)
-
-    def _get_selected_item(self, index):
-        """
-        Return index-th selected item.
-
-        Parameters
-        ----------
-        index : int
-            Item index.
-
-        Returns
-        -------
-        item : Item
-            index-th selected item.
-        """
-        item_id = RPR.GetSelectedMediaItem(self.id, index)
-        item = Item(item_id)
-        return item
 
 from ..item import Item
 from ..track import Track
