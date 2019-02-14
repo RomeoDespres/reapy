@@ -257,8 +257,8 @@ GetSetMediaTrackInfo_String,TODO
 GetSetProjectAuthor,TODO
 GetSetProjectGrid,TODO
 GetSetProjectNotes,TODO
-GetSetRepeat,reapy.core.project.time_selection.TimeSelection.looping
-GetSetRepeatEx,reapy.core.project.time_selection.TimeSelection.looping
+GetSetRepeat,reapy.core.project.time_selection.TimeSelection.is_looping;.loop;.unloop
+GetSetRepeatEx,reapy.core.project.time_selection.TimeSelection.looping;.loop;.unloop
 GetSetTrackGroupMembership,TODO
 GetSetTrackGroupMembershipHigh,TODO
 GetSetTrackState,TODO

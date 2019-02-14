@@ -54,6 +54,34 @@ class TimeSelection:
         Program(code).run(project_id=self.project_id, end=end)
         
     @property
+    def is_looping(self):
+        """
+        Return whether looping is enabled.
+        
+        Returns
+        -------
+        looping : bool
+            Whether looping is enabled.
+        """
+        is_looping = bool(RPR.GetSetRepeatEx(self.project_id, -1))
+        return is_looping
+        
+    @is_looping.setter
+    def is_looping(self, is_looping):
+        """
+        Sets whether time selection should loop.
+        
+        Parameters
+        ----------
+        looping : bool
+            Whether time selection should loop.
+        """
+        if is_looping:
+            self.loop()
+        else:
+            self.unloop()        
+        
+    @property
     def length(self):
         """
         Return time selection length in seconds.
@@ -87,31 +115,16 @@ class TimeSelection:
         """
         Program(code).run(project_id=self.project_id, length=length)
         
-    @property
-    def looping(self):
+    def loop(self):
         """
-        Return whether looping is enabled.
+        Enable time selection looping.
         
-        Returns
-        -------
-        looping : bool
-            Whether looping is enabled.
+        See also
+        --------
+        TimeSelection.is_looping
+        TimeSelection.unloop
         """
-        looping = bool(RPR.GetSetRepeatEx(self.project_id, -1))
-        return looping
-        
-    @looping.setter
-    def looping(self, looping):
-        """
-        Sets whether time selection should loop.
-        
-        Parameters
-        ----------
-        looping : bool
-            Whether time selection should loop.
-        """
-        looping = 1 if looping else 0
-        RPR.GetSetRepeatEx(self.project_id, looping)
+        RPR.GetSetRepeatEx(self.project_id, 1)
         
     @property
     def start(self):
@@ -162,6 +175,16 @@ class TimeSelection:
             RPR.Loop_OnArrow(self.project_id, 1)
         elif direction == "left":
             RPR.Loop_OnArrow(self.project_id, -1)
+            
+    def unloop(self):
+        """
+        Disable time selection looping.
         
+        See also
+        --------
+        TimeSelection.is_looping
+        TimeSelection.loop
+        """
+        RPR.GetSetRepeatEx(self.project_id, 0)
         
 
