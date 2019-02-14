@@ -9,6 +9,19 @@ class Track:
             id = RPR.GetTrack(project.id, id)
         self.id = id
         
+    def add_item(self):
+        """
+        Create new item on track and return it.
+        
+        Returns
+        -------
+        item : Item
+            New item on track.
+        """
+        item_id = RPR.AddMediaItemToTrack(self.id)
+        item = Item(item_id)
+        return item
+        
     @property
     def color(self):
         """
@@ -40,6 +53,24 @@ class Track:
         """
         native_color = reapy.rgb_to_native(color)
         RPR.SetTrackColor(self.id, native_color)
+        
+    def count_items(self):
+        """
+        Return number of items on track.
+        
+        Returns
+        -------
+        n_items : int
+            Number of items on track.
+        """
+        n_items = RPR.CountTrackMediaItems(self.id)
+        return n_items
+        
+    def delete(self):
+        """
+        Delete track.
+        """
+        RPR.DeleteTrack(self.id)
         
     @property
     def items(self):
@@ -74,6 +105,21 @@ class Track:
         is_selected = bool(RPR.IsTrackSelected(self.id))
         return is_selected
         
+    @is_selected.setter
+    def is_selected(self, selected):
+        """
+        Select or unselect track.
+        
+        Parameters
+        ----------
+        selected : bool
+            Whether to select or unselect track.
+        """
+        if selected:
+            self.select()
+        else:
+            self.unselect()
+        
     @property
     def name(self):
         """
@@ -88,35 +134,16 @@ class Track:
         _, _, name, _ = RPR.GetTrackName(self.id, "", 2048)
         return name
         
-    def add_item(self):
+    def select(self):
         """
-        Create new item on track and return it.
+        Select track.
+        """
+        RPR.SetTrackSelected(self.id, True)
         
-        Returns
-        -------
-        item : Item
-            New item on track.
+    def unselect(self):
         """
-        item_id = RPR.AddMediaItemToTrack(self.id)
-        item = Item(item_id)
-        return item
-        
-    def count_items(self):
+        Unselect track.
         """
-        Return number of items on track.
-        
-        Returns
-        -------
-        n_items : int
-            Number of items on track.
-        """
-        n_items = RPR.CountTrackMediaItems(self.id)
-        return n_items
-        
-    def delete(self):
-        """
-        Delete track.
-        """
-        RPR.DeleteTrack(self.id)
+        RPR.SetTrackSelected(self.id, False)
         
 from .item import Item
