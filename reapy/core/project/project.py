@@ -194,6 +194,19 @@ class Project:
         """
         action_id = 41588 if within_time_selection else 40362
         self.perform_action(action_id)
+    
+    @property
+    def is_dirty(self):
+        """
+        Return whether project is dirty (i.e. needing save).
+        
+        Returns
+        -------
+        is_dirty : bool
+            Whether project is dirty.
+        """
+        is_dirty = RPR.IsProjectDirty(self.id)
+        return is_dirty
 
     @property
     def length(self):

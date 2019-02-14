@@ -326,7 +326,7 @@ InsertMediaSection,TODO
 InsertTrackAtIndex,TODO
 IsMediaExtension,TODO
 IsMediaItemSelected,TODO
-IsProjectDirty,TODO
+IsProjectDirty,reapy.core.project.Project.is_dirty
 IsTrackSelected,TODO
 IsTrackVisible,TODO
 joystick_create,TODO
@@ -342,7 +342,7 @@ Loop_OnArrow,reapy.core.project.time_selection.shift
 Main_OnCommand,reapy.perform_action
 Main_OnCommandEx,reapy.core.project.Project.perform_action
 Main_openProject,TODO
-Main_SaveProject,TODO
+Main_SaveProject,reapy.core.project.Project.save
 Main_UpdateLoopInfo,TODO
 MarkProjectDirty,TODO
 MarkTrackItemsDirty,TODO
