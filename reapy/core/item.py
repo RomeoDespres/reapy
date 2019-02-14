@@ -22,6 +22,19 @@ class Item:
         """
         take = Take(RPR.GetActiveTake(self.id))
         return take
+        
+    @property
+    def is_selected(self):
+        """
+        Return whether item is selected.
+        
+        Returns
+        -------
+        is_selected : bool
+            Whether item is selected.
+        """
+        is_selected = bool(RPR.IsMediaItemSelected(self.id))
+        return is_selected
 
     @property
     def length(self):

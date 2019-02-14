@@ -325,7 +325,7 @@ InsertMedia,TODO
 InsertMediaSection,TODO
 InsertTrackAtIndex,TODO
 IsMediaExtension,TODO
-IsMediaItemSelected,TODO
+IsMediaItemSelected,reapy.core.item.Item.is_selected
 IsProjectDirty,reapy.core.project.Project.is_dirty
 IsTrackSelected,TODO
 IsTrackVisible,TODO
