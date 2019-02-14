@@ -257,6 +257,19 @@ class Project:
             Action ID in the main Actions section.
         """
         RPR.Main_OnCommandEx(action_id, 0, self.id)
+        
+    @property
+    def play_rate(self):
+        """
+        Return project play rate.
+        
+        Returns
+        -------
+        play_rate : float
+            Project play rate.
+        """
+        play_rate = RPR.Master_GetPlayRate(self.id)
+        return play_rate
 
     @property
     def play_state(self):

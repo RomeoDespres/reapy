@@ -346,9 +346,9 @@ Main_SaveProject,reapy.core.project.Project.save
 Main_UpdateLoopInfo,TODO
 MarkProjectDirty,TODO
 MarkTrackItemsDirty,TODO
-Master_GetPlayRate,TODO
+Master_GetPlayRate,reapy.core.project.Project.play_rate
 Master_GetPlayRateAtTime,TODO
-Master_GetTempo,TODO
+Master_GetTempo,reapy.core.project.Project.bpm
 Master_NormalizePlayRate,TODO
 Master_NormalizeTempo,TODO
 MB,TODO
