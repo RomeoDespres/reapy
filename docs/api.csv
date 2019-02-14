@@ -327,7 +327,7 @@ InsertTrackAtIndex,TODO
 IsMediaExtension,TODO
 IsMediaItemSelected,reapy.core.item.Item.is_selected
 IsProjectDirty,reapy.core.project.Project.is_dirty
-IsTrackSelected,TODO
+IsTrackSelected,reapy.core.track.Track.is_selected
 IsTrackVisible,TODO
 joystick_create,TODO
 joystick_destroy,TODO

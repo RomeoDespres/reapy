@@ -62,6 +62,19 @@ class Track:
         return items
         
     @property
+    def is_selected(self):
+        """
+        Return whether track is selected.
+        
+        Returns
+        -------
+        is_selected : bool
+            Whether track is selected.
+        """
+        is_selected = bool(RPR.IsTrackSelected(self.id))
+        return is_selected
+        
+    @property
     def name(self):
         """
         Return track name.
