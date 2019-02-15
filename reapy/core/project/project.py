@@ -79,7 +79,7 @@ class Project:
         """
         if isinstance(color, tuple):
             color = reapy.rgb_to_native(color)
-        region_id = RPR.AddProjectMarker(
+        region_id = RPR.AddProjectMarker2(
             self.id, True, start, end, name, -1, color
         )
         return region_id
@@ -144,6 +144,30 @@ class Project:
         """
         n_items = RPR.CountMediaItems(self.id)
         return n_items
+        
+    def count_markers(self):
+        """
+        Return number of markers in project.
+        
+        Returns
+        -------
+        n_markers : int
+            Number of markers in project.
+        """
+        n_markers = RPR.CountProjectMarkers(self.id, 0, 0)[2]
+        return n_markers
+        
+    def count_regions(self):
+        """
+        Return number of regions in project.
+        
+        Returns
+        -------
+        n_regions : int
+            Number of regions in project.
+        """
+        n_regions = RPR.CountProjectMarkers(self.id, 0, 0)[3]
+        return n_regions
         
     def count_selected_items(self):
         """
@@ -429,6 +453,6 @@ class Project:
         return tracks
 
 
-from ..item import Item
+from ..item.item import Item
 from ..track import Track
 from .time_selection import TimeSelection

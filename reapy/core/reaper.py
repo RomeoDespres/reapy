@@ -44,6 +44,22 @@ def clear_console():
     """
     RPR.ClearConsole()
     
+def delete_ext_state(section, key, persist=False):
+    """
+    Delete extended state value for a given section and key.
+    
+    Parameters
+    ----------
+    section : str
+        Extended state section.
+    key : str
+        Extended state key.
+    persist : bool
+        Whether extended state should remain deleted next time REAPER
+        is opened.
+    """
+    RPR.DeleteExtState(section, key, persist)
+    
 def get_command_id(command_name):
     """
     Return ID of command with a given name.
@@ -108,6 +124,11 @@ def get_ext_state(section, key):
     -------
     value : str
         Extended state value.
+        
+    See also
+    --------
+    delete_ext_state
+    set_ext_state
     """
     value = RPR.GetExtState(section, key)
     return value
@@ -212,6 +233,11 @@ def set_ext_state(section, key, value, persist=False):
     persist : bool
         Whether the value should be stored and reloaded the next time
         REAPER is opened.
+        
+    See also
+    --------
+    delete_ext_state
+    get_ext_state
     """
     RPR.SetExtState(section, key, value, persist)
     

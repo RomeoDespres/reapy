@@ -26,12 +26,12 @@ CountAutomationItems,TODO
 CountEnvelopePoints,TODO
 CountEnvelopePointsEx,TODO
 CountMediaItems,reapy.core.project.Project.count_items
-CountProjectMarkers,TODO
+CountProjectMarkers,reapy.core.project.Project.count_markers;.count_regions
 CountSelectedMediaItems,reapy.core.project.Project.count_selected_items
 CountSelectedTracks,reapy.core.project.Project.count_selected_tracks
 CountSelectedTracks2,reapy.core.project.Project.count_selected_tracks
 CountTakeEnvelopes,TODO
-CountTakes,TODO
+CountTakes,reapy.core.item.Item.count_takes
 CountTCPFXParms,TODO
 CountTempoTimeSigMarkers,TODO
 CountTrackEnvelopes,TODO
@@ -96,7 +96,7 @@ CSurf_TrackToID,TODO
 DB2SLIDER,TODO
 DeleteEnvelopePointRange,TODO
 DeleteEnvelopePointRangeEx,TODO
-DeleteExtState,TODO
+DeleteExtState,reapy.delete_ext_state
 DeleteProjectMarker,TODO
 DeleteProjectMarkerByIndex,TODO
 DeleteTakeStretchMarkers,TODO

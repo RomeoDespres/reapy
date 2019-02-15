@@ -146,4 +146,4 @@ class Track:
         """
         RPR.SetTrackSelected(self.id, False)
         
-from .item import Item
+from .item.item import Item
