@@ -42,5 +42,6 @@ if __name__ == "__main__":
     SERVER = get_new_reapy_server()
     generate_api_module()
     main_loop()
+    RPR_atexit("""reapy.delete_ext_state("reapy", "server_port")""")
 
     
