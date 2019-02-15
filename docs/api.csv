@@ -444,7 +444,7 @@ ReverseNamedCommandLookup,reapy.get_command_name
 ScaleFromEnvelopeMode,TODO
 ScaleToEnvelopeMode,TODO
 SelectAllMediaItems,reapy.core.project.Project.select_all_items
-SelectProjectInstance,TODO
+SelectProjectInstance,reapy.core.project.Project.select
 SetActiveTake,TODO
 SetAutomationMode,TODO
 SetCurrentBPM,reapy.core.project.Project.bpm
