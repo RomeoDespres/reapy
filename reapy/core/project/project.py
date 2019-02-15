@@ -397,6 +397,12 @@ class Project:
         _, name, _ = RPR.GetProjectName(self.id, "", 2048)
         return name
         
+    def pause(self):
+        """
+        Hit pause button.
+        """
+        RPR.OnPauseButtonEx(self.id)
+        
     @property
     def path(self):
         """
@@ -420,6 +426,12 @@ class Project:
             Action ID in the main Actions section.
         """
         RPR.Main_OnCommandEx(action_id, 0, self.id)
+        
+    def play(self):
+        """
+        Hit play button.
+        """
+        RPR.OnPlayButtonEx(self.id)
         
     @property
     def play_rate(self):
@@ -501,6 +513,12 @@ class Project:
         item_ids = Program(code, "item_ids").run(project_id=self.id)[0]
         items = [Item(item_id) for item_id in item_ids]
         return items
+        
+    def stop(self):
+        """
+        Hit stop button.
+        """
+        RPR.OnStopButtonEx(self.id)
         
     @property
     def time_selection(self):
