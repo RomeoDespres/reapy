@@ -2,10 +2,10 @@ import reapy
 from .errors import OutsideREAPERError
 
 from configparser import ConfigParser
-import os
+import json, os
 
-DEFAULT_REAPY_SERVER_PORT = 2307
-DEFAULT_WEB_INTERFACE_PORT = 2308
+REAPY_SERVER_PORT = 2306
+WEB_INTERFACE_PORT = 2307
 
 class Config(ConfigParser):
 
@@ -38,7 +38,9 @@ def delete_web_interface(port):
 def disable_dist_api():
     if not reapy.is_inside_reaper():
         raise OutsideREAPERError
-    delete_web_interface(DEFAULT_WEB_INTERFACE_PORT)
+    delete_web_interface(WEB_INTERFACE_PORT)
+    reascript_path = get_activate_reapy_server_path()
+    reapy.remove_reascript(reascript_path)
     message = (
         "reapy will be disabled as soon as you restart REAPER."
     )
@@ -47,10 +49,11 @@ def disable_dist_api():
 def enable_dist_api():
     if not reapy.is_inside_reaper():
         raise OutsideREAPERError
-    create_new_web_interface(DEFAULT_WEB_INTERFACE_PORT)
+    create_new_web_interface(WEB_INTERFACE_PORT)
     reascript_path = get_activate_reapy_server_path()
     action_id = reapy.add_reascript(reascript_path)
-    section, key, value = "reapy", "activate_reapy_server:id", str(action_id)
+    command_name = json.dumps(reapy.get_command_name(action_id))
+    section, key, value = "reapy", "activate_reapy_server", command_name
     reapy.set_ext_state(section, key, value, persist=True)
     message = (
         "reapy successfully enabled!\n\nPlease restart REAPER.\n\nYou will then be "

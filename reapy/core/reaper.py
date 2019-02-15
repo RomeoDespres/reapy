@@ -43,6 +43,43 @@ def clear_console():
     ReaProject.show_console_message
     """
     RPR.ClearConsole()
+    
+def get_command_id(command_name):
+    """
+    Return ID of command with a given name.
+    
+    Parameters
+    ----------
+    command_name : str
+        Command name.
+    
+    Returns
+    -------
+    command_id : int or None
+        Command ID, or None if name can't be found.
+    """
+    command_id = RPR.NamedCommandLookup(command_name)
+    command_id = command_id if command_id else None
+    return command_id
+    
+def get_command_name(command_id):
+    """
+    Return name of command with a given ID.
+    
+    Parameters
+    ----------
+    command_id : int
+        Command ID.
+        
+    Returns
+    -------
+    command_name : str, None
+        Command name, or None for a native command.
+    """
+    command_name = RPR.ReverseNamedCommandLookup(command_id)
+    if command_name is not None:
+        command_name = "_" + command_name
+    return command_name
 
 def get_exe_dir():
     """

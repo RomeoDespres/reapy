@@ -404,7 +404,7 @@ MoveEditCursor,TODO
 MoveMediaItemToTrack,reapy.core.item.Item.track
 MuteAllTracks,TODO
 my_getViewport,TODO
-NamedCommandLookup,TODO
+NamedCommandLookup,reapy.get_command_id
 OnPauseButton,TODO
 OnPauseButtonEx,TODO
 OnPlayButton,TODO
@@ -440,7 +440,7 @@ ReorderSelectedTracks,TODO
 Resample_EnumModes,TODO
 resolve_fn,TODO
 resolve_fn2,TODO
-ReverseNamedCommandLookup,TODO
+ReverseNamedCommandLookup,reapy.get_command_name
 ScaleFromEnvelopeMode,TODO
 ScaleToEnvelopeMode,TODO
 SelectAllMediaItems,reapy.core.project.Project.select_all_items

@@ -2,8 +2,8 @@ import reapy
 
 if not reapy.is_inside_reaper():
     from reapy.reascript_api.network import Client, WebInterface
-    from reapy.config.config import DEFAULT_WEB_INTERFACE_PORT
-    WEB_INTERFACE = WebInterface(DEFAULT_WEB_INTERFACE_PORT)
+    from reapy.config.config import WEB_INTERFACE_PORT
+    WEB_INTERFACE = WebInterface(WEB_INTERFACE_PORT)
     CLIENT = Client(WEB_INTERFACE.get_reapy_server_port())
 
 from . import program

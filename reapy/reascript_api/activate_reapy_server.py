@@ -1,7 +1,7 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.config import config
-from reapy.reascript_api.network import Server, WebInterface
+from reapy.reascript_api.network import Server
 
 import os, sys, tempfile
 
@@ -33,7 +33,7 @@ def generate_api_module():
             )
             
 def get_new_reapy_server():
-    server_port = config.DEFAULT_REAPY_SERVER_PORT
+    server_port = config.REAPY_SERVER_PORT
     reapy.set_ext_state("reapy", "server_port", server_port)
     server = Server(server_port)
     return server

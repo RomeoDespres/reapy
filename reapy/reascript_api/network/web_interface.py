@@ -10,12 +10,12 @@ class WebInterface:
 
     def __init__(self, port):
         self._url = "http://localhost:{}/_/".format(port)
-        self.ext_state = ExtendedState(self)
+        self.ext_state = ExtState(self)
         
     def activate_reapy_server(self):
         try:
-            script_id = self.ext_state["activate_reapy_server:id"]
-            self.perform_action(script_id)
+            action_name = self.ext_state["activate_reapy_server"]
+            self.perform_action(action_name)
         except UndefinedExtStateError:
             raise DisabledDistAPIError
     
@@ -33,7 +33,7 @@ class WebInterface:
         url = self._url + str(action_id)
         request.urlopen(url)
         
-class ExtendedState:
+class ExtState:
 
     def __init__(self, web_interface):
         self._url = web_interface._url + "{method}/EXTSTATE/reapy/{key}"
