@@ -9,7 +9,7 @@ class Envelope:
     def __init__(self, id):
         self.id = id
         
-    def add_item(self, position=0., length=0., pool=0):
+    def add_item(self, position=0., length=1., pool=0):
         """
         Add automation item to envelope.
         
@@ -32,6 +32,20 @@ class Envelope:
         item_index = RPR.InsertAutomationItem(self.id, pool, position, length)
         item = AutomationItem(envelope=self, index=item_index)
         return item
+        
+    @property
+    def items(self):
+        """
+        Return list of automation items in envelope.
+        
+        Returns
+        -------
+        items : list of AutomationItem
+            List of automation items in envelope.
+        """
+        n_items = self.n_items
+        items = [AutomationItem(self, i) for i in range(n_items)]
+        return items
         
     @property
     def n_items(self):
