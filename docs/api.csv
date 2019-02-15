@@ -182,7 +182,7 @@ GetLastTouchedFX,TODO
 GetLastTouchedTrack,TODO
 GetMainHwnd,TODO
 GetMasterMuteSoloFlags,TODO
-GetMasterTrack,TODO
+GetMasterTrack,reapy.core.project.Project.master_track
 GetMasterTrackVisibility,TODO
 GetMaxMidiInputs,TODO
 GetMaxMidiOutputs,TODO

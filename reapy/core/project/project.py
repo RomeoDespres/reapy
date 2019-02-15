@@ -291,6 +291,20 @@ class Project:
         Mark project as dirty (i.e. needing save).
         """
         RPR.MarkProjectDirty(self.id)
+        
+    @property
+    def master_track(self):
+        """
+        Return project master track.
+        
+        Returns
+        -------
+        master_track : Track
+            Project master track.
+        """
+        track_id = RPR.GetMasterTrack(self.id)
+        master_track = Track(track_id)
+        return master_track
          
     @property
     def name(self):
@@ -454,5 +468,5 @@ class Project:
 
 
 from ..item.item import Item
-from ..track import Track
+from ..track.track import Track
 from .time_selection import TimeSelection

@@ -202,6 +202,6 @@ class Item:
         return take
 
 from ..project.project import Project
-from ..track import Track
+from ..track.track import Track
 from .take import Take
 
