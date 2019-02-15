@@ -34,3 +34,32 @@ class AutomationItem:
         success = RPR.GetSetAutomationItemInfo(
             self.envelope_id, self.index, "D_LENGTH", length, True
         )
+        
+    @property
+    def position(self):
+        """
+        Return item position in seconds.
+        
+        Returns
+        -------
+        position : float
+            Item position in seconds.
+        """
+        position = RPR.GetSetAutomationItemInfo(
+            self.envelope_id, self.index, "D_POSITION", 0, False
+        )
+        return position
+        
+    @position.setter
+    def position(self, position):
+        """
+        Set item position.
+        
+        Parameters
+        ----------
+        position : float
+            New item position in seconds.
+        """
+        success = RPR.GetSetAutomationItemInfo(
+            self.envelope_id, self.index, "D_POSITION", position, True
+        )
