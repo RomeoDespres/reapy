@@ -73,6 +73,19 @@ class Track:
         RPR.DeleteTrack(self.id)
         
     @property
+    def depth(self):
+        """
+        Return track depth.
+        
+        Returns
+        -------
+        depth : int
+            Track depth.
+        """
+        depth = RPR.GetTrackDepth(self.id)
+        return depth
+        
+    @property
     def items(self):
         """
         Return list of items on track.

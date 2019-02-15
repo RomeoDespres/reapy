@@ -280,7 +280,7 @@ GetTooltipWindow,TODO
 GetTrack,reapy.core.project.Project.tracks
 GetTrackAutomationMode,TODO
 GetTrackColor,reapy.core.track.Track.color
-GetTrackDepth,TODO
+GetTrackDepth,reapy.core.track.Track.depth
 GetTrackEnvelope,TODO
 GetTrackEnvelopeByChunkName,TODO
 GetTrackEnvelopeByName,TODO
