@@ -135,7 +135,7 @@ def get_ext_state(section, key):
     value = RPR.GetExtState(section, key)
     return value
     
-def get_global_automation_override():
+def get_global_automation_mode():
     """
     Return global automation override mode.
     

@@ -169,7 +169,7 @@ GetExtState,reapy.get_ext_state
 GetFocusedFX,TODO
 GetFreeDiskSpaceForRecordPath,TODO
 GetFXEnvelope,TODO
-GetGlobalAutomationOverride,reapy.get_global_automation_override
+GetGlobalAutomationOverride,reapy.get_global_automation_mode
 GetHZoomLevel,TODO
 GetInputChannelName,TODO
 GetInputOutputLatency,TODO

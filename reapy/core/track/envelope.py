@@ -9,6 +9,30 @@ class Envelope:
     def __init__(self, id):
         self.id = id
         
+    def add_item(self, position=0., length=0., pool=0):
+        """
+        Add automation item to envelope.
+        
+        Parameters
+        ----------
+        position : float, optional
+            New item position in seconds (default=0).
+        length : float
+            New item length in seconds (default=0).
+        pool : int
+            New item pool index. If >= 0 the automation item will be a
+            new instance of that pool (which will be created as an
+            empty instance if it does not exist).
+            
+        Returns
+        -------
+        item : AutomationItem
+            New automation item.
+        """
+        item_index = RPR.InsertAutomationItem(self.id, pool, position, length)
+        item = AutomationItem(envelope=self, index=item_index)
+        return item
+        
     @property
     def n_items(self):
         """
@@ -46,3 +70,6 @@ class UndefinedEnvelopeError(Exception):
         else:
             message = "No envelope with chunk name {}".format(chunk_name)
         super(UndefinedEnvelopeError, self).__init__(message)
+        
+
+from .automation_item import AutomationItem
