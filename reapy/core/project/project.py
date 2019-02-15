@@ -284,6 +284,28 @@ class Project:
         master_track = Track(track_id)
         return master_track
         
+    def mute_all_tracks(self, mute=True):
+        """
+        Mute or unmute all tracks.
+        
+        Parameters
+        ----------
+        mute : bool, optional
+            Whether to mute or unmute all tracks (default=True).
+            
+        See also
+        --------
+        Project.unmute_all_tracks
+        """
+        code = """
+        current_project = reapy.Project()
+        project = reapy.Project(project_id)
+        project.make_current_project()
+        RPR.MuteAllTracks(mute)
+        current_project.make_current_project()
+        """
+        Program(code).run(project_id=self.id, mute=mute)
+        
     @property
     def n_items(self):
         """
@@ -545,6 +567,12 @@ class Project:
         track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
         tracks = [Track(track_id) for track_id in track_ids]
         return tracks
+        
+    def unmute_all_tracks(self):
+        """
+        Unmute all tracks.
+        """
+        self.mute_all_tracks(mute=False)
         
 
 class NotCurrentProjectError(Exception):

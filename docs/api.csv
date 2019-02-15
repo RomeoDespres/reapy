@@ -402,7 +402,7 @@ mkvolpanstr,TODO
 mkvolstr,TODO
 MoveEditCursor,TODO
 MoveMediaItemToTrack,reapy.core.item.Item.track
-MuteAllTracks,TODO
+MuteAllTracks,reapy.core.project.Project.mute_all_tracks;.unmute_all_tracks
 my_getViewport,TODO
 NamedCommandLookup,reapy.get_command_id
 OnPauseButton,TODO
