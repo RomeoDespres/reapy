@@ -628,7 +628,7 @@ Undo_OnStateChange2,TODO
 Undo_OnStateChange_Item,TODO
 Undo_OnStateChangeEx,TODO
 Undo_OnStateChangeEx2,TODO
-UpdateArrange,TODO
+UpdateArrange,update_arrange
 UpdateItemInProject,TODO
 UpdateTimeline,update_timeline
 ValidatePtr,TODO

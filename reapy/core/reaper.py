@@ -376,6 +376,12 @@ def show_message_box(text="", title="", type="ok"):
     status = all_status[status]
     return status
     
+def update_arrange():
+    """
+    Redraw the arrange view.
+    """
+    RPR.UpdateArrange()
+    
 def update_timeline():
     """
     Redraw the arrange view and ruler.
