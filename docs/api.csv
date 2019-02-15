@@ -630,7 +630,7 @@ Undo_OnStateChangeEx,TODO
 Undo_OnStateChangeEx2,TODO
 UpdateArrange,TODO
 UpdateItemInProject,TODO
-UpdateTimeline,TODO
+UpdateTimeline,update_timeline
 ValidatePtr,TODO
 ValidatePtr2,TODO
 ViewPrefs,view_prefs

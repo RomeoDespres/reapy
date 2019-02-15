@@ -376,6 +376,12 @@ def show_message_box(text="", title="", type="ok"):
     status = all_status[status]
     return status
     
+def update_timeline():
+    """
+    Redraw the arrange view and ruler.
+    """
+    RPR.UpdateTimeline()
+    
 def view_prefs():
     """
     Open Preferences.
