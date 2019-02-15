@@ -1,10 +1,27 @@
+"""Defines class Project."""
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import Program
 
 class Project:
 
-    def __init__(self, id=0):
+    """REAPER project."""
+
+    def __init__(self, id=None, index=-1):
+        """
+        Build project either by ID or index.
+        
+        Parameters
+        ----------
+        id : str, optional
+            Project ID. If None, `index` must be specified.
+        index : int, optional
+            Project index in GUI (default=-1, corresponds to current
+            project).
+        """
+        if id is None:
+            id = RPR.EnumProjects(index, None, 0)
         self.id = id
         
     def add_marker(self, position, name="", color=0):
@@ -17,7 +34,7 @@ class Project:
             Marker position in seconds.
         name : str, optional
             Marker name.
-        color : int, tuple, optional
+        color : int or tuple of int, optional
             Marker color. Integers correspond to REAPER native colors.
             Tuple must be RGB triplets of integers between 0 and 255.
             
@@ -39,7 +56,7 @@ class Project:
         )
         return marker_id
     
-    def add_region(self, start, end, name=""):
+    def add_region(self, start, end, name="", color=0):
         """
         Create new marker and return its index.
         
@@ -51,7 +68,7 @@ class Project:
             Region end in seconds.
         name : str, optional
             Region name.
-        color : int, tuple, optional
+        color : int or tuple of int, optional
             Marker color. Integers correspond to REAPER native colors.
             Tuple must be RGB triplets of integers between 0 and 255.
             
@@ -115,6 +132,18 @@ class Project:
             Tempo in beats per minute.
         """
         RPR.SetCurrentBPM(self.id, bpm, True)
+        
+    def count_items(self):
+        """
+        Return number of items in project.
+        
+        Returns
+        -------
+        n_items : int
+            Number of items in project.
+        """
+        n_items = RPR.CountMediaItems(self.id)
+        return n_items
         
     def count_selected_items(self):
         """
@@ -325,7 +354,7 @@ class Project:
 
         See also
         --------
-        ReaProject.get_selected_item
+        Project.get_selected_item
             Return a specific selected item.
         """
         code = """

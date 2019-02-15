@@ -25,7 +25,7 @@ ColorToNative,reapy.rgb_to_native
 CountAutomationItems,TODO
 CountEnvelopePoints,TODO
 CountEnvelopePointsEx,TODO
-CountMediaItems,TODO
+CountMediaItems,reapy.core.project.Project.count_items
 CountProjectMarkers,TODO
 CountSelectedMediaItems,reapy.core.project.Project.count_selected_items
 CountSelectedTracks,TODO
@@ -121,7 +121,7 @@ EnumPitchShiftSubModes,TODO
 EnumProjectMarkers,TODO
 EnumProjectMarkers2,TODO
 EnumProjectMarkers3,TODO
-EnumProjects,TODO
+EnumProjects,reapy.core.project.Project
 EnumProjExtState,TODO
 EnumRegionRenderMatrix,TODO
 EnumTrackMIDIProgramNames,TODO
