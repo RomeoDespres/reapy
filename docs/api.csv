@@ -278,7 +278,7 @@ GetToggleCommandState,TODO
 GetToggleCommandStateEx,TODO
 GetTooltipWindow,TODO
 GetTrack,reapy.core.project.Project.tracks
-GetTrackAutomationMode,TODO
+GetTrackAutomationMode,reapy.core.track.Track.automation_mode
 GetTrackColor,reapy.core.track.Track.color
 GetTrackDepth,reapy.core.track.Track.depth
 GetTrackEnvelope,reapy.core.track.Track.get_envelope

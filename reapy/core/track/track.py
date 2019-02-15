@@ -24,6 +24,26 @@ class Track:
         return item
         
     @property
+    def automation_mode(self):
+        """
+        Return track automation mode.
+        
+        Returns
+        -------
+        automation_mode : str
+            One of the following values:
+                "latch"
+                "latch preview"
+                "read"
+                "touch"
+                "trim/read"
+                "write"
+        """
+        modes = "trim/read", "read", "touch", "write", "latch", "latch preview"
+        automation_mode = modes[RPR.GetTrackAutomationMode(self.id)]
+        return automation_mode
+        
+    @property
     def color(self):
         """
         Return track color in RGB format.
