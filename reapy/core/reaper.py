@@ -375,3 +375,9 @@ def show_message_box(text="", title="", type="ok"):
     status = RPR.ShowMessageBox(text, title, all_types[type])
     status = all_status[status]
     return status
+    
+def view_prefs():
+    """
+    Open Preferences.
+    """
+    RPR.ViewPrefs(0, "")
