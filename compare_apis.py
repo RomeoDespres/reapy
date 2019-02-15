@@ -7,7 +7,16 @@ done = ~(api.iloc[:, 1] == "TODO")
 print("{:.1f}% done ({}/{})".format(done.mean()*100, done.sum(), len(done)))
 
 
-classes = "track", "take", "item", "project", "source"
+classes = (
+    "track",
+    "envelope",
+    "automationitem",
+    "mediaitemtake",
+    "mediaitem",
+    "project",
+    "source",
+    "undo"
+)
 series = pd.DataFrame(0, index=classes, columns=["%", "done", "total"])
 
 for c in classes:
