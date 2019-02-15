@@ -104,9 +104,9 @@ class Project:
         """
         code = """
         selected_project = reapy.Project()
-        Project(project_id).select()
+        reapy.Project(project_id).select()
         RPR.InsertTrackAtIndex(index, True)
-        selected_project.selec()
+        selected_project.select()
         track_id = RPR.GetTrack(project_id, index)
         """
         track_id = Program(code, "track_id").run(
@@ -234,7 +234,16 @@ class Project:
         
     @property
     def is_selected(self):
+        """
+        Return whether project is current project.
         
+        Returns
+        -------
+        is_selected : bool
+            Whether project is current project.
+        """
+        is_selected = self == Project()
+        return is_selected
 
     @property
     def length(self):
@@ -421,6 +430,12 @@ class Project:
             Force using "Save as" instead of "Save".
         """
         RPR.Main_SaveProject(self.id, force_save_as)
+        
+    def select(self):
+        """
+        Set project as current project.
+        """
+        RPR.SelectProjectInstance(self.id)
         
     def select_all_items(self, selected=True):
         """
