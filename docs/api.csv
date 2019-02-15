@@ -181,7 +181,7 @@ GetLastMarkerAndCurRegion,TODO
 GetLastTouchedFX,TODO
 GetLastTouchedTrack,TODO
 GetMainHwnd,TODO
-GetMasterMuteSoloFlags,TODO
+GetMasterMuteSoloFlags,DEPRECATED
 GetMasterTrack,reapy.core.project.Project.master_track
 GetMasterTrackVisibility,TODO
 GetMaxMidiInputs,TODO
@@ -247,10 +247,10 @@ GetSet_ArrangeView2,TODO
 GetSet_LoopTimeRange,reapy.core.project.Project.time_selection
 GetSet_LoopTimeRange2,reapy.core.project.Project.time_selection
 GetSetAutomationItemInfo,reapy.core.track.automation_item.AutomationItem.length;.pool;.position
-GetSetEnvelopeState,TODO
-GetSetEnvelopeState2,TODO
-GetSetItemState,TODO
-GetSetItemState2,TODO
+GetSetEnvelopeState,DEPRECATED
+GetSetEnvelopeState2,DEPRECATED
+GetSetItemState,DEPRECATED
+GetSetItemState2,DEPRECATED
 GetSetMediaItemInfo_String,TODO
 GetSetMediaItemTakeInfo_String,TODO
 GetSetMediaTrackInfo_String,TODO
@@ -261,8 +261,8 @@ GetSetRepeat,reapy.core.project.time_selection.TimeSelection.is_looping;.loop;.u
 GetSetRepeatEx,reapy.core.project.time_selection.TimeSelection.looping;.loop;.unloop
 GetSetTrackGroupMembership,TODO
 GetSetTrackGroupMembershipHigh,TODO
-GetSetTrackState,TODO
-GetSetTrackState2,TODO
+GetSetTrackState,DEPRECATED
+GetSetTrackState2,DEPRECATED
 GetSubProjectFromSource,TODO
 GetTake,TODO
 GetTakeEnvelope,TODO
