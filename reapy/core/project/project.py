@@ -127,6 +127,12 @@ class Project:
         """
         any_track_solo = bool(RPR.AnyTrackSolo(self.id))
         return any_track_solo
+        
+    def begin_undo_block(self):
+        """
+        Start a new undo block.
+        """
+        RPR.Undo_BeginBlock2(self.id)
 
     @property
     def bpi(self):
@@ -163,7 +169,41 @@ class Project:
             Tempo in beats per minute.
         """
         RPR.SetCurrentBPM(self.id, bpm, True)
-
+        
+    @property
+    def can_redo(self):
+        """
+        Return whether redo is possible.
+        
+        Returns
+        -------
+        can_redo : bool
+            Whether redo is possible.
+        """
+        try:
+            RPR.Undo_CanRedo2(self.id)
+            can_redo = True
+        except AttributeError: # Bug in ReaScript API when 
+            can_redo = False
+        return can_redo
+    
+    @property
+    def can_undo(self):
+        """
+        Return whether undo is possible.
+        
+        Returns
+        -------
+        can_undo : bool
+            Whether undo is possible.
+        """
+        try:
+            RPR.Undo_CanUndo2(self.id)
+            can_undo = True
+        except AttributeError: # Bug in ReaScript API when 
+            can_undo = False
+        return can_undo
+    
     @property
     def cursor_position(self):
         """
@@ -188,6 +228,17 @@ class Project:
             New edit cursor position in seconds.
         """
         RPR.SetEditCurPos(position, True, True)
+        
+    def end_undo_block(self, description=""):
+        """
+        End undo block.
+        
+        Parameters
+        ----------
+        description : str
+            Undo block description.
+        """
+        RPR.Undo_EndBlock2(self.id, description, 0)
         
     def get_selected_item(self, index):
         """
@@ -460,6 +511,19 @@ class Project:
         state = states[RPR.GetPlayStateEx(self.id)]
         return state
         
+    def redo(self):
+        """
+        Redo last action.
+        
+        Raises
+        ------
+        RedoError
+            If impossible to redo.
+        """
+        success = RPR.Undo_DoRedo2(self.id)
+        if not success:
+            raise RedoError
+        
     def save(self, force_save_as=False):
         """
         Save project.
@@ -586,18 +650,45 @@ class Project:
         tracks = [Track(track_id) for track_id in track_ids]
         return tracks
         
+    def undo(self):
+        """
+        Undo last action.
+        
+        Raises
+        ------
+        UndoError
+            If impossible to undo.
+        """
+        success = RPR.Undo_DoUndo2(self.id)
+        if not success:
+            raise UndoError
+        
     def unmute_all_tracks(self):
         """
         Unmute all tracks.
         """
         self.mute_all_tracks(mute=False)
-        
+ 
+
+class RedoError(Exception):
+    
+    def __init__(self):
+        message = "Can't redo."
+        super(RedoError, self).__init__(message)
+ 
 
 class NotCurrentProjectError(Exception):
     
     def __init__(self):
         message = "Project is not current project."
         super(NotCurrentProjectError, self).__init__(message)
+
+
+class UndoError(Exception):
+    
+    def __init__(self):
+        message = "Can't undo."
+        super(UndoError, self).__init__(message)
 
 
 from ..item.item import Item
