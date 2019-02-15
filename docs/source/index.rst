@@ -70,7 +70,7 @@ The purpose of ``reapy`` is to provide a more pythonic API as a substitute for R
     >>> project.cursor_position
     1.0
 
-The table  `api.csv <docs/api.csv>`_ matches ReaScript functions with their ``reapy`` counterparts.
+The table  `api.csv <https://github.com/RomeoDespres/reapy/blob/master/docs/api.csv>`_ matches ReaScript functions with their ``reapy`` counterparts.
 
 Performance
 ***********
