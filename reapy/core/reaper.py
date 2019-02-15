@@ -135,6 +135,34 @@ def get_ext_state(section, key):
     value = RPR.GetExtState(section, key)
     return value
     
+def get_global_automation_override():
+    """
+    Return global automation override mode.
+    
+    Returns
+    -------
+    override_mode : str
+        One of the following values:
+            "bypass"
+            "latch"
+            "none"
+            "read"
+            "touch"            
+            "trim/read"
+            "write"
+    """
+    modes = {
+         -1: "none",
+         0: "trim/read",
+         1: "read",
+         2: "touch",
+         3: "write",
+         4: "latch",
+         5: "bypass"
+    }
+    override_mode = modes[RPR.GetGlobalAutomationOverride()]
+    return override_mode
+    
 def get_ini_file():
     """
     Return path to REAPER.ini file.
