@@ -85,6 +85,36 @@ class Project:
         )
         return region_id
         
+    def add_track(self, index=0):
+        """
+        Add track at a specified index.
+        
+        Parameters
+        ----------
+        index : int
+            Index at which to insert track.
+            
+        Returns
+        -------
+        track : Track
+            New track.
+            
+        Notes
+        -----
+        As a side-effect, this method sets the project as current
+        project.
+        """
+        code = """
+        RPR.SelectProjectInstance(project_id)
+        RPR.InsertTrackAtIndex(index, True)
+        track_id = RPR.GetTrack(project_id, index)
+        """
+        track_id = Program(code, "track_id").run(
+            project_id=self.id, index=index
+        )[0]
+        track = Track(track_id)
+        return track
+        
     @property
     def any_track_solo(self):
         """
@@ -472,6 +502,13 @@ class Project:
         track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
         tracks = [Track(track_id) for track_id in track_ids]
         return tracks
+        
+
+class NotCurrentProjectError(Exception):
+    
+    def __init__(self):
+        message = "Project is not current project."
+        super(NotCurrentProjectError, self).__init__(message)
 
 
 from ..item.item import Item

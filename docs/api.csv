@@ -323,7 +323,7 @@ InsertEnvelopePoint,TODO
 InsertEnvelopePointEx,TODO
 InsertMedia,TODO
 InsertMediaSection,TODO
-InsertTrackAtIndex,TODO
+InsertTrackAtIndex,reapy.core.project.Project.add_track
 IsMediaExtension,TODO
 IsMediaItemSelected,reapy.core.item.Item.is_selected
 IsProjectDirty,reapy.core.project.Project.is_dirty
