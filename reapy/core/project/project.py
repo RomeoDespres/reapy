@@ -4,6 +4,7 @@ import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import Program
 
+
 class Project:
 
     """REAPER project."""
@@ -132,78 +133,6 @@ class Project:
             Tempo in beats per minute.
         """
         RPR.SetCurrentBPM(self.id, bpm, True)
-        
-    def count_items(self):
-        """
-        Return number of items in project.
-        
-        Returns
-        -------
-        n_items : int
-            Number of items in project.
-        """
-        n_items = RPR.CountMediaItems(self.id)
-        return n_items
-        
-    def count_markers(self):
-        """
-        Return number of markers in project.
-        
-        Returns
-        -------
-        n_markers : int
-            Number of markers in project.
-        """
-        n_markers = RPR.CountProjectMarkers(self.id, 0, 0)[2]
-        return n_markers
-        
-    def count_regions(self):
-        """
-        Return number of regions in project.
-        
-        Returns
-        -------
-        n_regions : int
-            Number of regions in project.
-        """
-        n_regions = RPR.CountProjectMarkers(self.id, 0, 0)[3]
-        return n_regions
-        
-    def count_selected_items(self):
-        """
-        Return the number of selected media items.
-
-        Returns
-        -------
-        n_items : int
-            Number of selected media items.
-        """
-        n_items = RPR.CountSelectedMediaItems(self.id)
-        return n_items
-        
-    def count_selected_tracks(self):
-        """
-        Return numbet of selected tracks in project (including master).
-        
-        Returns
-        -------
-        n_tracks : int
-            Number of selected tracks in project.
-        """
-        n_tracks = RPR.CountSelectedTracks2(self.id, True)
-        return n_tracks
-        
-    def count_tracks(self):
-        """
-        Return the number of tracks in project.
-        
-        Returns
-        -------
-        n_tracks : int
-            Number of tracks in project.
-        """
-        n_tracks = RPR.CountTracks(self.id)
-        return n_tracks
 
     @property
     def cursor_position(self):
@@ -305,6 +234,84 @@ class Project:
         track_id = RPR.GetMasterTrack(self.id)
         master_track = Track(track_id)
         return master_track
+        
+    @property
+    def n_items(self):
+        """
+        Return number of items in project.
+        
+        Returns
+        -------
+        n_items : int
+            Number of items in project.
+        """
+        n_items = RPR.CountMediaItems(self.id)
+        return n_items
+        
+    @property
+    def n_markers(self):
+        """
+        Return number of markers in project.
+        
+        Returns
+        -------
+        n_markers : int
+            Number of markers in project.
+        """
+        n_markers = RPR.CountProjectMarkers(self.id, 0, 0)[2]
+        return n_markers
+        
+    @property
+    def n_regions(self):
+        """
+        Return number of regions in project.
+        
+        Returns
+        -------
+        n_regions : int
+            Number of regions in project.
+        """
+        n_regions = RPR.CountProjectMarkers(self.id, 0, 0)[3]
+        return n_regions
+        
+    @property
+    def n_selected_items(self):
+        """
+        Return the number of selected media items.
+
+        Returns
+        -------
+        n_items : int
+            Number of selected media items.
+        """
+        n_items = RPR.CountSelectedMediaItems(self.id)
+        return n_items
+        
+    @property
+    def n_selected_tracks(self):
+        """
+        Return numbet of selected tracks in project (including master).
+        
+        Returns
+        -------
+        n_tracks : int
+            Number of selected tracks in project.
+        """
+        n_tracks = RPR.CountSelectedTracks2(self.id, True)
+        return n_tracks
+        
+    @property
+    def n_tracks(self):
+        """
+        Return the number of tracks in project.
+        
+        Returns
+        -------
+        n_tracks : int
+            Number of tracks in project.
+        """
+        n_tracks = RPR.CountTracks(self.id)
+        return n_tracks
          
     @property
     def name(self):

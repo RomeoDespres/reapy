@@ -2,7 +2,9 @@ from reapy import reascript_api as RPR
 
 import io, os
 
-_original_print = print
+
+_ORIGINAL_PRINT = print
+
 
 def add_reascript(path, section_id=0, commit=True):
     """
@@ -259,7 +261,7 @@ def show_console_message(*args, sep=" ", end="\n"):
     ReaProject.clear_console
     """
     file = io.StringIO()
-    _original_print(*args, sep=sep, end=end, file=file)
+    _ORIGINAL_PRINT(*args, sep=sep, end=end, file=file)
     file.seek(0)
     txt = file.read()
     RPR.ShowConsoleMsg(txt)

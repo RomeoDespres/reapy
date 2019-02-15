@@ -8,15 +8,10 @@ class Take:
 
     def __eq__(self, other):
         return self.id == other.id and isinstance(other, Take)
-
-    @property
-    def data(self):
-        data = self.source.data
-        start_offset = self.start_offset
-        length = self.item.length
-        sample_rate = self.source.sample_rate
-        data = data[int(sample_rate*start_offset):int(sample_rate*length)]
-        return data
+        
+    def get_info_value(self, param_name):
+        value = RPR.GettakeInfo_Value(self.id, param_name)
+        return value
 
     @property
     def item(self):
@@ -54,7 +49,7 @@ class Take:
         start_offset : float
             Start offset in seconds.
         """
-        start_offset = self._get_info_value("D_STARTOFFS")
+        start_offset = self.get_info_value("D_STARTOFFS")
         return start_offset
         
     @property
@@ -71,10 +66,7 @@ class Take:
         track = Track(track_id)
         return track
 
-    def _get_info_value(self, param_name):
-        value = RPR.GettakeInfo_Value(self.id, param_name)
-        return value
-
-from ..track import Track
+    
+from ..track.track import Track
 from .item import Item
 from .source import Source

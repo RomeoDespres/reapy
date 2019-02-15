@@ -2,6 +2,7 @@ import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import Program
 
+
 class Item:
 
     def __init__(self, id):
@@ -21,6 +22,41 @@ class Item:
             Active take of the item.
         """
         take = Take(RPR.GetActiveTake(self.id))
+        return take
+        
+    def add_take(self):
+        """
+        Create and return a new take in item.
+        
+        Returns
+        -------
+        take : Take
+            New take in item.
+        """
+        take_id = RPR.AddTakeToMediaItem(self.id)
+        take = Take(take_id)
+        return take
+        
+    def get_info_value(self, param_name):
+        value = RPR.GetItemInfo_Value(self.id, param_name)
+        return value
+        
+    def get_take(self, index):
+        """
+        Return index-th take of item.
+
+        Parameters
+        ----------
+        index : int
+            Take index.
+
+        Returns
+        -------
+        take : Take
+            index-th take of media item.
+        """
+        take_id = RPR.GetItemTake(self.id, i)
+        take = Take(take_id)
         return take
         
     @property
@@ -47,7 +83,7 @@ class Item:
             Item length in seconds.
         """
         param_name = "D_LENGTH"
-        length = self._get_info_value(param_name)
+        length = self.get_info_value(param_name)
         return length
         
     @length.setter
@@ -61,6 +97,19 @@ class Item:
             New item length in seconds.
         """
         RPR.SetMediaItemLength(self.id, length, True)
+        
+    @property
+    def n_takes(self):
+        """
+        Return the number of takes of media item.
+
+        Returns
+        -------
+        n_takes : int
+            Number of takes of media item.
+        """
+        n_takes = RPR.GetMediaItemNumTakes(self.id)
+        return n_takes
 
     @property
     def position(self):
@@ -153,53 +202,7 @@ class Item:
         success = RPR.MoveMediaItemToTrack(self.id, track.id)
         if not success:
             raise Exception("Couldn't move item to track.")
-        
-    def add_take(self):
-        """
-        Create and return a new take in item.
-        
-        Returns
-        -------
-        take : Take
-            New take in item.
-        """
-        take_id = RPR.AddTakeToMediaItem(self.id)
-        take = Take(take_id)
-        return take
 
-    def count_takes(self):
-        """
-        Return the number of takes of media item.
-
-        Returns
-        -------
-        n_takes : int
-            Number of takes of media item.
-        """
-        n_takes = RPR.GetMediaItemNumTakes(self.id)
-        return n_takes
-
-    def _get_info_value(self, param_name):
-        value = RPR.GetItemInfo_Value(self.id, param_name)
-        return value
-    
-    def _get_take(self, i):
-        """
-        Return i-th take of item.
-
-        Parameters
-        ----------
-        i : int
-            Take index.
-
-        Returns
-        -------
-        take : Take
-            i-th take of media item.
-        """
-        take_id = RPR.GetItemTake(self.id, i)
-        take = Take(take_id)
-        return take
 
 from ..project.project import Project
 from ..track.track import Track

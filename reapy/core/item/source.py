@@ -1,6 +1,5 @@
 from reapy import reascript_api as RPR
 
-import wave
 
 class Source:
 

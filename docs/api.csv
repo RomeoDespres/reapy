@@ -23,7 +23,7 @@ ClearPeakCache,TODO
 ColorFromNative,reapy.rgb_from_native
 ColorToNative,reapy.rgb_to_native
 CountAutomationItems,TODO
-CountEnvelopePoints,TODO
+CountEnvelopePoints,reapy.core.track.envelope.Envelope.count_points
 CountEnvelopePointsEx,TODO
 CountMediaItems,reapy.core.project.Project.count_items
 CountProjectMarkers,reapy.core.project.Project.count_markers;.count_regions
@@ -281,9 +281,9 @@ GetTrack,reapy.core.project.Project.tracks
 GetTrackAutomationMode,TODO
 GetTrackColor,reapy.core.track.Track.color
 GetTrackDepth,reapy.core.track.Track.depth
-GetTrackEnvelope,TODO
-GetTrackEnvelopeByChunkName,TODO
-GetTrackEnvelopeByName,TODO
+GetTrackEnvelope,reapy.core.track.Track.get_envelope
+GetTrackEnvelopeByChunkName,reapy.core.track.Track.get_envelope
+GetTrackEnvelopeByName,reapy.core.track.Track.get_envelope
 GetTrackGUID,TODO
 GetTrackMediaItem,reapy.core.track.Track.items
 GetTrackMIDILyrics,TODO

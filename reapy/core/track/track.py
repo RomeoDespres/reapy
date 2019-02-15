@@ -2,6 +2,7 @@ import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import Program
 
+
 class Track:
 
     def __init__(self, id, project=None):
@@ -54,18 +55,6 @@ class Track:
         native_color = reapy.rgb_to_native(color)
         RPR.SetTrackColor(self.id, native_color)
         
-    def count_items(self):
-        """
-        Return number of items on track.
-        
-        Returns
-        -------
-        n_items : int
-            Number of items on track.
-        """
-        n_items = RPR.CountTrackMediaItems(self.id)
-        return n_items
-        
     def delete(self):
         """
         Delete track.
@@ -114,6 +103,8 @@ class Track:
             assert chunk_name is not None, message
             function, arg = RPR.GetTrackEnvelopeByChunkName, chunk_name
         envelope = Envelope(function(self.id, arg))
+        if envelope.id == UNDEFINED_ENVELOPE_ID:
+            raise UndefinedEnvelopeError(index, name, chunk_name)
         return envelope
         
     @property
@@ -163,6 +154,19 @@ class Track:
             self.select()
         else:
             self.unselect()
+            
+    @property
+    def n_items(self):
+        """
+        Return number of items on track.
+        
+        Returns
+        -------
+        n_items : int
+            Number of items on track.
+        """
+        n_items = RPR.CountTrackMediaItems(self.id)
+        return n_items
         
     @property
     def name(self):
@@ -189,6 +193,7 @@ class Track:
         Unselect track.
         """
         RPR.SetTrackSelected(self.id, False)
-        
+  
+  
 from ..item.item import Item
-from .envelope import Envelope
+from .envelope import Envelope, UndefinedEnvelopeError, UNDEFINED_ENVELOPE_ID
