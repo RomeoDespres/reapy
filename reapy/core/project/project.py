@@ -258,6 +258,24 @@ class Project:
         item = Item(item_id)
         return item
         
+    def get_selected_track(self, index):
+        """
+        Return index-th selected track.
+
+        Parameters
+        ----------
+        index : int
+            Track index.
+
+        Returns
+        -------
+        track : Track
+            index-th selected track.
+        """
+        track_id = RPR.GetSelectedTrack(self.id, index)
+        track = Track(track_id)
+        return track
+        
     def glue_items(self, within_time_selection=False):
         """
         Glue items (action shortcut).
@@ -412,14 +430,14 @@ class Project:
     @property
     def n_selected_tracks(self):
         """
-        Return numbet of selected tracks in project (including master).
+        Return number of selected tracks in project (excluding master).
         
         Returns
         -------
         n_tracks : int
             Number of selected tracks in project.
         """
-        n_tracks = RPR.CountSelectedTracks2(self.id, True)
+        n_tracks = RPR.CountSelectedTracks2(self.id, False)
         return n_tracks
         
     @property
@@ -552,6 +570,20 @@ class Project:
             Whether to select or unselect items.
         """
         RPR.SelectAllMediaItems(self.id, selected)
+        
+    @property
+    def selected_envelope(self):
+        """
+        Return project selected envelope.
+        
+        Returns
+        -------
+        envelope : Envelope or None
+            Selected envelope if any, else None.
+        """
+        envelope_id = RPR.GetSelectedTrackEnvelope(self.id)
+        envelope = None if envelope_id == 0 else Envelope(envelope_id)
+        return envelope
 
     @property
     def selected_items(self):
@@ -575,8 +607,29 @@ class Project:
         ]
         """
         item_ids = Program(code, "item_ids").run(project_id=self.id)[0]
-        items = [Item(item_id) for item_id in item_ids]
+        items = list(map(Item, item_ids))
         return items
+    
+    @property
+    def selected_tracks(self):
+        """
+        Return list of selected tracks (excluding master).
+        
+        Returns
+        -------
+        tracks : list of Track
+            List of selected tracks.
+        """
+        code = """
+        track_ids = [
+            RPR.GetSelectedTrack(project_id, i)
+            for i in range(reapy.Project(project_id).n_selected_tracks)
+        ]
+        """
+        track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
+        tracks = list(map(Track, track_ids))
+        return tracks
+        
         
     def stop(self):
         """
@@ -693,4 +746,5 @@ class UndoError(Exception):
 
 from ..item.item import Item
 from ..track.track import Track
+from ..track.envelope import Envelope
 from .time_selection import TimeSelection

@@ -175,6 +175,18 @@ def get_ini_file():
     path = RPR.get_ini_file()
     return path
     
+def get_resource_path():
+    """
+    Return path to directory where .ini files are stored.
+    
+    Returns
+    -------
+    path : str
+        Path to directory where .ini files are stored.
+    """
+    path = RPR.GetResourcePath()
+    return path
+    
 def perform_action(action_id):
     """
     Perform action with ID `action_id` in the main Actions section.

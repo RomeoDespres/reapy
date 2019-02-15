@@ -237,12 +237,12 @@ GetProjectTimeOffset,TODO
 GetProjectTimeSignature,DEPRECATED
 GetProjectTimeSignature2,Project.bpm;Project.bpi
 GetProjExtState,TODO
-GetResourcePath,TODO
+GetResourcePath,get_resource_path
 GetSelectedEnvelope,TODO
 GetSelectedMediaItem,Project.selected_items;Project.get_selected_item
-GetSelectedTrack,TODO
-GetSelectedTrack2,TODO
-GetSelectedTrackEnvelope,TODO
+GetSelectedTrack,Project.selected_tracks;.get_selected_track
+GetSelectedTrack2,Project.selected_tracks;.get_selected_track
+GetSelectedTrackEnvelope,Project.selected_envelope
 GetSet_ArrangeView2,TODO
 GetSet_LoopTimeRange,Project.time_selection
 GetSet_LoopTimeRange2,Project.time_selection
