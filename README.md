@@ -71,7 +71,7 @@ When used from inside REAPER, `reapy` has almost identical performance than nati
 
 In a time-critical context, you can make use of the `reapy.tools.Program` feature. It allows to execute arbitrary code inside REAPER, with input and output sent over the local network.
 
-In the example below, one can see how to make use of `Program` to improve efficiency. Input parameters are passed to the program as `Program.run` keyword arguments. Required output values are specified as `Project` positional arguments after `code` (first positional argument).
+In the example below, one can see how to make use of `Program` to improve efficiency. Input parameters are passed to the program as `Program.run` keyword arguments. Required output values are specified as `Program` positional arguments after `code` (first positional argument).
 
 Note that the modules `reapy` and `reascript_api` (as `RPR`) are always available in `Program`s. Any other needed module must be explicitly imported in the `code`.
 
