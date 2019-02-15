@@ -1,6 +1,7 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import Program
+from reapy.errors import UndefinedEnvelopeError
 
 
 class Track:
@@ -248,4 +249,4 @@ class Track:
   
   
 from ..item.item import Item
-from .envelope import Envelope, UndefinedEnvelopeError, UNDEFINED_ENVELOPE_ID
+from .envelope import Envelope, UNDEFINED_ENVELOPE_ID

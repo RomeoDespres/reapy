@@ -3,6 +3,7 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import Program
+from reapy.errors import RedoError, UndoError
 
 
 class Project:
@@ -722,27 +723,6 @@ class Project:
         """
         self.mute_all_tracks(mute=False)
  
-
-class RedoError(Exception):
-    
-    def __init__(self):
-        message = "Can't redo."
-        super(RedoError, self).__init__(message)
- 
-
-class NotCurrentProjectError(Exception):
-    
-    def __init__(self):
-        message = "Project is not current project."
-        super(NotCurrentProjectError, self).__init__(message)
-
-
-class UndoError(Exception):
-    
-    def __init__(self):
-        message = "Can't undo."
-        super(UndoError, self).__init__(message)
-
 
 from ..item.item import Item
 from ..track.track import Track

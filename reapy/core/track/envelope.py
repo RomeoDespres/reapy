@@ -74,16 +74,4 @@ class Envelope:
         return n_points
         
 
-class UndefinedEnvelopeError(Exception):
-    
-    def __init__(self, index, name, chunk_name):
-        if index is not None:
-            message = "No envelope with index {}".format(index)
-        elif name is not None:
-            message = "No envelope with name {}".format(name)
-        else:
-            message = "No envelope with chunk name {}".format(chunk_name)
-        super(UndefinedEnvelopeError, self).__init__(message)
-        
-
 from .automation_item import AutomationItem
