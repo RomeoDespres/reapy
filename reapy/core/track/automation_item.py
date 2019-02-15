@@ -1,5 +1,6 @@
 from reapy import reascript_api as RPR
 
+
 class AutomationItem:
 
     def __init__(self, envelope, index):
@@ -34,6 +35,19 @@ class AutomationItem:
         success = RPR.GetSetAutomationItemInfo(
             self.envelope_id, self.index, "D_LENGTH", length, True
         )
+        
+    @property
+    def n_points(self):
+        """
+        Return number of automation points in item.
+        
+        Returns
+        -------
+        n_points : int
+            Number of automation points in item.
+        """
+        n_points = RPR.CountAutomationPointsEx(self.envelope_id, self.index)
+        return n_points
         
     @property
     def pool(self):

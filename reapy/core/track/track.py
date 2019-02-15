@@ -195,6 +195,19 @@ class Track:
             self.unselect()
             
     @property
+    def n_envelopes(self):
+        """
+        Return number of envelopes on track.
+        
+        Returns
+        -------
+        n_envelopes : int
+            Number of envelopes on track.
+        """
+        n_envelopes = RPR.CountTrackEnvelopes(self.id)
+        return n_envelopes
+            
+    @property
     def n_items(self):
         """
         Return number of items on track.

@@ -22,7 +22,7 @@ ClearConsole,reapy.clear_console
 ClearPeakCache,TODO
 ColorFromNative,reapy.rgb_from_native
 ColorToNative,reapy.rgb_to_native
-CountAutomationItems,TODO
+CountAutomationItems,reapy.core.track.envelope.Envelope.n_items
 CountEnvelopePoints,reapy.core.track.envelope.Envelope.n_points
 CountEnvelopePointsEx,TODO
 CountMediaItems,reapy.core.project.Project.n_items
@@ -34,7 +34,7 @@ CountTakeEnvelopes,TODO
 CountTakes,reapy.core.item.Item.n_takes
 CountTCPFXParms,TODO
 CountTempoTimeSigMarkers,TODO
-CountTrackEnvelopes,TODO
+CountTrackEnvelopes,reapy.core.track.Track.n_envelopes
 CountTrackMediaItems,reapy.core.track.Track.n_items
 CountTracks,reapy.core.project.Project.n_tracks
 CreateNewMIDIItemInProj,TODO
@@ -246,7 +246,7 @@ GetSelectedTrackEnvelope,TODO
 GetSet_ArrangeView2,TODO
 GetSet_LoopTimeRange,reapy.core.project.Project.time_selection
 GetSet_LoopTimeRange2,reapy.core.project.Project.time_selection
-GetSetAutomationItemInfo,TODO
+GetSetAutomationItemInfo,reapy.core.track.automation_item.AutomationItem.length;.pool;.position
 GetSetEnvelopeState,TODO
 GetSetEnvelopeState2,TODO
 GetSetItemState,TODO
