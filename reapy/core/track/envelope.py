@@ -19,7 +19,7 @@ class Envelope:
         n_items : int
             Number of automation items in envelope.
         """
-        n_items = RPR.CountAutomationPoints(self.id)
+        n_items = RPR.CountAutomationItems(self.id)
         return n_items
         
     @property
