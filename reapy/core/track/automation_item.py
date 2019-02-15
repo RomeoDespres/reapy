@@ -36,6 +36,35 @@ class AutomationItem:
         )
         
     @property
+    def pool(self):
+        """
+        Return item pool.
+        
+        Returns
+        -------
+        pool : int
+            Item pool.
+        """
+        pool = RPR.GetSetAutomationItemInfo(
+            self.envelope_id, self.index, "D_POOL", 0, False
+        )
+        return pool
+        
+    @pool.setter
+    def pool(self, pool):
+        """
+        Set item pool.
+        
+        Parameters
+        ----------
+        pool : int
+            New item pool.
+        """
+        success = RPR.GetSetAutomationItemInfo(
+            self.envelope_id, self.index, "D_POOL", pool, True
+        )
+        
+    @property
     def position(self):
         """
         Return item position in seconds.
