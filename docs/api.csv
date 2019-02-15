@@ -455,7 +455,7 @@ SetEnvelopePoint,TODO
 SetEnvelopePointEx,TODO
 SetEnvelopeStateChunk,TODO
 SetExtState,reapy.set_ext_state
-SetGlobalAutomationOverride,TODO
+SetGlobalAutomationOverride,reapy.set_global_automation_mode
 SetItemStateChunk,TODO
 SetMasterTrackVisibility,TODO
 SetMediaItemInfo_Value,TODO

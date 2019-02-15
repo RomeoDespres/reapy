@@ -271,6 +271,34 @@ def set_ext_state(section, key, value, persist=False):
     """
     RPR.SetExtState(section, key, value, persist)
     
+def set_global_automation_mode(mode):
+    """
+    Set global automation mode.
+    
+    Parameters
+    ----------
+    mode : str
+        One of the following values:
+            "bypass"
+            "latch"
+            "none"
+            "read"
+            "touch"            
+            "trim/read"
+            "write"
+    """
+    modes = {
+         "none": -1,
+         "trim/read": 0,
+         "read": 1,
+         "touch": 2,
+         "write": 3,
+         "latch": 4,
+         "bypass": 5
+    }
+    RPR.SetGlobalAutomationOverride(modes[mode])
+    
+    
 def show_console_message(*args, sep=" ", end="\n"):
     """
     Print a message to the Reaper console.
