@@ -167,7 +167,7 @@ class Item:
         take = Take(take_id)
         return take
 
-    def count_takes(self, id):
+    def count_takes(self):
         """
         Return the number of takes of media item.
 

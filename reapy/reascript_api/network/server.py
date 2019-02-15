@@ -54,7 +54,7 @@ class Server(Socket):
     def accept(self):
         connection, address = super(Server, self).accept()
         self.connections[address] = connection
-        connection.settimeout(.0001)
+        connection.settimeout(.001)
         connection.send("{}".format(address).encode("ascii"))
         
     def disconnect(self, address):
