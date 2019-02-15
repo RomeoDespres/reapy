@@ -103,10 +103,10 @@ class Project:
             New track.
         """
         code = """
-        selected_project = reapy.Project()
-        reapy.Project(project_id).select()
+        current_project = reapy.Project()
+        reapy.Project(project_id).make_current_project()
         RPR.InsertTrackAtIndex(index, True)
-        selected_project.select()
+        current_project.make_current_project()
         track_id = RPR.GetTrack(project_id, index)
         """
         track_id = Program(code, "track_id").run(
@@ -233,17 +233,17 @@ class Project:
         return is_dirty
         
     @property
-    def is_selected(self):
+    def is_current_project(self):
         """
         Return whether project is current project.
         
         Returns
         -------
-        is_selected : bool
+        is_current : bool
             Whether project is current project.
         """
-        is_selected = self == Project()
-        return is_selected
+        is_current = self == Project()
+        return is_current
 
     @property
     def length(self):
@@ -257,6 +257,12 @@ class Project:
         """
         length = RPR.GetProjectLength(self.id)
         return length
+        
+    def make_current_project(self):
+        """
+        Set project as current project.
+        """
+        RPR.SelectProjectInstance(self.id)
         
     def mark_dirty(self):
         """
@@ -431,11 +437,12 @@ class Project:
         """
         RPR.Main_SaveProject(self.id, force_save_as)
         
-    def select(self):
-        """
-        Set project as current project.
-        """
-        RPR.SelectProjectInstance(self.id)
+    def select(self, start, end=None, length=None):
+        if end is None:
+            message = "Either `end` or `length` must be specified."
+            assert length is not None, message
+            end = start + length
+        self.time_selection = start, end
         
     def select_all_items(self, selected=True):
         """
@@ -485,6 +492,23 @@ class Project:
         """
         time_selection = TimeSelection(self)
         return time_selection
+        
+    @time_selection.setter
+    def time_selection(self, selection):
+        """
+        Set time selection bounds.
+        
+        Parameters
+        ----------
+        selection : (float, float)
+            Start and end of new time selection in seconds.
+        """
+        code = """
+        project = reapy.Project(project_id)
+        project.time_selection.start = selection[0]
+        project.time_selection.end = selection[1]
+        """
+        Program(code).run(project_id=self.id, selection=selection)
 
     @property
     def time_signature(self):

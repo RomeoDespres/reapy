@@ -1,5 +1,6 @@
 import reapy
 
+
 class Program:
     
     def __init__(self, code, *output):
@@ -66,6 +67,10 @@ class Program:
         output : tuple
             Output values.
         """
+        input.update({"RPR": RPR, "reapy": reapy})
         exec(self._code, input)
         output = tuple(input[o] for o in self._output)
         return output
+        
+        
+from reapy import reascript_api as RPR
