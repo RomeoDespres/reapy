@@ -25,6 +25,9 @@ class Project:
             id = RPR.EnumProjects(index, None, 0)[0]
         self.id = id
         
+    def __eq__(self, other):
+        return self.id == other.id
+        
     def add_marker(self, position, name="", color=0):
         """
         Create new marker and return its index.
@@ -100,10 +103,10 @@ class Project:
             New track.
         """
         code = """
-        current_project = RPR.EnumProjects(-1, None, 0)[0]
-        RPR.SelectProjectInstance(project_id)
+        selected_project = reapy.Project()
+        Project(project_id).select()
         RPR.InsertTrackAtIndex(index, True)
-        RPR.SelectProjectInstance(current_project)
+        selected_project.selec()
         track_id = RPR.GetTrack(project_id, index)
         """
         track_id = Program(code, "track_id").run(
@@ -228,6 +231,10 @@ class Project:
         """
         is_dirty = RPR.IsProjectDirty(self.id)
         return is_dirty
+        
+    @property
+    def is_selected(self):
+        
 
     @property
     def length(self):
