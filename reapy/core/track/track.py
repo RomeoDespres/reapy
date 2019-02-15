@@ -43,6 +43,25 @@ class Track:
         automation_mode = modes[RPR.GetTrackAutomationMode(self.id)]
         return automation_mode
         
+    @automation_mode.setter
+    def automation_mode(self, mode):
+        """
+        Set track automation mode.
+        
+        Parameters
+        -------
+        mode : str
+            One of the following values:
+                "latch"
+                "latch preview"
+                "read"
+                "touch"
+                "trim/read"
+                "write"
+        """
+        modes = "trim/read", "read", "touch", "write", "latch", "latch preview"
+        RPR.SetTrackAutomationMode(self.id, modes.index(mode))
+        
     @property
     def color(self):
         """

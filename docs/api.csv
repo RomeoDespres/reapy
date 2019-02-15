@@ -482,7 +482,7 @@ SetTakeStretchMarker,TODO
 SetTakeStretchMarkerSlope,TODO
 SetTempoTimeSigMarker,TODO
 SetToggleCommandState,TODO
-SetTrackAutomationMode,TODO
+SetTrackAutomationMode,reapy.core.track.Track.automation_mode
 SetTrackColor,reapy.core.track.Track.color
 SetTrackMIDILyrics,TODO
 SetTrackMIDINoteName,TODO
