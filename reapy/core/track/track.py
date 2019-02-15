@@ -85,6 +85,37 @@ class Track:
         depth = RPR.GetTrackDepth(self.id)
         return depth
         
+    def get_envelope(self, index=None, name=None, chunk_name=None):
+        """
+        Return track envelope for a given index, name or chunk name.
+        
+        Parameters
+        ----------
+        index : int, optional
+            Envelope index.
+        name : str, optional
+            Envelope name.
+        chunk_name : str, optional
+            Built-in envelope configuration chunk name, e.g. "<VOLENV".
+            
+        Returns
+        -------
+        envelope : Envelope
+            Track envelope.
+        """
+        if index is not None:
+            function, arg = RPR.GetTrackEnvelope, index
+        elif name is not None:
+            function, arg = RPR.GetTrackEnvelopeByName, name
+        else:
+            message = (
+                "One of `index`, `name` or `chunk_name` must be specified"
+            )
+            assert chunk_name is not None, message
+            function, arg = RPR.GetTrackEnvelopeByChunkName, chunk_name
+        envelope = Envelope(function(self.id, arg))
+        return envelope
+        
     @property
     def items(self):
         """
@@ -160,3 +191,4 @@ class Track:
         RPR.SetTrackSelected(self.id, False)
         
 from ..item.item import Item
+from .envelope import Envelope
