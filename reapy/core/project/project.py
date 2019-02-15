@@ -98,15 +98,12 @@ class Project:
         -------
         track : Track
             New track.
-            
-        Notes
-        -----
-        As a side-effect, this method sets the project as current
-        project.
         """
         code = """
+        current_project = RPR.EnumProjects(-1, None, 0)[0]
         RPR.SelectProjectInstance(project_id)
         RPR.InsertTrackAtIndex(index, True)
+        RPR.SelectProjectInstance(current_project)
         track_id = RPR.GetTrack(project_id, index)
         """
         track_id = Program(code, "track_id").run(
