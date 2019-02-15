@@ -157,6 +157,18 @@ class Project:
         n_items = RPR.CountSelectedMediaItems(self.id)
         return n_items
         
+    def count_selected_tracks(self):
+        """
+        Return numbet of selected tracks in project (including master).
+        
+        Returns
+        -------
+        n_tracks : int
+            Number of selected tracks in project.
+        """
+        n_tracks = RPR.CountSelectedTracks2(self.id, True)
+        return n_tracks
+        
     def count_tracks(self):
         """
         Return the number of tracks in project.

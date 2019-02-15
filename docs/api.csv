@@ -28,8 +28,8 @@ CountEnvelopePointsEx,TODO
 CountMediaItems,reapy.core.project.Project.count_items
 CountProjectMarkers,TODO
 CountSelectedMediaItems,reapy.core.project.Project.count_selected_items
-CountSelectedTracks,TODO
-CountSelectedTracks2,TODO
+CountSelectedTracks,reapy.core.project.Project.count_selected_tracks
+CountSelectedTracks2,reapy.core.project.Project.count_selected_tracks
 CountTakeEnvelopes,TODO
 CountTakes,TODO
 CountTCPFXParms,TODO
