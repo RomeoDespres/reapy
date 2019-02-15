@@ -1,0 +1,128 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reapy.tools.dist_program &#8212; reapy 0.1.0.dev2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reapy.tools.dist_program</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">reapy</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">reapy</span><span class="o">.</span><span class="n">is_inside_reaper</span><span class="p">():</span>
+    <span class="kn">from</span> <span class="nn">reapy.reascript_api.network</span> <span class="k">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">WebInterface</span>
+    <span class="kn">from</span> <span class="nn">reapy.config.config</span> <span class="k">import</span> <span class="n">WEB_INTERFACE_PORT</span>
+    <span class="n">WEB_INTERFACE</span> <span class="o">=</span> <span class="n">WebInterface</span><span class="p">(</span><span class="n">WEB_INTERFACE_PORT</span><span class="p">)</span>
+    <span class="n">CLIENT</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">WEB_INTERFACE</span><span class="o">.</span><span class="n">get_reapy_server_port</span><span class="p">())</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">program</span>
+
+<div class="viewcode-block" id="Program"><a class="viewcode-back" href="../../../reapy.tools.html#reapy.reascript_api.dist_api.Program">[docs]</a><span class="k">class</span> <span class="nc">Program</span><span class="p">(</span><span class="n">program</span><span class="o">.</span><span class="n">Program</span><span class="p">):</span>
+
+<div class="viewcode-block" id="Program.from_function"><a class="viewcode-back" href="../../../reapy.tools.html#reapy.reascript_api.dist_api.Program.from_function">[docs]</a>    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">from_function</span><span class="p">(</span><span class="n">function_name</span><span class="p">):</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;result = </span><span class="si">{}</span><span class="s2">(*args, **kwargs)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">function_name</span><span class="p">)</span>
+        <span class="n">program</span> <span class="o">=</span> <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s2">&quot;result&quot;</span><span class="p">)</span>
+        <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">program</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">kwargs</span><span class="o">=</span><span class="n">kwargs</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">g</span></div>
+    
+<div class="viewcode-block" id="Program.run"><a class="viewcode-back" href="../../../reapy.tools.html#reapy.reascript_api.dist_api.Program.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="nb">input</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">reapy</span><span class="o">.</span><span class="n">is_inside_reaper</span><span class="p">():</span>
+            <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">DistProgram</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">**</span><span class="nb">input</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">CLIENT</span><span class="o">.</span><span class="n">run_program</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">input</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">reapy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reapy.html">reapy</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Roméo Després.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,480 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reapy.core.reaper &#8212; reapy 0.1.0.dev2 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reapy.core.reaper</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span> <span class="k">as</span> <span class="n">RPR</span>
+
+<span class="kn">import</span> <span class="nn">io</span><span class="o">,</span> <span class="nn">os</span>
+
+
+<span class="n">_ORIGINAL_PRINT</span> <span class="o">=</span> <span class="nb">print</span>
+
+
+<div class="viewcode-block" id="add_reascript"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.add_reascript">[docs]</a><span class="k">def</span> <span class="nf">add_reascript</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">section_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Add a ReaScript and return the new action ID.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path to script.</span>
+<span class="sd">    section_id : int, optional (default=0, corresponds to main section).</span>
+<span class="sd">        Action section ID to which the script must be added.</span>
+<span class="sd">    commit : bool, optional</span>
+<span class="sd">        Whether to commit change. Use it when adding a single script.</span>
+<span class="sd">        You can optimize bulk adding `n` scripts by setting </span>
+<span class="sd">        `commit=False` for the first `n-1` calls and `commit=True` for</span>
+<span class="sd">        the last call.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    action_id : int</span>
+<span class="sd">        New ReaScript action ID.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">action_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">AddRemoveReaScript</span><span class="p">(</span>
+        <span class="kc">True</span><span class="p">,</span> <span class="n">section_id</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">commit</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">action_id</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Script at </span><span class="si">{}</span><span class="s2"> wasn&#39;t successfully added.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">action_id</span></div>
+    
+<div class="viewcode-block" id="clear_console"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.clear_console">[docs]</a><span class="k">def</span> <span class="nf">clear_console</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clear Reaper console.</span>
+
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    ReaProject.show_console_message</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">RPR</span><span class="o">.</span><span class="n">ClearConsole</span><span class="p">()</span></div>
+    
+<div class="viewcode-block" id="delete_ext_state"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.delete_ext_state">[docs]</a><span class="k">def</span> <span class="nf">delete_ext_state</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Delete extended state value for a given section and key.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    section : str</span>
+<span class="sd">        Extended state section.</span>
+<span class="sd">    key : str</span>
+<span class="sd">        Extended state key.</span>
+<span class="sd">    persist : bool</span>
+<span class="sd">        Whether extended state should remain deleted next time REAPER</span>
+<span class="sd">        is opened.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">RPR</span><span class="o">.</span><span class="n">DeleteExtState</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">persist</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="get_command_id"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.get_command_id">[docs]</a><span class="k">def</span> <span class="nf">get_command_id</span><span class="p">(</span><span class="n">command_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return ID of command with a given name.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    command_name : str</span>
+<span class="sd">        Command name.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    command_id : int or None</span>
+<span class="sd">        Command ID, or None if name can&#39;t be found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">command_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">NamedCommandLookup</span><span class="p">(</span><span class="n">command_name</span><span class="p">)</span>
+    <span class="n">command_id</span> <span class="o">=</span> <span class="n">command_id</span> <span class="k">if</span> <span class="n">command_id</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">command_id</span></div>
+    
+<div class="viewcode-block" id="get_command_name"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.get_command_name">[docs]</a><span class="k">def</span> <span class="nf">get_command_name</span><span class="p">(</span><span class="n">command_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return name of command with a given ID.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    command_id : int</span>
+<span class="sd">        Command ID.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    command_name : str, None</span>
+<span class="sd">        Command name, or None for a native command.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">command_name</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">ReverseNamedCommandLookup</span><span class="p">(</span><span class="n">command_id</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">command_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">command_name</span> <span class="o">=</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">command_name</span>
+    <span class="k">return</span> <span class="n">command_name</span></div>
+
+<div class="viewcode-block" id="get_exe_dir"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.get_exe_dir">[docs]</a><span class="k">def</span> <span class="nf">get_exe_dir</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return REAPER.exe directory (e.g. &quot;C:\Program Files\REAPER&quot;).</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path to REAPER.exe directory.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetExePath</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">path</span></div>
+    
+<div class="viewcode-block" id="get_ext_state"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.get_ext_state">[docs]</a><span class="k">def</span> <span class="nf">get_ext_state</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Get the extended state value for a specific section and key.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    section : str</span>
+<span class="sd">        Extended state section.</span>
+<span class="sd">    key : str</span>
+<span class="sd">        Extended state key for section `section`.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    value : str</span>
+<span class="sd">        Extended state value.</span>
+<span class="sd">        </span>
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    delete_ext_state</span>
+<span class="sd">    set_ext_state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetExtState</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">value</span></div>
+    
+<div class="viewcode-block" id="get_global_automation_mode"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.get_global_automation_mode">[docs]</a><span class="k">def</span> <span class="nf">get_global_automation_mode</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return global automation override mode.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    override_mode : str</span>
+<span class="sd">        One of the following values:</span>
+<span class="sd">            &quot;bypass&quot;</span>
+<span class="sd">            &quot;latch&quot;</span>
+<span class="sd">            &quot;none&quot;</span>
+<span class="sd">            &quot;read&quot;</span>
+<span class="sd">            &quot;touch&quot;            </span>
+<span class="sd">            &quot;trim/read&quot;</span>
+<span class="sd">            &quot;write&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">modes</span> <span class="o">=</span> <span class="p">{</span>
+         <span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+         <span class="mi">0</span><span class="p">:</span> <span class="s2">&quot;trim/read&quot;</span><span class="p">,</span>
+         <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span>
+         <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;touch&quot;</span><span class="p">,</span>
+         <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;write&quot;</span><span class="p">,</span>
+         <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;latch&quot;</span><span class="p">,</span>
+         <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;bypass&quot;</span>
+    <span class="p">}</span>
+    <span class="n">override_mode</span> <span class="o">=</span> <span class="n">modes</span><span class="p">[</span><span class="n">RPR</span><span class="o">.</span><span class="n">GetGlobalAutomationOverride</span><span class="p">()]</span>
+    <span class="k">return</span> <span class="n">override_mode</span></div>
+    
+<div class="viewcode-block" id="get_ini_file"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.get_ini_file">[docs]</a><span class="k">def</span> <span class="nf">get_ini_file</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Return path to REAPER.ini file.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path to REAPER.ini file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">get_ini_file</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">path</span></div>
+    
+<div class="viewcode-block" id="perform_action"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.perform_action">[docs]</a><span class="k">def</span> <span class="nf">perform_action</span><span class="p">(</span><span class="n">action_id</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Perform action with ID `action_id` in the main Actions section.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    action_id : int</span>
+<span class="sd">        Action ID in the main Actions section.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">RPR</span><span class="o">.</span><span class="n">Main_OnCommand</span><span class="p">(</span><span class="n">action_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="print"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.print">[docs]</a><span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Alias to ReaProject.show_console_message.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">show_console_message</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="remove_reascript"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.remove_reascript">[docs]</a><span class="k">def</span> <span class="nf">remove_reascript</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">section_id</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Remove a ReaScript.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path to script.</span>
+<span class="sd">    section_id : int, optional (default=0, corresponds to main section).</span>
+<span class="sd">        Action section ID to which the script must be added.</span>
+<span class="sd">    commit : bool, optional</span>
+<span class="sd">        Whether to commit change. Use it when removing a single script.</span>
+<span class="sd">        You can optimize bulk removing `n` scripts by setting </span>
+<span class="sd">        `commit=False` for the first `n-1` calls and `commit=True` for</span>
+<span class="sd">        the last call.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">success</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">AddRemoveReaScript</span><span class="p">(</span>
+        <span class="kc">False</span><span class="p">,</span> <span class="n">section_id</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">commit</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Script at </span><span class="si">{}</span><span class="s2"> wasn&#39;t successfully added.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">path</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="rgb_from_native"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.rgb_from_native">[docs]</a><span class="k">def</span> <span class="nf">rgb_from_native</span><span class="p">(</span><span class="n">native_color</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract RGB values from a native (OS-dependent) color.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    native_color : int </span>
+<span class="sd">        Native color.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    r, g, b : (int, int, int)</span>
+<span class="sd">        RGB values between 0 and 255.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_</span><span class="p">,</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">ColorFromNative</span><span class="p">(</span><span class="n">native_color</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span></div>
+    
+<div class="viewcode-block" id="rgb_to_native"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.rgb_to_native">[docs]</a><span class="k">def</span> <span class="nf">rgb_to_native</span><span class="p">(</span><span class="n">rgb</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Make a native (OS-dependent) color from RGB values.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rgb : (int, int, int)</span>
+<span class="sd">        RGB triplet of integers between 0 and 255.</span>
+<span class="sd">        </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    native_color : int</span>
+<span class="sd">        Native color.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">native_color</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">ColorToNative</span><span class="p">(</span><span class="o">*</span><span class="n">rgb</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">native_color</span></div>
+
+<div class="viewcode-block" id="set_ext_state"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.set_ext_state">[docs]</a><span class="k">def</span> <span class="nf">set_ext_state</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">persist</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set the extended state value for a specific section and key.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    section : str</span>
+<span class="sd">        Extended state section.</span>
+<span class="sd">    key : str</span>
+<span class="sd">        Extended state key for section `section`.</span>
+<span class="sd">    value : str</span>
+<span class="sd">        Extended state value for section `section` and key `key`.</span>
+<span class="sd">    persist : bool</span>
+<span class="sd">        Whether the value should be stored and reloaded the next time</span>
+<span class="sd">        REAPER is opened.</span>
+<span class="sd">        </span>
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    delete_ext_state</span>
+<span class="sd">    get_ext_state</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">RPR</span><span class="o">.</span><span class="n">SetExtState</span><span class="p">(</span><span class="n">section</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">persist</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="set_global_automation_mode"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.set_global_automation_mode">[docs]</a><span class="k">def</span> <span class="nf">set_global_automation_mode</span><span class="p">(</span><span class="n">mode</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Set global automation mode.</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mode : str</span>
+<span class="sd">        One of the following values:</span>
+<span class="sd">            &quot;bypass&quot;</span>
+<span class="sd">            &quot;latch&quot;</span>
+<span class="sd">            &quot;none&quot;</span>
+<span class="sd">            &quot;read&quot;</span>
+<span class="sd">            &quot;touch&quot;            </span>
+<span class="sd">            &quot;trim/read&quot;</span>
+<span class="sd">            &quot;write&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">modes</span> <span class="o">=</span> <span class="p">{</span>
+         <span class="s2">&quot;none&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+         <span class="s2">&quot;trim/read&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+         <span class="s2">&quot;read&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+         <span class="s2">&quot;touch&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+         <span class="s2">&quot;write&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+         <span class="s2">&quot;latch&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+         <span class="s2">&quot;bypass&quot;</span><span class="p">:</span> <span class="mi">5</span>
+    <span class="p">}</span>
+    <span class="n">RPR</span><span class="o">.</span><span class="n">SetGlobalAutomationOverride</span><span class="p">(</span><span class="n">modes</span><span class="p">[</span><span class="n">mode</span><span class="p">])</span></div>
+    
+    
+<div class="viewcode-block" id="show_console_message"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.show_console_message">[docs]</a><span class="k">def</span> <span class="nf">show_console_message</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Print a message to the Reaper console.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    args : tuple</span>
+<span class="sd">        Values to print.</span>
+<span class="sd">    sep : str, optional</span>
+<span class="sd">        String inserted between values (default=&quot; &quot;).</span>
+<span class="sd">    end : str, optional</span>
+<span class="sd">        String appended after the last value (default=&quot;\n&quot;).</span>
+
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    ReaProject.clear_console</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">file</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">_ORIGINAL_PRINT</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">file</span><span class="p">)</span>
+    <span class="n">file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">txt</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="n">RPR</span><span class="o">.</span><span class="n">ShowConsoleMsg</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="show_message_box"><a class="viewcode-back" href="../../../reapy.core.html#reapy.core.reaper.show_message_box">[docs]</a><span class="k">def</span> <span class="nf">show_message_box</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">&quot;ok&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Show message box.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    text : str</span>
+<span class="sd">        Box message</span>
+<span class="sd">    title : str</span>
+<span class="sd">        Box title</span>
+<span class="sd">    type : str</span>
+<span class="sd">        One of the following values.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;ok&quot;</span>
+<span class="sd">        &quot;ok-cancel&quot;</span>
+<span class="sd">        &quot;abort-retry-ignore&quot;</span>
+<span class="sd">        &quot;yes-no-cancel&quot;</span>
+<span class="sd">        &quot;yes-no&quot;</span>
+<span class="sd">        &quot;retry-cancel&quot;</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    status : str</span>
+<span class="sd">        One of the following values.</span>
+
+<span class="sd">        &quot;ok&quot;</span>
+<span class="sd">        &quot;cancel&quot;</span>
+<span class="sd">        &quot;abort&quot;</span>
+<span class="sd">        &quot;retry&quot;</span>
+<span class="sd">        &quot;ignore&quot;</span>
+<span class="sd">        &quot;yes&quot;</span>
+<span class="sd">        &quot;no&quot;   </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">all_types</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">&quot;ok&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">&quot;ok-cancel&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">&quot;abort-retry-ignore&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">&quot;yes-no-cancel&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+        <span class="s2">&quot;yes-no&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+        <span class="s2">&quot;retry-cancel&quot;</span><span class="p">:</span> <span class="mi">5</span>
+    <span class="p">}</span>
+    <span class="n">all_status</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="mi">1</span><span class="p">:</span> <span class="s2">&quot;ok&quot;</span><span class="p">,</span>
+        <span class="mi">2</span><span class="p">:</span> <span class="s2">&quot;cancel&quot;</span><span class="p">,</span>
+        <span class="mi">3</span><span class="p">:</span> <span class="s2">&quot;abort&quot;</span><span class="p">,</span>
+        <span class="mi">4</span><span class="p">:</span> <span class="s2">&quot;retry&quot;</span><span class="p">,</span>
+        <span class="mi">5</span><span class="p">:</span> <span class="s2">&quot;ignore&quot;</span><span class="p">,</span>
+        <span class="mi">6</span><span class="p">:</span> <span class="s2">&quot;yes&quot;</span><span class="p">,</span>
+        <span class="mi">7</span><span class="p">:</span> <span class="s2">&quot;no&quot;</span>
+    <span class="p">}</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">ShowMessageBox</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">all_types</span><span class="p">[</span><span class="nb">type</span><span class="p">])</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">all_status</span><span class="p">[</span><span class="n">status</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">status</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../index.html">reapy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reapy.html">reapy</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Roméo Després.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

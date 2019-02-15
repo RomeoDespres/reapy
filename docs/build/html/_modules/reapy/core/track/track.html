@@ -1,0 +1,341 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reapy.core.track.track &#8212; reapy 0.1.0.dev2 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reapy.core.track.track</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">reapy</span>
+<span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span> <span class="k">as</span> <span class="n">RPR</span>
+<span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
+
+
+<div class="viewcode-block" id="Track"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.track.track.Track">[docs]</a><span class="k">class</span> <span class="nc">Track</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="nb">id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrack</span><span class="p">(</span><span class="n">project</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="nb">id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+        
+<div class="viewcode-block" id="Track.add_item"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.track.track.Track.add_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create new item on track and return it.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        item : Item</span>
+<span class="sd">            New item on track.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">item_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">AddMediaItemToTrack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">Item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span></div>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">automation_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return track automation mode.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        automation_mode : str</span>
+<span class="sd">            One of the following values:</span>
+<span class="sd">                &quot;latch&quot;</span>
+<span class="sd">                &quot;latch preview&quot;</span>
+<span class="sd">                &quot;read&quot;</span>
+<span class="sd">                &quot;touch&quot;</span>
+<span class="sd">                &quot;trim/read&quot;</span>
+<span class="sd">                &quot;write&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="s2">&quot;trim/read&quot;</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="s2">&quot;touch&quot;</span><span class="p">,</span> <span class="s2">&quot;write&quot;</span><span class="p">,</span> <span class="s2">&quot;latch&quot;</span><span class="p">,</span> <span class="s2">&quot;latch preview&quot;</span>
+        <span class="n">automation_mode</span> <span class="o">=</span> <span class="n">modes</span><span class="p">[</span><span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackAutomationMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">automation_mode</span>
+        
+    <span class="nd">@automation_mode</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">automation_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set track automation mode.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        -------</span>
+<span class="sd">        mode : str</span>
+<span class="sd">            One of the following values:</span>
+<span class="sd">                &quot;latch&quot;</span>
+<span class="sd">                &quot;latch preview&quot;</span>
+<span class="sd">                &quot;read&quot;</span>
+<span class="sd">                &quot;touch&quot;</span>
+<span class="sd">                &quot;trim/read&quot;</span>
+<span class="sd">                &quot;write&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">modes</span> <span class="o">=</span> <span class="s2">&quot;trim/read&quot;</span><span class="p">,</span> <span class="s2">&quot;read&quot;</span><span class="p">,</span> <span class="s2">&quot;touch&quot;</span><span class="p">,</span> <span class="s2">&quot;write&quot;</span><span class="p">,</span> <span class="s2">&quot;latch&quot;</span><span class="p">,</span> <span class="s2">&quot;latch preview&quot;</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">SetTrackAutomationMode</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">modes</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">color</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return track color in RGB format.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        r : int</span>
+<span class="sd">            Red value of track color.</span>
+<span class="sd">        g : int</span>
+<span class="sd">            Green value of track color.</span>
+<span class="sd">        b : int</span>
+<span class="sd">            Blue value of track color.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">native_color</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">reapy</span><span class="o">.</span><span class="n">rgb_from_native</span><span class="p">(</span><span class="n">native_color</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">r</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">b</span>
+        
+    <span class="nd">@color</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">color</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set track color to `color`</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        color : tuple</span>
+<span class="sd">            Triplet of integers between 0 and 255 corresponding to RGB</span>
+<span class="sd">            values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">native_color</span> <span class="o">=</span> <span class="n">reapy</span><span class="o">.</span><span class="n">rgb_to_native</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">SetTrackColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">native_color</span><span class="p">)</span>
+        
+<div class="viewcode-block" id="Track.delete"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.track.track.Track.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete track.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">DeleteTrack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">depth</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return track depth.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        depth : int</span>
+<span class="sd">            Track depth.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">depth</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackDepth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">depth</span>
+        
+<div class="viewcode-block" id="Track.get_envelope"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.track.track.Track.get_envelope">[docs]</a>    <span class="k">def</span> <span class="nf">get_envelope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chunk_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return track envelope for a given index, name or chunk name.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        index : int, optional</span>
+<span class="sd">            Envelope index.</span>
+<span class="sd">        name : str, optional</span>
+<span class="sd">            Envelope name.</span>
+<span class="sd">        chunk_name : str, optional</span>
+<span class="sd">            Built-in envelope configuration chunk name, e.g. &quot;&lt;VOLENV&quot;.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        envelope : Envelope</span>
+<span class="sd">            Track envelope.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">function</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackEnvelope</span><span class="p">,</span> <span class="n">index</span>
+        <span class="k">elif</span> <span class="n">name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">function</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackEnvelopeByName</span><span class="p">,</span> <span class="n">name</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s2">&quot;One of `index`, `name` or `chunk_name` must be specified&quot;</span>
+            <span class="p">)</span>
+            <span class="k">assert</span> <span class="n">chunk_name</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">message</span>
+            <span class="n">function</span><span class="p">,</span> <span class="n">arg</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackEnvelopeByChunkName</span><span class="p">,</span> <span class="n">chunk_name</span>
+        <span class="n">envelope</span> <span class="o">=</span> <span class="n">Envelope</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">arg</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">envelope</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">UNDEFINED_ENVELOPE_ID</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">UndefinedEnvelopeError</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">chunk_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">envelope</span></div>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return list of items on track.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        items : list of Item</span>
+<span class="sd">            List of items on track.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        n_items = RPR.CountTrackMediaItems(track_id)</span>
+<span class="s2">        item_ids = [</span>
+<span class="s2">            RPR.GetTrackMediaItem(track_id, i) for i in range(n_items)</span>
+<span class="s2">        ]</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="n">item_ids</span> <span class="o">=</span> <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s2">&quot;item_ids&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">track_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">Item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">item_id</span> <span class="ow">in</span> <span class="n">item_ids</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">items</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return whether track is selected.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        is_selected : bool</span>
+<span class="sd">            Whether track is selected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_selected</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">RPR</span><span class="o">.</span><span class="n">IsTrackSelected</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">is_selected</span>
+        
+    <span class="nd">@is_selected</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">is_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Select or unselect track.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selected : bool</span>
+<span class="sd">            Whether to select or unselect track.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">selected</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unselect</span><span class="p">()</span>
+            
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_items</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return number of items on track.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        n_items : int</span>
+<span class="sd">            Number of items on track.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_items</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">CountTrackMediaItems</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n_items</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return track name.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Track name (&quot;MASTER&quot; for master track, &quot;Track N&quot; if track</span>
+<span class="sd">            has no name).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">name</span>
+        
+<div class="viewcode-block" id="Track.select"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.track.track.Track.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Select track.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">SetTrackSelected</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="Track.unselect"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.track.track.Track.unselect">[docs]</a>    <span class="k">def</span> <span class="nf">unselect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Unselect track.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">SetTrackSelected</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span></div></div>
+  
+  
+<span class="kn">from</span> <span class="nn">..item.item</span> <span class="k">import</span> <span class="n">Item</span>
+<span class="kn">from</span> <span class="nn">.envelope</span> <span class="k">import</span> <span class="n">Envelope</span><span class="p">,</span> <span class="n">UndefinedEnvelopeError</span><span class="p">,</span> <span class="n">UNDEFINED_ENVELOPE_ID</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">reapy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  <li><a href="../../../reapy.html">reapy</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Roméo Després.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

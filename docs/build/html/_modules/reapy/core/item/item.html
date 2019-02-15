@@ -1,0 +1,313 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reapy.core.item.item &#8212; reapy 0.1.0.dev2 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reapy.core.item.item</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">reapy</span>
+<span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span> <span class="k">as</span> <span class="n">RPR</span>
+<span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
+
+
+<div class="viewcode-block" id="Item"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.item.Item">[docs]</a><span class="k">class</span> <span class="nc">Item</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
+
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Item</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">active_take</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the active take of the item.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        take : Take</span>
+<span class="sd">            Active take of the item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">take</span> <span class="o">=</span> <span class="n">Take</span><span class="p">(</span><span class="n">RPR</span><span class="o">.</span><span class="n">GetActiveTake</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">take</span>
+        
+<div class="viewcode-block" id="Item.add_take"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.item.Item.add_take">[docs]</a>    <span class="k">def</span> <span class="nf">add_take</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create and return a new take in item.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        take : Take</span>
+<span class="sd">            New take in item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">take_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">AddTakeToMediaItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">take</span> <span class="o">=</span> <span class="n">Take</span><span class="p">(</span><span class="n">take_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">take</span></div>
+        
+<div class="viewcode-block" id="Item.get_info_value"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.item.Item.get_info_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetMediaItemInfo_Value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">value</span></div>
+        
+<div class="viewcode-block" id="Item.get_take"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.item.Item.get_take">[docs]</a>    <span class="k">def</span> <span class="nf">get_take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return index-th take of item.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        index : int</span>
+<span class="sd">            Take index.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        take : Take</span>
+<span class="sd">            index-th take of media item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">take_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetItemTake</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span>
+        <span class="n">take</span> <span class="o">=</span> <span class="n">Take</span><span class="p">(</span><span class="n">take_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">take</span></div>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_selected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return whether item is selected.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        is_selected : bool</span>
+<span class="sd">            Whether item is selected.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">is_selected</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">RPR</span><span class="o">.</span><span class="n">IsMediaItemSelected</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">is_selected</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return item length in seconds.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        length : float</span>
+<span class="sd">            Item length in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">param_name</span> <span class="o">=</span> <span class="s2">&quot;D_LENGTH&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_info_value</span><span class="p">(</span><span class="n">param_name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">length</span>
+        
+    <span class="nd">@length</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set item length.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        length : float</span>
+<span class="sd">            New item length in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">SetMediaItemLength</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_takes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the number of takes of media item.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        n_takes : int</span>
+<span class="sd">            Number of takes of media item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_takes</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetMediaItemNumTakes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n_takes</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return item position in seconds.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        position : float</span>
+<span class="sd">            Item position in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_info_value</span><span class="p">(</span><span class="s2">&quot;D_POSITION&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">position</span>
+
+    <span class="nd">@position</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set media item position to `position`.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        position : float</span>
+<span class="sd">            New item position in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">SetMediaItemPosition</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return item parent project.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        project : Project</span>
+<span class="sd">            Item parent project.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">project_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetItemProjectContext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">project_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">project</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">takes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return list of all takes of media item.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        takes : list</span>
+<span class="sd">            List of all takes of media item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        n_takes = RPR.GetMediaItemNumTakes(item_id)</span>
+<span class="s2">        take_ids = [RPR.GetMediaItemTake(item_id, i) for i in range(n_takes)]</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="n">take_ids</span> <span class="o">=</span> <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s2">&quot;take_ids&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">item_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">takes</span> <span class="o">=</span> <span class="p">[</span><span class="n">Take</span><span class="p">(</span><span class="n">take_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">take_id</span> <span class="ow">in</span> <span class="n">take_ids</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">takes</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">track</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return parent track of item.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        track : Track</span>
+<span class="sd">            Parent track of item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">track_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetMediaItemTrack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="n">track</span> <span class="o">=</span> <span class="n">Track</span><span class="p">(</span><span class="n">track_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">track</span>
+        
+    <span class="nd">@track</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Move item to track `track`.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        track : Track, int</span>
+<span class="sd">            If Track, destination track for item. If int, track index.</span>
+<span class="sd">            </span>
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        Exception</span>
+<span class="sd">            If operation failed within REAPER.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">isisintance</span><span class="p">(</span><span class="n">track</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">track</span> <span class="o">=</span> <span class="n">Track</span><span class="p">(</span><span class="n">track</span><span class="p">,</span> <span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project</span><span class="p">)</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">MoveMediaItemToTrack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">track</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t move item to track.&quot;</span><span class="p">)</span></div>
+
+
+<span class="kn">from</span> <span class="nn">..project.project</span> <span class="k">import</span> <span class="n">Project</span>
+<span class="kn">from</span> <span class="nn">..track.track</span> <span class="k">import</span> <span class="n">Track</span>
+<span class="kn">from</span> <span class="nn">.take</span> <span class="k">import</span> <span class="n">Take</span>
+
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../../../index.html">reapy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  <li><a href="../../../reapy.html">reapy</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Roméo Després.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
