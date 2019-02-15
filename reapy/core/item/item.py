@@ -38,7 +38,7 @@ class Item:
         return take
         
     def get_info_value(self, param_name):
-        value = RPR.GetItemInfo_Value(self.id, param_name)
+        value = RPR.GetMediaItemInfo_Value(self.id, param_name)
         return value
         
     def get_take(self, index):
@@ -121,7 +121,7 @@ class Item:
         position : float
             Item position in seconds.
         """
-        position = RPR.GetitemInfo_Value(self.id, "D_POSITION")
+        position = self.get_info_value("D_POSITION")
         return position
 
     @position.setter
