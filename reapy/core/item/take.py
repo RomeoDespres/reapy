@@ -1,4 +1,5 @@
 from reapy import reascript_api as RPR
+from reapy.tools import Program
 
 
 class Take:
@@ -7,11 +8,29 @@ class Take:
         self.id = id
 
     def __eq__(self, other):
-        return self.id == other.id and isinstance(other, Take)
+        return self.id == other.id
         
     def get_info_value(self, param_name):
         value = RPR.GettakeInfo_Value(self.id, param_name)
         return value
+        
+    @property
+    def is_active(self):
+        """
+        Return whether take is active.
+        
+        Returns
+        -------
+        is_active : bool
+            Whether take is active.
+        """
+        code = """
+        from reapy.core.item.take import Take
+        take = Take(take_id)
+        is_active = take == take.item.active_take
+        """
+        is_active = Program(code, "is_active").run(take_id=self.id)[0]
+        return is_active
 
     @property
     def item(self):
@@ -23,8 +42,14 @@ class Take:
         item : item
             Parent item.
         """
-        item = Item(RPR.Gettake_Item(self.id))
+        item = Item(RPR.GetMediaItemTake_Item(self.id))
         return item
+        
+    def make_active_take(self):
+        """
+        Make take active.
+        """
+        RPR.SetActiveTake(self.id)
 
     @property
     def source(self):
