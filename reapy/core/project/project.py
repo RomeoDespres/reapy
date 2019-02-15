@@ -21,7 +21,7 @@ class Project:
             project).
         """
         if id is None:
-            id = RPR.EnumProjects(index, None, 0)
+            id = RPR.EnumProjects(index, None, 0)[0]
         self.id = id
         
     def add_marker(self, position, name="", color=0):
