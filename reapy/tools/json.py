@@ -1,10 +1,11 @@
-import json
+import importlib, json
 
 
 class ReapyEncoder(json.JSONEncoder):
     
     def default(self, x):
-        if any(isinstance(x, c) for c in _CLASSES.values()):
+        core = importlib.import_module("reapy.core")
+        if any(isinstance(x, getattr(core, c)) for c in core.__all__):
             return x._to_dict()
         return json.JSONEncoder.default(self, x)
         
@@ -18,7 +19,7 @@ def object_hook(x):
     if "__reapy__" not in x:
         return x
     core = importlib.import_module("reapy.core")
-    reapy_class = dir(core)[x["class"]]
+    reapy_class = getattr(core, x["class"])
     return reapy_class(*x["args"], **x["kwargs"])
 
 

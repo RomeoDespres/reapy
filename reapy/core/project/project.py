@@ -113,13 +113,13 @@ class Project:
         """
         code = """
         current_project = reapy.Project()
-        reapy.Project(project_id).make_current_project()
+        project.make_current_project()
         RPR.InsertTrackAtIndex(index, True)
         current_project.make_current_project()
-        track_id = RPR.GetTrack(project_id, index)
+        track_id = RPR.GetTrack(project.id, index)
         """
         track_id = Program(code, "track_id").run(
-            project_id=self.id, index=index
+            project=self, index=index
         )[0]
         track = Track(track_id)
         return track
@@ -190,11 +190,11 @@ class Project:
         """
         code = """
         current_project = reapy.Project()
-        reapy.Project(project_id).make_current_project()
+        project.make_current_project()
         RPR.BypassFxAllTracks(bypass)
         current_project.make_current_project()
         """
-        Program(code).run(project_id=self.id, bypass=bypass)
+        Program(code).run(project=self, bypass=bypass)
         
     @property
     def can_redo(self):
@@ -394,12 +394,11 @@ class Project:
         """
         code = """
         current_project = reapy.Project()
-        project = reapy.Project(project_id)
         project.make_current_project()
         RPR.MuteAllTracks(mute)
         current_project.make_current_project()
         """
-        Program(code).run(project_id=self.id, mute=mute)
+        Program(code).run(project=self, mute=mute)
         
     @property
     def n_items(self):
@@ -687,11 +686,10 @@ class Project:
             Start and end of new time selection in seconds.
         """
         code = """
-        project = reapy.Project(project_id)
         project.time_selection.start = selection[0]
         project.time_selection.end = selection[1]
         """
-        Program(code).run(project_id=self.id, selection=selection)
+        Program(code).run(project=self, selection=selection)
 
     @property
     def time_signature(self):
