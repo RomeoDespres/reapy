@@ -468,7 +468,7 @@ SetMediaTrackInfo_Value,TODO
 SetMIDIEditorGrid,TODO
 SetMixerScroll,TODO
 SetMouseModifier,TODO
-SetOnlyTrackSelected,TODO
+SetOnlyTrackSelected,Track.make_only_selected_track
 SetProjectGrid,TODO
 SetProjectMarker,TODO
 SetProjectMarker2,TODO

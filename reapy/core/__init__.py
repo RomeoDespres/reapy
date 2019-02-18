@@ -11,6 +11,7 @@ __all__ = [
 ]
 
 from .project.project import Project
+from .project.marker import Marker
 from .project.time_selection import TimeSelection
 from .item.item import Item, MIDIItem
 from .item.take import Take

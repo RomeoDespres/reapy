@@ -240,6 +240,12 @@ class Track:
         else:
             self.unselect()
             
+    def make_only_selected_track(self):
+        """
+        Make track the only selected track in parent project.
+        """
+        RPR.SetOnlyTrackSelected(self.)
+            
     @property
     def n_envelopes(self):
         """
