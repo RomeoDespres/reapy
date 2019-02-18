@@ -5,7 +5,6 @@ import io, os
 
 _ORIGINAL_PRINT = print
 
-
 def add_reascript(path, section_id=0, commit=True):
     """
     Add a ReaScript and return the new action ID.
@@ -36,6 +35,19 @@ def add_reascript(path, section_id=0, commit=True):
         raise ValueError("Script at {} wasn't successfully added.".format(path))
     return action_id
     
+def arm_command(command_id, section=""):
+    """
+    Arm or disarm command.
+    
+    Parameters
+    ----------
+    command_id : int
+        Command ID. If 0, disarm command.
+    section : str, optional
+        Command section. Empty string for main section. Default="".
+    """
+    RPR.ArmCommand(command_id, section)
+    
 def clear_console():
     """
     Clear Reaper console.
@@ -61,6 +73,12 @@ def delete_ext_state(section, key, persist=False):
         is opened.
     """
     RPR.DeleteExtState(section, key, persist)
+    
+def disarm_command():
+    """
+    Disarm command.
+    """
+    arm_command(0)
     
 def get_command_id(command_name):
     """

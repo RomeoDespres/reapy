@@ -255,6 +255,18 @@ class Project:
         """
         RPR.SetEditCurPos(position, True, True)
         
+    def disarm_rec_on_all_tracks(self):
+        """
+        Disarm record on all tracks.
+        """
+        code = """
+        current_project = reapy.Project()
+        project.make_current_project()
+        RPR.ClearAllRecArmed()
+        current_project.make_current_project()
+        """
+        Program(code).run(project=self)
+        
     def end_undo_block(self, description=""):
         """
         End undo block.

@@ -10,14 +10,14 @@ AnyTrackSolo,any_track_solo
 APIExists,TODO
 APITest,TODO
 ApplyNudge,TODO
-ArmCommand,TODO
+ArmCommand,arm_command;disarm_command
 Audio_Init,audio.init
 Audio_IsPreBuffer,audio.is_prebuffer
 Audio_IsRunning,audio.is_running
 Audio_Quit,audio.quit
 AudioAccessorValidateState,TODO
 BypassFxAllTracks,Project.bypass_fx_on_all_tracks
-ClearAllRecArmed,TODO
+ClearAllRecArmed,Project.disarm_rec_on_all_tracks
 ClearConsole,clear_console
 ClearPeakCache,TODO
 ColorFromNative,rgb_from_native

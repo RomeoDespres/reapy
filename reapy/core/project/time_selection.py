@@ -197,5 +197,3 @@ class TimeSelection:
         TimeSelection.loop
         """
         RPR.GetSetRepeatEx(self.project_id, 0)
-        
-
