@@ -296,7 +296,7 @@ GetTrackNumSends,TODO
 GetTrackReceiveName,TODO
 GetTrackReceiveUIMute,TODO
 GetTrackReceiveUIVolPan,TODO
-GetTrackSendInfo_Value,TODO
+GetTrackSendInfo_Value,Send
 GetTrackSendName,TODO
 GetTrackSendUIMute,TODO
 GetTrackSendUIVolPan,TODO
@@ -488,7 +488,7 @@ SetTrackMIDILyrics,TODO
 SetTrackMIDINoteName,TODO
 SetTrackMIDINoteNameEx,TODO
 SetTrackSelected,Track.is_selected;.select;.unselect
-SetTrackSendInfo_Value,TODO
+SetTrackSendInfo_Value,Send
 SetTrackSendUIPan,TODO
 SetTrackSendUIVol,TODO
 SetTrackStateChunk,TODO
