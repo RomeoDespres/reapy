@@ -11,10 +11,10 @@ APIExists,TODO
 APITest,TODO
 ApplyNudge,TODO
 ArmCommand,TODO
-Audio_Init,TODO
-Audio_IsPreBuffer,TODO
-Audio_IsRunning,TODO
-Audio_Quit,TODO
+Audio_Init,audio.init
+Audio_IsPreBuffer,audio.is_prebuffer
+Audio_IsRunning,audio.is_running
+Audio_Quit,audio.quit
 AudioAccessorValidateState,TODO
 BypassFxAllTracks,TODO
 ClearAllRecArmed,TODO
