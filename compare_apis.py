@@ -15,7 +15,8 @@ classes = (
     "mediaitem",
     "project",
     "source",
-    "undo"
+    "undo",
+    "csurf"
 )
 series = pd.DataFrame(0, index=classes, columns=["%", "done", "total"])
 
