@@ -72,7 +72,7 @@ class Project:
     
     def add_region(self, start, end, name="", color=0):
         """
-        Create new region region and return its index.
+        Create new region and return its index.
         
         Parameters
         ----------
@@ -378,6 +378,30 @@ class Project:
         Mark project as dirty (i.e. needing save).
         """
         RPR.MarkProjectDirty(self.id)
+    
+    @property
+    def markers(self):
+        """
+        Return list of project markers.
+        
+        Returns
+        -------
+        markers : list of Marker
+            List of project markers.
+        """
+        code = """
+        n_markers = project.n_markers
+        ids = [
+            RPR.EnumProjectMarkers2(project.id, i, 0, 0, 0, 0, 0)
+            for i in range(project.n_regions + project.n_markers)
+        ]
+        ids = [
+            i[0] for i in ids if not i[3]
+        ]
+        """
+        ids = Program(code, "ids").run(project=self)[0]
+        markers = [Marker(self, i) for i in ids]
+        return markers
         
     @property
     def master_track(self):
@@ -593,6 +617,29 @@ class Project:
         success = RPR.Undo_DoRedo2(self.id)
         if not success:
             raise RedoError
+            
+    @property
+    def regions(self):
+        """
+        Return list of project regions.
+        
+        Returns
+        -------
+        regions : list of Region
+            List of project regions.
+        """
+        code = """
+        ids = [
+            RPR.EnumProjectMarkers2(project.id, i, 0, 0, 0, 0, 0)
+            for i in range(project.n_regions + project.n_markers)
+        ]
+        ids = [
+            i[0] for i in ids if i[3]
+        ]
+        """
+        ids = Program(code, "ids").run(project=self)[0]
+        regions = [Region(self, i) for i in ids]
+        return regions
         
     def save(self, force_save_as=False):
         """

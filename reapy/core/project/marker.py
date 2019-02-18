@@ -1,4 +1,6 @@
+import reapy
 from reapy import reascript_api as RPR
+from reapy.tools import Program
 
 class Marker:
 
@@ -15,13 +17,28 @@ class Marker:
         self.project_id = parent_project_id
         self.index = index
         
+    def _get_enum_index(self):
+        """
+        Return marker index as needed by RPR.EnumProjectMarkers2.
+        """
+        code = """
+        index = [
+            i for i, m in enumerate(project.markers)
+            if m.index == marker.index
+        ][0]
+        """
+        index = Program(code, "index").run(
+            marker=self, project=reapy.Project(self.project_id)
+        )[0]
+        return index
+        
     def _to_dict(self):
         return {
             "__reapy__": True,
             "class": "Marker",
             "args": (),
             "kwargs": {
-                "index": self.index, "parent_project_id": self.envelope_id
+                "index": self.index, "parent_project_id": self.project_id
             }
         }
         
@@ -30,3 +47,34 @@ class Marker:
         Delete marker.
         """
         RPR.DeleteProjectMarker(self.project_id, self.index, False)
+        
+    @property
+    def position(self):
+        """
+        Return marker position.
+        
+        Returns
+        -------
+        position : float
+            Marker position in seconds.
+        """
+        code = """
+        index = marker._get_enum_index()
+        position = RPR.EnumProjectMarkers2(
+            marker.project_id, index, 0, 0, 0, 0, 0
+        )[4]
+        """
+        position = Program(code, "position").run(marker=self)[0]
+        return position
+        
+    @position.setter
+    def position(self, position):
+        """
+        Set marker position.
+        
+        Parameters
+        ----------
+        position : float
+            Marker position in seconds.
+        """
+        RPR.SetProjectMarker2(self.project_id, self.index, False, position, 0, "")
