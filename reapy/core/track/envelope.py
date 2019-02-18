@@ -41,6 +41,19 @@ class Envelope:
         item = AutomationItem(envelope=self, index=item_index)
         return item
         
+    def delete_points_in_range(self, start, end):
+        """
+        Delete envelope points between `start` and `end`.
+        
+        Parameters
+        ----------
+        start : float
+            Range start in seconds.
+        end : float
+            Range end in seconds.
+        """
+        RPR.DeleteEnvelopePointRange(self.id, start, end)
+        
     @property
     def items(self):
         """

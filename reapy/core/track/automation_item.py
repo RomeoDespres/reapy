@@ -17,6 +17,21 @@ class AutomationItem:
             "kwargs": {"index": self.index, "envelope_id": self.envelope_id}
         }
         
+    def delete_points_in_range(self, start, end):
+        """
+        Delete points between `start` and `end`.
+        
+        Parameters
+        ----------
+        start : float
+            Range start in seconds.
+        end : float
+            Range end in seconds.
+        """
+        RPR.DeleteEnvelopePointRangeEx(
+            self.envelope_id, self.index, start, end
+        )
+        
     @property
     def length(self):
         """
