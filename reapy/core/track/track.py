@@ -244,7 +244,7 @@ class Track:
         """
         Make track the only selected track in parent project.
         """
-        RPR.SetOnlyTrackSelected(self.)
+        RPR.SetOnlyTrackSelected(self.id)
             
     @property
     def n_envelopes(self):

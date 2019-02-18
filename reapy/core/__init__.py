@@ -1,10 +1,15 @@
 __all__ = [
+    # core.project
     "Project",
+    "Marker",
+    "Region",
     "TimeSelection",
+    #core.item
     "Item",
     "MIDIItem",
     "Take",
     "Source",
+    #core.track
     "Track",
     "Envelope",
     "AutomationItem"
@@ -12,6 +17,7 @@ __all__ = [
 
 from .project.project import Project
 from .project.marker import Marker
+from .project.region import Region
 from .project.time_selection import TimeSelection
 from .item.item import Item, MIDIItem
 from .item.take import Take

@@ -97,7 +97,7 @@ DB2SLIDER,TODO
 DeleteEnvelopePointRange,Envelope.delete_points_in_range
 DeleteEnvelopePointRangeEx,AutomationItem.delete_points_in_range
 DeleteExtState,delete_ext_state
-DeleteProjectMarker,TODO
+DeleteProjectMarker,Marker.delete;Region.delete
 DeleteProjectMarkerByIndex,TODO
 DeleteTakeStretchMarkers,TODO
 DeleteTempoTimeSigMarker,TODO

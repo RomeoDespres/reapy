@@ -1,6 +1,6 @@
 from reapy import reascript_api as RPR
 
-class Marker:
+class Region:
 
     def __init__(
         self, parent_project=None, index=None, parent_project_id=None
@@ -18,7 +18,7 @@ class Marker:
     def _to_dict(self):
         return {
             "__reapy__": True,
-            "class": "Marker",
+            "class": "Region",
             "args": (),
             "kwargs": {
                 "index": self.index, "parent_project_id": self.envelope_id
@@ -27,6 +27,6 @@ class Marker:
         
     def delete(self):
         """
-        Delete marker.
+        Delete region.
         """
-        RPR.DeleteProjectMarker(self.project_id, self.index, False)
+        RPR.DeleteProjectMarker(self.project_id, self.index, True)

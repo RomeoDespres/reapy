@@ -53,8 +53,8 @@ class Project:
             
         Returns
         -------
-        marker_id : int
-            The marker index.
+        marker : Marker
+            New marker.
             
         Notes
         -----
@@ -67,11 +67,12 @@ class Project:
         marker_id = RPR.AddProjectMarker2(
             self.id, False, position, 0, name, -1, color
         )
-        return marker_id
+        marker = Marker(self, marker_id)
+        return marker
     
     def add_region(self, start, end, name="", color=0):
         """
-        Create new marker and return its index.
+        Create new region region and return its index.
         
         Parameters
         ----------
@@ -82,20 +83,21 @@ class Project:
         name : str, optional
             Region name.
         color : int or tuple of int, optional
-            Marker color. Integers correspond to REAPER native colors.
+            Region color. Integers correspond to REAPER native colors.
             Tuple must be RGB triplets of integers between 0 and 255.
             
         Returns
         -------
-        region_id : int
-            The region index.
+        region : Region
+            New region.
         """
         if isinstance(color, tuple):
             color = reapy.rgb_to_native(color)
         region_id = RPR.AddProjectMarker2(
             self.id, True, start, end, name, -1, color
         )
-        return region_id
+        region = Region(self, region_id)
+        return region
         
     def add_track(self, index=0):
         """
@@ -428,7 +430,7 @@ class Project:
     @property
     def n_markers(self):
         """
-        Return number of markers in project.
+        Return number of markers a in project.
         
         Returns
         -------
@@ -773,6 +775,8 @@ class Project:
  
 
 from ..item.item import Item
-from ..track.track import Track
 from ..track.envelope import Envelope
+from ..track.track import Track
+from .marker import Marker
+from .region import Region
 from .time_selection import TimeSelection
