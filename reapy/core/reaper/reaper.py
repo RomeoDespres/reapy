@@ -58,6 +58,12 @@ def clear_console():
     """
     RPR.ClearConsole()
     
+def clear_peak_cache():
+    """
+    Reset global peak cache.
+    """
+    RPR.ClearPeakCache()
+    
 def delete_ext_state(section, key, persist=False):
     """
     Delete extended state value for a given section and key.

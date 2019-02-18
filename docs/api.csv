@@ -19,7 +19,7 @@ AudioAccessorValidateState,TODO
 BypassFxAllTracks,Project.bypass_fx_on_all_tracks
 ClearAllRecArmed,Project.disarm_rec_on_all_tracks
 ClearConsole,clear_console
-ClearPeakCache,TODO
+ClearPeakCache,clear_peak_cache
 ColorFromNative,rgb_from_native
 ColorToNative,rgb_to_native
 CountAutomationItems,Envelope.n_items
