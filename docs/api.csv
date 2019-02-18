@@ -434,7 +434,7 @@ RecursiveCreateDirectory,TODO
 RefreshToolbar,TODO
 RefreshToolbar2,TODO
 relative_fn,TODO
-RemoveTrackSend,TODO
+RemoveTrackSend,Send.delete
 RenderFileSection,TODO
 ReorderSelectedTracks,TODO
 Resample_EnumModes,TODO

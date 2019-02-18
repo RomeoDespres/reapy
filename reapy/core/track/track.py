@@ -87,7 +87,8 @@ class Track:
         if isinstance(destination, Track):
             destination = destination.id
         send_id = RPR.CreateTrackSend(self.id, destination)
-        send = Send(self, send_id)
+        type = "hardware" if destination is None else "send"
+        send = Send(self, send_id, type=type)
         return send
         
     @property
