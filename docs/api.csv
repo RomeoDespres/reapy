@@ -133,7 +133,7 @@ Envelope_GetParentTrack,TODO
 Envelope_SortPoints,TODO
 Envelope_SortPointsEx,TODO
 ExecProcess,TODO
-file_exists,TODO
+file_exists,os.path.isfile
 FindTempoTimeSigMarker,TODO
 format_timestr,TODO
 format_timestr_len,TODO
