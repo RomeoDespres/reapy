@@ -280,6 +280,11 @@ class Track:
         """
         n_envelopes = RPR.CountTrackEnvelopes(self.id)
         return n_envelopes
+        
+    @property
+    def n_hardware_sends(self):
+        n_hardware_sends = RPR.GetTrackNumSends(self.id, 1)
+        return n_hardware_sends
             
     @property
     def n_items(self):
@@ -293,6 +298,16 @@ class Track:
         """
         n_items = RPR.CountTrackMediaItems(self.id)
         return n_items
+        
+    @property
+    def n_receives(self):
+        n_receives = RPR.GetTrackNumSends(self.id, -1)
+        return n_receives
+        
+    @property
+    def n_sends(self):
+        n_sends = RPR.GetTrackNumSends(self.id, 0)
+        return n_sends
         
     @property
     def name(self):
@@ -313,6 +328,14 @@ class Track:
         Select track.
         """
         RPR.SetTrackSelected(self.id, True)
+        
+    @property
+    def sends(self):
+        code = """
+        sends = [Send(track, i, type="send") for i in range(track.n_sends)]
+        """
+        sends = Program(code, "sends").run(track=self)[0]
+        return sends
         
     def unselect(self):
         """

@@ -114,8 +114,8 @@ DockWindowRefreshForHWND,TODO
 DockWindowRemove,TODO
 EditTempoTimeSigMarker,TODO
 EnsureNotCompletelyOffscreen,TODO
-EnumerateFiles,TODO
-EnumerateSubdirectories,TODO
+EnumerateFiles,os.listdir
+EnumerateSubdirectories,os.listdir
 EnumPitchShiftModes,TODO
 EnumPitchShiftSubModes,TODO
 EnumProjectMarkers,Project.markers;Project.regions
@@ -291,8 +291,8 @@ GetTrackMIDINoteName,TODO
 GetTrackMIDINoteNameEx,TODO
 GetTrackMIDINoteRange,TODO
 GetTrackName,Track.name
-GetTrackNumMediaItems,TODO
-GetTrackNumSends,TODO
+GetTrackNumMediaItems,Track.n_items
+GetTrackNumSends,Track.n_sends;Track.n_receives
 GetTrackReceiveName,TODO
 GetTrackReceiveUIMute,TODO
 GetTrackReceiveUIVolPan,TODO
