@@ -9,6 +9,14 @@ class Envelope:
     def __init__(self, id):
         self.id = id
         
+    def _to_dict(self):
+        return {
+            "__reapy__": True,
+            "class": "Envelope",
+            "args": (self.id,),
+            "kwargs": {}
+        }
+        
     def add_item(self, position=0., length=1., pool=0):
         """
         Add automation item to envelope.

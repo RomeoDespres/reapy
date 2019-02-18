@@ -10,6 +10,14 @@ class Item:
 
     def __eq__(self, other):
         return self.id == other.id and isinstance(other, Item)
+        
+    def _to_dict(self):
+        return {
+            "__reapy__": True,
+            "class": "Item",
+            "args": (self.id,),
+            "kwargs": {}
+        }
 
     @property
     def active_take(self):

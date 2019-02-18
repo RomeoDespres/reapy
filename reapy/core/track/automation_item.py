@@ -3,9 +3,19 @@ from reapy import reascript_api as RPR
 
 class AutomationItem:
 
-    def __init__(self, envelope, index):
-        self.envelope_id = envelope.id
+    def __init__(self, envelope=None, index=0, envelope_id=None):
+        if envelope is not None:
+            envelope_id = envelope.id
+        self.envelope_id = envelope_id
         self.index = index
+        
+    def _to_dict(self):
+        return {
+            "__reapy__": True,
+            "class": "AutomationItem",
+            "args": (),
+            "kwargs": {"index": self.index, "envelope_id": self.envelope_id}
+        }
         
     @property
     def length(self):

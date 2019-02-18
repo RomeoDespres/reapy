@@ -29,6 +29,14 @@ class Project:
     def __eq__(self, other):
         return self.id == other.id
         
+    def _to_dict(self):
+        return {
+            "__reapy__": True,
+            "class": "Project",
+            "args": (self.id,),
+            "kwargs": {}
+        }
+        
     def add_marker(self, position, name="", color=0):
         """
         Create new marker and return its index.

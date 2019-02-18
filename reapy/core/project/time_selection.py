@@ -4,8 +4,10 @@ from reapy.tools import Program
 
 class TimeSelection:    
     
-    def __init__(self, parent_project):
-        self.project_id = parent_project.id
+    def __init__(self, parent_project=None, parent_project_id=None):
+        if parent_project is not None:
+            parent_project_id = parent_project.id
+        self.project_id = parent_project_id
         
     def _get_infos(self):
         """
@@ -20,6 +22,14 @@ class TimeSelection:
             self.project_id, False, False, 0, 0, False
         )
         return infos
+        
+    def _to_dict(self):
+        return {
+            "__reapy__": True,
+            "class": "TimeSelection",
+            "args": (),
+            "kwargs": {"parent_project_id": self.project_id}
+        }
         
     @property
     def end(self):

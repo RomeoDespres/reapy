@@ -1,7 +1,7 @@
+from reapy.errors import DisconnectedClientError, DistError
+from reapy.tools import json
 from .socket import Socket
-from .errors import DisconnectedClientError, DistError
 
-import json
 
 class Client(Socket):
 

@@ -11,6 +11,14 @@ class Track:
             id = RPR.GetTrack(project.id, id)
         self.id = id
         
+    def _to_dict(self):
+        return {
+            "__reapy__": True,
+            "class": "Track",
+            "args": (self.id,),
+            "kwargs": {}
+        }
+        
     def add_item(self):
         """
         Create new item on track and return it.

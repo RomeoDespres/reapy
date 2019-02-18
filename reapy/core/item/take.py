@@ -10,6 +10,14 @@ class Take:
     def __eq__(self, other):
         return self.id == other.id
         
+    def _to_dict(self):
+        return {
+            "__reapy__": True,
+            "class": "Take",
+            "args": (self.id,),
+            "kwargs": {}
+        }
+        
     def get_info_value(self, param_name):
         value = RPR.GettakeInfo_Value(self.id, param_name)
         return value

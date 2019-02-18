@@ -1,5 +1,5 @@
 import reapy
-from .errors import OutsideREAPERError
+from reapy.errors import OutsideREAPERError
 
 from configparser import ConfigParser
 import json, os

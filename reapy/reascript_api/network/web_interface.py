@@ -1,10 +1,10 @@
-from .errors import DisabledDistAPIError, UndefinedExtStateError
+from reapy.errors import DisabledDistAPIError, UndefinedExtStateError
+from reapy.tools import json
 from urllib import request
 from urllib.error import URLError
 
 import reapy
 
-import json
 
 class WebInterface:
 

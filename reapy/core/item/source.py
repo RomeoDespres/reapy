@@ -8,6 +8,14 @@ class Source:
 
     def __eq__(self, other):
         return self.id == other.id and isinstance(other, Source)
+        
+    def _to_dict(self):
+        return {
+            "__reapy__": True,
+            "class": "Source",
+            "args": (self.id,),
+            "kwargs": {}
+        }
 
     @property
     def filename(self):
