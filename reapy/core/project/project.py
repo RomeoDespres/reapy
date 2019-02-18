@@ -171,6 +171,23 @@ class Project:
         """
         RPR.SetCurrentBPM(self.id, bpm, True)
         
+    def bypass_fx_on_all_tracks(self, bypass=True):
+        """
+        Bypass or un-bypass FX on all tracks.
+        
+        Parameters
+        ----------
+        bypass : bool
+            Whether to bypass or un-bypass FX.
+        """
+        code = """
+        current_project = reapy.Project()
+        reapy.Project(project_id).make_current_project()
+        RPR.BypassFxAllTracks(bypass)
+        current_project.make_current_project()
+        """
+        Program(code).run(project_id=self.id, bypass=bypass)
+        
     @property
     def can_redo(self):
         """

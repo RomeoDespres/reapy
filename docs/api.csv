@@ -16,7 +16,7 @@ Audio_IsPreBuffer,audio.is_prebuffer
 Audio_IsRunning,audio.is_running
 Audio_Quit,audio.quit
 AudioAccessorValidateState,TODO
-BypassFxAllTracks,TODO
+BypassFxAllTracks,Project.bypass_fx_on_all_tracks
 ClearAllRecArmed,TODO
 ClearConsole,clear_console
 ClearPeakCache,TODO
