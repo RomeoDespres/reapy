@@ -69,6 +69,27 @@ class Track:
         item = MIDIItem(item_id)
         return item
         
+    def add_send(self, destination=None):
+        """
+        Add send to track and return it.
+        
+        Parameters
+        ----------
+        destination : Track or None
+            Send destination (default=None). If None, destination is
+            set to hardware output.
+            
+        Returns
+        -------
+        send : Send
+            New send on track.
+        """
+        if isinstance(destination, Track):
+            destination = destination.id
+        send_id = RPR.CreateTrackSend(self.id, destination)
+        send = Send(self, send_id)
+        return send
+        
     @property
     def automation_mode(self):
         """
@@ -301,3 +322,4 @@ class Track:
   
 from ..item.item import Item, MIDIItem
 from .envelope import Envelope, UNDEFINED_ENVELOPE_ID
+from .send import Send

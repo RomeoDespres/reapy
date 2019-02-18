@@ -40,7 +40,7 @@ CountTracks,Project.n_tracks
 CreateNewMIDIItemInProj,Track.add_midi_item
 CreateTakeAudioAccessor,TODO
 CreateTrackAudioAccessor,TODO
-CreateTrackSend,TODO
+CreateTrackSend,Track.add_send
 CSurf_FlushUndo,TODO
 CSurf_GetTouchState,TODO
 CSurf_GoEnd,TODO
