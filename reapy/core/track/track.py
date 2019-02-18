@@ -19,17 +19,36 @@ class Track:
             "kwargs": {}
         }
         
-    def add_item(self):
+    def add_item(self, start=0, end=None, length=0):
         """
         Create new item on track and return it.
+        
+        Parameters
+        ----------
+        start : float, optional
+            New item start in seconds (default=0).
+        end : float, optional
+            New item end in seconds (default None). If None, `length`
+            is used instead.
+        length : float, optional
+            New item length in seconds (default 0).
         
         Returns
         -------
         item : Item
             New item on track.
         """
-        item_id = RPR.AddMediaItemToTrack(self.id)
-        item = Item(item_id)
+        if end is None:
+            end = start + length
+        code = """
+        item_id = RPR.AddMediaItemToTrack(track_id)
+        item = reapy.Item(item_id)
+        item.position = start
+        item.length = end - start
+        """
+        item = Program(code, "item").run(
+            track_id=self.id, start=start, end=end
+        )[0]
         return item
         
     def add_midi_item(self, start=0, end=1, quantize=False):
