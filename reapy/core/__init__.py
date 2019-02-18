@@ -2,6 +2,7 @@ __all__ = [
     "Project",
     "TimeSelection",
     "Item",
+    "MIDIItem",
     "Take",
     "Source",
     "Track",
@@ -11,7 +12,7 @@ __all__ = [
 
 from .project.project import Project
 from .project.time_selection import TimeSelection
-from .item.item import Item
+from .item.item import Item, MIDIItem
 from .item.take import Take
 from .item.source import Source
 from .track.track import Track

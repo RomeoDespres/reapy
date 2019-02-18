@@ -32,6 +32,24 @@ class Track:
         item = Item(item_id)
         return item
         
+    def add_midi_item(self, start=0, end=1, quantize=False):
+        """
+        Add empty MIDI item to track and return it.
+        
+        Parameters
+        ----------
+        start : float, optional
+            New item start in seconds (or beats if `quantize`=True).
+        end : float, optional
+            New item end in seconds (or beats if `quantize`=True).
+        quantize : boo, optional
+            Whether to count time in beats (True) or seconds (False,
+            default).
+        """
+        item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)
+        item = MIDIItem(item_id)
+        return item
+        
     @property
     def automation_mode(self):
         """
@@ -256,5 +274,5 @@ class Track:
         RPR.SetTrackSelected(self.id, False)
   
   
-from ..item.item import Item
+from ..item.item import Item, MIDIItem
 from .envelope import Envelope, UNDEFINED_ENVELOPE_ID

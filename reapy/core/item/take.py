@@ -58,6 +58,19 @@ class Take:
         Make take active.
         """
         RPR.SetActiveTake(self.id)
+        
+    @property
+    def n_envelopes(self):
+        """
+        Return number of envelopes on take.
+        
+        Returns
+        -------
+        n_envelopes : int
+            Number of envelopes on take.
+        """
+        n_envelopes = RPR.CountTakeEnvelopes(self.id)
+        return n_envelopes
 
     @property
     def source(self):

@@ -478,6 +478,19 @@ class Project:
         return n_tracks
         
     @property
+    def n_tempo_markers(self):
+        """
+        Return number of tempo/time signature markers in project.
+        
+        Returns
+        -------
+        n_tempo_markers : int
+            Number of tempo/time signature markers in project.
+        """
+        n_tempo_markers = RPR.CountTempoTimeSigMarkers(self.id)
+        return n_tempo_markers
+        
+    @property
     def n_tracks(self):
         """
         Return the number of tracks in project.

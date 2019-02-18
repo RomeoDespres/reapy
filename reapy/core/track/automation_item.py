@@ -56,7 +56,7 @@ class AutomationItem:
         n_points : int
             Number of automation points in item.
         """
-        n_points = RPR.CountAutomationPointsEx(self.envelope_id, self.index)
+        n_points = RPR.CountEnvelopePointsEx(self.envelope_id, self.index)
         return n_points
         
     @property

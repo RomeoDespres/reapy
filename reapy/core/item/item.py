@@ -211,6 +211,10 @@ class Item:
         if not success:
             raise Exception("Couldn't move item to track.")
 
+class MIDIItem(Item):
+
+    pass
+
 
 from ..project.project import Project
 from ..track.track import Track
