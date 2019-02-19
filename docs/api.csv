@@ -600,7 +600,7 @@ TrackFX_GetPresetIndex,TrackFX.preset_index
 TrackFX_GetRecChainVisible,TODO
 TrackFX_GetRecCount,TODO
 TrackFX_GetUserPresetFilename,TrackFX.preset_file
-TrackFX_NavigatePresets,TODO
+TrackFX_NavigatePresets,TrackFX.use_next_preset;TrackFX.use_previous_preset
 TrackFX_SetEnabled,TrackFX.enable;.disable
 TrackFX_SetEQBandEnabled,TODO
 TrackFX_SetEQParam,TODO

@@ -161,6 +161,9 @@ class TrackFX(ReapyObject):
     def name(self):
         name = RPR.TrackFX_GetFXName(self.track_id, self.index, "", 2048)[3]
         return name
+            
+    def open_ui(self):
+        self.is_ui_open = True
         
     @property
     def params(self):
@@ -206,8 +209,11 @@ class TrackFX(ReapyObject):
         )[2]
         return file
         
-    def open_ui(self):
-        self.is_ui_open = True
+    def use_previous_preset(self):
+        RPR.TrackFX_NavigatePresets(self.track_id, self.index, -1)
+        
+    def use_next_preset(self):
+        RPR.TrackFX_NavigatePresets(self.track_id, self.index, 1)
         
 class TrackFXParam(float):    
 
