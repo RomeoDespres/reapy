@@ -1,6 +1,8 @@
 class ReapyObject:
 
     """Base class for reapy objects."""
+    
+    _class_name = "ReapyObject"
 
     def __repr__(self):
         def to_str(x):
@@ -21,10 +23,6 @@ class ReapyObject:
     @property
     def _args(self):
         return ()
-        
-    @property
-    def _class_name(self):
-        return "ReapyObject"
     
     @property
     def _is_defined(self):
