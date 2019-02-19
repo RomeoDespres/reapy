@@ -156,6 +156,24 @@ class Item(ReapyObject):
         project_id = RPR.GetItemProjectContext(self.id)
         project = Project(project_id)
         return project
+        
+    def split(self, position):
+        """
+        Split item and return left and right parts.
+        
+        Parameters
+        ----------
+        position : float
+            Split position in seconds.
+        
+        Returns
+        -------
+        left, right : Item
+            Left and right parts of the split.
+        """
+        right_id = RPR.SplitMediaItem(self.id, position)
+        left, right = self, Item(right_id)
+        return left, right
 
     @property
     def takes(self):

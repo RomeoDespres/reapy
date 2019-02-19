@@ -500,7 +500,7 @@ SLIDER2DB,slider_to_dB
 SnapToGrid,TODO
 SoloAllTracks,TODO
 Splash_GetWnd,TODO
-SplitMediaItem,TODO
+SplitMediaItem,Item.split
 stringToGuid,TODO
 StuffMIDIMessage,TODO
 TakeFX_AddByName,TODO
