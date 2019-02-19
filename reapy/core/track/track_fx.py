@@ -151,9 +151,21 @@ class TrackFX(ReapyObject):
         return n_params
         
     @property
+    def n_presets(self):
+        n_presets = RPR.TrackFX_GetPresetIndex(
+            self.track_id, self.index, 0
+        )[-1]
+        return n_presets
+        
+    @property
     def name(self):
         name = RPR.TrackFX_GetFXName(self.track_id, self.index, "", 2048)[3]
         return name
+        
+    @property
+    def params(self):
+        params = TrackFXParamsList(self)
+        return params
         
     @property
     def parent_track(self):
@@ -167,10 +179,83 @@ class TrackFX(ReapyObject):
         
     @preset.setter
     def preset(self, preset):
-        RPR.TrackFX_SetPreset(self.track_id, self.index, preset)
+        """
+        Set FX preset.
+        
+        Parameters
+        ----------
+        preset : str or int
+            If str, preset name or path to .vstpreset file. If int,
+            preset index. Set to -2 for factory preset, and -1 for user
+            default preset.
+        """
+        if isinstance(preset, str):
+            RPR.TrackFX_SetPreset(self.track_id, self.index, preset)
+        elif isinstance(preset, int):
+            RPR.TrackFX_SetPresetByIndex(self.track_id, self.index, preset)
+        
+    @property
+    def preset_index(self):
+        index = RPR.TrackFX_GetPresetIndex(self.track_id, self.index, 0)[0]
+        return index
+    
+    @property
+    def preset_file(self):
+        file = RPR.TrackFX_GetUserPresetFilename(
+            self.track_id, self.index, "", 2048
+        )[2]
+        return file
         
     def open_ui(self):
         self.is_ui_open = True
+        
+class TrackFXParam(float):    
+
+    @property
+    def name(self):
+        l = self.parent_list
+        name = RPR.TrackFX_GetParamName(
+            l.track_id, l.fx_index, self.index, "", 2048
+        )[4]
+        return name
+        
+    @property
+    def range(self):
+        l = self.parent_list
+        min, max = RPR.TrackFX_GetParam(
+            l.track_id, l.fx_index, self.index, 0, 0
+        )[-2:]
+        return min, max
+        
+class TrackFXParamsList(ReapyObject):
+
+    _class_name = "TrackFXParamList"
+    
+    def __init__(
+        self, parent_fx=None, parent_track_id=None, parent_fx_index=None
+    ):
+        if parent_fx_index is None:
+            parent_fx_index = parent_fx.index
+        if parent_track_id is None:
+            parent_track_id = parent_fx.track_id
+        self.track_id = parent_track_id
+        self.fx_index = parent_fx_index
+        
+    def __getitem__(self, i):
+        value = RPR.TrackFX_GetParam(self.track_id, self.fx_index, i, 0, 0)[0]
+        param = TrackFXParam(value)
+        param.parent_list = self
+        param.index = i
+        return param
+        
+    def __setitem__(self, i, value):
+        RPR.TrackFX_SetParam(self.track_id, self.fx_index, i, value)
+    
+    @property
+    def _kwargs(self):
+        return {
+            "parent_fx_index": self.fx_index, "parent_track_id": self.track_id
+        }
         
         
 from .track import Track
