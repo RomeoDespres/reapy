@@ -607,7 +607,7 @@ TrackFX_SetEQParam,TODO
 TrackFX_SetNamedConfigParm,TODO
 TrackFX_SetOffline,TrackFX.make_online;TrackFX.make_offline
 TrackFX_SetOpen,TrackFX.open_ui;.close_ui
-TrackFX_SetParam,TODO
+TrackFX_SetParam,TrackFX.params
 TrackFX_SetParamNormalized,TODO
 TrackFX_SetPinMappings,TODO
 TrackFX_SetPreset,TrackFX.preset

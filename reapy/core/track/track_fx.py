@@ -1,5 +1,7 @@
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
+from reapy.errors import UndefinedFXParamError
+from reapy.tools import Program
 
 
 class TrackFX(ReapyObject):
@@ -235,7 +237,7 @@ class TrackFXParam(float):
         
 class TrackFXParamsList(ReapyObject):
 
-    _class_name = "TrackFXParamList"
+    _class_name = "TrackFXParamsList"
     
     def __init__(
         self, parent_fx=None, parent_track_id=None, parent_fx_index=None
@@ -248,20 +250,46 @@ class TrackFXParamsList(ReapyObject):
         self.fx_index = parent_fx_index
         
     def __getitem__(self, i):
+        if isinstance(i, str):
+            i = self._get_param_index(i)
         value = RPR.TrackFX_GetParam(self.track_id, self.fx_index, i, 0, 0)[0]
         param = TrackFXParam(value)
         param.parent_list = self
         param.index = i
         return param
         
+    def __len__(self):
+        length = self.parent_fx.n_params
+        return length
+        
     def __setitem__(self, i, value):
+        if isinstance(i, str):
+            i = self._get_param_index(i)
         RPR.TrackFX_SetParam(self.track_id, self.fx_index, i, value)
+        
+    def _get_param_index(self, name):
+        code = """
+        names = [l[i].name for i in range(len(l))]
+        try:
+            index = names.index(name)
+        except ValueError:
+            index = -1
+        """
+        index = Program(code, "index").run(name=name, l=self)[0]
+        if index == -1:
+            raise UndefinedFXParamError(self.parent_fx.name, name)
+        return index
     
     @property
     def _kwargs(self):
         return {
             "parent_fx_index": self.fx_index, "parent_track_id": self.track_id
         }
+        
+    @property
+    def parent_fx(self):
+        fx = TrackFX(parent_track_id=self.track_id, index=self.fx_index)
+        return fx
         
         
 from .track import Track
