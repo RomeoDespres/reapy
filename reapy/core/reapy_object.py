@@ -1,5 +1,23 @@
 class ReapyObject:
 
+    """Base class for reapy objects."""
+
+    def __repr__(self):
+        def to_str(x):
+            if isinstance(x, str):
+                return "\"{}\"".format(x)
+            return str(x)
+        args = ", ".join(map(to_str, self._args))
+        kwargs = ", ".join(
+            ("{}={}".format(k, to_str(v)) for k, v in self._kwargs.items())
+        )
+        if args and kwargs:
+            brackets = ", ".join((args, kwargs))
+        else:
+            brackets = args if args else kwargs
+        rep = "{}({})".format(self._class_name, brackets)
+        return rep
+
     @property
     def _args(self):
         return ()
