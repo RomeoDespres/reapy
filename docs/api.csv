@@ -93,7 +93,7 @@ CSurf_SetSurfaceVolume,TODO
 CSurf_SetTrackListChange,TODO
 CSurf_TrackFromID,TODO
 CSurf_TrackToID,TODO
-DB2SLIDER,TODO
+DB2SLIDER,dB_to_slider
 DeleteEnvelopePointRange,Envelope.delete_points_in_range
 DeleteEnvelopePointRangeEx,AutomationItem.delete_points_in_range
 DeleteExtState,delete_ext_state
@@ -496,7 +496,7 @@ ShowActionList,TODO
 ShowConsoleMsg,print;show_console_message
 ShowMessageBox,show_message_box
 ShowPopupMenu,TODO
-SLIDER2DB,TODO
+SLIDER2DB,slider_to_dB
 SnapToGrid,TODO
 SoloAllTracks,TODO
 Splash_GetWnd,TODO

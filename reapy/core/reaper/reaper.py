@@ -64,6 +64,27 @@ def clear_peak_cache():
     """
     RPR.ClearPeakCache()
     
+def dB_to_slider(db):
+    """
+    Convert decibel value to slider.
+    
+    Parameters
+    ----------
+    db : float
+        Decibel value.
+    
+    Returns
+    -------
+    slider : float
+        Slider value.
+        
+    See also
+    --------
+    slider_to_dB
+    """
+    sider = RPR.DB2SLIDER(db)
+    return slider
+    
 def delete_ext_state(section, key, persist=False):
     """
     Delete extended state value for a given section and key.
@@ -411,6 +432,27 @@ def show_message_box(text="", title="", type="ok"):
     status = RPR.ShowMessageBox(text, title, all_types[type])
     status = all_status[status]
     return status
+    
+def slider_to_dB(slider):
+    """
+    Convert slider value to decibel.
+    
+    Parameters
+    ----------
+    slider : float
+        Slider value.
+    
+    Returns
+    -------
+    db : float
+        Decibel value.
+        
+    See also
+    --------
+    dB_to_slider
+    """
+    db = RPR.SLIDER2DB(slider)
+    return db
     
 def update_arrange():
     """
