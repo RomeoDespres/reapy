@@ -1,8 +1,11 @@
 from reapy import reascript_api as RPR
+from reapy.core import ReapyObject
 from reapy.tools import Program
 
 
-class Send:
+class Send(ReapyObject):
+
+    _class_name = "Send"
 
     def __init__(self, track=None, index=0, track_id=None, type="send"):
         if track_id is None:
@@ -21,17 +24,13 @@ class Send:
         int_type = types[self.type]
         return int_type
     
-    def _to_dict(self):
+    @property
+    def _kwargs(self):
         return {
-                "__reapy__": True,
-                "class": "Send",
-                "args": (),
-                "kwargs": {
-                    "index": self.index,
-                    "track_id": self.track_id,
-                    "type": self.type
-                }
-            }
+            "index": self.index,
+            "track_id": self.track_id,
+            "type": self.type
+        }
     
     def delete(self):
         """

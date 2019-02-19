@@ -1,23 +1,22 @@
 import reapy
 from reapy import reascript_api as RPR
+from reapy.core import ReapyObject
 from reapy.tools import Program
 from reapy.errors import UndefinedEnvelopeError
 
 
-class Track:
+class Track(ReapyObject):
+
+    _class_name = "Track"
 
     def __init__(self, id, project=None):
         if isinstance(id, int):
             id = RPR.GetTrack(project.id, id)
         self.id = id
-        
-    def _to_dict(self):
-        return {
-            "__reapy__": True,
-            "class": "Track",
-            "args": (self.id,),
-            "kwargs": {}
-        }
+    
+    @property
+    def _args(self):
+        return (self.id,)
         
     def add_item(self, start=0, end=None, length=0):
         """
@@ -210,7 +209,7 @@ class Track:
             assert chunk_name is not None, message
             function, arg = RPR.GetTrackEnvelopeByChunkName, chunk_name
         envelope = Envelope(function(self.id, arg))
-        if envelope.id == UNDEFINED_ENVELOPE_ID:
+        if not envelope._is_defined:
             raise UndefinedEnvelopeError(index, name, chunk_name)
         return envelope
         
@@ -345,5 +344,5 @@ class Track:
   
   
 from ..item.item import Item, MIDIItem
-from .envelope import Envelope, UNDEFINED_ENVELOPE_ID
+from .envelope import Envelope
 from .send import Send

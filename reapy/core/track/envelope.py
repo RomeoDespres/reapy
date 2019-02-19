@@ -1,21 +1,17 @@
 from reapy import reascript_api as RPR
+from reapy.core import ReapyObject
 
 
-UNDEFINED_ENVELOPE_ID = "(TrackEnvelope*)0x0000000000000000"
+class Envelope(ReapyObject):
 
-
-class Envelope:
+    _class_name = "Envelope"
     
     def __init__(self, id):
         self.id = id
-        
-    def _to_dict(self):
-        return {
-            "__reapy__": True,
-            "class": "Envelope",
-            "args": (self.id,),
-            "kwargs": {}
-        }
+    
+    @property
+    def _args(self):
+        return (self.id,)
         
     def add_item(self, position=0., length=1., pool=0):
         """

@@ -1,23 +1,22 @@
 import reapy
 from reapy import reascript_api as RPR
+from reapy.core import ReapyObject
 from reapy.tools import Program
 
 
-class Item:
+class Item(ReapyObject):
+
+    _class_name = "Item"
 
     def __init__(self, id):
         self.id = id
 
     def __eq__(self, other):
         return self.id == other.id and isinstance(other, Item)
-        
-    def _to_dict(self):
-        return {
-            "__reapy__": True,
-            "class": "Item",
-            "args": (self.id,),
-            "kwargs": {}
-        }
+    
+    @property
+    def _args(self):
+        return (self.id,)
 
     @property
     def active_take(self):

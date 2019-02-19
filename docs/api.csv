@@ -123,7 +123,7 @@ EnumProjectMarkers2,Project.markers;Project.regions
 EnumProjectMarkers3,Project.markers;Project.regions
 EnumProjects,Project
 EnumProjExtState,TODO
-EnumRegionRenderMatrix,TODO
+EnumRegionRenderMatrix,Region.rendered_tracks
 EnumTrackMIDIProgramNames,TODO
 EnumTrackMIDIProgramNamesEx,TODO
 Envelope_Evaluate,TODO
@@ -477,7 +477,7 @@ SetProjectMarker4,Marker;Region
 SetProjectMarkerByIndex,Marker;Region
 SetProjectMarkerByIndex2,Marker;Region
 SetProjExtState,TODO
-SetRegionRenderMatrix,TODO
+SetRegionRenderMatrix,Region.add_rendered_track-s;.remove_rendered_track-s;
 SetTakeStretchMarker,TODO
 SetTakeStretchMarkerSlope,TODO
 SetTempoTimeSigMarker,TODO

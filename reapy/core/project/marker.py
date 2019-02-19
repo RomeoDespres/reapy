@@ -1,8 +1,12 @@
 import reapy
 from reapy import reascript_api as RPR
+from reapy.core import ReapyObject
 from reapy.tools import Program
 
-class Marker:
+
+class Marker(ReapyObject):
+
+    _class_name = "Marker"
 
     def __init__(
         self, parent_project=None, index=None, parent_project_id=None
@@ -31,15 +35,11 @@ class Marker:
             marker=self, project=reapy.Project(self.project_id)
         )[0]
         return index
-        
-    def _to_dict(self):
+     
+    @property
+    def _kwargs(self):
         return {
-            "__reapy__": True,
-            "class": "Marker",
-            "args": (),
-            "kwargs": {
-                "index": self.index, "parent_project_id": self.project_id
-            }
+            "index": self.index, "parent_project_id": self.project_id
         }
         
     def delete(self):

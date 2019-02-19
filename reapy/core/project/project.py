@@ -2,13 +2,16 @@
 
 import reapy
 from reapy import reascript_api as RPR
+from reapy.core import ReapyObject
 from reapy.tools import Program
 from reapy.errors import RedoError, UndoError
 
 
-class Project:
+class Project(ReapyObject):
 
     """REAPER project."""
+    
+    _class_name = "Project"
 
     def __init__(self, id=None, index=-1):
         """
@@ -28,14 +31,10 @@ class Project:
         
     def __eq__(self, other):
         return self.id == other.id
-        
-    def _to_dict(self):
-        return {
-            "__reapy__": True,
-            "class": "Project",
-            "args": (self.id,),
-            "kwargs": {}
-        }
+      
+    @property
+    def _args(self):
+        return (self.id,)
         
     def add_marker(self, position, name="", color=0):
         """

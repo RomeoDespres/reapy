@@ -1,7 +1,10 @@
 from reapy import reascript_api as RPR
+from reapy.core import ReapyObject
 
 
-class AutomationItem:
+class AutomationItem(ReapyObject):
+
+    _class_name = "AutomationItem"
 
     def __init__(self, envelope=None, index=0, envelope_id=None):
         if envelope is not None:
@@ -9,13 +12,9 @@ class AutomationItem:
         self.envelope_id = envelope_id
         self.index = index
         
-    def _to_dict(self):
-        return {
-            "__reapy__": True,
-            "class": "AutomationItem",
-            "args": (),
-            "kwargs": {"index": self.index, "envelope_id": self.envelope_id}
-        }
+    @property
+    def _kwargs(self):
+        return {"index": self.index, "envelope_id": self.envelope_id}
         
     def delete_points_in_range(self, start, end):
         """
