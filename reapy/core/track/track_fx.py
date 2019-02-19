@@ -160,6 +160,15 @@ class TrackFX(ReapyObject):
         track = Track(self.track_id)
         return track
         
+    @property
+    def preset(self):
+        preset = RPR.TrackFX_GetPreset(self.track_id, self.index, "", 2048)[3]
+        return preset
+        
+    @preset.setter
+    def preset(self, preset):
+        RPR.TrackFX_SetPreset(self.track_id, self.index, preset)
+        
     def open_ui(self):
         self.is_ui_open = True
         

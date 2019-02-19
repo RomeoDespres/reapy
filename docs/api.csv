@@ -142,8 +142,8 @@ genGuid,TODO
 get_ini_file,get_ini_file
 GetActiveTake,Item.active_take
 GetAllProjectPlayStates,TODO
-GetAppVersion,TODO
-GetArmedCommand,TODO
+GetAppVersion,get_reaper_version
+GetArmedCommand,get_armed_command
 GetAudioAccessorEndTime,TODO
 GetAudioAccessorHash,TODO
 GetAudioAccessorSamples,TODO
@@ -583,7 +583,7 @@ TrackFX_GetFloatingWindow,TODO
 TrackFX_GetFormattedParamValue,TODO
 TrackFX_GetFXGUID,TODO
 TrackFX_GetFXName,TrackFX.name
-TrackFX_GetInstrument,TODO
+TrackFX_GetInstrument,Track.instrument
 TrackFX_GetIOSize,TODO
 TrackFX_GetNamedConfigParm,TODO
 TrackFX_GetNumParams,TrackFX.n_params
@@ -595,7 +595,7 @@ TrackFX_GetParamEx,TODO
 TrackFX_GetParamName,TODO
 TrackFX_GetParamNormalized,TODO
 TrackFX_GetPinMappings,TODO
-TrackFX_GetPreset,TODO
+TrackFX_GetPreset,TrackFX.preset
 TrackFX_GetPresetIndex,TODO
 TrackFX_GetRecChainVisible,TODO
 TrackFX_GetRecCount,TODO
@@ -610,7 +610,7 @@ TrackFX_SetOpen,TrackFX.open_ui;.close_ui
 TrackFX_SetParam,TODO
 TrackFX_SetParamNormalized,TODO
 TrackFX_SetPinMappings,TODO
-TrackFX_SetPreset,TODO
+TrackFX_SetPreset,TrackFX.preset
 TrackFX_SetPresetByIndex,TODO
 TrackFX_Show,TODO
 TrackList_AdjustWindows,TODO

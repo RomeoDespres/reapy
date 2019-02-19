@@ -225,6 +225,20 @@ class Track(ReapyObject):
         if not envelope._is_defined:
             raise UndefinedEnvelopeError(index, name, chunk_name)
         return envelope
+    
+    @property
+    def instrument(self):
+        """
+        Return first instrument FX on track if it exists.
+        
+        Returns
+        -------
+        instrument : TrackFX or None
+            First instrument FX on track if it exists, else None.
+        """
+        fx_index = RPR.TrackFX_GetInstrument(self.id)
+        instrument = None if fx_index == -1 else TrackFX(self, fx_index)
+        return instrument
         
     @property
     def items(self):

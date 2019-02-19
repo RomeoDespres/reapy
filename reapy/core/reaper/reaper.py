@@ -107,6 +107,12 @@ def disarm_command():
     """
     arm_command(0)
     
+def get_armed_command():
+    command_id, section, _ = RPR.GetArmedCommand("", 2048)
+    if command_id == 0:
+        return
+    return command_id, section
+    
 def get_command_id(command_name):
     """
     Return ID of command with a given name.
@@ -219,6 +225,10 @@ def get_ini_file():
     """
     path = RPR.get_ini_file()
     return path
+    
+def get_reaper_version():
+    version = RPR.GetAppVersion()
+    return version
     
 def get_resource_path():
     """
