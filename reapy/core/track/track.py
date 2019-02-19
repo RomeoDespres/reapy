@@ -180,6 +180,19 @@ class Track(ReapyObject):
         depth = RPR.GetTrackDepth(self.id)
         return depth
         
+    @property
+    def fxs(self):
+        """
+        Return list of FXs on track.
+        
+        Returns
+        -------
+        fxs : list of TrackFX
+            List of FXs on track.
+        """
+        fxs = [TrackFX(self, i) for i in range(self.n_fxs)]
+        return fxs
+        
     def get_envelope(self, index=None, name=None, chunk_name=None):
         """
         Return track envelope for a given index, name or chunk name.
@@ -281,6 +294,19 @@ class Track(ReapyObject):
         return n_envelopes
         
     @property
+    def n_fxs(self):
+        """
+        Return number of FXs on track.
+        
+        Returns
+        -------
+        n_fxs : int
+            Number of FXs on track.
+        """
+        n_fxs = RPR.TrackFX_GetCount(self.id)
+        return n_fxs
+        
+    @property
     def n_hardware_sends(self):
         n_hardware_sends = RPR.GetTrackNumSends(self.id, 1)
         return n_hardware_sends
@@ -346,3 +372,4 @@ class Track(ReapyObject):
 from ..item.item import Item, MIDIItem
 from .envelope import Envelope
 from .send import Send
+from .track_fx import TrackFX

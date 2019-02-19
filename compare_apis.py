@@ -9,6 +9,7 @@ print("{:.1f}% done ({}/{})".format(done.mean()*100, done.sum(), len(done)))
 
 classes = (
     "track",
+    "trackfx",
     "envelope",
     "automationitem",
     "mediaitemtake",

@@ -10,9 +10,10 @@ from .item.take import Take
 from .item.source import Source
 
 from .track.track import Track
-from .track.envelope import Envelope
 from .track.automation_item import AutomationItem
+from .track.envelope import Envelope
 from .track.send import Send
+from .track.track_fx import TrackFX
 
 
 __all__ = [
@@ -32,5 +33,6 @@ __all__ = [
     "Track",
     "Envelope",
     "AutomationItem",
-    "Send"
+    "Send",
+    "TrackFX"
 ]
