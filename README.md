@@ -12,14 +12,15 @@
 pip install python-reapy
 ```
 
-2. Then in REAPER, execute a new ReaScript containing the following:
+2. Then run:
 
-```python
-import reapy
-reapy.config.enable_dist_api()
+```
+python -m reapy
 ```
 
-You can create new ReaScripts by going to *Actions > Show action list > Reascript : New...*.
+Paths to your Python DLL and to `reapy` configuration scripts get printed. If you haven't enabled Python in REAPER yet, go to *Options > Preferences... > Plug-ins > ReaScript*. Check "Enable Python for use with ReaScript", and fill "Custom path to Python dll directory" and "Force ReaScript to use specific Python .dll" with the directory path and the file name of the Python DLL.
+
+Then enable `reapy` dist API by running the corresponding ReaScript (*Actions > Show action list > Reascript : Load...* and browse for the given path).
 
 3. You're all set! You can now import `reapy` from inside or outside REAPER as any standard Python module.
 
