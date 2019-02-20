@@ -84,7 +84,7 @@ In the example below, one can see how to make use of ``Program`` to improve effi
 
 Note that the modules ``reapy`` and ``reascript_api`` (as `RPR`) are always available in ``Program``. Any other needed module must be explicitly imported in the ``code``.
 
-::
+
     >>> import reapy
     >>> project = reapy.Project() # Current project
     >>>
