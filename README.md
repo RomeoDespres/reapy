@@ -95,7 +95,7 @@ Note that the modules `reapy` and `reascript_api` (as `RPR`) are always availabl
 
 ### More
 
-Check the [documentation](https://python-reapy.readthedocs.io/ reapy online documentation) for more information.
+Check the [documentation](https://python-reapy.readthedocs.io/ "reapy online documentation") for more information.
 
 ## Author
 
