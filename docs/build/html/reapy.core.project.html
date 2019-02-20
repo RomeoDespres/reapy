@@ -37,13 +37,44 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-reapy.core.project.marker">
+<span id="reapy-core-project-marker-module"></span><h2>reapy.core.project.marker module<a class="headerlink" href="#module-reapy.core.project.marker" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reapy.core.project.marker.Marker">
+<em class="property">class </em><code class="descclassname">reapy.core.project.marker.</code><code class="descname">Marker</code><span class="sig-paren">(</span><em>parent_project=None</em>, <em>index=None</em>, <em>parent_project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/marker.html#Marker"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.marker.Marker" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
+<dl class="method">
+<dt id="reapy.core.project.marker.Marker.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/marker.html#Marker.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.marker.Marker.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete marker.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.marker.Marker.position">
+<code class="descname">position</code><a class="headerlink" href="#reapy.core.project.marker.Marker.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return marker position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>position</strong> – Marker position in seconds.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-reapy.core.project.project">
 <span id="reapy-core-project-project-module"></span><h2>reapy.core.project.project module<a class="headerlink" href="#module-reapy.core.project.project" title="Permalink to this headline">¶</a></h2>
 <p>Defines class Project.</p>
 <dl class="class">
 <dt id="reapy.core.project.project.Project">
 <em class="property">class </em><code class="descclassname">reapy.core.project.project.</code><code class="descname">Project</code><span class="sig-paren">(</span><em>id=None</em>, <em>index=-1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
 <p>REAPER project.</p>
 <dl class="method">
 <dt id="reapy.core.project.project.Project.add_marker">
@@ -61,10 +92,10 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>marker_id</strong> – The marker index.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>marker</strong> – New marker.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="reapy.core.html#reapy.core.Marker" title="reapy.core.Marker">Marker</a></p>
 </td>
 </tr>
 </tbody>
@@ -78,7 +109,7 @@ be returned.</p>
 <dl class="method">
 <dt id="reapy.core.project.project.Project.add_region">
 <code class="descname">add_region</code><span class="sig-paren">(</span><em>start</em>, <em>end</em>, <em>name=''</em>, <em>color=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.add_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.add_region" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create new marker and return its index.</p>
+<dd><p>Create new region and return its index.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -87,16 +118,34 @@ be returned.</p>
 <li><strong>start</strong> (<em>float</em>) – Region start in seconds.</li>
 <li><strong>end</strong> (<em>float</em>) – Region end in seconds.</li>
 <li><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Region name.</li>
-<li><strong>color</strong> (<em>int</em><em> or </em><em>tuple of int</em><em>, </em><em>optional</em>) – Marker color. Integers correspond to REAPER native colors.
+<li><strong>color</strong> (<em>int</em><em> or </em><em>tuple of int</em><em>, </em><em>optional</em>) – Region color. Integers correspond to REAPER native colors.
 Tuple must be RGB triplets of integers between 0 and 255.</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>region_id</strong> – The region index.</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>region</strong> – New region.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="reapy.core.html#reapy.core.Region" title="reapy.core.Region">Region</a></p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.project.Project.add_track">
+<code class="descname">add_track</code><span class="sig-paren">(</span><em>index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.add_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.add_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add track at a specified index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) – Index at which to insert track.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>track</strong> – New track.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track">Track</a></td>
 </tr>
 </tbody>
 </table>
@@ -116,6 +165,12 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.project.Project.begin_undo_block">
+<code class="descname">begin_undo_block</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.begin_undo_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.begin_undo_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start a new undo block.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -150,6 +205,52 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="reapy.core.project.project.Project.bypass_fx_on_all_tracks">
+<code class="descname">bypass_fx_on_all_tracks</code><span class="sig-paren">(</span><em>bypass=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.bypass_fx_on_all_tracks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.bypass_fx_on_all_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bypass or un-bypass FX on all tracks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>bypass</strong> (<em>bool</em>) – Whether to bypass or un-bypass FX.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.project.Project.can_redo">
+<code class="descname">can_redo</code><a class="headerlink" href="#reapy.core.project.project.Project.can_redo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether redo is possible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>can_redo</strong> – Whether redo is possible.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.project.Project.can_undo">
+<code class="descname">can_undo</code><a class="headerlink" href="#reapy.core.project.project.Project.can_undo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether undo is possible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>can_undo</strong> – Whether undo is possible.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="reapy.core.project.project.Project.cursor_position">
 <code class="descname">cursor_position</code><a class="headerlink" href="#reapy.core.project.project.Project.cursor_position" title="Permalink to this definition">¶</a></dt>
@@ -167,6 +268,26 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="reapy.core.project.project.Project.disarm_rec_on_all_tracks">
+<code class="descname">disarm_rec_on_all_tracks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.disarm_rec_on_all_tracks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.disarm_rec_on_all_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disarm record on all tracks.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.project.Project.end_undo_block">
+<code class="descname">end_undo_block</code><span class="sig-paren">(</span><em>description=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.end_undo_block"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.end_undo_block" title="Permalink to this definition">¶</a></dt>
+<dd><p>End undo block.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>description</strong> (<em>str</em>) – Undo block description.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="reapy.core.project.project.Project.get_selected_item">
 <code class="descname">get_selected_item</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.get_selected_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.get_selected_item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return index-th selected item.</p>
@@ -178,7 +299,25 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>item</strong> – index-th selected item.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.item.html#reapy.core.item.item.Item" title="reapy.core.item.item.Item">Item</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Item" title="reapy.core.Item">Item</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.project.Project.get_selected_track">
+<code class="descname">get_selected_track</code><span class="sig-paren">(</span><em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.get_selected_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.get_selected_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return index-th selected track.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>index</strong> (<em>int</em>) – Track index.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>track</strong> – index-th selected track.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track">Track</a></td>
 </tr>
 </tbody>
 </table>
@@ -193,6 +332,22 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>within_time_selection</strong> (<em>bool</em>) – If True, glue items within time selection.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.project.Project.is_current_project">
+<code class="descname">is_current_project</code><a class="headerlink" href="#reapy.core.project.project.Project.is_current_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether project is current project.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>is_current</strong> – Whether project is current project.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
 </tr>
 </tbody>
 </table>
@@ -231,9 +386,31 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="reapy.core.project.project.Project.make_current_project">
+<code class="descname">make_current_project</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.make_current_project"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.make_current_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set project as current project.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="reapy.core.project.project.Project.mark_dirty">
 <code class="descname">mark_dirty</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.mark_dirty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.mark_dirty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mark project as dirty (i.e. needing save).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.project.Project.markers">
+<code class="descname">markers</code><a class="headerlink" href="#reapy.core.project.project.Project.markers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of project markers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>markers</strong> – List of project markers.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of Marker</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
@@ -246,10 +423,28 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>master_track</strong> – Project master track.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.track.html#reapy.core.track.track.Track" title="reapy.core.track.track.Track">Track</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track">Track</a></td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.project.Project.mute_all_tracks">
+<code class="descname">mute_all_tracks</code><span class="sig-paren">(</span><em>mute=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.mute_all_tracks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.mute_all_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mute or unmute all tracks.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mute</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to mute or unmute all tracks (default=True).</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.project.project.Project.unmute_all_tracks" title="reapy.core.project.project.Project.unmute_all_tracks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Project.unmute_all_tracks()</span></code></a></p>
+</div>
 </dd></dl>
 
 <dl class="attribute">
@@ -271,7 +466,7 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 <dl class="attribute">
 <dt id="reapy.core.project.project.Project.n_markers">
 <code class="descname">n_markers</code><a class="headerlink" href="#reapy.core.project.project.Project.n_markers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return number of markers in project.</p>
+<dd><p>Return number of markers a in project.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -319,12 +514,28 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 <dl class="attribute">
 <dt id="reapy.core.project.project.Project.n_selected_tracks">
 <code class="descname">n_selected_tracks</code><a class="headerlink" href="#reapy.core.project.project.Project.n_selected_tracks" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return numbet of selected tracks in project (including master).</p>
+<dd><p>Return number of selected tracks in project (excluding master).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>n_tracks</strong> – Number of selected tracks in project.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.project.Project.n_tempo_markers">
+<code class="descname">n_tempo_markers</code><a class="headerlink" href="#reapy.core.project.project.Project.n_tempo_markers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of tempo/time signature markers in project.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>n_tempo_markers</strong> – Number of tempo/time signature markers in project.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
 </tr>
@@ -381,6 +592,12 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="reapy.core.project.project.Project.pause">
+<code class="descname">pause</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.pause"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hit pause button.</p>
+</dd></dl>
+
+<dl class="method">
 <dt id="reapy.core.project.project.Project.perform_action">
 <code class="descname">perform_action</code><span class="sig-paren">(</span><em>action_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.perform_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.perform_action" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform action with ID <cite>action_id</cite> in the main Actions section.</p>
@@ -392,6 +609,12 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.project.Project.play">
+<code class="descname">play</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.play"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.play" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hit play button.</p>
 </dd></dl>
 
 <dl class="attribute">
@@ -427,6 +650,36 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="reapy.core.project.project.Project.redo">
+<code class="descname">redo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.redo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.redo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redo last action.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RedoError</span></code> – If impossible to redo.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.project.Project.regions">
+<code class="descname">regions</code><a class="headerlink" href="#reapy.core.project.project.Project.regions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of project regions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>regions</strong> – List of project regions.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of Region</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="reapy.core.project.project.Project.save">
 <code class="descname">save</code><span class="sig-paren">(</span><em>force_save_as=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save project.</p>
@@ -441,6 +694,11 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </dd></dl>
 
 <dl class="method">
+<dt id="reapy.core.project.project.Project.select">
+<code class="descname">select</code><span class="sig-paren">(</span><em>start</em>, <em>end=None</em>, <em>length=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.select" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="reapy.core.project.project.Project.select_all_items">
 <code class="descname">select_all_items</code><span class="sig-paren">(</span><em>selected=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.select_all_items"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.select_all_items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select or unselect all items, depending on <cite>selected</cite>.</p>
@@ -449,6 +707,22 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>selected</strong> (<em>bool</em>) – Whether to select or unselect items.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.project.Project.selected_envelope">
+<code class="descname">selected_envelope</code><a class="headerlink" href="#reapy.core.project.project.Project.selected_envelope" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return project selected envelope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>envelope</strong> – Selected envelope if any, else None.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Envelope" title="reapy.core.Envelope">Envelope</a> or None</td>
 </tr>
 </tbody>
 </table>
@@ -478,6 +752,28 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 </dd></dl>
 
 <dl class="attribute">
+<dt id="reapy.core.project.project.Project.selected_tracks">
+<code class="descname">selected_tracks</code><a class="headerlink" href="#reapy.core.project.project.Project.selected_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of selected tracks (excluding master).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>tracks</strong> – List of selected tracks.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of Track</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.project.Project.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hit stop button.</p>
+</dd></dl>
+
+<dl class="attribute">
 <dt id="reapy.core.project.project.Project.time_selection">
 <code class="descname">time_selection</code><a class="headerlink" href="#reapy.core.project.project.Project.time_selection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return project time selection.</p>
@@ -487,7 +783,7 @@ Tuple must be RGB triplets of integers between 0 and 255.</li>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>time_selection</strong> – Project time selection.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#reapy.core.project.time_selection.TimeSelection" title="reapy.core.project.time_selection.TimeSelection">TimeSelection</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.TimeSelection" title="reapy.core.TimeSelection">TimeSelection</a></td>
 </tr>
 </tbody>
 </table>
@@ -529,6 +825,169 @@ project settings.</p>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="reapy.core.project.project.Project.undo">
+<code class="descname">undo</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.undo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.undo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Undo last action.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">UndoError</span></code> – If impossible to undo.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.project.Project.unmute_all_tracks">
+<code class="descname">unmute_all_tracks</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/project.html#Project.unmute_all_tracks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.project.Project.unmute_all_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unmute all tracks.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reapy.core.project.region">
+<span id="reapy-core-project-region-module"></span><h2>reapy.core.project.region module<a class="headerlink" href="#module-reapy.core.project.region" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reapy.core.project.region.Region">
+<em class="property">class </em><code class="descclassname">reapy.core.project.region.</code><code class="descname">Region</code><span class="sig-paren">(</span><em>parent_project=None</em>, <em>index=None</em>, <em>parent_project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/region.html#Region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.region.Region" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
+<dl class="method">
+<dt id="reapy.core.project.region.Region.add_rendered_track">
+<code class="descname">add_rendered_track</code><span class="sig-paren">(</span><em>track</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/region.html#Region.add_rendered_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.region.Region.add_rendered_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add track to region render matrix for this region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>track</strong> (<a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track"><em>Track</em></a>) – Track to add.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="docutils">
+<dt><a class="reference internal" href="#reapy.core.project.region.Region.add_rendered_tracks" title="reapy.core.project.region.Region.add_rendered_tracks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Region.add_rendered_tracks()</span></code></a></dt>
+<dd>Efficiently add several tracks to region render matrix.</dd>
+</dl>
+<p class="last"><a class="reference internal" href="#reapy.core.project.region.Region.remove_rendered_track" title="reapy.core.project.region.Region.remove_rendered_track"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Region.remove_rendered_track()</span></code></a>, <a class="reference internal" href="#reapy.core.project.region.Region.remove_rendered_tracks" title="reapy.core.project.region.Region.remove_rendered_tracks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Region.remove_rendered_tracks()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.region.Region.add_rendered_tracks">
+<code class="descname">add_rendered_tracks</code><span class="sig-paren">(</span><em>tracks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/region.html#Region.add_rendered_tracks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.region.Region.add_rendered_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Efficiently add  several tracks to region render matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tracks</strong> (<em>list of Track</em>) – Tracks to add.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.project.region.Region.remove_rendered_tracks" title="reapy.core.project.region.Region.remove_rendered_tracks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Region.remove_rendered_tracks()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.region.Region.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/region.html#Region.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.region.Region.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete region.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.region.Region.end">
+<code class="descname">end</code><a class="headerlink" href="#reapy.core.project.region.Region.end" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return region end.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>end</strong> – Region end in seconds.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.region.Region.remove_rendered_track">
+<code class="descname">remove_rendered_track</code><span class="sig-paren">(</span><em>track</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/region.html#Region.remove_rendered_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.region.Region.remove_rendered_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove track from region render matrix for this region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>track</strong> (<a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track"><em>Track</em></a>) – Track to remove.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference internal" href="#reapy.core.project.region.Region.add_rendered_tracks" title="reapy.core.project.region.Region.add_rendered_tracks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Region.add_rendered_tracks()</span></code></a>, <a class="reference internal" href="#reapy.core.project.region.Region.remove_rendered_track" title="reapy.core.project.region.Region.remove_rendered_track"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Region.remove_rendered_track()</span></code></a></p>
+<dl class="last docutils">
+<dt><a class="reference internal" href="#reapy.core.project.region.Region.remove_rendered_tracks" title="reapy.core.project.region.Region.remove_rendered_tracks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Region.remove_rendered_tracks()</span></code></a></dt>
+<dd>Efficiently remove several tracks from render matrix.</dd>
+</dl>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.project.region.Region.remove_rendered_tracks">
+<code class="descname">remove_rendered_tracks</code><span class="sig-paren">(</span><em>tracks</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/region.html#Region.remove_rendered_tracks"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.region.Region.remove_rendered_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Efficiently remove  several tracks from region render matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>tracks</strong> (<em>list of Track</em>) – Tracks to remove.</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.project.region.Region.add_rendered_tracks" title="reapy.core.project.region.Region.add_rendered_tracks"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Region.add_rendered_tracks()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.region.Region.rendered_tracks">
+<code class="descname">rendered_tracks</code><a class="headerlink" href="#reapy.core.project.region.Region.rendered_tracks" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of tracks for this region in region render matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>rendered_tracks</strong> – List of tracks for this region in region render matrix.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of Track</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.project.region.Region.start">
+<code class="descname">start</code><a class="headerlink" href="#reapy.core.project.region.Region.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return region start.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>start</strong> – Region start in seconds.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -536,8 +995,8 @@ project settings.</p>
 <span id="reapy-core-project-time-selection-module"></span><h2>reapy.core.project.time_selection module<a class="headerlink" href="#module-reapy.core.project.time_selection" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="reapy.core.project.time_selection.TimeSelection">
-<em class="property">class </em><code class="descclassname">reapy.core.project.time_selection.</code><code class="descname">TimeSelection</code><span class="sig-paren">(</span><em>parent_project</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/time_selection.html#TimeSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.time_selection.TimeSelection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">reapy.core.project.time_selection.</code><code class="descname">TimeSelection</code><span class="sig-paren">(</span><em>parent_project=None</em>, <em>parent_project_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/project/time_selection.html#TimeSelection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.project.time_selection.TimeSelection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
 <dl class="attribute">
 <dt id="reapy.core.project.time_selection.TimeSelection.end">
 <code class="descname">end</code><a class="headerlink" href="#reapy.core.project.time_selection.TimeSelection.end" title="Permalink to this definition">¶</a></dt>

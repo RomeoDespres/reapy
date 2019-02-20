@@ -12,14 +12,6 @@ reapy.reascript\_api.network.client module
     :undoc-members:
     :show-inheritance:
 
-reapy.reascript\_api.network.errors module
-------------------------------------------
-
-.. automodule:: reapy.reascript_api.network.errors
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 reapy.reascript\_api.network.server module
 ------------------------------------------
 

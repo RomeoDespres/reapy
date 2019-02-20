@@ -12,6 +12,14 @@ reapy.tools.dist\_program module
     :undoc-members:
     :show-inheritance:
 
+reapy.tools.json module
+-----------------------
+
+.. automodule:: reapy.tools.json
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reapy.tools.program module
 --------------------------
 

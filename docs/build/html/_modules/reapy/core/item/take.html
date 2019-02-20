@@ -34,19 +34,45 @@
             
   <h1>Source code for reapy.core.item.take</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span> <span class="k">as</span> <span class="n">RPR</span>
+<span class="kn">from</span> <span class="nn">reapy.core</span> <span class="k">import</span> <span class="n">ReapyObject</span>
+<span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
 
 
-<div class="viewcode-block" id="Take"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.take.Take">[docs]</a><span class="k">class</span> <span class="nc">Take</span><span class="p">:</span>
+<div class="viewcode-block" id="Take"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Take">[docs]</a><span class="k">class</span> <span class="nc">Take</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+    
+    <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;Take&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Take</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span>
+     
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,)</span>
         
-<div class="viewcode-block" id="Take.get_info_value"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.take.Take.get_info_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+<div class="viewcode-block" id="Take.get_info_value"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Take.get_info_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GettakeInfo_Value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span></div>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_active</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return whether take is active.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        is_active : bool</span>
+<span class="sd">            Whether take is active.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        from reapy.core.item.take import Take</span>
+<span class="s2">        take = Take(take_id)</span>
+<span class="s2">        is_active = take == take.item.active_take</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+        <span class="n">is_active</span> <span class="o">=</span> <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s2">&quot;is_active&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">take_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">is_active</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">item</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -58,8 +84,27 @@
 <span class="sd">        item : item</span>
 <span class="sd">            Parent item.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">item</span> <span class="o">=</span> <span class="n">Item</span><span class="p">(</span><span class="n">RPR</span><span class="o">.</span><span class="n">Gettake_Item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">Item</span><span class="p">(</span><span class="n">RPR</span><span class="o">.</span><span class="n">GetMediaItemTake_Item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">item</span>
+        
+<div class="viewcode-block" id="Take.make_active_take"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Take.make_active_take">[docs]</a>    <span class="k">def</span> <span class="nf">make_active_take</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Make take active.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">SetActiveTake</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_envelopes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return number of envelopes on take.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        n_envelopes : int</span>
+<span class="sd">            Number of envelopes on take.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_envelopes</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">CountTakeEnvelopes</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n_envelopes</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

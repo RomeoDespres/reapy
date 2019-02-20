@@ -35,16 +35,23 @@
   <h1>Source code for reapy.core.item.item</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">reapy</span>
 <span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span> <span class="k">as</span> <span class="n">RPR</span>
+<span class="kn">from</span> <span class="nn">reapy.core</span> <span class="k">import</span> <span class="n">ReapyObject</span>
 <span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
 
 
-<div class="viewcode-block" id="Item"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.item.Item">[docs]</a><span class="k">class</span> <span class="nc">Item</span><span class="p">:</span>
+<div class="viewcode-block" id="Item"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Item">[docs]</a><span class="k">class</span> <span class="nc">Item</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+
+    <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;Item&quot;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">=</span> <span class="nb">id</span>
 
     <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">id</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">Item</span><span class="p">)</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">active_take</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -59,7 +66,7 @@
         <span class="n">take</span> <span class="o">=</span> <span class="n">Take</span><span class="p">(</span><span class="n">RPR</span><span class="o">.</span><span class="n">GetActiveTake</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">take</span>
         
-<div class="viewcode-block" id="Item.add_take"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.item.Item.add_take">[docs]</a>    <span class="k">def</span> <span class="nf">add_take</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Item.add_take"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Item.add_take">[docs]</a>    <span class="k">def</span> <span class="nf">add_take</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create and return a new take in item.</span>
 <span class="sd">        </span>
@@ -72,11 +79,11 @@
         <span class="n">take</span> <span class="o">=</span> <span class="n">Take</span><span class="p">(</span><span class="n">take_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">take</span></div>
         
-<div class="viewcode-block" id="Item.get_info_value"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.item.Item.get_info_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+<div class="viewcode-block" id="Item.get_info_value"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Item.get_info_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetMediaItemInfo_Value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span></div>
         
-<div class="viewcode-block" id="Item.get_take"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.item.item.Item.get_take">[docs]</a>    <span class="k">def</span> <span class="nf">get_take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="Item.get_take"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Item.get_take">[docs]</a>    <span class="k">def</span> <span class="nf">get_take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return index-th take of item.</span>
 
@@ -184,6 +191,24 @@
         <span class="n">project_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetItemProjectContext</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="n">project</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">project_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">project</span>
+        
+<div class="viewcode-block" id="Item.split"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Item.split">[docs]</a>    <span class="k">def</span> <span class="nf">split</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Split item and return left and right parts.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        position : float</span>
+<span class="sd">            Split position in seconds.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        left, right : Item</span>
+<span class="sd">            Left and right parts of the split.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">right_id</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">SplitMediaItem</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="n">left</span><span class="p">,</span> <span class="n">right</span> <span class="o">=</span> <span class="bp">self</span><span class="p">,</span> <span class="n">Item</span><span class="p">(</span><span class="n">right_id</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">left</span><span class="p">,</span> <span class="n">right</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">takes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -237,6 +262,10 @@
         <span class="n">success</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">MoveMediaItemToTrack</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">track</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t move item to track.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="MIDIItem"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.MIDIItem">[docs]</a><span class="k">class</span> <span class="nc">MIDIItem</span><span class="p">(</span><span class="n">Item</span><span class="p">):</span>
+
+    <span class="k">pass</span></div>
 
 
 <span class="kn">from</span> <span class="nn">..project.project</span> <span class="k">import</span> <span class="n">Project</span>

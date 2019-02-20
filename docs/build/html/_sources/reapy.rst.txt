@@ -11,6 +11,18 @@ Subpackages
     reapy.reascript_api
     reapy.tools
 
+Submodules
+----------
+
+reapy.errors module
+-------------------
+
+.. automodule:: reapy.errors
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 Module contents
 ---------------
 

@@ -35,12 +35,13 @@
   <h1>Source code for reapy.reascript_api.network.server</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">reapy</span>
 <span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span> <span class="k">as</span> <span class="n">RPR</span>
+<span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">json</span>
 <span class="k">if</span> <span class="n">reapy</span><span class="o">.</span><span class="n">is_inside_reaper</span><span class="p">():</span>
     <span class="kn">from</span> <span class="nn">reapy.tools.program</span> <span class="k">import</span> <span class="n">Program</span>
 
 <span class="kn">from</span> <span class="nn">.socket</span> <span class="k">import</span> <span class="n">Socket</span>
 
-<span class="kn">import</span> <span class="nn">json</span><span class="o">,</span> <span class="nn">socket</span><span class="o">,</span> <span class="nn">traceback</span>
+<span class="kn">import</span> <span class="nn">socket</span><span class="o">,</span> <span class="nn">traceback</span>
 
 <div class="viewcode-block" id="Server"><a class="viewcode-back" href="../../../../reapy.reascript_api.network.html#reapy.reascript_api.network.server.Server">[docs]</a><span class="k">class</span> <span class="nc">Server</span><span class="p">(</span><span class="n">Socket</span><span class="p">):</span>
 

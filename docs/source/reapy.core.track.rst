@@ -20,10 +20,26 @@ reapy.core.track.envelope module
     :undoc-members:
     :show-inheritance:
 
+reapy.core.track.send module
+----------------------------
+
+.. automodule:: reapy.core.track.send
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reapy.core.track.track module
 -----------------------------
 
 .. automodule:: reapy.core.track.track
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reapy.core.track.track\_fx module
+---------------------------------
+
+.. automodule:: reapy.core.track.track_fx
     :members:
     :undoc-members:
     :show-inheritance:

@@ -41,8 +41,90 @@
 <span id="reapy-core-track-automation-item-module"></span><h2>reapy.core.track.automation_item module<a class="headerlink" href="#module-reapy.core.track.automation_item" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="reapy.core.track.automation_item.AutomationItem">
-<em class="property">class </em><code class="descclassname">reapy.core.track.automation_item.</code><code class="descname">AutomationItem</code><span class="sig-paren">(</span><em>envelope</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/automation_item.html#AutomationItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.automation_item.AutomationItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<em class="property">class </em><code class="descclassname">reapy.core.track.automation_item.</code><code class="descname">AutomationItem</code><span class="sig-paren">(</span><em>envelope=None</em>, <em>index=0</em>, <em>envelope_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/automation_item.html#AutomationItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.automation_item.AutomationItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
+<dl class="method">
+<dt id="reapy.core.track.automation_item.AutomationItem.delete_points_in_range">
+<code class="descname">delete_points_in_range</code><span class="sig-paren">(</span><em>start</em>, <em>end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/automation_item.html#AutomationItem.delete_points_in_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.automation_item.AutomationItem.delete_points_in_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete points between <cite>start</cite> and <cite>end</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<em>float</em>) – Range start in seconds.</li>
+<li><strong>end</strong> (<em>float</em>) – Range end in seconds.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.automation_item.AutomationItem.length">
+<code class="descname">length</code><a class="headerlink" href="#reapy.core.track.automation_item.AutomationItem.length" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return item length in seconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>length</strong> – Item length in seconds.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.automation_item.AutomationItem.n_points">
+<code class="descname">n_points</code><a class="headerlink" href="#reapy.core.track.automation_item.AutomationItem.n_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of automation points in item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>n_points</strong> – Number of automation points in item.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.automation_item.AutomationItem.pool">
+<code class="descname">pool</code><a class="headerlink" href="#reapy.core.track.automation_item.AutomationItem.pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return item pool.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pool</strong> – Item pool.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.automation_item.AutomationItem.position">
+<code class="descname">position</code><a class="headerlink" href="#reapy.core.track.automation_item.AutomationItem.position" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return item position in seconds.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>position</strong> – Item position in seconds.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 </dd></dl>
 
 </div>
@@ -51,10 +133,10 @@
 <dl class="class">
 <dt id="reapy.core.track.envelope.Envelope">
 <em class="property">class </em><code class="descclassname">reapy.core.track.envelope.</code><code class="descname">Envelope</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/envelope.html#Envelope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.envelope.Envelope" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
 <dl class="method">
 <dt id="reapy.core.track.envelope.Envelope.add_item">
-<code class="descname">add_item</code><span class="sig-paren">(</span><em>position=0.0</em>, <em>length=0.0</em>, <em>pool=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/envelope.html#Envelope.add_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.envelope.Envelope.add_item" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_item</code><span class="sig-paren">(</span><em>position=0.0</em>, <em>length=1.0</em>, <em>pool=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/envelope.html#Envelope.add_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.envelope.Envelope.add_item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add automation item to envelope.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -72,8 +154,42 @@ empty instance if it does not exist).</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>item</strong> – New automation item.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#reapy.core.track.automation_item.AutomationItem" title="reapy.core.track.automation_item.AutomationItem">AutomationItem</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="reapy.core.html#reapy.core.AutomationItem" title="reapy.core.AutomationItem">AutomationItem</a></p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.envelope.Envelope.delete_points_in_range">
+<code class="descname">delete_points_in_range</code><span class="sig-paren">(</span><em>start</em>, <em>end</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/envelope.html#Envelope.delete_points_in_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.envelope.Envelope.delete_points_in_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete envelope points between <cite>start</cite> and <cite>end</cite>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<em>float</em>) – Range start in seconds.</li>
+<li><strong>end</strong> (<em>float</em>) – Range end in seconds.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.envelope.Envelope.items">
+<code class="descname">items</code><a class="headerlink" href="#reapy.core.track.envelope.Envelope.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of automation items in envelope.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>items</strong> – List of automation items in envelope.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of AutomationItem</td>
 </tr>
 </tbody>
 </table>
@@ -113,10 +229,99 @@ empty instance if it does not exist).</li>
 
 </dd></dl>
 
-<dl class="exception">
-<dt id="reapy.core.track.envelope.UndefinedEnvelopeError">
-<em class="property">exception </em><code class="descclassname">reapy.core.track.envelope.</code><code class="descname">UndefinedEnvelopeError</code><span class="sig-paren">(</span><em>index</em>, <em>name</em>, <em>chunk_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/envelope.html#UndefinedEnvelopeError"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.envelope.UndefinedEnvelopeError" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</div>
+<div class="section" id="module-reapy.core.track.send">
+<span id="reapy-core-track-send-module"></span><h2>reapy.core.track.send module<a class="headerlink" href="#module-reapy.core.track.send" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reapy.core.track.send.Send">
+<em class="property">class </em><code class="descclassname">reapy.core.track.send.</code><code class="descname">Send</code><span class="sig-paren">(</span><em>track=None</em>, <em>index=0</em>, <em>track_id=None</em>, <em>type='send'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/send.html#Send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.send.Send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
+<dl class="method">
+<dt id="reapy.core.track.send.Send.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/send.html#Send.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.send.Send.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete send.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.send.Send.flip_phase">
+<code class="descname">flip_phase</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/send.html#Send.flip_phase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.send.Send.flip_phase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Toggle whether phase is flipped.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.send.Send.get_info">
+<code class="descname">get_info</code><span class="sig-paren">(</span><em>param_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/send.html#Send.get_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.send.Send.get_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.send.Send.is_mono">
+<code class="descname">is_mono</code><a class="headerlink" href="#reapy.core.track.send.Send.is_mono" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.send.Send.is_muted">
+<code class="descname">is_muted</code><a class="headerlink" href="#reapy.core.track.send.Send.is_muted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether send is muted.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>is_muted</strong> – Whether send is muted.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.send.Send.is_phase_flipped">
+<code class="descname">is_phase_flipped</code><a class="headerlink" href="#reapy.core.track.send.Send.is_phase_flipped" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.send.Send.mute">
+<code class="descname">mute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/send.html#Send.mute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.send.Send.mute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mute send.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.send.Send.pan">
+<code class="descname">pan</code><a class="headerlink" href="#reapy.core.track.send.Send.pan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return send pan (from -1=left to 1=right).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>pan</strong> – Send pan.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.send.Send.set_info">
+<code class="descname">set_info</code><span class="sig-paren">(</span><em>param_name</em>, <em>value</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/send.html#Send.set_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.send.Send.set_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.send.Send.source_track">
+<code class="descname">source_track</code><a class="headerlink" href="#reapy.core.track.send.Send.source_track" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.send.Send.unmute">
+<code class="descname">unmute</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/send.html#Send.unmute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.send.Send.unmute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unmute send.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.send.Send.volume">
+<code class="descname">volume</code><a class="headerlink" href="#reapy.core.track.send.Send.volume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </div>
@@ -125,18 +330,67 @@ empty instance if it does not exist).</li>
 <dl class="class">
 <dt id="reapy.core.track.track.Track">
 <em class="property">class </em><code class="descclassname">reapy.core.track.track.</code><code class="descname">Track</code><span class="sig-paren">(</span><em>id</em>, <em>project=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track.html#Track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track.Track" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
 <dl class="method">
 <dt id="reapy.core.track.track.Track.add_item">
-<code class="descname">add_item</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track.html#Track.add_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track.Track.add_item" title="Permalink to this definition">¶</a></dt>
+<code class="descname">add_item</code><span class="sig-paren">(</span><em>start=0</em>, <em>end=None</em>, <em>length=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track.html#Track.add_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track.Track.add_item" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create new item on track and return it.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>item</strong> – New item on track.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> (<em>float</em><em>, </em><em>optional</em>) – New item start in seconds (default=0).</li>
+<li><strong>end</strong> (<em>float</em><em>, </em><em>optional</em>) – New item end in seconds (default None). If None, <cite>length</cite>
+is used instead.</li>
+<li><strong>length</strong> (<em>float</em><em>, </em><em>optional</em>) – New item length in seconds (default 0).</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.item.html#reapy.core.item.item.Item" title="reapy.core.item.item.Item">Item</a></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>item</strong> – New item on track.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="reapy.core.html#reapy.core.Item" title="reapy.core.Item">Item</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track.Track.add_midi_item">
+<code class="descname">add_midi_item</code><span class="sig-paren">(</span><em>start=0</em>, <em>end=1</em>, <em>quantize=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track.html#Track.add_midi_item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track.Track.add_midi_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add empty MIDI item to track and return it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> (<em>float</em><em>, </em><em>optional</em>) – New item start in seconds (or beats if <a href="#id1"><span class="problematic" id="id2">`</span></a>quantize`=True).</li>
+<li><strong>end</strong> (<em>float</em><em>, </em><em>optional</em>) – New item end in seconds (or beats if <a href="#id3"><span class="problematic" id="id4">`</span></a>quantize`=True).</li>
+<li><strong>quantize</strong> (<em>boo</em><em>, </em><em>optional</em>) – Whether to count time in beats (True) or seconds (False,
+default).</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track.Track.add_send">
+<code class="descname">add_send</code><span class="sig-paren">(</span><em>destination=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track.html#Track.add_send"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track.Track.add_send" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add send to track and return it.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>destination</strong> (<a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track"><em>Track</em></a><em> or </em><em>None</em>) – Send destination (default=None). If None, destination is
+set to hardware output.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>send</strong> – New send on track.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Send" title="reapy.core.Send">Send</a></td>
 </tr>
 </tbody>
 </table>
@@ -208,6 +462,22 @@ empty instance if it does not exist).</li>
 </table>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="reapy.core.track.track.Track.fxs">
+<code class="descname">fxs</code><a class="headerlink" href="#reapy.core.track.track.Track.fxs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of FXs on track.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>fxs</strong> – List of FXs on track.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">list of TrackFX</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="reapy.core.track.track.Track.get_envelope">
 <code class="descname">get_envelope</code><span class="sig-paren">(</span><em>index=None</em>, <em>name=None</em>, <em>chunk_name=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track.html#Track.get_envelope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track.Track.get_envelope" title="Permalink to this definition">¶</a></dt>
@@ -226,8 +496,24 @@ empty instance if it does not exist).</li>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>envelope</strong> – Track envelope.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#reapy.core.track.envelope.Envelope" title="reapy.core.track.envelope.Envelope">Envelope</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="reapy.core.html#reapy.core.Envelope" title="reapy.core.Envelope">Envelope</a></p>
 </td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track.Track.instrument">
+<code class="descname">instrument</code><a class="headerlink" href="#reapy.core.track.track.Track.instrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return first instrument FX on track if it exists.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>instrument</strong> – First instrument FX on track if it exists, else None.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.TrackFX" title="reapy.core.TrackFX">TrackFX</a> or None</td>
 </tr>
 </tbody>
 </table>
@@ -265,6 +551,49 @@ empty instance if it does not exist).</li>
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="reapy.core.track.track.Track.make_only_selected_track">
+<code class="descname">make_only_selected_track</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track.html#Track.make_only_selected_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track.Track.make_only_selected_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make track the only selected track in parent project.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track.Track.n_envelopes">
+<code class="descname">n_envelopes</code><a class="headerlink" href="#reapy.core.track.track.Track.n_envelopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of envelopes on track.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>n_envelopes</strong> – Number of envelopes on track.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track.Track.n_fxs">
+<code class="descname">n_fxs</code><a class="headerlink" href="#reapy.core.track.track.Track.n_fxs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of FXs on track.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>n_fxs</strong> – Number of FXs on track.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track.Track.n_hardware_sends">
+<code class="descname">n_hardware_sends</code><a class="headerlink" href="#reapy.core.track.track.Track.n_hardware_sends" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="attribute">
 <dt id="reapy.core.track.track.Track.n_items">
 <code class="descname">n_items</code><a class="headerlink" href="#reapy.core.track.track.Track.n_items" title="Permalink to this definition">¶</a></dt>
@@ -280,6 +609,16 @@ empty instance if it does not exist).</li>
 </tbody>
 </table>
 </dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track.Track.n_receives">
+<code class="descname">n_receives</code><a class="headerlink" href="#reapy.core.track.track.Track.n_receives" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track.Track.n_sends">
+<code class="descname">n_sends</code><a class="headerlink" href="#reapy.core.track.track.Track.n_sends" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="attribute">
 <dt id="reapy.core.track.track.Track.name">
@@ -304,11 +643,241 @@ has no name).</td>
 <dd><p>Select track.</p>
 </dd></dl>
 
+<dl class="attribute">
+<dt id="reapy.core.track.track.Track.sends">
+<code class="descname">sends</code><a class="headerlink" href="#reapy.core.track.track.Track.sends" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="reapy.core.track.track.Track.unselect">
 <code class="descname">unselect</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track.html#Track.unselect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track.Track.unselect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unselect track.</p>
 </dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reapy.core.track.track_fx">
+<span id="reapy-core-track-track-fx-module"></span><h2>reapy.core.track.track_fx module<a class="headerlink" href="#module-reapy.core.track.track_fx" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reapy.core.track.track_fx.TrackFX">
+<em class="property">class </em><code class="descclassname">reapy.core.track.track_fx.</code><code class="descname">TrackFX</code><span class="sig-paren">(</span><em>parent_track=None</em>, <em>index=None</em>, <em>parent_track_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.close_ui">
+<code class="descname">close_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.close_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.close_ui" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.copy_to_take">
+<code class="descname">copy_to_take</code><span class="sig-paren">(</span><em>take</em>, <em>index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.copy_to_take"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.copy_to_take" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy FX to take.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>take</strong> (<a class="reference internal" href="reapy.core.html#reapy.core.Take" title="reapy.core.Take"><em>Take</em></a>) – Destination take.</li>
+<li><strong>index</strong> (<em>int</em>) – Index on destination take.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.track.track_fx.TrackFX.move_to_take" title="reapy.core.track.track_fx.TrackFX.move_to_take"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TrackFX.move_to_take()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.copy_to_track">
+<code class="descname">copy_to_track</code><span class="sig-paren">(</span><em>track</em>, <em>index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.copy_to_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.copy_to_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy FX to track.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>track</strong> (<a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track"><em>Track</em></a>) – Destination track.</li>
+<li><strong>index</strong> (<em>int</em>) – Index on destination track.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.track.track_fx.TrackFX.move_to_track" title="reapy.core.track.track_fx.TrackFX.move_to_track"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TrackFX.move_to_track()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.delete">
+<code class="descname">delete</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete FX.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.disable">
+<code class="descname">disable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.disable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.disable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.enable">
+<code class="descname">enable</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.enable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.enable" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.is_enabled">
+<code class="descname">is_enabled</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.is_enabled" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.is_online">
+<code class="descname">is_online</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.is_online" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.is_ui_open">
+<code class="descname">is_ui_open</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.is_ui_open" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.make_offline">
+<code class="descname">make_offline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.make_offline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.make_offline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.make_online">
+<code class="descname">make_online</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.make_online"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.make_online" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.move_to_take">
+<code class="descname">move_to_take</code><span class="sig-paren">(</span><em>take</em>, <em>index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.move_to_take"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.move_to_take" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move FX to take.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>take</strong> (<a class="reference internal" href="reapy.core.html#reapy.core.Take" title="reapy.core.Take"><em>Take</em></a>) – Destination take.</li>
+<li><strong>index</strong> (<em>int</em>) – Index on destination take.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.track.track_fx.TrackFX.copy_to_take" title="reapy.core.track.track_fx.TrackFX.copy_to_take"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TrackFX.copy_to_take()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.move_to_track">
+<code class="descname">move_to_track</code><span class="sig-paren">(</span><em>track</em>, <em>index=0</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.move_to_track"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.move_to_track" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move FX to track.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>track</strong> (<a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track"><em>Track</em></a>) – Destination track.</li>
+<li><strong>index</strong> (<em>int</em>) – Index on destination track.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.track.track_fx.TrackFX.copy_to_track" title="reapy.core.track.track_fx.TrackFX.copy_to_track"><code class="xref py py-meth docutils literal notranslate"><span class="pre">TrackFX.copy_to_track()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.n_params">
+<code class="descname">n_params</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.n_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.n_presets">
+<code class="descname">n_presets</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.n_presets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.name">
+<code class="descname">name</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.open_ui">
+<code class="descname">open_ui</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.open_ui"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.open_ui" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.params">
+<code class="descname">params</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.parent_track">
+<code class="descname">parent_track</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.parent_track" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.preset">
+<code class="descname">preset</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.preset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.preset_file">
+<code class="descname">preset_file</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.preset_file" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFX.preset_index">
+<code class="descname">preset_index</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.preset_index" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.use_next_preset">
+<code class="descname">use_next_preset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.use_next_preset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.use_next_preset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.track.track_fx.TrackFX.use_previous_preset">
+<code class="descname">use_previous_preset</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFX.use_previous_preset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFX.use_previous_preset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reapy.core.track.track_fx.TrackFXParam">
+<em class="property">class </em><code class="descclassname">reapy.core.track.track_fx.</code><code class="descname">TrackFXParam</code><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFXParam"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFXParam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></p>
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFXParam.name">
+<code class="descname">name</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFXParam.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFXParam.range">
+<code class="descname">range</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFXParam.range" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reapy.core.track.track_fx.TrackFXParamsList">
+<em class="property">class </em><code class="descclassname">reapy.core.track.track_fx.</code><code class="descname">TrackFXParamsList</code><span class="sig-paren">(</span><em>parent_fx=None</em>, <em>parent_track_id=None</em>, <em>parent_fx_index=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/track/track_fx.html#TrackFXParamsList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.track.track_fx.TrackFXParamsList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
+<dl class="attribute">
+<dt id="reapy.core.track.track_fx.TrackFXParamsList.parent_fx">
+<code class="descname">parent_fx</code><a class="headerlink" href="#reapy.core.track.track_fx.TrackFXParamsList.parent_fx" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </dd></dl>
 

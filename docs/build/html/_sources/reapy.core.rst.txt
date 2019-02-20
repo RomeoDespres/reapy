@@ -8,15 +8,16 @@ Subpackages
 
     reapy.core.item
     reapy.core.project
+    reapy.core.reaper
     reapy.core.track
 
 Submodules
 ----------
 
-reapy.core.reaper module
-------------------------
+reapy.core.reapy\_object module
+-------------------------------
 
-.. automodule:: reapy.core.reaper
+.. automodule:: reapy.core.reapy_object
     :members:
     :undoc-members:
     :show-inheritance:

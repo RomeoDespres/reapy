@@ -33,11 +33,138 @@
           <div class="body" role="main">
             
   <h1>Source code for reapy.core.track.automation_item</h1><div class="highlight"><pre>
-<div class="viewcode-block" id="AutomationItem"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.track.automation_item.AutomationItem">[docs]</a><span></span><span class="k">class</span> <span class="nc">AutomationItem</span><span class="p">:</span>
+<span></span><span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span> <span class="k">as</span> <span class="n">RPR</span>
+<span class="kn">from</span> <span class="nn">reapy.core</span> <span class="k">import</span> <span class="n">ReapyObject</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envelope</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span> <span class="o">=</span> <span class="n">envelope</span><span class="o">.</span><span class="n">id</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span></div>
+
+<div class="viewcode-block" id="AutomationItem"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.AutomationItem">[docs]</a><span class="k">class</span> <span class="nc">AutomationItem</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+
+    <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;AutomationItem&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">envelope</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">envelope_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">envelope</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">envelope_id</span> <span class="o">=</span> <span class="n">envelope</span><span class="o">.</span><span class="n">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span> <span class="o">=</span> <span class="n">envelope_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">index</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;envelope_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">}</span>
+        
+<div class="viewcode-block" id="AutomationItem.delete_points_in_range"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.AutomationItem.delete_points_in_range">[docs]</a>    <span class="k">def</span> <span class="nf">delete_points_in_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Delete points between `start` and `end`.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        start : float</span>
+<span class="sd">            Range start in seconds.</span>
+<span class="sd">        end : float</span>
+<span class="sd">            Range end in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">RPR</span><span class="o">.</span><span class="n">DeleteEnvelopePointRangeEx</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span>
+        <span class="p">)</span></div>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return item length in seconds.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        length : float</span>
+<span class="sd">            Item length in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">length</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetSetAutomationItemInfo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;D_LENGTH&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">length</span>
+        
+    <span class="nd">@length</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set item length.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        length : float</span>
+<span class="sd">            New item length in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetSetAutomationItemInfo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;D_LENGTH&quot;</span><span class="p">,</span> <span class="n">length</span><span class="p">,</span> <span class="kc">True</span>
+        <span class="p">)</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">n_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return number of automation points in item.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        n_points : int</span>
+<span class="sd">            Number of automation points in item.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_points</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">CountEnvelopePointsEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">n_points</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pool</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return item pool.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pool : int</span>
+<span class="sd">            Item pool.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetSetAutomationItemInfo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;D_POOL&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">pool</span>
+        
+    <span class="nd">@pool</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">pool</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pool</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set item pool.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pool : int</span>
+<span class="sd">            New item pool.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetSetAutomationItemInfo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;D_POOL&quot;</span><span class="p">,</span> <span class="n">pool</span><span class="p">,</span> <span class="kc">True</span>
+        <span class="p">)</span>
+        
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return item position in seconds.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        position : float</span>
+<span class="sd">            Item position in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">position</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetSetAutomationItemInfo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;D_POSITION&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">position</span>
+        
+    <span class="nd">@position</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Set item position.</span>
+<span class="sd">        </span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        position : float</span>
+<span class="sd">            New item position in seconds.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">success</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetSetAutomationItemInfo</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;D_POSITION&quot;</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="kc">True</span>
+        <span class="p">)</span></div>
 </pre></div>
 
           </div>

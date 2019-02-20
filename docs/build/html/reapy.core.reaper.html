@@ -1,0 +1,645 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reapy.core.reaper package &#8212; reapy 0.1.0.dev2 documentation</title>
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="reapy-core-reaper-package">
+<h1>reapy.core.reaper package<a class="headerlink" href="#reapy-core-reaper-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reapy.core.reaper.audio">
+<span id="reapy-core-reaper-audio-module"></span><h2>reapy.core.reaper.audio module<a class="headerlink" href="#module-reapy.core.reaper.audio" title="Permalink to this headline">¶</a></h2>
+<p>Audio handling functions.</p>
+<dl class="function">
+<dt id="reapy.core.reaper.audio.init">
+<code class="descclassname">reapy.core.reaper.audio.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/audio.html#init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.audio.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open all audio and MIDI devices (if not opened).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.audio.is_prebuffer">
+<code class="descclassname">reapy.core.reaper.audio.</code><code class="descname">is_prebuffer</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/audio.html#is_prebuffer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.audio.is_prebuffer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether audio is in pre-buffer (threadsafe).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>is_prebuffer</strong> – Whether audio is in pre-buffer.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.audio.is_running">
+<code class="descclassname">reapy.core.reaper.audio.</code><code class="descname">is_running</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/audio.html#is_running"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.audio.is_running" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether audio is running (threadsafe).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>is_running</strong> – Whether audio is running.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.audio.quit">
+<code class="descclassname">reapy.core.reaper.audio.</code><code class="descname">quit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/audio.html#quit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.audio.quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close all audio and MIDI devices (if opened).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reapy.core.reaper.reaper">
+<span id="reapy-core-reaper-reaper-module"></span><h2>reapy.core.reaper.reaper module<a class="headerlink" href="#module-reapy.core.reaper.reaper" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.add_reascript">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">add_reascript</code><span class="sig-paren">(</span><em>path</em>, <em>section_id=0</em>, <em>commit=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#add_reascript"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.add_reascript" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a ReaScript and return the new action ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>path</strong> (<em>str</em>) – Path to script.</li>
+<li><strong>section_id</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=0</em><em>, </em><em>corresponds to main section</em><em>)</em><em></em>) – Action section ID to which the script must be added.</li>
+<li><strong>commit</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to commit change. Use it when adding a single script.
+You can optimize bulk adding <cite>n</cite> scripts by setting
+<cite>commit=False</cite> for the first <cite>n-1</cite> calls and <cite>commit=True</cite> for
+the last call.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>action_id</strong> – New ReaScript action ID.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.arm_command">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">arm_command</code><span class="sig-paren">(</span><em>command_id</em>, <em>section=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#arm_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.arm_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Arm or disarm command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>command_id</strong> (<em>int</em>) – Command ID. If 0, disarm command.</li>
+<li><strong>section</strong> (<em>str</em><em>, </em><em>optional</em>) – Command section. Empty string for main section. Default=”“.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.clear_console">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">clear_console</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#clear_console"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.clear_console" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear Reaper console.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><code class="xref py py-func docutils literal notranslate"><span class="pre">ReaProject.show_console_message()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.clear_peak_cache">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">clear_peak_cache</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#clear_peak_cache"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.clear_peak_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset global peak cache.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.dB_to_slider">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">dB_to_slider</code><span class="sig-paren">(</span><em>db</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#dB_to_slider"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.dB_to_slider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert decibel value to slider.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>db</strong> (<em>float</em>) – Decibel value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>slider</strong> – Slider value.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.reaper.reaper.slider_to_dB" title="reapy.core.reaper.reaper.slider_to_dB"><code class="xref py py-func docutils literal notranslate"><span class="pre">slider_to_dB()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.delete_ext_state">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">delete_ext_state</code><span class="sig-paren">(</span><em>section</em>, <em>key</em>, <em>persist=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#delete_ext_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.delete_ext_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete extended state value for a given section and key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>section</strong> (<em>str</em>) – Extended state section.</li>
+<li><strong>key</strong> (<em>str</em>) – Extended state key.</li>
+<li><strong>persist</strong> (<em>bool</em>) – Whether extended state should remain deleted next time REAPER
+is opened.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.disarm_command">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">disarm_command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#disarm_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.disarm_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disarm command.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_armed_command">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_armed_command</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_armed_command"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_armed_command" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_command_id">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_command_id</code><span class="sig-paren">(</span><em>command_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_command_id"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_command_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return ID of command with a given name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>command_name</strong> (<em>str</em>) – Command name.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>command_id</strong> – Command ID, or None if name can’t be found.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int or None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_command_name">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_command_name</code><span class="sig-paren">(</span><em>command_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_command_name"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_command_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return name of command with a given ID.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>command_id</strong> (<em>int</em>) – Command ID.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>command_name</strong> – Command name, or None for a native command.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">str, None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_exe_dir">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_exe_dir</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_exe_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_exe_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return REAPER.exe directory (e.g. “C:Program FilesREAPER”).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>path</strong> – Path to REAPER.exe directory.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_ext_state">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_ext_state</code><span class="sig-paren">(</span><em>section</em>, <em>key</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_ext_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_ext_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the extended state value for a specific section and key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>section</strong> (<em>str</em>) – Extended state section.</li>
+<li><strong>key</strong> (<em>str</em>) – Extended state key for section <cite>section</cite>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>value</strong> – Extended state value.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.reaper.reaper.delete_ext_state" title="reapy.core.reaper.reaper.delete_ext_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete_ext_state()</span></code></a>, <a class="reference internal" href="#reapy.core.reaper.reaper.set_ext_state" title="reapy.core.reaper.reaper.set_ext_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_ext_state()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_global_automation_mode">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_global_automation_mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_global_automation_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_global_automation_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return global automation override mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>override_mode</strong> –<dl class="docutils">
+<dt>One of the following values:</dt>
+<dd>”bypass”
+“latch”
+“none”
+“read”
+“touch”
+“trim/read”
+“write”</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_ini_file">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_ini_file</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_ini_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_ini_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return path to REAPER.ini file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>path</strong> – Path to REAPER.ini file.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_reaper_version">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_reaper_version</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_reaper_version"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_reaper_version" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.get_resource_path">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">get_resource_path</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#get_resource_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.get_resource_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return path to directory where .ini files are stored.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>path</strong> – Path to directory where .ini files are stored.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">str</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.perform_action">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">perform_action</code><span class="sig-paren">(</span><em>action_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#perform_action"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.perform_action" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform action with ID <cite>action_id</cite> in the main Actions section.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>action_id</strong> (<em>int</em>) – Action ID in the main Actions section.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.print">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">print</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#print"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.print" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias to ReaProject.show_console_message.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.remove_reascript">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">remove_reascript</code><span class="sig-paren">(</span><em>path</em>, <em>section_id=0</em>, <em>commit=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#remove_reascript"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.remove_reascript" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove a ReaScript.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (<em>str</em>) – Path to script.</li>
+<li><strong>section_id</strong> (<em>int</em><em>, </em><em>optional</em><em> (</em><em>default=0</em><em>, </em><em>corresponds to main section</em><em>)</em><em></em>) – Action section ID to which the script must be added.</li>
+<li><strong>commit</strong> (<em>bool</em><em>, </em><em>optional</em>) – Whether to commit change. Use it when removing a single script.
+You can optimize bulk removing <cite>n</cite> scripts by setting
+<cite>commit=False</cite> for the first <cite>n-1</cite> calls and <cite>commit=True</cite> for
+the last call.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.rgb_from_native">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">rgb_from_native</code><span class="sig-paren">(</span><em>native_color</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#rgb_from_native"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.rgb_from_native" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract RGB values from a native (OS-dependent) color.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>native_color</strong> (<em>int</em>) – Native color.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>r, g, b</strong> – RGB values between 0 and 255.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(int, int, int)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.rgb_to_native">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">rgb_to_native</code><span class="sig-paren">(</span><em>rgb</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#rgb_to_native"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.rgb_to_native" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a native (OS-dependent) color from RGB values.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>rgb</strong> (<em>(</em><em>int</em><em>, </em><em>int</em><em>, </em><em>int</em><em>)</em>) – RGB triplet of integers between 0 and 255.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>native_color</strong> – Native color.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.set_ext_state">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">set_ext_state</code><span class="sig-paren">(</span><em>section</em>, <em>key</em>, <em>value</em>, <em>persist=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#set_ext_state"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.set_ext_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the extended state value for a specific section and key.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>section</strong> (<em>str</em>) – Extended state section.</li>
+<li><strong>key</strong> (<em>str</em>) – Extended state key for section <cite>section</cite>.</li>
+<li><strong>value</strong> (<em>str</em>) – Extended state value for section <cite>section</cite> and key <cite>key</cite>.</li>
+<li><strong>persist</strong> (<em>bool</em>) – Whether the value should be stored and reloaded the next time
+REAPER is opened.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.reaper.reaper.delete_ext_state" title="reapy.core.reaper.reaper.delete_ext_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">delete_ext_state()</span></code></a>, <a class="reference internal" href="#reapy.core.reaper.reaper.get_ext_state" title="reapy.core.reaper.reaper.get_ext_state"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_ext_state()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.set_global_automation_mode">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">set_global_automation_mode</code><span class="sig-paren">(</span><em>mode</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#set_global_automation_mode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.set_global_automation_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set global automation mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mode</strong> (<em>str</em>) – <dl class="docutils">
+<dt>One of the following values:</dt>
+<dd>”bypass”
+“latch”
+“none”
+“read”
+“touch”
+“trim/read”
+“write”</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.show_console_message">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">show_console_message</code><span class="sig-paren">(</span><em>*args</em>, <em>sep=' '</em>, <em>end='\n'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#show_console_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.show_console_message" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Print a message to the Reaper console.</p>
+<dl class="docutils">
+<dt>args <span class="classifier-delimiter">:</span> <span class="classifier">tuple</span></dt>
+<dd>Values to print.</dd>
+<dt>sep <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd>String inserted between values (default=” “).</dd>
+<dt>end <span class="classifier-delimiter">:</span> <span class="classifier">str, optional</span></dt>
+<dd>String appended after the last value (default=”</dd>
+</dl>
+</div></blockquote>
+<p>“).</p>
+<blockquote>
+<div>ReaProject.clear_console</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.show_message_box">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">show_message_box</code><span class="sig-paren">(</span><em>text=''</em>, <em>title=''</em>, <em>type='ok'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#show_message_box"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.show_message_box" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show message box.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> (<em>str</em>) – Box message</li>
+<li><strong>title</strong> (<em>str</em>) – Box title</li>
+<li><strong>type</strong> (<em>str</em>) – <p>One of the following values.</p>
+<p>”ok”
+“ok-cancel”
+“abort-retry-ignore”
+“yes-no-cancel”
+“yes-no”
+“retry-cancel”</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><p><strong>status</strong> – One of the following values.</p>
+<p>”ok”
+“cancel”
+“abort”
+“retry”
+“ignore”
+“yes”
+“no”</p>
+</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">str</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.slider_to_dB">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">slider_to_dB</code><span class="sig-paren">(</span><em>slider</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#slider_to_dB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.slider_to_dB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert slider value to decibel.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>slider</strong> (<em>float</em>) – Slider value.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>db</strong> – Decibel value.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">float</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reapy.core.reaper.reaper.dB_to_slider" title="reapy.core.reaper.reaper.dB_to_slider"><code class="xref py py-func docutils literal notranslate"><span class="pre">dB_to_slider()</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.update_arrange">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">update_arrange</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#update_arrange"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.update_arrange" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redraw the arrange view.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.update_timeline">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">update_timeline</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#update_timeline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.update_timeline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redraw the arrange view and ruler.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reapy.core.reaper.reaper.view_prefs">
+<code class="descclassname">reapy.core.reaper.reaper.</code><code class="descname">view_prefs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/reaper/reaper.html#view_prefs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.reaper.reaper.view_prefs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open Preferences.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reapy.core.reaper">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-reapy.core.reaper" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">reapy</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Roméo Després.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/reapy.core.reaper.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

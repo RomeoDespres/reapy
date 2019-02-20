@@ -34,13 +34,18 @@
             
   <h1>Source code for reapy.core.project.time_selection</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">reapy</span> <span class="k">import</span> <span class="n">reascript_api</span> <span class="k">as</span> <span class="n">RPR</span>
+<span class="kn">from</span> <span class="nn">reapy.core</span> <span class="k">import</span> <span class="n">ReapyObject</span>
 <span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
 
 
-<div class="viewcode-block" id="TimeSelection"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.project.time_selection.TimeSelection">[docs]</a><span class="k">class</span> <span class="nc">TimeSelection</span><span class="p">:</span>    
+<div class="viewcode-block" id="TimeSelection"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TimeSelection">[docs]</a><span class="k">class</span> <span class="nc">TimeSelection</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+
+    <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;TimeSelection&quot;</span>
     
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_project</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">project_id</span> <span class="o">=</span> <span class="n">parent_project</span><span class="o">.</span><span class="n">id</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parent_project</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parent_project_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">parent_project</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">parent_project_id</span> <span class="o">=</span> <span class="n">parent_project</span><span class="o">.</span><span class="n">id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">project_id</span> <span class="o">=</span> <span class="n">parent_project_id</span>
         
     <span class="k">def</span> <span class="nf">_get_infos</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
@@ -55,6 +60,10 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="kc">False</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="n">infos</span>
+        
+    <span class="nd">@property</span>    
+    <span class="k">def</span> <span class="nf">_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;parent_project_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">}</span>
         
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">end</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -151,7 +160,7 @@
 <span class="s2">        &quot;&quot;&quot;</span>
         <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">project_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">)</span>
         
-<div class="viewcode-block" id="TimeSelection.loop"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.project.time_selection.TimeSelection.loop">[docs]</a>    <span class="k">def</span> <span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSelection.loop"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TimeSelection.loop">[docs]</a>    <span class="k">def</span> <span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable time selection looping.</span>
 <span class="sd">        </span>
@@ -195,7 +204,7 @@
 <span class="s2">        &quot;&quot;&quot;</span>
         <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">project_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">)</span>
         
-<div class="viewcode-block" id="TimeSelection.shift"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.project.time_selection.TimeSelection.shift">[docs]</a>    <span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSelection.shift"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TimeSelection.shift">[docs]</a>    <span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shift time selection.</span>
 <span class="sd">        </span>
@@ -212,7 +221,7 @@
         <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
             <span class="n">RPR</span><span class="o">.</span><span class="n">Loop_OnArrow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
             
-<div class="viewcode-block" id="TimeSelection.unloop"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.project.time_selection.TimeSelection.unloop">[docs]</a>    <span class="k">def</span> <span class="nf">unloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSelection.unloop"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TimeSelection.unloop">[docs]</a>    <span class="k">def</span> <span class="nf">unloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disable time selection looping.</span>
 <span class="sd">        </span>
@@ -222,8 +231,6 @@
 <span class="sd">        TimeSelection.loop</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">GetSetRepeatEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div></div>
-        
-
 </pre></div>
 
           </div>

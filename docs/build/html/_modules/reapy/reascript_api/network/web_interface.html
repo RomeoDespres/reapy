@@ -33,13 +33,13 @@
           <div class="body" role="main">
             
   <h1>Source code for reapy.reascript_api.network.web_interface</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.errors</span> <span class="k">import</span> <span class="n">DisabledDistAPIError</span><span class="p">,</span> <span class="n">UndefinedExtStateError</span>
+<span></span><span class="kn">from</span> <span class="nn">reapy.errors</span> <span class="k">import</span> <span class="n">DisabledDistAPIError</span><span class="p">,</span> <span class="n">UndefinedExtStateError</span>
+<span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">json</span>
 <span class="kn">from</span> <span class="nn">urllib</span> <span class="k">import</span> <span class="n">request</span>
 <span class="kn">from</span> <span class="nn">urllib.error</span> <span class="k">import</span> <span class="n">URLError</span>
 
 <span class="kn">import</span> <span class="nn">reapy</span>
 
-<span class="kn">import</span> <span class="nn">json</span>
 
 <div class="viewcode-block" id="WebInterface"><a class="viewcode-back" href="../../../../reapy.reascript_api.network.html#reapy.reascript_api.network.web_interface.WebInterface">[docs]</a><span class="k">class</span> <span class="nc">WebInterface</span><span class="p">:</span>
 

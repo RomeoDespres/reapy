@@ -42,7 +42,7 @@
 <dl class="class">
 <dt id="reapy.core.item.item.Item">
 <em class="property">class </em><code class="descclassname">reapy.core.item.item.</code><code class="descname">Item</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/item/item.html#Item"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.item.item.Item" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
 <dl class="attribute">
 <dt id="reapy.core.item.item.Item.active_take">
 <code class="descname">active_take</code><a class="headerlink" href="#reapy.core.item.item.Item.active_take" title="Permalink to this definition">¶</a></dt>
@@ -53,7 +53,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>take</strong> – Active take of the item.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#reapy.core.item.take.Take" title="reapy.core.item.take.Take">Take</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Take" title="reapy.core.Take">Take</a></td>
 </tr>
 </tbody>
 </table>
@@ -69,7 +69,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>take</strong> – New take in item.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#reapy.core.item.take.Take" title="reapy.core.item.take.Take">Take</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Take" title="reapy.core.Take">Take</a></td>
 </tr>
 </tbody>
 </table>
@@ -92,7 +92,7 @@
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>take</strong> – index-th take of media item.</td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#reapy.core.item.take.Take" title="reapy.core.item.take.Take">Take</a></td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Take" title="reapy.core.Take">Take</a></td>
 </tr>
 </tbody>
 </table>
@@ -172,7 +172,25 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>project</strong> – Item parent project.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.project.html#reapy.core.project.project.Project" title="reapy.core.project.project.Project">Project</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Project" title="reapy.core.Project">Project</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reapy.core.item.item.Item.split">
+<code class="descname">split</code><span class="sig-paren">(</span><em>position</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/item/item.html#Item.split"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.item.item.Item.split" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split item and return left and right parts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>position</strong> (<em>float</em>) – Split position in seconds.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>left, right</strong> – Left and right parts of the split.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Item" title="reapy.core.Item">Item</a></td>
 </tr>
 </tbody>
 </table>
@@ -204,12 +222,18 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>track</strong> – Parent track of item.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.track.html#reapy.core.track.track.Track" title="reapy.core.track.track.Track">Track</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track">Track</a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="reapy.core.item.item.MIDIItem">
+<em class="property">class </em><code class="descclassname">reapy.core.item.item.</code><code class="descname">MIDIItem</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/item/item.html#MIDIItem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.item.item.MIDIItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reapy.core.item.item.Item" title="reapy.core.item.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.item.item.Item</span></code></a></p>
 </dd></dl>
 
 </div>
@@ -309,11 +333,27 @@
 <dl class="class">
 <dt id="reapy.core.item.take.Take">
 <em class="property">class </em><code class="descclassname">reapy.core.item.take.</code><code class="descname">Take</code><span class="sig-paren">(</span><em>id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/item/take.html#Take"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.item.take.Take" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dd><p>Bases: <a class="reference internal" href="reapy.core.html#reapy.core.reapy_object.ReapyObject" title="reapy.core.reapy_object.ReapyObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">reapy.core.reapy_object.ReapyObject</span></code></a></p>
 <dl class="method">
 <dt id="reapy.core.item.take.Take.get_info_value">
 <code class="descname">get_info_value</code><span class="sig-paren">(</span><em>param_name</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/item/take.html#Take.get_info_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.item.take.Take.get_info_value" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.item.take.Take.is_active">
+<code class="descname">is_active</code><a class="headerlink" href="#reapy.core.item.take.Take.is_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return whether take is active.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>is_active</strong> – Whether take is active.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="attribute">
 <dt id="reapy.core.item.take.Take.item">
@@ -331,6 +371,28 @@
 </table>
 </dd></dl>
 
+<dl class="method">
+<dt id="reapy.core.item.take.Take.make_active_take">
+<code class="descname">make_active_take</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/reapy/core/item/take.html#Take.make_active_take"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reapy.core.item.take.Take.make_active_take" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make take active.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="reapy.core.item.take.Take.n_envelopes">
+<code class="descname">n_envelopes</code><a class="headerlink" href="#reapy.core.item.take.Take.n_envelopes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return number of envelopes on take.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>n_envelopes</strong> – Number of envelopes on take.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="attribute">
 <dt id="reapy.core.item.take.Take.source">
 <code class="descname">source</code><a class="headerlink" href="#reapy.core.item.take.Take.source" title="Permalink to this definition">¶</a></dt>
@@ -341,7 +403,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>source</strong> – Take source.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#reapy.core.item.source.Source" title="reapy.core.item.source.Source">Source</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Source" title="reapy.core.Source">Source</a></td>
 </tr>
 </tbody>
 </table>
@@ -373,7 +435,7 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>track</strong> – Parent track of take.</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.track.html#reapy.core.track.track.Track" title="reapy.core.track.track.Track">Track</a></td>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="reapy.core.html#reapy.core.Track" title="reapy.core.Track">Track</a></td>
 </tr>
 </tbody>
 </table>

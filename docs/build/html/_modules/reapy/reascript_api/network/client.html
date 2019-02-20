@@ -33,10 +33,10 @@
           <div class="body" role="main">
             
   <h1>Source code for reapy.reascript_api.network.client</h1><div class="highlight"><pre>
-<span></span><span class="kn">from</span> <span class="nn">.socket</span> <span class="k">import</span> <span class="n">Socket</span>
-<span class="kn">from</span> <span class="nn">.errors</span> <span class="k">import</span> <span class="n">DisconnectedClientError</span><span class="p">,</span> <span class="n">DistError</span>
+<span></span><span class="kn">from</span> <span class="nn">reapy.errors</span> <span class="k">import</span> <span class="n">DisconnectedClientError</span><span class="p">,</span> <span class="n">DistError</span>
+<span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">json</span>
+<span class="kn">from</span> <span class="nn">.socket</span> <span class="k">import</span> <span class="n">Socket</span>
 
-<span class="kn">import</span> <span class="nn">json</span>
 
 <div class="viewcode-block" id="Client"><a class="viewcode-back" href="../../../../reapy.reascript_api.network.html#reapy.reascript_api.network.client.Client">[docs]</a><span class="k">class</span> <span class="nc">Client</span><span class="p">(</span><span class="n">Socket</span><span class="p">):</span>
 
