@@ -40,7 +40,7 @@
 <span class="kn">from</span> <span class="nn">reapy.errors</span> <span class="k">import</span> <span class="n">UndefinedEnvelopeError</span>
 
 
-<div class="viewcode-block" id="Track"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track">[docs]</a><span class="k">class</span> <span class="nc">Track</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Track"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track">[docs]</a><span class="k">class</span> <span class="nc">Track</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;Track&quot;</span>
 
@@ -53,7 +53,7 @@
     <span class="k">def</span> <span class="nf">_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,)</span>
         
-<div class="viewcode-block" id="Track.add_item"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track.add_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.add_item"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track.add_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create new item on track and return it.</span>
 <span class="sd">        </span>
@@ -85,7 +85,7 @@
         <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">item</span></div>
         
-<div class="viewcode-block" id="Track.add_midi_item"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track.add_midi_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_midi_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.add_midi_item"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track.add_midi_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_midi_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">quantize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add empty MIDI item to track and return it.</span>
 <span class="sd">        </span>
@@ -103,7 +103,7 @@
         <span class="n">item</span> <span class="o">=</span> <span class="n">MIDIItem</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">item</span></div>
         
-<div class="viewcode-block" id="Track.add_send"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track.add_send">[docs]</a>    <span class="k">def</span> <span class="nf">add_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.add_send"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track.add_send">[docs]</a>    <span class="k">def</span> <span class="nf">add_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">destination</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add send to track and return it.</span>
 <span class="sd">        </span>
@@ -196,7 +196,7 @@
         <span class="n">native_color</span> <span class="o">=</span> <span class="n">reapy</span><span class="o">.</span><span class="n">rgb_to_native</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">SetTrackColor</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">native_color</span><span class="p">)</span>
         
-<div class="viewcode-block" id="Track.delete"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.delete"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete track.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -228,7 +228,7 @@
         <span class="n">fxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">TrackFX</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_fxs</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">fxs</span>
         
-<div class="viewcode-block" id="Track.get_envelope"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track.get_envelope">[docs]</a>    <span class="k">def</span> <span class="nf">get_envelope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chunk_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.get_envelope"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track.get_envelope">[docs]</a>    <span class="k">def</span> <span class="nf">get_envelope</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">chunk_name</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return track envelope for a given index, name or chunk name.</span>
 <span class="sd">        </span>
@@ -323,7 +323,7 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">unselect</span><span class="p">()</span>
             
-<div class="viewcode-block" id="Track.make_only_selected_track"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track.make_only_selected_track">[docs]</a>    <span class="k">def</span> <span class="nf">make_only_selected_track</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.make_only_selected_track"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track.make_only_selected_track">[docs]</a>    <span class="k">def</span> <span class="nf">make_only_selected_track</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make track the only selected track in parent project.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -397,7 +397,7 @@
         <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">name</span>
         
-<div class="viewcode-block" id="Track.select"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.select"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select track.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -411,7 +411,7 @@
         <span class="n">sends</span> <span class="o">=</span> <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="s2">&quot;sends&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">track</span><span class="o">=</span><span class="bp">self</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">sends</span>
         
-<div class="viewcode-block" id="Track.unselect"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Track.unselect">[docs]</a>    <span class="k">def</span> <span class="nf">unselect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Track.unselect"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Track.unselect">[docs]</a>    <span class="k">def</span> <span class="nf">unselect</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unselect track.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

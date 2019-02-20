@@ -1,12 +1,19 @@
 import reapy
+from reapy.errors import DisabledDistAPIError, DisabledDistAPIWarning
+
+import warnings
 
 if not reapy.is_inside_reaper():
-    from reapy.reascript_api.network import Client, WebInterface
-    from reapy.config.config import WEB_INTERFACE_PORT
-    WEB_INTERFACE = WebInterface(WEB_INTERFACE_PORT)
-    CLIENT = Client(WEB_INTERFACE.get_reapy_server_port())
+    try:
+        from reapy.reascript_api.network import Client, WebInterface
+        from reapy.config.config import WEB_INTERFACE_PORT
+        WEB_INTERFACE = WebInterface(WEB_INTERFACE_PORT)
+        CLIENT = Client(WEB_INTERFACE.get_reapy_server_port())
+    except DisabledDistAPIError:
+        warnings.warn(DisabledDistAPIWarning())
 
 from . import program
+
 
 class Program(program.Program):
 

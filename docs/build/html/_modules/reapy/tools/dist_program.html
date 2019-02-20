@@ -34,14 +34,21 @@
             
   <h1>Source code for reapy.tools.dist_program</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">reapy</span>
+<span class="kn">from</span> <span class="nn">reapy.errors</span> <span class="k">import</span> <span class="n">DisabledDistAPIError</span><span class="p">,</span> <span class="n">DisabledDistAPIWarning</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
 
 <span class="k">if</span> <span class="ow">not</span> <span class="n">reapy</span><span class="o">.</span><span class="n">is_inside_reaper</span><span class="p">():</span>
-    <span class="kn">from</span> <span class="nn">reapy.reascript_api.network</span> <span class="k">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">WebInterface</span>
-    <span class="kn">from</span> <span class="nn">reapy.config.config</span> <span class="k">import</span> <span class="n">WEB_INTERFACE_PORT</span>
-    <span class="n">WEB_INTERFACE</span> <span class="o">=</span> <span class="n">WebInterface</span><span class="p">(</span><span class="n">WEB_INTERFACE_PORT</span><span class="p">)</span>
-    <span class="n">CLIENT</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">WEB_INTERFACE</span><span class="o">.</span><span class="n">get_reapy_server_port</span><span class="p">())</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">reapy.reascript_api.network</span> <span class="k">import</span> <span class="n">Client</span><span class="p">,</span> <span class="n">WebInterface</span>
+        <span class="kn">from</span> <span class="nn">reapy.config.config</span> <span class="k">import</span> <span class="n">WEB_INTERFACE_PORT</span>
+        <span class="n">WEB_INTERFACE</span> <span class="o">=</span> <span class="n">WebInterface</span><span class="p">(</span><span class="n">WEB_INTERFACE_PORT</span><span class="p">)</span>
+        <span class="n">CLIENT</span> <span class="o">=</span> <span class="n">Client</span><span class="p">(</span><span class="n">WEB_INTERFACE</span><span class="o">.</span><span class="n">get_reapy_server_port</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">DisabledDistAPIError</span><span class="p">:</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="n">DisabledDistAPIWarning</span><span class="p">())</span>
 
 <span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">program</span>
+
 
 <div class="viewcode-block" id="Program"><a class="viewcode-back" href="../../../reapy.tools.html#reapy.reascript_api.dist_api.Program">[docs]</a><span class="k">class</span> <span class="nc">Program</span><span class="p">(</span><span class="n">program</span><span class="o">.</span><span class="n">Program</span><span class="p">):</span>
 

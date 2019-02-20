@@ -37,7 +37,7 @@
 <span class="kn">from</span> <span class="nn">reapy.core</span> <span class="k">import</span> <span class="n">ReapyObject</span>
 
 
-<div class="viewcode-block" id="AutomationItem"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.AutomationItem">[docs]</a><span class="k">class</span> <span class="nc">AutomationItem</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="AutomationItem"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.AutomationItem">[docs]</a><span class="k">class</span> <span class="nc">AutomationItem</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;AutomationItem&quot;</span>
 
@@ -51,7 +51,7 @@
     <span class="k">def</span> <span class="nf">_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;envelope_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">envelope_id</span><span class="p">}</span>
         
-<div class="viewcode-block" id="AutomationItem.delete_points_in_range"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.AutomationItem.delete_points_in_range">[docs]</a>    <span class="k">def</span> <span class="nf">delete_points_in_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<div class="viewcode-block" id="AutomationItem.delete_points_in_range"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.AutomationItem.delete_points_in_range">[docs]</a>    <span class="k">def</span> <span class="nf">delete_points_in_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete points between `start` and `end`.</span>
 <span class="sd">        </span>

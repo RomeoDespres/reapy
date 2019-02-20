@@ -41,6 +41,15 @@
             <span class="s2">&quot;`reapy.config.enable_dist_api()` from inside REAPER.&quot;</span>
         <span class="p">)</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">DisabledDistAPIError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="DisabledDistAPIWarning"><a class="viewcode-back" href="../../reapy.html#reapy.errors.DisabledDistAPIWarning">[docs]</a><span class="k">class</span> <span class="nc">DisabledDistAPIWarning</span><span class="p">(</span><span class="ne">Warning</span><span class="p">):</span>
+    
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;reapy distant API is disabled. Please call &quot;</span>
+            <span class="s2">&quot;`reapy.config.enable_dist_api()` from inside REAPER.&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DisabledDistAPIWarning</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="DisconnectedClientError"><a class="viewcode-back" href="../../reapy.html#reapy.errors.DisconnectedClientError">[docs]</a><span class="k">class</span> <span class="nc">DisconnectedClientError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
 

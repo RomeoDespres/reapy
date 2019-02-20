@@ -39,7 +39,7 @@
 <span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
 
 
-<div class="viewcode-block" id="TrackFX"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX">[docs]</a><span class="k">class</span> <span class="nc">TrackFX</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX">[docs]</a><span class="k">class</span> <span class="nc">TrackFX</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;TrackFX&quot;</span>
     
@@ -57,10 +57,10 @@
     <span class="k">def</span> <span class="nf">_kwargs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;parent_track_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">}</span>
         
-<div class="viewcode-block" id="TrackFX.close_ui"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.close_ui">[docs]</a>    <span class="k">def</span> <span class="nf">close_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.close_ui"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.close_ui">[docs]</a>    <span class="k">def</span> <span class="nf">close_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_ui_open</span> <span class="o">=</span> <span class="kc">False</span></div>
         
-<div class="viewcode-block" id="TrackFX.copy_to_take"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.copy_to_take">[docs]</a>    <span class="k">def</span> <span class="nf">copy_to_take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">take</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.copy_to_take"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.copy_to_take">[docs]</a>    <span class="k">def</span> <span class="nf">copy_to_take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">take</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Copy FX to take.</span>
 <span class="sd">        </span>
@@ -79,7 +79,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">take</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="kc">False</span>
         <span class="p">)</span></div>
         
-<div class="viewcode-block" id="TrackFX.copy_to_track"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.copy_to_track">[docs]</a>    <span class="k">def</span> <span class="nf">copy_to_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.copy_to_track"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.copy_to_track">[docs]</a>    <span class="k">def</span> <span class="nf">copy_to_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Copy FX to track.</span>
 <span class="sd">        </span>
@@ -98,16 +98,16 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">track</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="kc">False</span>
         <span class="p">)</span></div>
         
-<div class="viewcode-block" id="TrackFX.delete"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.delete"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete FX.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">TrackFX_Delete</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="TrackFX.disable"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.disable">[docs]</a>    <span class="k">def</span> <span class="nf">disable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.disable"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.disable">[docs]</a>    <span class="k">def</span> <span class="nf">disable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_enabled</span> <span class="o">=</span> <span class="kc">False</span></div>
         
-<div class="viewcode-block" id="TrackFX.enable"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.enable"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.enable">[docs]</a>    <span class="k">def</span> <span class="nf">enable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_enabled</span> <span class="o">=</span> <span class="kc">True</span></div>
         
     <span class="nd">@property</span>
@@ -138,13 +138,13 @@
     <span class="k">def</span> <span class="nf">is_ui_open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">open</span><span class="p">):</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">TrackFX_SetOpen</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="nb">open</span><span class="p">)</span>
         
-<div class="viewcode-block" id="TrackFX.make_offline"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.make_offline">[docs]</a>    <span class="k">def</span> <span class="nf">make_offline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.make_offline"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.make_offline">[docs]</a>    <span class="k">def</span> <span class="nf">make_offline</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_online</span> <span class="o">=</span> <span class="kc">False</span></div>
         
-<div class="viewcode-block" id="TrackFX.make_online"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.make_online">[docs]</a>    <span class="k">def</span> <span class="nf">make_online</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.make_online"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.make_online">[docs]</a>    <span class="k">def</span> <span class="nf">make_online</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_online</span> <span class="o">=</span> <span class="kc">True</span></div>
         
-<div class="viewcode-block" id="TrackFX.move_to_take"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.move_to_take">[docs]</a>    <span class="k">def</span> <span class="nf">move_to_take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">take</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.move_to_take"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.move_to_take">[docs]</a>    <span class="k">def</span> <span class="nf">move_to_take</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">take</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Move FX to take.</span>
 <span class="sd">        </span>
@@ -163,7 +163,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">take</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="kc">True</span>
         <span class="p">)</span></div>
         
-<div class="viewcode-block" id="TrackFX.move_to_track"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.move_to_track">[docs]</a>    <span class="k">def</span> <span class="nf">move_to_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.move_to_track"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.move_to_track">[docs]</a>    <span class="k">def</span> <span class="nf">move_to_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Move FX to track.</span>
 <span class="sd">        </span>
@@ -199,7 +199,7 @@
         <span class="n">name</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">TrackFX_GetFXName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">name</span>
             
-<div class="viewcode-block" id="TrackFX.open_ui"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.open_ui">[docs]</a>    <span class="k">def</span> <span class="nf">open_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.open_ui"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.open_ui">[docs]</a>    <span class="k">def</span> <span class="nf">open_ui</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">is_ui_open</span> <span class="o">=</span> <span class="kc">True</span></div>
         
     <span class="nd">@property</span>
@@ -246,13 +246,13 @@
         <span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">file</span>
         
-<div class="viewcode-block" id="TrackFX.use_previous_preset"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.use_previous_preset">[docs]</a>    <span class="k">def</span> <span class="nf">use_previous_preset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.use_previous_preset"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.use_previous_preset">[docs]</a>    <span class="k">def</span> <span class="nf">use_previous_preset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">TrackFX_NavigatePresets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="TrackFX.use_next_preset"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFX.use_next_preset">[docs]</a>    <span class="k">def</span> <span class="nf">use_next_preset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFX.use_next_preset"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFX.use_next_preset">[docs]</a>    <span class="k">def</span> <span class="nf">use_next_preset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">TrackFX_NavigatePresets</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div></div>
         
-<div class="viewcode-block" id="TrackFXParam"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFXParam">[docs]</a><span class="k">class</span> <span class="nc">TrackFXParam</span><span class="p">(</span><span class="nb">float</span><span class="p">):</span>    
+<div class="viewcode-block" id="TrackFXParam"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFXParam">[docs]</a><span class="k">class</span> <span class="nc">TrackFXParam</span><span class="p">(</span><span class="nb">float</span><span class="p">):</span>    
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -270,7 +270,7 @@
         <span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
         <span class="k">return</span> <span class="nb">min</span><span class="p">,</span> <span class="nb">max</span></div>
         
-<div class="viewcode-block" id="TrackFXParamsList"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TrackFXParamsList">[docs]</a><span class="k">class</span> <span class="nc">TrackFXParamsList</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="TrackFXParamsList"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.TrackFXParamsList">[docs]</a><span class="k">class</span> <span class="nc">TrackFXParamsList</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;TrackFXParamsList&quot;</span>
     

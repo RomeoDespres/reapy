@@ -38,7 +38,7 @@
 <span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
 
 
-<div class="viewcode-block" id="Send"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Send">[docs]</a><span class="k">class</span> <span class="nc">Send</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Send"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Send">[docs]</a><span class="k">class</span> <span class="nc">Send</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;Send&quot;</span>
 
@@ -67,13 +67,13 @@
             <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">type</span>
         <span class="p">}</span>
     
-<div class="viewcode-block" id="Send.delete"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Send.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Send.delete"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Send.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete send.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">RemoveTrackSend</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_int_type</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Send.flip_phase"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Send.flip_phase">[docs]</a>    <span class="k">def</span> <span class="nf">flip_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Send.flip_phase"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Send.flip_phase">[docs]</a>    <span class="k">def</span> <span class="nf">flip_phase</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Toggle whether phase is flipped.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -82,7 +82,7 @@
 <span class="s2">        &quot;&quot;&quot;</span>
         <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">send</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Send.get_info"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Send.get_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+<div class="viewcode-block" id="Send.get_info"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Send.get_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetTrackSendInfo_Value</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_int_type</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">param_name</span>
         <span class="p">)</span>
@@ -131,7 +131,7 @@
     <span class="k">def</span> <span class="nf">is_phase_flipped</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flipped</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_info</span><span class="p">(</span><span class="s2">&quot;B_PHASE&quot;</span><span class="p">,</span> <span class="n">flipped</span><span class="p">)</span>
         
-<div class="viewcode-block" id="Send.mute"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Send.mute">[docs]</a>    <span class="k">def</span> <span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Send.mute"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Send.mute">[docs]</a>    <span class="k">def</span> <span class="nf">mute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mute send.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -162,7 +162,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_info</span><span class="p">(</span><span class="s2">&quot;D_PAN&quot;</span><span class="p">,</span> <span class="n">pan</span><span class="p">)</span>
         
-<div class="viewcode-block" id="Send.set_info"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Send.set_info">[docs]</a>    <span class="k">def</span> <span class="nf">set_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+<div class="viewcode-block" id="Send.set_info"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Send.set_info">[docs]</a>    <span class="k">def</span> <span class="nf">set_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">SetTrackSendInfo_Value</span><span class="p">(</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_int_type</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">value</span>
         <span class="p">)</span></div>
@@ -172,7 +172,7 @@
         <span class="n">track</span> <span class="o">=</span> <span class="n">Track</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">track_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">track</span>
         
-<div class="viewcode-block" id="Send.unmute"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Send.unmute">[docs]</a>    <span class="k">def</span> <span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Send.unmute"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Send.unmute">[docs]</a>    <span class="k">def</span> <span class="nf">unmute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unmute send.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

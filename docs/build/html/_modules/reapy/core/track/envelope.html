@@ -37,7 +37,7 @@
 <span class="kn">from</span> <span class="nn">reapy.core</span> <span class="k">import</span> <span class="n">ReapyObject</span>
 
 
-<div class="viewcode-block" id="Envelope"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Envelope">[docs]</a><span class="k">class</span> <span class="nc">Envelope</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Envelope"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Envelope">[docs]</a><span class="k">class</span> <span class="nc">Envelope</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;Envelope&quot;</span>
     
@@ -48,7 +48,7 @@
     <span class="k">def</span> <span class="nf">_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,)</span>
         
-<div class="viewcode-block" id="Envelope.add_item"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Envelope.add_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="Envelope.add_item"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Envelope.add_item">[docs]</a>    <span class="k">def</span> <span class="nf">add_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="o">=</span><span class="mf">0.</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mf">1.</span><span class="p">,</span> <span class="n">pool</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add automation item to envelope.</span>
 <span class="sd">        </span>
@@ -72,7 +72,7 @@
         <span class="n">item</span> <span class="o">=</span> <span class="n">AutomationItem</span><span class="p">(</span><span class="n">envelope</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">item_index</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">item</span></div>
         
-<div class="viewcode-block" id="Envelope.delete_points_in_range"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Envelope.delete_points_in_range">[docs]</a>    <span class="k">def</span> <span class="nf">delete_points_in_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+<div class="viewcode-block" id="Envelope.delete_points_in_range"><a class="viewcode-back" href="../../../../reapy.core.track.html#reapy.core.Envelope.delete_points_in_range">[docs]</a>    <span class="k">def</span> <span class="nf">delete_points_in_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete envelope points between `start` and `end`.</span>
 <span class="sd">        </span>

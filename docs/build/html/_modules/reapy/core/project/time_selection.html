@@ -38,7 +38,7 @@
 <span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
 
 
-<div class="viewcode-block" id="TimeSelection"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TimeSelection">[docs]</a><span class="k">class</span> <span class="nc">TimeSelection</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSelection"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.TimeSelection">[docs]</a><span class="k">class</span> <span class="nc">TimeSelection</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;TimeSelection&quot;</span>
     
@@ -160,7 +160,7 @@
 <span class="s2">        &quot;&quot;&quot;</span>
         <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">project_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="n">length</span><span class="p">)</span>
         
-<div class="viewcode-block" id="TimeSelection.loop"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TimeSelection.loop">[docs]</a>    <span class="k">def</span> <span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSelection.loop"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.TimeSelection.loop">[docs]</a>    <span class="k">def</span> <span class="nf">loop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Enable time selection looping.</span>
 <span class="sd">        </span>
@@ -204,7 +204,7 @@
 <span class="s2">        &quot;&quot;&quot;</span>
         <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">project_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">)</span>
         
-<div class="viewcode-block" id="TimeSelection.shift"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TimeSelection.shift">[docs]</a>    <span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSelection.shift"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.TimeSelection.shift">[docs]</a>    <span class="k">def</span> <span class="nf">shift</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">direction</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Shift time selection.</span>
 <span class="sd">        </span>
@@ -221,7 +221,7 @@
         <span class="k">elif</span> <span class="n">direction</span> <span class="o">==</span> <span class="s2">&quot;left&quot;</span><span class="p">:</span>
             <span class="n">RPR</span><span class="o">.</span><span class="n">Loop_OnArrow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
             
-<div class="viewcode-block" id="TimeSelection.unloop"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.TimeSelection.unloop">[docs]</a>    <span class="k">def</span> <span class="nf">unloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="TimeSelection.unloop"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.TimeSelection.unloop">[docs]</a>    <span class="k">def</span> <span class="nf">unloop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disable time selection looping.</span>
 <span class="sd">        </span>

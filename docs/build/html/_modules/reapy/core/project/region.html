@@ -38,7 +38,7 @@
 <span class="kn">from</span> <span class="nn">reapy.core</span> <span class="k">import</span> <span class="n">ReapyObject</span>
 <span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
 
-<div class="viewcode-block" id="Region"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Region">[docs]</a><span class="k">class</span> <span class="nc">Region</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Region"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Region">[docs]</a><span class="k">class</span> <span class="nc">Region</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;Region&quot;</span>
 
@@ -76,7 +76,7 @@
             <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="s2">&quot;parent_project_id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_id</span>
         <span class="p">}</span>
         
-<div class="viewcode-block" id="Region.add_rendered_track"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Region.add_rendered_track">[docs]</a>    <span class="k">def</span> <span class="nf">add_rendered_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">):</span>
+<div class="viewcode-block" id="Region.add_rendered_track"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Region.add_rendered_track">[docs]</a>    <span class="k">def</span> <span class="nf">add_rendered_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add track to region render matrix for this region.</span>
 <span class="sd">        </span>
@@ -94,7 +94,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">SetRegionRenderMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">track</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Region.add_rendered_tracks"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Region.add_rendered_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">add_rendered_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tracks</span><span class="p">):</span>
+<div class="viewcode-block" id="Region.add_rendered_tracks"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Region.add_rendered_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">add_rendered_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tracks</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Efficiently add  several tracks to region render matrix.</span>
 <span class="sd">        </span>
@@ -149,13 +149,13 @@
 <span class="s2">        &quot;&quot;&quot;</span>
         <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="bp">self</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
         
-<div class="viewcode-block" id="Region.delete"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Region.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Region.delete"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Region.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Delete region.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">DeleteProjectMarker</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Region.remove_rendered_track"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Region.remove_rendered_track">[docs]</a>    <span class="k">def</span> <span class="nf">remove_rendered_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">):</span>
+<div class="viewcode-block" id="Region.remove_rendered_track"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Region.remove_rendered_track">[docs]</a>    <span class="k">def</span> <span class="nf">remove_rendered_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">track</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Remove track from region render matrix for this region.</span>
 <span class="sd">        </span>
@@ -173,7 +173,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">SetRegionRenderMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">project_id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">track</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Region.remove_rendered_tracks"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Region.remove_rendered_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">remove_rendered_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tracks</span><span class="p">):</span>
+<div class="viewcode-block" id="Region.remove_rendered_tracks"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Region.remove_rendered_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">remove_rendered_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tracks</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Efficiently remove  several tracks from region render matrix.</span>
 <span class="sd">        </span>

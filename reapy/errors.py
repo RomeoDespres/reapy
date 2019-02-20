@@ -6,6 +6,15 @@ class DisabledDistAPIError(Exception):
             "`reapy.config.enable_dist_api()` from inside REAPER."
         )
         super(DisabledDistAPIError, self).__init__(message)
+        
+class DisabledDistAPIWarning(Warning):
+    
+    def __init__(self):
+        message = (
+            "reapy distant API is disabled. Please call "
+            "`reapy.config.enable_dist_api()` from inside REAPER."
+        )
+        super(DisabledDistAPIWarning, self).__init__(message)
 
 class DisconnectedClientError(Exception):
 

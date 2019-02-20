@@ -38,7 +38,7 @@
 <span class="kn">from</span> <span class="nn">reapy.tools</span> <span class="k">import</span> <span class="n">Program</span>
 
 
-<div class="viewcode-block" id="Take"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Take">[docs]</a><span class="k">class</span> <span class="nc">Take</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Take"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.Take">[docs]</a><span class="k">class</span> <span class="nc">Take</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
     
     <span class="n">_class_name</span> <span class="o">=</span> <span class="s2">&quot;Take&quot;</span>
 
@@ -52,7 +52,7 @@
     <span class="k">def</span> <span class="nf">_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,)</span>
         
-<div class="viewcode-block" id="Take.get_info_value"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Take.get_info_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
+<div class="viewcode-block" id="Take.get_info_value"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.Take.get_info_value">[docs]</a>    <span class="k">def</span> <span class="nf">get_info_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">param_name</span><span class="p">):</span>
         <span class="n">value</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GettakeInfo_Value</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">param_name</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">value</span></div>
         
@@ -87,7 +87,7 @@
         <span class="n">item</span> <span class="o">=</span> <span class="n">Item</span><span class="p">(</span><span class="n">RPR</span><span class="o">.</span><span class="n">GetMediaItemTake_Item</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">item</span>
         
-<div class="viewcode-block" id="Take.make_active_take"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Take.make_active_take">[docs]</a>    <span class="k">def</span> <span class="nf">make_active_take</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Take.make_active_take"><a class="viewcode-back" href="../../../../reapy.core.item.html#reapy.core.Take.make_active_take">[docs]</a>    <span class="k">def</span> <span class="nf">make_active_take</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Make take active.</span>
 <span class="sd">        &quot;&quot;&quot;</span>

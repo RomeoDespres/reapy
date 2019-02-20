@@ -56,7 +56,8 @@ All ReaScript API functions are available in `reapy` in the sub-module `reapy.re
 The purpose of `reapy` is to provide a more pythonic API as a substitute for ReaScript API. Below is the `reapy` way of executing the example above.
 
 ```python
->>> from reapy import CURRENT_PROJECT as project
+>>> import reapy
+>>> project = reapy.Project() # Current project
 >>> project.cursor_position
 0.0
 >>> project.cursor_position = 1

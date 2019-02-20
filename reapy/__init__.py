@@ -8,6 +8,3 @@ def is_inside_reaper():
 from . import config, reascript_api
 from .core import *
 from .core.reaper import *
-
-
-CURRENT_PROJECT = Project()

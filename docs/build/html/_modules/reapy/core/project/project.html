@@ -42,7 +42,7 @@
 <span class="kn">from</span> <span class="nn">reapy.errors</span> <span class="k">import</span> <span class="n">RedoError</span><span class="p">,</span> <span class="n">UndoError</span>
 
 
-<div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
+<div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="n">ReapyObject</span><span class="p">):</span>
 
     <span class="sd">&quot;&quot;&quot;REAPER project.&quot;&quot;&quot;</span>
     
@@ -71,7 +71,7 @@
     <span class="k">def</span> <span class="nf">_args</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,)</span>
         
-<div class="viewcode-block" id="Project.add_marker"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.add_marker">[docs]</a>    <span class="k">def</span> <span class="nf">add_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.add_marker"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.add_marker">[docs]</a>    <span class="k">def</span> <span class="nf">add_marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create new marker and return its index.</span>
 <span class="sd">        </span>
@@ -104,7 +104,7 @@
         <span class="n">marker</span> <span class="o">=</span> <span class="n">Marker</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">marker_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">marker</span></div>
     
-<div class="viewcode-block" id="Project.add_region"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.add_region">[docs]</a>    <span class="k">def</span> <span class="nf">add_region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.add_region"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.add_region">[docs]</a>    <span class="k">def</span> <span class="nf">add_region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create new region and return its index.</span>
 <span class="sd">        </span>
@@ -133,7 +133,7 @@
         <span class="n">region</span> <span class="o">=</span> <span class="n">Region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">region_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">region</span></div>
         
-<div class="viewcode-block" id="Project.add_track"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.add_track">[docs]</a>    <span class="k">def</span> <span class="nf">add_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.add_track"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.add_track">[docs]</a>    <span class="k">def</span> <span class="nf">add_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Add track at a specified index.</span>
 <span class="sd">        </span>
@@ -173,7 +173,7 @@
         <span class="n">any_track_solo</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">RPR</span><span class="o">.</span><span class="n">AnyTrackSolo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">))</span>
         <span class="k">return</span> <span class="n">any_track_solo</span>
         
-<div class="viewcode-block" id="Project.begin_undo_block"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.begin_undo_block">[docs]</a>    <span class="k">def</span> <span class="nf">begin_undo_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.begin_undo_block"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.begin_undo_block">[docs]</a>    <span class="k">def</span> <span class="nf">begin_undo_block</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Start a new undo block.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -215,7 +215,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">SetCurrentBPM</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">bpm</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         
-<div class="viewcode-block" id="Project.bypass_fx_on_all_tracks"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.bypass_fx_on_all_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">bypass_fx_on_all_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bypass</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.bypass_fx_on_all_tracks"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.bypass_fx_on_all_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">bypass_fx_on_all_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bypass</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Bypass or un-bypass FX on all tracks.</span>
 <span class="sd">        </span>
@@ -291,7 +291,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">SetEditCurPos</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
         
-<div class="viewcode-block" id="Project.disarm_rec_on_all_tracks"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.disarm_rec_on_all_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">disarm_rec_on_all_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.disarm_rec_on_all_tracks"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.disarm_rec_on_all_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">disarm_rec_on_all_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Disarm record on all tracks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -303,7 +303,7 @@
 <span class="s2">        &quot;&quot;&quot;</span>
         <span class="n">Program</span><span class="p">(</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">project</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Project.end_undo_block"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.end_undo_block">[docs]</a>    <span class="k">def</span> <span class="nf">end_undo_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.end_undo_block"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.end_undo_block">[docs]</a>    <span class="k">def</span> <span class="nf">end_undo_block</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        End undo block.</span>
 <span class="sd">        </span>
@@ -314,7 +314,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">Undo_EndBlock2</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">description</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Project.get_selected_item"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.get_selected_item">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.get_selected_item"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.get_selected_item">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return index-th selected item.</span>
 
@@ -332,7 +332,7 @@
         <span class="n">item</span> <span class="o">=</span> <span class="n">Item</span><span class="p">(</span><span class="n">item_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">item</span></div>
         
-<div class="viewcode-block" id="Project.get_selected_track"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.get_selected_track">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.get_selected_track"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.get_selected_track">[docs]</a>    <span class="k">def</span> <span class="nf">get_selected_track</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return index-th selected track.</span>
 
@@ -350,7 +350,7 @@
         <span class="n">track</span> <span class="o">=</span> <span class="n">Track</span><span class="p">(</span><span class="n">track_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">track</span></div>
         
-<div class="viewcode-block" id="Project.glue_items"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.glue_items">[docs]</a>    <span class="k">def</span> <span class="nf">glue_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">within_time_selection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.glue_items"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.glue_items">[docs]</a>    <span class="k">def</span> <span class="nf">glue_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">within_time_selection</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Glue items (action shortcut).</span>
 
@@ -401,13 +401,13 @@
         <span class="n">length</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetProjectLength</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">length</span>
         
-<div class="viewcode-block" id="Project.make_current_project"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.make_current_project">[docs]</a>    <span class="k">def</span> <span class="nf">make_current_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.make_current_project"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.make_current_project">[docs]</a>    <span class="k">def</span> <span class="nf">make_current_project</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Set project as current project.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">SelectProjectInstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Project.mark_dirty"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.mark_dirty">[docs]</a>    <span class="k">def</span> <span class="nf">mark_dirty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.mark_dirty"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.mark_dirty">[docs]</a>    <span class="k">def</span> <span class="nf">mark_dirty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mark project as dirty (i.e. needing save).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -451,7 +451,7 @@
         <span class="n">master_track</span> <span class="o">=</span> <span class="n">Track</span><span class="p">(</span><span class="n">track_id</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">master_track</span>
         
-<div class="viewcode-block" id="Project.mute_all_tracks"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.mute_all_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">mute_all_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mute</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.mute_all_tracks"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.mute_all_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">mute_all_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mute</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Mute or unmute all tracks.</span>
 <span class="sd">        </span>
@@ -576,7 +576,7 @@
         <span class="n">_</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetProjectName</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">name</span>
         
-<div class="viewcode-block" id="Project.pause"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.pause"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.pause">[docs]</a>    <span class="k">def</span> <span class="nf">pause</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hit pause button.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -595,7 +595,7 @@
         <span class="n">_</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">RPR</span><span class="o">.</span><span class="n">GetProjectPathEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">path</span>
         
-<div class="viewcode-block" id="Project.perform_action"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.perform_action">[docs]</a>    <span class="k">def</span> <span class="nf">perform_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_id</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.perform_action"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.perform_action">[docs]</a>    <span class="k">def</span> <span class="nf">perform_action</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">action_id</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Perform action with ID `action_id` in the main Actions section.</span>
 
@@ -606,7 +606,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">Main_OnCommandEx</span><span class="p">(</span><span class="n">action_id</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Project.play"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.play">[docs]</a>    <span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.play"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.play">[docs]</a>    <span class="k">def</span> <span class="nf">play</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hit play button.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -639,7 +639,7 @@
         <span class="n">state</span> <span class="o">=</span> <span class="n">states</span><span class="p">[</span><span class="n">RPR</span><span class="o">.</span><span class="n">GetPlayStateEx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">state</span>
         
-<div class="viewcode-block" id="Project.redo"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.redo">[docs]</a>    <span class="k">def</span> <span class="nf">redo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.redo"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.redo">[docs]</a>    <span class="k">def</span> <span class="nf">redo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Redo last action.</span>
 <span class="sd">        </span>
@@ -675,7 +675,7 @@
         <span class="n">regions</span> <span class="o">=</span> <span class="p">[</span><span class="n">Region</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">regions</span>
         
-<div class="viewcode-block" id="Project.save"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_save_as</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.save"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.save">[docs]</a>    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_save_as</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save project.</span>
 <span class="sd">        </span>
@@ -686,14 +686,14 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">RPR</span><span class="o">.</span><span class="n">Main_SaveProject</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="n">force_save_as</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="Project.select"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.select"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">end</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Either `end` or `length` must be specified.&quot;</span>
             <span class="k">assert</span> <span class="n">length</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span> <span class="n">message</span>
             <span class="n">end</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="n">length</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">time_selection</span> <span class="o">=</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span></div>
         
-<div class="viewcode-block" id="Project.select_all_items"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.select_all_items">[docs]</a>    <span class="k">def</span> <span class="nf">select_all_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.select_all_items"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.select_all_items">[docs]</a>    <span class="k">def</span> <span class="nf">select_all_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selected</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Select or unselect all items, depending on `selected`.</span>
 
@@ -764,7 +764,7 @@
         <span class="k">return</span> <span class="n">tracks</span>
         
         
-<div class="viewcode-block" id="Project.stop"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.stop"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Hit stop button.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -835,7 +835,7 @@
         <span class="n">tracks</span> <span class="o">=</span> <span class="p">[</span><span class="n">Track</span><span class="p">(</span><span class="n">track_id</span><span class="p">)</span> <span class="k">for</span> <span class="n">track_id</span> <span class="ow">in</span> <span class="n">track_ids</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">tracks</span>
         
-<div class="viewcode-block" id="Project.undo"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.undo">[docs]</a>    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.undo"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.undo">[docs]</a>    <span class="k">def</span> <span class="nf">undo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Undo last action.</span>
 <span class="sd">        </span>
@@ -848,7 +848,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">success</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">UndoError</span></div>
         
-<div class="viewcode-block" id="Project.unmute_all_tracks"><a class="viewcode-back" href="../../../../reapy.core.html#reapy.core.Project.unmute_all_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">unmute_all_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Project.unmute_all_tracks"><a class="viewcode-back" href="../../../../reapy.core.project.html#reapy.core.Project.unmute_all_tracks">[docs]</a>    <span class="k">def</span> <span class="nf">unmute_all_tracks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Unmute all tracks.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
