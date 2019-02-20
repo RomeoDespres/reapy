@@ -163,7 +163,7 @@ Translation table
 	"`GetCursorPositionEx <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetCursorPositionEx>`_","`Project.cursor_position <reapy.core.project.html#reapy.core.project.project.Project.cursor_position>`_"
 	"`GetDisplayedMediaItemColor <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetDisplayedMediaItemColor>`_","TODO"
 	"`GetDisplayedMediaItemColor2 <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetDisplayedMediaItemColor2>`_","TODO"
-	"`GetEnvelopeName <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetEnvelopeName>`_","TODO"
+	"`GetEnvelopeName <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetEnvelopeName>`_","`Envelope.name <reapy.core.track.html#reapy.core.track.envelope.Envelope.name>`_"
 	"`GetEnvelopePoint <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetEnvelopePoint>`_","TODO"
 	"`GetEnvelopePointByTime <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetEnvelopePointByTime>`_","TODO"
 	"`GetEnvelopePointByTimeEx <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetEnvelopePointByTimeEx>`_","TODO"

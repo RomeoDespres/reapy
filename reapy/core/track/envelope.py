@@ -90,5 +90,10 @@ class Envelope(ReapyObject):
         n_points = RPR.CountEnvelopePoints(self.id)
         return n_points
         
+    @property
+    def name(self):
+        name = RPR.GetEnvelopeName(self.id, "", 2048)[2]
+        return name
+        
 
 from .automation_item import AutomationItem

@@ -157,7 +157,7 @@ GetCursorPosition,Project.cursor_position
 GetCursorPositionEx,Project.cursor_position
 GetDisplayedMediaItemColor,TODO
 GetDisplayedMediaItemColor2,TODO
-GetEnvelopeName,TODO
+GetEnvelopeName,Envelope.name
 GetEnvelopePoint,TODO
 GetEnvelopePointByTime,TODO
 GetEnvelopePointByTimeEx,TODO
