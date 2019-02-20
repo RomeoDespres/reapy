@@ -87,15 +87,19 @@ Note that the modules ``reapy`` and ``reascript_api`` (as `RPR`) are always avai
 ::
     >>> import reapy
     >>> project = reapy.Project() # Current project
+    >>>
     >>> # Unefficient (and useless) call
-    >>> start = time.time(); bpms = [project.bpm for _ in range(100)] # Takes at least 3 seconds!
+    >>> start = time.time(); bpms = [project.bpm for _ in range(100)]
+    >>> # Takes at least 3 seconds!
+    >>>
     >>> # Efficient call
     >>> from reapy.tools import Program
     >>> code = """
     ... project = reapy.Project(project_id)
     ... bpms = [project.bpm for _ in range(100)]
     ... """
-    >>> [bpms] = Program(code, "bpms").run(project_id = project.id) # Takes 1/30 seconds (= one distant call)
+    >>> [bpms] = Program(code, "bpms").run(project_id = project.id)
+    >>> # Takes 1/30 seconds (= one distant call)
 
 
 Author

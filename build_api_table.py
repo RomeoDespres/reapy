@@ -22,7 +22,10 @@ def reapy_link(s):
         return s
     module = get_reapy_module(s)
     page = module.__package__ + ".html"
-    anchor = ".".join((module.__name__, s))
+    if "." in s and s[0].lower() == s[0]:
+        anchor = ".".join((module.__name__, s.split(".")[-1]))
+    else:
+        anchor = ".".join((module.__name__, s))
     url = page + "#" + anchor
     return rst_link(s, url)
     
