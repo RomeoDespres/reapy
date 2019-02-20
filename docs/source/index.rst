@@ -12,11 +12,8 @@ Welcome to reapy's documentation!
    
 ``reapy`` is a nice pythonic wrapper around the quite unpythonic `ReaScript Python API <https://www.reaper.fm/sdk/reascript/reascripthelp.html#p>`_ for `REAPER <https://www.reaper.fm/>`_.
 
-Getting Started
----------------
-
-Installing
-**********
+Installation
+------------
 
 1. First install from ``pip``::
 
@@ -103,6 +100,10 @@ Note that the modules ``reapy`` and ``reascript_api`` (as `RPR`) are always avai
     >>> [bpms] = Program(code, "bpms").run(project_id = project.id)
     >>> # Takes 1/30 seconds (= one distant call)
 
+Contributing
+------------
+
+For now, about a third of ReaScript API has a ``reapy`` counterpart. Feel free to extend the API by forking the `repository <https://github.com/RomeoDespres/reapy>`_ !
 
 Author
 ------
