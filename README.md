@@ -93,6 +93,10 @@ Note that the modules `reapy` and `reascript_api` (as `RPR`) are always availabl
 >>> [bpms] = Program(code, "bpms").run(project_id = project.id) # Takes 1/30 seconds (= one distant call)
 ```
 
+### More
+
+Check the [documentation](https://python-reapy.readthedocs.io/ reapy online documentation) for more information.
+
 ## Author
 
 **Roméo Després** - [RomeoDespres](https://github.com/RomeoDespres)
