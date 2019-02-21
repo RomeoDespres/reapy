@@ -3,10 +3,10 @@
 First, thanks for being interested in contributing to `reapy`!
 
 There are several ways you can contribute to the project:
-1. [Reporting bugs](###reporting-bugs)
-2. [Requesting features](###requesting-features)
-3. [Improving documentation](###improving-documentation)
-4. [Adding features](###adding-features)
+1. [Reporting bugs](#reporting-bugs)
+2. [Requesting features](#requesting-features)
+3. [Improving documentation](#improving-documentation)
+4. [Adding features](#adding-features)
 
 ## Providing feedback
 
