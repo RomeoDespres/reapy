@@ -1,3 +1,5 @@
+"""Define Server class."""
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import json

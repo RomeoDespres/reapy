@@ -1,3 +1,14 @@
+"""
+Define base Program class.
+
+Notes
+-----
+Runing ``from reapy.tools import Program`` only imports this
+``Program`` class if called from inside REAPER. If not, then the
+subclass ``reapy.tools.dist_program.Program``, which overrides
+``Program.run``, is imported.
+"""
+
 import reapy
 from reapy import reascript_api as RPR
 

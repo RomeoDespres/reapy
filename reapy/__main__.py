@@ -5,6 +5,9 @@ import sys
 
 
 def get_config_scripts():
+    """
+    Return path to configuration ReaScripts.
+    """
     dir = os.path.dirname(__file__)
     return (
         os.path.join(dir, "config", "enable_dist_api.py"),
@@ -13,6 +16,9 @@ def get_config_scripts():
 
 
 def get_python_dll():
+    """
+    Return path to Python DLL (if it can be found).
+    """
     dir = os.path.dirname(sys.executable)
     file = os.path.basename(dir).lower() + ".dll"
     path = os.path.join(dir, file)

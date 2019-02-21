@@ -1,4 +1,4 @@
-"""Encode and decode `reapy` objects as JSON."""
+"""Encode and decode ``reapy`` objects as JSON."""
 
 import importlib
 import json

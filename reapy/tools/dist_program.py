@@ -1,3 +1,5 @@
+"""Define distant Program class."""
+
 import reapy
 from reapy.errors import DisabledDistAPIError, DisabledDistAPIWarning
 from . import program

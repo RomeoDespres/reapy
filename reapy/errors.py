@@ -1,3 +1,5 @@
+"""Define custom errors."""
+
 class DisabledDistAPIError(Exception):
 
     def __init__(self):
