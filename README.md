@@ -97,7 +97,7 @@ Check the [documentation](https://python-reapy.readthedocs.io/ "reapy online doc
 
 ## Contributing
 
-For now, about a third of ReaScript API has a `reapy` counterpart. Feel free to extend the API by forking this repository!
+For now, about a third of ReaScript API has a `reapy` counterpart, the docs are far from great, and many bugs are hiding in wait to be found. Feel free to improve the project by checking the [contribution guide](CONTRIBUTING.md)!
 
 ## Author
 
