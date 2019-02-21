@@ -103,7 +103,7 @@ Note that the modules ``reapy`` and ``reascript_api`` (as `RPR`) are always avai
 Contributing
 ------------
 
-For now, about a third of ReaScript API has a ``reapy`` counterpart. Feel free to extend the API by forking the `repository <https://github.com/RomeoDespres/reapy>`_ !
+For now, about a third of ReaScript API has a ``reapy`` counterpart, the docs are far from great, and many bugs are waiting to be found. Feel free to improve the project by checking the `contribution guide <https://github.com/RomeoDespres/reapy/blob/master/CONTRIBUTING.md>`_ !
 
 Author
 ------
