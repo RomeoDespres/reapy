@@ -2,11 +2,11 @@ import reapy
 
 
 class Program:
-    
+
     def __init__(self, code, *output):
         """
         Build program.
-        
+
         Parameters
         ----------
         code : str
@@ -22,11 +22,11 @@ class Program:
         """
         self._code = self.parse_code(code)
         self._output = tuple(output)
-        
+
     def to_dict(self):
         """
         Return dict representation of program.
-        
+
         Returns
         -------
         rep : dict
@@ -34,16 +34,16 @@ class Program:
             be created from `rep` with `Program(**rep)`.
         """
         return (self._code,) + self._output
-        
+
     def parse_code(self, code):
         """
         Return code with correct indentation.
-        
+
         Parameters
         ----------
         code : str
             Code to be parsed.
-            
+
         Returns
         -------
         code : str
@@ -57,11 +57,11 @@ class Program:
         lines = [line[indentation:] for line in lines]
         code = "\n".join(lines)
         return code
-        
+
     def run(self, **input):
         """
         Run program and return output.
-        
+
         Returns
         -------
         output : tuple
@@ -71,6 +71,6 @@ class Program:
         exec(self._code, input)
         output = tuple(input[o] for o in self._output)
         return output
-        
-        
+
+
 from reapy import reascript_api as RPR

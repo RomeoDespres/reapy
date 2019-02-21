@@ -3,10 +3,11 @@ from reapy import reascript_api as RPR
 from reapy.tools import json
 if reapy.is_inside_reaper():
     from reapy.tools.program import Program
-
 from .socket import Socket
 
-import socket, traceback
+import socket
+import traceback
+
 
 class Server(Socket):
 
@@ -16,7 +17,7 @@ class Server(Socket):
         self.listen()
         self.connections = {}
         self.settimeout(.0001)
-    
+
     @Socket._non_blocking
     def _get_request(self, connection):
         try:
@@ -33,7 +34,7 @@ class Server(Socket):
             input = {"address": address, "server": self}
             request = {"program": program, "input": input}
         return request
-            
+
     def _process_request(self, request):
         program = Program(*request["program"])
         result = {}
@@ -47,24 +48,24 @@ class Server(Socket):
             result["traceback"] = traceback.format_exc()
             result["type"] = "error"
         return result
-        
+
     def _send_result(self, connection, result):
         result = json.dumps(result).encode()
         connection.send(result)
-        
+
     @Socket._non_blocking
     def accept(self):
         connection, address = super(Server, self).accept()
         self.connections[address] = connection
         connection.settimeout(.001)
         connection.send("{}".format(address).encode("ascii"))
-        
+
     def disconnect(self, address):
         connection = self.connections[address]
         connection.shutdown(socket.SHUT_RDWR)
         connection.close()
         del self.connections[address]
-        
+
     def get_requests(self):
         requests = {}
         for address, connection in self.connections.items():
@@ -72,14 +73,14 @@ class Server(Socket):
             if request is not None:
                 requests[address] = request
         return requests
-        
+
     def process_requests(self, requests):
         results = {}
         for address, request in requests.items():
             result = self._process_request(request)
             results[address] = result
         return results
-    
+
     def send_results(self, results):
         for address, result in results.items():
             try:

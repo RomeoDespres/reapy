@@ -13,15 +13,15 @@ class Track(ReapyObject):
         if isinstance(id, int):
             id = RPR.GetTrack(project.id, id)
         self.id = id
-    
+
     @property
     def _args(self):
         return (self.id,)
-        
+
     def add_item(self, start=0, end=None, length=0):
         """
         Create new item on track and return it.
-        
+
         Parameters
         ----------
         start : float, optional
@@ -31,7 +31,7 @@ class Track(ReapyObject):
             is used instead.
         length : float, optional
             New item length in seconds (default 0).
-        
+
         Returns
         -------
         item : Item
@@ -49,11 +49,11 @@ class Track(ReapyObject):
             track_id=self.id, start=start, end=end
         )[0]
         return item
-        
+
     def add_midi_item(self, start=0, end=1, quantize=False):
         """
         Add empty MIDI item to track and return it.
-        
+
         Parameters
         ----------
         start : float, optional
@@ -67,17 +67,17 @@ class Track(ReapyObject):
         item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)
         item = MIDIItem(item_id)
         return item
-        
+
     def add_send(self, destination=None):
         """
         Add send to track and return it.
-        
+
         Parameters
         ----------
         destination : Track or None
             Send destination (default=None). If None, destination is
             set to hardware output.
-            
+
         Returns
         -------
         send : Send
@@ -89,12 +89,12 @@ class Track(ReapyObject):
         type = "hardware" if destination is None else "send"
         send = Send(self, send_id, type=type)
         return send
-        
+
     @property
     def automation_mode(self):
         """
         Return track automation mode.
-        
+
         Returns
         -------
         automation_mode : str
@@ -109,12 +109,12 @@ class Track(ReapyObject):
         modes = "trim/read", "read", "touch", "write", "latch", "latch preview"
         automation_mode = modes[RPR.GetTrackAutomationMode(self.id)]
         return automation_mode
-        
+
     @automation_mode.setter
     def automation_mode(self, mode):
         """
         Set track automation mode.
-        
+
         Parameters
         -------
         mode : str
@@ -128,12 +128,12 @@ class Track(ReapyObject):
         """
         modes = "trim/read", "read", "touch", "write", "latch", "latch preview"
         RPR.SetTrackAutomationMode(self.id, modes.index(mode))
-        
+
     @property
     def color(self):
         """
         Return track color in RGB format.
-        
+
         Returns
         -------
         r : int
@@ -146,12 +146,12 @@ class Track(ReapyObject):
         native_color = RPR.GetTrackColor(self.id)
         r, g, b = reapy.rgb_from_native(native_color)
         return r, g, b
-        
+
     @color.setter
     def color(self, color):
         """
         Set track color to `color`
-        
+
         Parameters
         ----------
         color : tuple
@@ -160,18 +160,18 @@ class Track(ReapyObject):
         """
         native_color = reapy.rgb_to_native(color)
         RPR.SetTrackColor(self.id, native_color)
-        
+
     def delete(self):
         """
         Delete track.
         """
         RPR.DeleteTrack(self.id)
-        
+
     @property
     def depth(self):
         """
         Return track depth.
-        
+
         Returns
         -------
         depth : int
@@ -179,12 +179,12 @@ class Track(ReapyObject):
         """
         depth = RPR.GetTrackDepth(self.id)
         return depth
-        
+
     @property
     def fxs(self):
         """
         Return list of FXs on track.
-        
+
         Returns
         -------
         fxs : list of TrackFX
@@ -192,11 +192,11 @@ class Track(ReapyObject):
         """
         fxs = [TrackFX(self, i) for i in range(self.n_fxs)]
         return fxs
-        
+
     def get_envelope(self, index=None, name=None, chunk_name=None):
         """
         Return track envelope for a given index, name or chunk name.
-        
+
         Parameters
         ----------
         index : int, optional
@@ -205,7 +205,7 @@ class Track(ReapyObject):
             Envelope name.
         chunk_name : str, optional
             Built-in envelope configuration chunk name, e.g. "<VOLENV".
-            
+
         Returns
         -------
         envelope : Envelope
@@ -225,12 +225,12 @@ class Track(ReapyObject):
         if not envelope._is_defined:
             raise UndefinedEnvelopeError(index, name, chunk_name)
         return envelope
-    
+
     @property
     def instrument(self):
         """
         Return first instrument FX on track if it exists.
-        
+
         Returns
         -------
         instrument : TrackFX or None
@@ -239,7 +239,7 @@ class Track(ReapyObject):
         fx_index = RPR.TrackFX_GetInstrument(self.id)
         instrument = None if fx_index == -1 else TrackFX(self, fx_index)
         return instrument
-        
+
     @property
     def items(self):
         """
@@ -259,12 +259,12 @@ class Track(ReapyObject):
         item_ids = Program(code, "item_ids").run(track_id=self.id)[0]
         items = [Item(item_id) for item_id in item_ids]
         return items
-        
+
     @property
     def is_selected(self):
         """
         Return whether track is selected.
-        
+
         Returns
         -------
         is_selected : bool
@@ -272,12 +272,12 @@ class Track(ReapyObject):
         """
         is_selected = bool(RPR.IsTrackSelected(self.id))
         return is_selected
-        
+
     @is_selected.setter
     def is_selected(self, selected):
         """
         Select or unselect track.
-        
+
         Parameters
         ----------
         selected : bool
@@ -287,18 +287,18 @@ class Track(ReapyObject):
             self.select()
         else:
             self.unselect()
-            
+
     def make_only_selected_track(self):
         """
         Make track the only selected track in parent project.
         """
         RPR.SetOnlyTrackSelected(self.id)
-            
+
     @property
     def n_envelopes(self):
         """
         Return number of envelopes on track.
-        
+
         Returns
         -------
         n_envelopes : int
@@ -306,12 +306,12 @@ class Track(ReapyObject):
         """
         n_envelopes = RPR.CountTrackEnvelopes(self.id)
         return n_envelopes
-        
+
     @property
     def n_fxs(self):
         """
         Return number of FXs on track.
-        
+
         Returns
         -------
         n_fxs : int
@@ -319,17 +319,17 @@ class Track(ReapyObject):
         """
         n_fxs = RPR.TrackFX_GetCount(self.id)
         return n_fxs
-        
+
     @property
     def n_hardware_sends(self):
         n_hardware_sends = RPR.GetTrackNumSends(self.id, 1)
         return n_hardware_sends
-            
+
     @property
     def n_items(self):
         """
         Return number of items on track.
-        
+
         Returns
         -------
         n_items : int
@@ -337,22 +337,22 @@ class Track(ReapyObject):
         """
         n_items = RPR.CountTrackMediaItems(self.id)
         return n_items
-        
+
     @property
     def n_receives(self):
         n_receives = RPR.GetTrackNumSends(self.id, -1)
         return n_receives
-        
+
     @property
     def n_sends(self):
         n_sends = RPR.GetTrackNumSends(self.id, 0)
         return n_sends
-        
+
     @property
     def name(self):
         """
         Return track name.
-        
+
         Returns
         -------
         name : str
@@ -361,13 +361,13 @@ class Track(ReapyObject):
         """
         _, _, name, _ = RPR.GetTrackName(self.id, "", 2048)
         return name
-        
+
     def select(self):
         """
         Select track.
         """
         RPR.SetTrackSelected(self.id, True)
-        
+
     @property
     def sends(self):
         code = """
@@ -375,14 +375,14 @@ class Track(ReapyObject):
         """
         sends = Program(code, "sends").run(track=self)[0]
         return sends
-        
+
     def unselect(self):
         """
         Unselect track.
         """
         RPR.SetTrackSelected(self.id, False)
-  
-  
+
+
 from ..item.item import Item, MIDIItem
 from .envelope import Envelope
 from .send import Send

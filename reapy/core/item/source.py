@@ -8,7 +8,7 @@ class Source:
 
     def __eq__(self, other):
         return self.id == other.id and isinstance(other, Source)
-        
+
     def _to_dict(self):
         return {
             "__reapy__": True,
@@ -38,7 +38,7 @@ class Source:
         Parameters
         ----------
         unit : {"beats", "seconds"}
-            
+
         Returns
         -------
         length : float
@@ -60,7 +60,7 @@ class Source:
     def n_channels(self):
         """
         Return number of channels in source media.
-        
+
         Returns
         -------
         n_channels : int

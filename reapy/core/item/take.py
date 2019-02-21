@@ -4,7 +4,7 @@ from reapy.tools import Program
 
 
 class Take(ReapyObject):
-    
+
     _class_name = "Take"
 
     def __init__(self, id):
@@ -12,20 +12,20 @@ class Take(ReapyObject):
 
     def __eq__(self, other):
         return self.id == other.id
-     
+
     @property
     def _args(self):
         return (self.id,)
-        
+
     def get_info_value(self, param_name):
         value = RPR.GettakeInfo_Value(self.id, param_name)
         return value
-        
+
     @property
     def is_active(self):
         """
         Return whether take is active.
-        
+
         Returns
         -------
         is_active : bool
@@ -51,18 +51,18 @@ class Take(ReapyObject):
         """
         item = Item(RPR.GetMediaItemTake_Item(self.id))
         return item
-        
+
     def make_active_take(self):
         """
         Make take active.
         """
         RPR.SetActiveTake(self.id)
-        
+
     @property
     def n_envelopes(self):
         """
         Return number of envelopes on take.
-        
+
         Returns
         -------
         n_envelopes : int
@@ -96,12 +96,12 @@ class Take(ReapyObject):
         """
         start_offset = self.get_info_value("D_STARTOFFS")
         return start_offset
-        
+
     @property
     def track(self):
         """
         Return parent track of take.
-        
+
         Returns
         -------
         track : Track
@@ -111,7 +111,7 @@ class Take(ReapyObject):
         track = Track(track_id)
         return track
 
-    
+
 from ..track.track import Track
 from .item import Item
 from .source import Source

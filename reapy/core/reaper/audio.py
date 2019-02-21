@@ -2,16 +2,18 @@
 
 from reapy import reascript_api as RPR
 
+
 def init():
     """
     Open all audio and MIDI devices (if not opened).
     """
     RPR.Audio_Init()
-    
+
+
 def is_prebuffer():
     """
     Return whether audio is in pre-buffer (threadsafe).
-    
+
     Returns
     -------
     is_prebuffer : bool
@@ -19,11 +21,12 @@ def is_prebuffer():
     """
     is_prebuffer = bool(RPR.Audio_IsPreBuffer())
     return is_prebuffer
-    
+
+
 def is_running():
     """
     Return whether audio is running (threadsafe).
-    
+
     Returns
     -------
     is_running : bool
@@ -31,7 +34,8 @@ def is_running():
     """
     is_running = bool(RPR.Audio_IsRunning())
     return is_running
-    
+
+
 def quit():
     """
     Close all audio and MIDI devices (if opened).

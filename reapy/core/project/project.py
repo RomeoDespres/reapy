@@ -10,13 +10,13 @@ from reapy.errors import RedoError, UndoError
 class Project(ReapyObject):
 
     """REAPER project."""
-    
+
     _class_name = "Project"
 
     def __init__(self, id=None, index=-1):
         """
         Build project either by ID or index.
-        
+
         Parameters
         ----------
         id : str, optional
@@ -28,18 +28,18 @@ class Project(ReapyObject):
         if id is None:
             id = RPR.EnumProjects(index, None, 0)[0]
         self.id = id
-        
+
     def __eq__(self, other):
         return self.id == other.id
-      
+
     @property
     def _args(self):
         return (self.id,)
-        
+
     def add_marker(self, position, name="", color=0):
         """
         Create new marker and return its index.
-        
+
         Parameters
         ----------
         position : float
@@ -49,12 +49,12 @@ class Project(ReapyObject):
         color : int or tuple of int, optional
             Marker color. Integers correspond to REAPER native colors.
             Tuple must be RGB triplets of integers between 0 and 255.
-            
+
         Returns
         -------
         marker : Marker
             New marker.
-            
+
         Notes
         -----
         If a marker with the same position and name already exists, no
@@ -68,11 +68,11 @@ class Project(ReapyObject):
         )
         marker = Marker(self, marker_id)
         return marker
-    
+
     def add_region(self, start, end, name="", color=0):
         """
         Create new region and return its index.
-        
+
         Parameters
         ----------
         start : float
@@ -84,7 +84,7 @@ class Project(ReapyObject):
         color : int or tuple of int, optional
             Region color. Integers correspond to REAPER native colors.
             Tuple must be RGB triplets of integers between 0 and 255.
-            
+
         Returns
         -------
         region : Region
@@ -97,16 +97,16 @@ class Project(ReapyObject):
         )
         region = Region(self, region_id)
         return region
-        
+
     def add_track(self, index=0):
         """
         Add track at a specified index.
-        
+
         Parameters
         ----------
         index : int
             Index at which to insert track.
-            
+
         Returns
         -------
         track : Track
@@ -124,12 +124,12 @@ class Project(ReapyObject):
         )[0]
         track = Track(track_id)
         return track
-        
+
     @property
     def any_track_solo(self):
         """
         Test whether any track is soloed in project.
-        
+
         Returns
         -------
         any_track_solo : bool
@@ -137,7 +137,7 @@ class Project(ReapyObject):
         """
         any_track_solo = bool(RPR.AnyTrackSolo(self.id))
         return any_track_solo
-        
+
     def begin_undo_block(self):
         """
         Start a new undo block.
@@ -167,23 +167,23 @@ class Project(ReapyObject):
             Project BPM (beats per minute).
         """
         return self.time_signature[0]
-        
+
     @bpm.setter
     def bpm(self, bpm):
         """
         Set project BPM (beats per minute).
-        
+
         Parameters
         ----------
         bpm : float
             Tempo in beats per minute.
         """
         RPR.SetCurrentBPM(self.id, bpm, True)
-        
+
     def bypass_fx_on_all_tracks(self, bypass=True):
         """
         Bypass or un-bypass FX on all tracks.
-        
+
         Parameters
         ----------
         bypass : bool
@@ -196,12 +196,12 @@ class Project(ReapyObject):
         current_project.make_current_project()
         """
         Program(code).run(project=self, bypass=bypass)
-        
+
     @property
     def can_redo(self):
         """
         Return whether redo is possible.
-        
+
         Returns
         -------
         can_redo : bool
@@ -210,15 +210,15 @@ class Project(ReapyObject):
         try:
             RPR.Undo_CanRedo2(self.id)
             can_redo = True
-        except AttributeError: # Bug in ReaScript API when 
+        except AttributeError:  # Bug in ReaScript API
             can_redo = False
         return can_redo
-    
+
     @property
     def can_undo(self):
         """
         Return whether undo is possible.
-        
+
         Returns
         -------
         can_undo : bool
@@ -227,15 +227,15 @@ class Project(ReapyObject):
         try:
             RPR.Undo_CanUndo2(self.id)
             can_undo = True
-        except AttributeError: # Bug in ReaScript API when 
+        except AttributeError:  # Bug in ReaScript API
             can_undo = False
         return can_undo
-    
+
     @property
     def cursor_position(self):
         """
         Return edit cursor position in seconds.
-        
+
         Returns
         -------
         position : float
@@ -248,14 +248,14 @@ class Project(ReapyObject):
     def cursor_position(self, position):
         """
         Set edit cursor position.
-        
+
         Parameters
         ----------
         position : float
             New edit cursor position in seconds.
         """
         RPR.SetEditCurPos(position, True, True)
-        
+
     def disarm_rec_on_all_tracks(self):
         """
         Disarm record on all tracks.
@@ -267,18 +267,18 @@ class Project(ReapyObject):
         current_project.make_current_project()
         """
         Program(code).run(project=self)
-        
+
     def end_undo_block(self, description=""):
         """
         End undo block.
-        
+
         Parameters
         ----------
         description : str
             Undo block description.
         """
         RPR.Undo_EndBlock2(self.id, description, 0)
-        
+
     def get_selected_item(self, index):
         """
         Return index-th selected item.
@@ -296,7 +296,7 @@ class Project(ReapyObject):
         item_id = RPR.GetSelectedMediaItem(self.id, index)
         item = Item(item_id)
         return item
-        
+
     def get_selected_track(self, index):
         """
         Return index-th selected track.
@@ -314,7 +314,7 @@ class Project(ReapyObject):
         track_id = RPR.GetSelectedTrack(self.id, index)
         track = Track(track_id)
         return track
-        
+
     def glue_items(self, within_time_selection=False):
         """
         Glue items (action shortcut).
@@ -326,12 +326,12 @@ class Project(ReapyObject):
         """
         action_id = 41588 if within_time_selection else 40362
         self.perform_action(action_id)
-    
+
     @property
     def is_dirty(self):
         """
         Return whether project is dirty (i.e. needing save).
-        
+
         Returns
         -------
         is_dirty : bool
@@ -339,12 +339,12 @@ class Project(ReapyObject):
         """
         is_dirty = RPR.IsProjectDirty(self.id)
         return is_dirty
-        
+
     @property
     def is_current_project(self):
         """
         Return whether project is current project.
-        
+
         Returns
         -------
         is_current : bool
@@ -365,24 +365,24 @@ class Project(ReapyObject):
         """
         length = RPR.GetProjectLength(self.id)
         return length
-        
+
     def make_current_project(self):
         """
         Set project as current project.
         """
         RPR.SelectProjectInstance(self.id)
-        
+
     def mark_dirty(self):
         """
         Mark project as dirty (i.e. needing save).
         """
         RPR.MarkProjectDirty(self.id)
-    
+
     @property
     def markers(self):
         """
         Return list of project markers.
-        
+
         Returns
         -------
         markers : list of Marker
@@ -401,12 +401,12 @@ class Project(ReapyObject):
         ids = Program(code, "ids").run(project=self)[0]
         markers = [Marker(self, i) for i in ids]
         return markers
-        
+
     @property
     def master_track(self):
         """
         Return project master track.
-        
+
         Returns
         -------
         master_track : Track
@@ -415,16 +415,16 @@ class Project(ReapyObject):
         track_id = RPR.GetMasterTrack(self.id)
         master_track = Track(track_id)
         return master_track
-        
+
     def mute_all_tracks(self, mute=True):
         """
         Mute or unmute all tracks.
-        
+
         Parameters
         ----------
         mute : bool, optional
             Whether to mute or unmute all tracks (default=True).
-            
+
         See also
         --------
         Project.unmute_all_tracks
@@ -436,12 +436,12 @@ class Project(ReapyObject):
         current_project.make_current_project()
         """
         Program(code).run(project=self, mute=mute)
-        
+
     @property
     def n_items(self):
         """
         Return number of items in project.
-        
+
         Returns
         -------
         n_items : int
@@ -449,12 +449,12 @@ class Project(ReapyObject):
         """
         n_items = RPR.CountMediaItems(self.id)
         return n_items
-        
+
     @property
     def n_markers(self):
         """
         Return number of markers a in project.
-        
+
         Returns
         -------
         n_markers : int
@@ -462,12 +462,12 @@ class Project(ReapyObject):
         """
         n_markers = RPR.CountProjectMarkers(self.id, 0, 0)[2]
         return n_markers
-        
+
     @property
     def n_regions(self):
         """
         Return number of regions in project.
-        
+
         Returns
         -------
         n_regions : int
@@ -475,7 +475,7 @@ class Project(ReapyObject):
         """
         n_regions = RPR.CountProjectMarkers(self.id, 0, 0)[3]
         return n_regions
-        
+
     @property
     def n_selected_items(self):
         """
@@ -488,12 +488,12 @@ class Project(ReapyObject):
         """
         n_items = RPR.CountSelectedMediaItems(self.id)
         return n_items
-        
+
     @property
     def n_selected_tracks(self):
         """
         Return number of selected tracks in project (excluding master).
-        
+
         Returns
         -------
         n_tracks : int
@@ -501,12 +501,12 @@ class Project(ReapyObject):
         """
         n_tracks = RPR.CountSelectedTracks2(self.id, False)
         return n_tracks
-        
+
     @property
     def n_tempo_markers(self):
         """
         Return number of tempo/time signature markers in project.
-        
+
         Returns
         -------
         n_tempo_markers : int
@@ -514,12 +514,12 @@ class Project(ReapyObject):
         """
         n_tempo_markers = RPR.CountTempoTimeSigMarkers(self.id)
         return n_tempo_markers
-        
+
     @property
     def n_tracks(self):
         """
         Return the number of tracks in project.
-        
+
         Returns
         -------
         n_tracks : int
@@ -527,12 +527,12 @@ class Project(ReapyObject):
         """
         n_tracks = RPR.CountTracks(self.id)
         return n_tracks
-         
+
     @property
     def name(self):
         """
         Return project name.
-        
+
         Returns
         -------
         name : str
@@ -540,18 +540,18 @@ class Project(ReapyObject):
         """
         _, name, _ = RPR.GetProjectName(self.id, "", 2048)
         return name
-        
+
     def pause(self):
         """
         Hit pause button.
         """
         RPR.OnPauseButtonEx(self.id)
-        
+
     @property
     def path(self):
         """
         Return project path.
-        
+
         Returns
         -------
         path : str
@@ -559,7 +559,7 @@ class Project(ReapyObject):
         """
         _, path, _ = RPR.GetProjectPathEx(self.id, "", 2048)
         return path
-        
+
     def perform_action(self, action_id):
         """
         Perform action with ID `action_id` in the main Actions section.
@@ -570,18 +570,18 @@ class Project(ReapyObject):
             Action ID in the main Actions section.
         """
         RPR.Main_OnCommandEx(action_id, 0, self.id)
-        
+
     def play(self):
         """
         Hit play button.
         """
         RPR.OnPlayButtonEx(self.id)
-        
+
     @property
     def play_rate(self):
         """
         Return project play rate.
-        
+
         Returns
         -------
         play_rate : float
@@ -594,7 +594,7 @@ class Project(ReapyObject):
     def play_state(self):
         """
         Return project play state.
-        
+
         Returns
         -------
         state : {"play", "pause", "record"}
@@ -603,11 +603,11 @@ class Project(ReapyObject):
         states = {1: "play", 2: "pause", 4: "record"}
         state = states[RPR.GetPlayStateEx(self.id)]
         return state
-        
+
     def redo(self):
         """
         Redo last action.
-        
+
         Raises
         ------
         RedoError
@@ -616,12 +616,12 @@ class Project(ReapyObject):
         success = RPR.Undo_DoRedo2(self.id)
         if not success:
             raise RedoError
-            
+
     @property
     def regions(self):
         """
         Return list of project regions.
-        
+
         Returns
         -------
         regions : list of Region
@@ -639,25 +639,25 @@ class Project(ReapyObject):
         ids = Program(code, "ids").run(project=self)[0]
         regions = [Region(self, i) for i in ids]
         return regions
-        
+
     def save(self, force_save_as=False):
         """
         Save project.
-        
+
         Parameters
         ----------
         force_save_as : bool
             Force using "Save as" instead of "Save".
         """
         RPR.Main_SaveProject(self.id, force_save_as)
-        
+
     def select(self, start, end=None, length=None):
         if end is None:
             message = "Either `end` or `length` must be specified."
             assert length is not None, message
             end = start + length
         self.time_selection = start, end
-        
+
     def select_all_items(self, selected=True):
         """
         Select or unselect all items, depending on `selected`.
@@ -668,12 +668,12 @@ class Project(ReapyObject):
             Whether to select or unselect items.
         """
         RPR.SelectAllMediaItems(self.id, selected)
-        
+
     @property
     def selected_envelope(self):
         """
         Return project selected envelope.
-        
+
         Returns
         -------
         envelope : Envelope or None
@@ -707,12 +707,12 @@ class Project(ReapyObject):
         item_ids = Program(code, "item_ids").run(project_id=self.id)[0]
         items = list(map(Item, item_ids))
         return items
-    
+
     @property
     def selected_tracks(self):
         """
         Return list of selected tracks (excluding master).
-        
+
         Returns
         -------
         tracks : list of Track
@@ -727,19 +727,18 @@ class Project(ReapyObject):
         track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
         tracks = list(map(Track, track_ids))
         return tracks
-        
-        
+
     def stop(self):
         """
         Hit stop button.
         """
         RPR.OnStopButtonEx(self.id)
-        
+
     @property
     def time_selection(self):
         """
         Return project time selection.
-        
+
         Returns
         -------
         time_selection : TimeSelection
@@ -747,12 +746,12 @@ class Project(ReapyObject):
         """
         time_selection = TimeSelection(self)
         return time_selection
-        
+
     @time_selection.setter
     def time_selection(self, selection):
         """
         Set time selection bounds.
-        
+
         Parameters
         ----------
         selection : (float, float)
@@ -781,12 +780,12 @@ class Project(ReapyObject):
         """
         _, bpm, bpi = RPR.GetProjectTimeSignature2(self.id, 0, 0)
         return bpm, bpi
-    
-    @property    
+
+    @property
     def tracks(self):
         """
         Return list of project tracks.
-        
+
         Returns
         -------
         tracks : list of Track
@@ -799,11 +798,11 @@ class Project(ReapyObject):
         track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
         tracks = [Track(track_id) for track_id in track_ids]
         return tracks
-        
+
     def undo(self):
         """
         Undo last action.
-        
+
         Raises
         ------
         UndoError
@@ -812,13 +811,13 @@ class Project(ReapyObject):
         success = RPR.Undo_DoUndo2(self.id)
         if not success:
             raise UndoError
-        
+
     def unmute_all_tracks(self):
         """
         Unmute all tracks.
         """
         self.mute_all_tracks(mute=False)
- 
+
 
 from ..item.item import Item
 from ..track.envelope import Envelope

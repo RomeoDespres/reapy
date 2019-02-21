@@ -1,5 +1,6 @@
 import socket
 
+
 class Socket:
 
     """
@@ -8,7 +9,7 @@ class Socket:
 
     def __init__(self, s=None):
         self._socket = socket.socket() if s is None else s
-    
+
     @staticmethod
     def _non_blocking(f):
         """
@@ -21,24 +22,24 @@ class Socket:
             except socket.timeout:
                 pass
         return g
-        
+
     def accept(self, *args, **kwargs):
         connection, address = self._socket.accept(*args, **kwargs)
         connection = Socket(connection)
         return connection, address
-        
+
     def bind(self, *args, **kwargs):
         return self._socket.bind(*args, **kwargs)
-        
+
     def close(self, *args, **kwargs):
         return self._socket.close(*args, **kwargs)
-        
+
     def connect(self, *args, **kwargs):
         return self._socket.connect(*args, **kwargs)
-        
+
     def listen(self, *args, **kwargs):
         return self._socket.listen(*args, **kwargs)
-        
+
     def recv(self):
         """
         Receive data of arbitrary length.
@@ -55,7 +56,7 @@ class Socket:
             data += self._socket.recv(max_size)
         data += self._socket.recv(length % max_size)
         return data
-    
+
     def send(self, data):
         """
         Send data.
@@ -65,9 +66,9 @@ class Socket:
         self._socket.send(length)
         # Then send data
         self._socket.send(data)
-        
+
     def settimeout(self, *args, **kwargs):
         return self._socket.settimeout(*args, **kwargs)
-        
+
     def shutdown(self, *args, **kwargs):
         return self._socket.shutdown(*args, **kwargs)

@@ -13,7 +13,7 @@ class Item(ReapyObject):
 
     def __eq__(self, other):
         return self.id == other.id and isinstance(other, Item)
-    
+
     @property
     def _args(self):
         return (self.id,)
@@ -30,11 +30,11 @@ class Item(ReapyObject):
         """
         take = Take(RPR.GetActiveTake(self.id))
         return take
-        
+
     def add_take(self):
         """
         Create and return a new take in item.
-        
+
         Returns
         -------
         take : Take
@@ -43,11 +43,11 @@ class Item(ReapyObject):
         take_id = RPR.AddTakeToMediaItem(self.id)
         take = Take(take_id)
         return take
-        
+
     def get_info_value(self, param_name):
         value = RPR.GetMediaItemInfo_Value(self.id, param_name)
         return value
-        
+
     def get_take(self, index):
         """
         Return index-th take of item.
@@ -65,12 +65,12 @@ class Item(ReapyObject):
         take_id = RPR.GetItemTake(self.id, i)
         take = Take(take_id)
         return take
-        
+
     @property
     def is_selected(self):
         """
         Return whether item is selected.
-        
+
         Returns
         -------
         is_selected : bool
@@ -92,19 +92,19 @@ class Item(ReapyObject):
         param_name = "D_LENGTH"
         length = self.get_info_value(param_name)
         return length
-        
+
     @length.setter
     def length(self, length):
         """
         Set item length.
-        
+
         Parameters
         ----------
         length : float
             New item length in seconds.
         """
         RPR.SetMediaItemLength(self.id, length, True)
-        
+
     @property
     def n_takes(self):
         """
@@ -135,19 +135,19 @@ class Item(ReapyObject):
     def position(self, position):
         """
         Set media item position to `position`.
-        
+
         Parameters
         ----------
         position : float
             New item position in seconds.
         """
         RPR.SetMediaItemPosition(self.id, position, False)
-        
+
     @property
     def project(self):
         """
         Return item parent project.
-        
+
         Returns
         -------
         project : Project
@@ -156,16 +156,16 @@ class Item(ReapyObject):
         project_id = RPR.GetItemProjectContext(self.id)
         project = Project(project_id)
         return project
-        
+
     def split(self, position):
         """
         Split item and return left and right parts.
-        
+
         Parameters
         ----------
         position : float
             Split position in seconds.
-        
+
         Returns
         -------
         left, right : Item
@@ -192,12 +192,12 @@ class Item(ReapyObject):
         take_ids = Program(code, "take_ids").run(item_id=self.id)[0]
         takes = [Take(take_id) for take_id in take_ids]
         return takes
-        
+
     @property
     def track(self):
         """
         Return parent track of item.
-        
+
         Returns
         -------
         track : Track
@@ -206,17 +206,17 @@ class Item(ReapyObject):
         track_id = RPR.GetMediaItemTrack(self.id)
         track = Track(track_id)
         return track
-        
+
     @track.setter
     def track(self, track):
         """
         Move item to track `track`.
-        
+
         Parameters
         ----------
         track : Track, int
             If Track, destination track for item. If int, track index.
-            
+
         Raises
         ------
         Exception
@@ -228,6 +228,7 @@ class Item(ReapyObject):
         if not success:
             raise Exception("Couldn't move item to track.")
 
+
 class MIDIItem(Item):
 
     pass
@@ -236,4 +237,3 @@ class MIDIItem(Item):
 from ..project.project import Project
 from ..track.track import Track
 from .take import Take
-

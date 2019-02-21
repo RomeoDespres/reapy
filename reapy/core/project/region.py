@@ -3,6 +3,7 @@ from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.tools import Program
 
+
 class Region(ReapyObject):
 
     _class_name = "Region"
@@ -19,7 +20,7 @@ class Region(ReapyObject):
             parent_project_id = parent_project.id
         self.project_id = parent_project_id
         self.index = index
-        
+
     def _get_enum_index(self):
         """
         Return region index as needed by RPR.EnumProjectMarkers2.
@@ -34,22 +35,22 @@ class Region(ReapyObject):
             region=self, project=reapy.Project(self.project_id)
         )[0]
         return index
-        
+
     @property
     def _kwargs(self):
         return {
             "index": self.index, "parent_project_id": self.project_id
         }
-        
+
     def add_rendered_track(self, track):
         """
         Add track to region render matrix for this region.
-        
+
         Parameters
         ----------
         track : Track
             Track to add.
-            
+
         See also
         --------
         Region.add_rendered_tracks
@@ -58,16 +59,16 @@ class Region(ReapyObject):
         Region.remove_rendered_tracks
         """
         RPR.SetRegionRenderMatrix(self.project_id, self.index, track.id, 1)
-        
+
     def add_rendered_tracks(self, tracks):
         """
         Efficiently add  several tracks to region render matrix.
-        
+
         Parameters
         ----------
         tracks : list of Track
             Tracks to add.
-            
+
         See also
         --------
         Region.remove_rendered_tracks
@@ -77,12 +78,12 @@ class Region(ReapyObject):
             region.add_rendered_track(track)
         """
         Program(code).run(region=self, tracks=tracks)
-        
+
     @property
     def end(self):
         """
         Return region end.
-        
+
         Returns
         -------
         end : float
@@ -96,12 +97,12 @@ class Region(ReapyObject):
         """
         end = Program(code, "end").run(region=self)[0]
         return end
-        
+
     @end.setter
     def end(self, end):
         """
         Set region end.
-        
+
         Parameters
         ----------
         end : float
@@ -113,22 +114,22 @@ class Region(ReapyObject):
         )
         """
         Program(code).run(region=self, end=end)
-        
+
     def delete(self):
         """
         Delete region.
         """
         RPR.DeleteProjectMarker(self.project_id, self.index, True)
-        
+
     def remove_rendered_track(self, track):
         """
         Remove track from region render matrix for this region.
-        
+
         Parameters
         ----------
         track : Track
             Track to remove.
-            
+
         See also
         --------
         Region.add_rendered_tracks
@@ -137,16 +138,16 @@ class Region(ReapyObject):
             Efficiently remove several tracks from render matrix.
         """
         RPR.SetRegionRenderMatrix(self.project_id, self.index, track.id, -1)
-        
+
     def remove_rendered_tracks(self, tracks):
         """
         Efficiently remove  several tracks from region render matrix.
-        
+
         Parameters
         ----------
         tracks : list of Track
             Tracks to remove.
-            
+
         See also
         --------
         Region.add_rendered_tracks
@@ -156,12 +157,12 @@ class Region(ReapyObject):
             region.remove_rendered_track(track)
         """
         Program(code).run(region=self, tracks=tracks)
-    
-    @property    
+
+    @property
     def rendered_tracks(self):
         """
         Return list of tracks for this region in region render matrix.
-        
+
         Returns
         -------
         rendered_tracks : list of Track
@@ -180,12 +181,12 @@ class Region(ReapyObject):
         """
         rendered_tracks = Program(code, "tracks").run(region=self)[0]
         return rendered_tracks
-        
+
     @property
     def start(self):
         """
         Return region start.
-        
+
         Returns
         -------
         start : float
@@ -199,12 +200,12 @@ class Region(ReapyObject):
         """
         start = Program(code, "start").run(region=self)[0]
         return start
-        
+
     @start.setter
     def start(self, start):
         """
         Set region start.
-        
+
         Parameters
         ----------
         start : float
@@ -216,6 +217,6 @@ class Region(ReapyObject):
         )
         """
         Program(code).run(region=self, start=start)
-        
-        
+
+
 from ..track.track import Track

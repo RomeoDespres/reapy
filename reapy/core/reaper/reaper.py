@@ -1,9 +1,11 @@
 from reapy import reascript_api as RPR
 
-import io, os
+import io
+import os
 
 
 _ORIGINAL_PRINT = print
+
 
 def add_reascript(path, section_id=0, commit=True):
     """
@@ -17,10 +19,10 @@ def add_reascript(path, section_id=0, commit=True):
         Action section ID to which the script must be added.
     commit : bool, optional
         Whether to commit change. Use it when adding a single script.
-        You can optimize bulk adding `n` scripts by setting 
+        You can optimize bulk adding `n` scripts by setting
         `commit=False` for the first `n-1` calls and `commit=True` for
         the last call.
-    
+
     Returns
     -------
     action_id : int
@@ -35,11 +37,12 @@ def add_reascript(path, section_id=0, commit=True):
         message = "Script at {} wasn't successfully added.".format(path)
         raise ValueError(message)
     return action_id
-    
+
+
 def arm_command(command_id, section=""):
     """
     Arm or disarm command.
-    
+
     Parameters
     ----------
     command_id : int
@@ -48,7 +51,8 @@ def arm_command(command_id, section=""):
         Command section. Empty string for main section. Default="".
     """
     RPR.ArmCommand(command_id, section)
-    
+
+
 def clear_console():
     """
     Clear Reaper console.
@@ -58,38 +62,41 @@ def clear_console():
     ReaProject.show_console_message
     """
     RPR.ClearConsole()
-    
+
+
 def clear_peak_cache():
     """
     Reset global peak cache.
     """
     RPR.ClearPeakCache()
-    
+
+
 def dB_to_slider(db):
     """
     Convert decibel value to slider.
-    
+
     Parameters
     ----------
     db : float
         Decibel value.
-    
+
     Returns
     -------
     slider : float
         Slider value.
-        
+
     See also
     --------
     slider_to_dB
     """
     sider = RPR.DB2SLIDER(db)
     return slider
-    
+
+
 def delete_ext_state(section, key, persist=False):
     """
     Delete extended state value for a given section and key.
-    
+
     Parameters
     ----------
     section : str
@@ -101,28 +108,31 @@ def delete_ext_state(section, key, persist=False):
         is opened.
     """
     RPR.DeleteExtState(section, key, persist)
-    
+
+
 def disarm_command():
     """
     Disarm command.
     """
     arm_command(0)
-    
+
+
 def get_armed_command():
     command_id, section, _ = RPR.GetArmedCommand("", 2048)
     if command_id == 0:
         return
     return command_id, section
-    
+
+
 def get_command_id(command_name):
     """
     Return ID of command with a given name.
-    
+
     Parameters
     ----------
     command_name : str
         Command name.
-    
+
     Returns
     -------
     command_id : int or None
@@ -131,16 +141,17 @@ def get_command_id(command_name):
     command_id = RPR.NamedCommandLookup(command_name)
     command_id = command_id if command_id else None
     return command_id
-    
+
+
 def get_command_name(command_id):
     """
     Return name of command with a given ID.
-    
+
     Parameters
     ----------
     command_id : int
         Command ID.
-        
+
     Returns
     -------
     command_name : str, None
@@ -151,10 +162,11 @@ def get_command_name(command_id):
         command_name = "_" + command_name
     return command_name
 
+
 def get_exe_dir():
     """
-    Return REAPER.exe directory (e.g. "C:\Program Files\REAPER").
-    
+    Return REAPER.exe directory (e.g. "C:\\Program Files\\REAPER").
+
     Returns
     -------
     path : str
@@ -162,23 +174,24 @@ def get_exe_dir():
     """
     path = RPR.GetExePath()
     return path
-    
+
+
 def get_ext_state(section, key):
     """
     Get the extended state value for a specific section and key.
-    
+
     Parameters
     ----------
     section : str
         Extended state section.
     key : str
         Extended state key for section `section`.
-    
+
     Returns
     -------
     value : str
         Extended state value.
-        
+
     See also
     --------
     delete_ext_state
@@ -186,11 +199,12 @@ def get_ext_state(section, key):
     """
     value = RPR.GetExtState(section, key)
     return value
-    
+
+
 def get_global_automation_mode():
     """
     Return global automation override mode.
-    
+
     Returns
     -------
     override_mode : str
@@ -199,7 +213,7 @@ def get_global_automation_mode():
             "latch"
             "none"
             "read"
-            "touch"            
+            "touch"
             "trim/read"
             "write"
     """
@@ -214,11 +228,12 @@ def get_global_automation_mode():
     }
     override_mode = modes[RPR.GetGlobalAutomationOverride()]
     return override_mode
-    
+
+
 def get_ini_file():
     """
     Return path to REAPER.ini file.
-    
+
     Returns
     -------
     path : str
@@ -226,15 +241,17 @@ def get_ini_file():
     """
     path = RPR.get_ini_file()
     return path
-    
+
+
 def get_reaper_version():
     version = RPR.GetAppVersion()
     return version
-    
+
+
 def get_resource_path():
     """
     Return path to directory where .ini files are stored.
-    
+
     Returns
     -------
     path : str
@@ -242,7 +259,8 @@ def get_resource_path():
     """
     path = RPR.GetResourcePath()
     return path
-    
+
+
 def perform_action(action_id):
     """
     Perform action with ID `action_id` in the main Actions section.
@@ -253,13 +271,15 @@ def perform_action(action_id):
         Action ID in the main Actions section.
     """
     RPR.Main_OnCommand(action_id, 0)
-    
+
+
 def print(*args, **kwargs):
     """
     Alias to ReaProject.show_console_message.
     """
     show_console_message(*args, **kwargs)
-    
+
+
 def remove_reascript(path, section_id=0, commit=True):
     """
     Remove a ReaScript.
@@ -272,7 +292,7 @@ def remove_reascript(path, section_id=0, commit=True):
         Action section ID to which the script must be added.
     commit : bool, optional
         Whether to commit change. Use it when removing a single script.
-        You can optimize bulk removing `n` scripts by setting 
+        You can optimize bulk removing `n` scripts by setting
         `commit=False` for the first `n-1` calls and `commit=True` for
         the last call.
     """
@@ -282,16 +302,17 @@ def remove_reascript(path, section_id=0, commit=True):
     if not success:
         message = "Script at {} wasn't successfully added.".format(path)
         raise ValueError(message)
-    
+
+
 def rgb_from_native(native_color):
     """
     Extract RGB values from a native (OS-dependent) color.
-    
+
     Parameters
     ----------
-    native_color : int 
+    native_color : int
         Native color.
-    
+
     Returns
     -------
     r, g, b : (int, int, int)
@@ -299,16 +320,17 @@ def rgb_from_native(native_color):
     """
     _, r, g, b = RPR.ColorFromNative(native_color, 0, 0, 0)
     return r, g, b
-    
+
+
 def rgb_to_native(rgb):
     """
     Make a native (OS-dependent) color from RGB values.
-    
+
     Parameters
     ----------
     rgb : (int, int, int)
         RGB triplet of integers between 0 and 255.
-        
+
     Returns
     -------
     native_color : int
@@ -317,10 +339,11 @@ def rgb_to_native(rgb):
     native_color = RPR.ColorToNative(*rgb)
     return native_color
 
+
 def set_ext_state(section, key, value, persist=False):
     """
     Set the extended state value for a specific section and key.
-    
+
     Parameters
     ----------
     section : str
@@ -332,18 +355,19 @@ def set_ext_state(section, key, value, persist=False):
     persist : bool
         Whether the value should be stored and reloaded the next time
         REAPER is opened.
-        
+
     See also
     --------
     delete_ext_state
     get_ext_state
     """
     RPR.SetExtState(section, key, value, persist)
-    
+
+
 def set_global_automation_mode(mode):
     """
     Set global automation mode.
-    
+
     Parameters
     ----------
     mode : str
@@ -352,7 +376,7 @@ def set_global_automation_mode(mode):
             "latch"
             "none"
             "read"
-            "touch"            
+            "touch"
             "trim/read"
             "write"
     """
@@ -366,8 +390,8 @@ def set_global_automation_mode(mode):
          "bypass": 5
     }
     RPR.SetGlobalAutomationOverride(modes[mode])
-    
-    
+
+
 def show_console_message(*args, sep=" ", end="\n"):
     """
     Print a message to the Reaper console.
@@ -390,7 +414,8 @@ def show_console_message(*args, sep=" ", end="\n"):
     file.seek(0)
     txt = file.read()
     RPR.ShowConsoleMsg(txt)
-    
+
+
 def show_message_box(text="", title="", type="ok"):
     """
     Show message box.
@@ -403,7 +428,7 @@ def show_message_box(text="", title="", type="ok"):
         Box title
     type : str
         One of the following values.
-        
+
         "ok"
         "ok-cancel"
         "abort-retry-ignore"
@@ -422,7 +447,7 @@ def show_message_box(text="", title="", type="ok"):
         "retry"
         "ignore"
         "yes"
-        "no"   
+        "no"
     """
     all_types = {
         "ok": 0,
@@ -444,40 +469,44 @@ def show_message_box(text="", title="", type="ok"):
     status = RPR.ShowMessageBox(text, title, all_types[type])
     status = all_status[status]
     return status
-    
+
+
 def slider_to_dB(slider):
     """
     Convert slider value to decibel.
-    
+
     Parameters
     ----------
     slider : float
         Slider value.
-    
+
     Returns
     -------
     db : float
         Decibel value.
-        
+
     See also
     --------
     dB_to_slider
     """
     db = RPR.SLIDER2DB(slider)
     return db
-    
+
+
 def update_arrange():
     """
     Redraw the arrange view.
     """
     RPR.UpdateArrange()
-    
+
+
 def update_timeline():
     """
     Redraw the arrange view and ruler.
     """
     RPR.UpdateTimeline()
-    
+
+
 def view_prefs():
     """
     Open Preferences.

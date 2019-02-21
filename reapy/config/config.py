@@ -2,21 +2,24 @@ import reapy
 from reapy.errors import OutsideREAPERError
 
 from configparser import ConfigParser
-import json, os
+import json
+import os
 
 REAPY_SERVER_PORT = 2306
 WEB_INTERFACE_PORT = 2307
+
 
 class Config(ConfigParser):
 
     def __init__(self):
         super(Config, self).__init__()
         self.read(reapy.get_ini_file())
-        
+
     def write(self):
         with open(reapy.get_ini_file(), "w") as f:
             super(Config, self).write(f, False)
-            
+
+
 def create_new_web_interface(port):
     config = Config()
     csurf_count = int(config["reaper"]["csurf_cnt"])
@@ -25,7 +28,8 @@ def create_new_web_interface(port):
     key = "csurf_{}".format(csurf_count - 1)
     config["reaper"][key] = "HTTP 0 {} '' 'index.html' 0 ''".format(port)
     config.write()
-    
+
+
 def delete_web_interface(port):
     config = Config()
     csurf_count = int(config["reaper"]["csurf_cnt"])
@@ -34,7 +38,8 @@ def delete_web_interface(port):
     key = "csurf_{}".format(csurf_count)
     del config["reaper"][key]
     config.write()
-    
+
+
 def disable_dist_api():
     if not reapy.is_inside_reaper():
         raise OutsideREAPERError
@@ -45,6 +50,7 @@ def disable_dist_api():
         "reapy will be disabled as soon as you restart REAPER."
     )
     reapy.show_message_box(message)
+
 
 def enable_dist_api():
     if not reapy.is_inside_reaper():
@@ -60,7 +66,8 @@ def enable_dist_api():
         "then be able to import reapy from the outside."
     )
     reapy.show_message_box(message)
-    
+
+
 def get_activate_reapy_server_path():
     path = os.path.join(
         os.path.dirname(reapy.__file__),

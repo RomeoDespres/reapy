@@ -24,7 +24,7 @@ class Program(program.Program):
         def g(*args, **kwargs):
             return program.run(args=args, kwargs=kwargs)[0]
         return g
-    
+
     def run(self, **input):
         if reapy.is_inside_reaper():
             return super(DistProgram, self).run(**input)

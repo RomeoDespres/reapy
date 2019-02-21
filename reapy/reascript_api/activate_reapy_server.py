@@ -3,7 +3,10 @@ from reapy import reascript_api as RPR
 from reapy.config import config
 from reapy.reascript_api.network import Server
 
-import os, sys, tempfile
+import os
+import sys
+import tempfile
+
 
 def main_loop():
     # Get new connections
@@ -14,6 +17,7 @@ def main_loop():
     SERVER.send_results(results)
     # Run main_loop again
     RPR_defer("main_loop()")
+
 
 def generate_api_module():
     function_names = RPR.__all__
@@ -33,17 +37,17 @@ def generate_api_module():
                     name=name
                 )
             )
-            
+
+
 def get_new_reapy_server():
     server_port = config.REAPY_SERVER_PORT
     reapy.set_ext_state("reapy", "server_port", server_port)
     server = Server(server_port)
     return server
 
+
 if __name__ == "__main__":
     SERVER = get_new_reapy_server()
     generate_api_module()
     main_loop()
     RPR_atexit("""reapy.delete_ext_state("reapy", "server_port")""")
-
-    

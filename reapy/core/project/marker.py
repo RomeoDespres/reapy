@@ -20,7 +20,7 @@ class Marker(ReapyObject):
             parent_project_id = parent_project.id
         self.project_id = parent_project_id
         self.index = index
-        
+
     def _get_enum_index(self):
         """
         Return marker index as needed by RPR.EnumProjectMarkers2.
@@ -35,24 +35,24 @@ class Marker(ReapyObject):
             marker=self, project=reapy.Project(self.project_id)
         )[0]
         return index
-     
+
     @property
     def _kwargs(self):
         return {
             "index": self.index, "parent_project_id": self.project_id
         }
-        
+
     def delete(self):
         """
         Delete marker.
         """
         RPR.DeleteProjectMarker(self.project_id, self.index, False)
-        
+
     @property
     def position(self):
         """
         Return marker position.
-        
+
         Returns
         -------
         position : float
@@ -66,12 +66,12 @@ class Marker(ReapyObject):
         """
         position = Program(code, "position").run(marker=self)[0]
         return position
-        
+
     @position.setter
     def position(self, position):
         """
         Set marker position.
-        
+
         Parameters
         ----------
         position : float

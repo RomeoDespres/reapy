@@ -5,18 +5,18 @@ from reapy.core import ReapyObject
 class Envelope(ReapyObject):
 
     _class_name = "Envelope"
-    
+
     def __init__(self, id):
         self.id = id
-    
+
     @property
     def _args(self):
         return (self.id,)
-        
+
     def add_item(self, position=0., length=1., pool=0):
         """
         Add automation item to envelope.
-        
+
         Parameters
         ----------
         position : float, optional
@@ -27,7 +27,7 @@ class Envelope(ReapyObject):
             New item pool index. If >= 0 the automation item will be a
             new instance of that pool (which will be created as an
             empty instance if it does not exist).
-            
+
         Returns
         -------
         item : AutomationItem
@@ -36,11 +36,11 @@ class Envelope(ReapyObject):
         item_index = RPR.InsertAutomationItem(self.id, pool, position, length)
         item = AutomationItem(envelope=self, index=item_index)
         return item
-        
+
     def delete_points_in_range(self, start, end):
         """
         Delete envelope points between `start` and `end`.
-        
+
         Parameters
         ----------
         start : float
@@ -49,12 +49,12 @@ class Envelope(ReapyObject):
             Range end in seconds.
         """
         RPR.DeleteEnvelopePointRange(self.id, start, end)
-        
+
     @property
     def items(self):
         """
         Return list of automation items in envelope.
-        
+
         Returns
         -------
         items : list of AutomationItem
@@ -63,12 +63,12 @@ class Envelope(ReapyObject):
         n_items = self.n_items
         items = [AutomationItem(self, i) for i in range(n_items)]
         return items
-        
+
     @property
     def n_items(self):
         """
         Return number of automation items in envelope.
-        
+
         Returns
         -------
         n_items : int
@@ -76,12 +76,12 @@ class Envelope(ReapyObject):
         """
         n_items = RPR.CountAutomationItems(self.id)
         return n_items
-        
+
     @property
     def n_points(self):
         """
         Return number of points in envelope.
-        
+
         Returns
         -------
         n_points : int
@@ -89,11 +89,11 @@ class Envelope(ReapyObject):
         """
         n_points = RPR.CountEnvelopePoints(self.id)
         return n_points
-        
+
     @property
     def name(self):
         name = RPR.GetEnvelopeName(self.id, "", 2048)[2]
         return name
-        
+
 
 from .automation_item import AutomationItem

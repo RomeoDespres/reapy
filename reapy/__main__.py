@@ -1,6 +1,7 @@
 """Get setup infos."""
 
-import os, sys
+import os
+import sys
 
 
 def get_config_scripts():
@@ -9,7 +10,8 @@ def get_config_scripts():
         os.path.join(dir, "config", "enable_dist_api.py"),
         os.path.join(dir, "config", "disable_dist_api.py")
     )
-    
+
+
 def get_python_dll():
     dir = os.path.dirname(sys.executable)
     file = os.path.basename(dir).lower() + ".dll"
@@ -18,7 +20,8 @@ def get_python_dll():
         return path
     else:
         raise FileNotFoundError("Can't find python DLL...")
-        
+
+
 string = """
 ======================
   reapy config infos
@@ -32,11 +35,11 @@ Enable or disable reapy dist API
 --------------------------------
 Enable dist API
     {}
-    
+
 Disable dist API
     {}
 """
-    
+
 if __name__ == "__main__":
     try:
         dll = get_python_dll()

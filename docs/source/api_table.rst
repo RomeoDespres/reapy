@@ -1,4 +1,3 @@
-
 Translation table
 =================
 
