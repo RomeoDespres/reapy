@@ -48,7 +48,7 @@ class Region(ReapyObject):
 
         Parameters
         ----------
-        track : Track
+        track : reapy.Track
             Track to add.
 
         See also
@@ -66,7 +66,7 @@ class Region(ReapyObject):
 
         Parameters
         ----------
-        tracks : list of Track
+        tracks : list of reapy.Track
             Tracks to add.
 
         See also
@@ -127,7 +127,7 @@ class Region(ReapyObject):
 
         Parameters
         ----------
-        track : Track
+        track : reapy.Track
             Track to remove.
 
         See also
@@ -145,7 +145,7 @@ class Region(ReapyObject):
 
         Parameters
         ----------
-        tracks : list of Track
+        tracks : list of reapy.Track
             Tracks to remove.
 
         See also
@@ -165,7 +165,7 @@ class Region(ReapyObject):
 
         Returns
         -------
-        rendered_tracks : list of Track
+        rendered_tracks : list of reapy.Track
             List of tracks for this region in region render matrix.
         """
         code = """
@@ -217,6 +217,3 @@ class Region(ReapyObject):
         )
         """
         Program(code).run(region=self, start=start)
-
-
-from ..track.track import Track

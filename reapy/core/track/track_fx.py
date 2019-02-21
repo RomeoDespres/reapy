@@ -134,7 +134,7 @@ class TrackFX(ReapyObject):
 
         Parameters
         ----------
-        track : Track
+        track : reapy.Track
             Destination track.
         index : int
             Index on destination track.
@@ -292,6 +292,3 @@ class TrackFXParamsList(ReapyObject):
     def parent_fx(self):
         fx = TrackFX(parent_track_id=self.track_id, index=self.fx_index)
         return fx
-
-
-from .track import Track

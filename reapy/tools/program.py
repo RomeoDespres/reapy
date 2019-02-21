@@ -1,4 +1,5 @@
 import reapy
+from reapy import reascript_api as RPR
 
 
 class Program:
@@ -71,6 +72,3 @@ class Program:
         exec(self._code, input)
         output = tuple(input[o] for o in self._output)
         return output
-
-
-from reapy import reascript_api as RPR

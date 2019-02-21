@@ -52,7 +52,7 @@ class Project(ReapyObject):
 
         Returns
         -------
-        marker : Marker
+        marker : reapy.Marker
             New marker.
 
         Notes
@@ -66,7 +66,7 @@ class Project(ReapyObject):
         marker_id = RPR.AddProjectMarker2(
             self.id, False, position, 0, name, -1, color
         )
-        marker = Marker(self, marker_id)
+        marker = reapy.Marker(self, marker_id)
         return marker
 
     def add_region(self, start, end, name="", color=0):
@@ -87,7 +87,7 @@ class Project(ReapyObject):
 
         Returns
         -------
-        region : Region
+        region : reapy.Region
             New region.
         """
         if isinstance(color, tuple):
@@ -95,7 +95,7 @@ class Project(ReapyObject):
         region_id = RPR.AddProjectMarker2(
             self.id, True, start, end, name, -1, color
         )
-        region = Region(self, region_id)
+        region = reapy.Region(self, region_id)
         return region
 
     def add_track(self, index=0):
@@ -109,7 +109,7 @@ class Project(ReapyObject):
 
         Returns
         -------
-        track : Track
+        track : reapy.Track
             New track.
         """
         code = """
@@ -122,7 +122,7 @@ class Project(ReapyObject):
         track_id = Program(code, "track_id").run(
             project=self, index=index
         )[0]
-        track = Track(track_id)
+        track = reapy.Track(track_id)
         return track
 
     @property
@@ -159,12 +159,9 @@ class Project(ReapyObject):
     @property
     def bpm(self):
         """
-        Return project BPM (beats per minute).
+        Project BPM (beats per minute).
 
-        Returns
-        -------
-        bpm : float
-            Project BPM (beats per minute).
+        :type: float
         """
         return self.time_signature[0]
 
@@ -200,12 +197,9 @@ class Project(ReapyObject):
     @property
     def can_redo(self):
         """
-        Return whether redo is possible.
+        Whether redo is possible.
 
-        Returns
-        -------
-        can_redo : bool
-            Whether redo is possible.
+        :type: bool
         """
         try:
             RPR.Undo_CanRedo2(self.id)
@@ -217,12 +211,9 @@ class Project(ReapyObject):
     @property
     def can_undo(self):
         """
-        Return whether undo is possible.
+        Whether undo is possible.
 
-        Returns
-        -------
-        can_undo : bool
-            Whether undo is possible.
+        :type: bool
         """
         try:
             RPR.Undo_CanUndo2(self.id)
@@ -234,12 +225,9 @@ class Project(ReapyObject):
     @property
     def cursor_position(self):
         """
-        Return edit cursor position in seconds.
+        Edit cursor position in seconds.
 
-        Returns
-        -------
-        position : float
-            Edit cursor position in seconds.
+        :type: float
         """
         position = RPR.GetCursorPositionEx(self.id)
         return position
@@ -290,11 +278,11 @@ class Project(ReapyObject):
 
         Returns
         -------
-        item : Item
+        item : reapy.Item
             index-th selected item.
         """
         item_id = RPR.GetSelectedMediaItem(self.id, index)
-        item = Item(item_id)
+        item = reapy.Item(item_id)
         return item
 
     def get_selected_track(self, index):
@@ -308,11 +296,11 @@ class Project(ReapyObject):
 
         Returns
         -------
-        track : Track
+        track : reapy.Track
             index-th selected track.
         """
         track_id = RPR.GetSelectedTrack(self.id, index)
-        track = Track(track_id)
+        track = reapy.Track(track_id)
         return track
 
     def glue_items(self, within_time_selection=False):
@@ -330,12 +318,9 @@ class Project(ReapyObject):
     @property
     def is_dirty(self):
         """
-        Return whether project is dirty (i.e. needing save).
+        Whether project is dirty (i.e. needing save).
 
-        Returns
-        -------
-        is_dirty : bool
-            Whether project is dirty.
+        :type: bool
         """
         is_dirty = RPR.IsProjectDirty(self.id)
         return is_dirty
@@ -343,12 +328,9 @@ class Project(ReapyObject):
     @property
     def is_current_project(self):
         """
-        Return whether project is current project.
+        Whether project is current project.
 
-        Returns
-        -------
-        is_current : bool
-            Whether project is current project.
+        :type: bool
         """
         is_current = self == Project()
         return is_current
@@ -356,12 +338,9 @@ class Project(ReapyObject):
     @property
     def length(self):
         """
-        Return project length in seconds.
+        Project length in seconds.
 
-        Returns
-        -------
-        length : float
-            Project length in seconds.
+        :type: float
         """
         length = RPR.GetProjectLength(self.id)
         return length
@@ -381,12 +360,9 @@ class Project(ReapyObject):
     @property
     def markers(self):
         """
-        Return list of project markers.
+        List of project markers.
 
-        Returns
-        -------
-        markers : list of Marker
-            List of project markers.
+        :type: list of reapy.Marker
         """
         code = """
         n_markers = project.n_markers
@@ -399,21 +375,18 @@ class Project(ReapyObject):
         ]
         """
         ids = Program(code, "ids").run(project=self)[0]
-        markers = [Marker(self, i) for i in ids]
+        markers = [reapy.Marker(self, i) for i in ids]
         return markers
 
     @property
     def master_track(self):
         """
-        Return project master track.
+        Project master track.
 
-        Returns
-        -------
-        master_track : Track
-            Project master track.
+        :type: reapy.Track
         """
         track_id = RPR.GetMasterTrack(self.id)
-        master_track = Track(track_id)
+        master_track = reapy.Track(track_id)
         return master_track
 
     def mute_all_tracks(self, mute=True):
@@ -440,12 +413,9 @@ class Project(ReapyObject):
     @property
     def n_items(self):
         """
-        Return number of items in project.
+        Number of items in project.
 
-        Returns
-        -------
-        n_items : int
-            Number of items in project.
+        :type: int
         """
         n_items = RPR.CountMediaItems(self.id)
         return n_items
@@ -453,12 +423,9 @@ class Project(ReapyObject):
     @property
     def n_markers(self):
         """
-        Return number of markers a in project.
+        Number of markers in project.
 
-        Returns
-        -------
-        n_markers : int
-            Number of markers in project.
+        :type: int
         """
         n_markers = RPR.CountProjectMarkers(self.id, 0, 0)[2]
         return n_markers
@@ -466,12 +433,9 @@ class Project(ReapyObject):
     @property
     def n_regions(self):
         """
-        Return number of regions in project.
+        Number of regions in project.
 
-        Returns
-        -------
-        n_regions : int
-            Number of regions in project.
+        :type: int
         """
         n_regions = RPR.CountProjectMarkers(self.id, 0, 0)[3]
         return n_regions
@@ -479,12 +443,9 @@ class Project(ReapyObject):
     @property
     def n_selected_items(self):
         """
-        Return the number of selected media items.
+        Number of selected media items.
 
-        Returns
-        -------
-        n_items : int
-            Number of selected media items.
+        :type: int
         """
         n_items = RPR.CountSelectedMediaItems(self.id)
         return n_items
@@ -492,12 +453,9 @@ class Project(ReapyObject):
     @property
     def n_selected_tracks(self):
         """
-        Return number of selected tracks in project (excluding master).
+        Number of selected tracks in project (excluding master).
 
-        Returns
-        -------
-        n_tracks : int
-            Number of selected tracks in project.
+        :type: int
         """
         n_tracks = RPR.CountSelectedTracks2(self.id, False)
         return n_tracks
@@ -505,12 +463,9 @@ class Project(ReapyObject):
     @property
     def n_tempo_markers(self):
         """
-        Return number of tempo/time signature markers in project.
+        Number of tempo/time signature markers in project.
 
-        Returns
-        -------
-        n_tempo_markers : int
-            Number of tempo/time signature markers in project.
+        :type: int
         """
         n_tempo_markers = RPR.CountTempoTimeSigMarkers(self.id)
         return n_tempo_markers
@@ -518,12 +473,9 @@ class Project(ReapyObject):
     @property
     def n_tracks(self):
         """
-        Return the number of tracks in project.
+        Number of tracks in project.
 
-        Returns
-        -------
-        n_tracks : int
-            Number of tracks in project.
+        :type: int
         """
         n_tracks = RPR.CountTracks(self.id)
         return n_tracks
@@ -531,12 +483,9 @@ class Project(ReapyObject):
     @property
     def name(self):
         """
-        Return project name.
+        Project name.
 
-        Returns
-        -------
-        name : str
-            Project name.
+        :type: str
         """
         _, name, _ = RPR.GetProjectName(self.id, "", 2048)
         return name
@@ -550,12 +499,9 @@ class Project(ReapyObject):
     @property
     def path(self):
         """
-        Return project path.
+        Project path.
 
-        Returns
-        -------
-        path : str
-            Project path.
+        :type: str
         """
         _, path, _ = RPR.GetProjectPathEx(self.id, "", 2048)
         return path
@@ -580,12 +526,9 @@ class Project(ReapyObject):
     @property
     def play_rate(self):
         """
-        Return project play rate.
+        Project play rate.
 
-        Returns
-        -------
-        play_rate : float
-            Project play rate.
+        :type: float
         """
         play_rate = RPR.Master_GetPlayRate(self.id)
         return play_rate
@@ -593,12 +536,9 @@ class Project(ReapyObject):
     @property
     def play_state(self):
         """
-        Return project play state.
+        Project play state ("play", "pause" or "record").
 
-        Returns
-        -------
-        state : {"play", "pause", "record"}
-            Project play state.
+        :type: str
         """
         states = {1: "play", 2: "pause", 4: "record"}
         state = states[RPR.GetPlayStateEx(self.id)]
@@ -620,12 +560,9 @@ class Project(ReapyObject):
     @property
     def regions(self):
         """
-        Return list of project regions.
+        List of project regions.
 
-        Returns
-        -------
-        regions : list of Region
-            List of project regions.
+        :type: list of reapy.Region
         """
         code = """
         ids = [
@@ -672,26 +609,20 @@ class Project(ReapyObject):
     @property
     def selected_envelope(self):
         """
-        Return project selected envelope.
+        Project selected envelope.
 
-        Returns
-        -------
-        envelope : Envelope or None
-            Selected envelope if any, else None.
+        :type: reapy.Envelope or None
         """
         envelope_id = RPR.GetSelectedTrackEnvelope(self.id)
-        envelope = None if envelope_id == 0 else Envelope(envelope_id)
+        envelope = None if envelope_id == 0 else reapy.Envelope(envelope_id)
         return envelope
 
     @property
     def selected_items(self):
         """
-        Return list of all selected items.
+        List of all selected items.
 
-        Returns
-        -------
-        items : list of Item
-            List of all selected items.
+        :type: list of reapy.Item
 
         See also
         --------
@@ -705,18 +636,15 @@ class Project(ReapyObject):
         ]
         """
         item_ids = Program(code, "item_ids").run(project_id=self.id)[0]
-        items = list(map(Item, item_ids))
+        items = list(map(reapy.Item, item_ids))
         return items
 
     @property
     def selected_tracks(self):
         """
-        Return list of selected tracks (excluding master).
+        List of selected tracks (excluding master).
 
-        Returns
-        -------
-        tracks : list of Track
-            List of selected tracks.
+        :type: list of reapy.Track
         """
         code = """
         track_ids = [
@@ -725,7 +653,7 @@ class Project(ReapyObject):
         ]
         """
         track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
-        tracks = list(map(Track, track_ids))
+        tracks = list(map(reapy.Track, track_ids))
         return tracks
 
     def stop(self):
@@ -737,14 +665,11 @@ class Project(ReapyObject):
     @property
     def time_selection(self):
         """
-        Return project time selection.
+        Project time selection.
 
-        Returns
-        -------
-        time_selection : TimeSelection
-            Project time selection.
+        time_selection : reapy.TimeSelection
         """
-        time_selection = TimeSelection(self)
+        time_selection = reapy.TimeSelection(self)
         return time_selection
 
     @time_selection.setter
@@ -766,13 +691,11 @@ class Project(ReapyObject):
     @property
     def time_signature(self):
         """
-        Return project time signature.
+        Project time signature.
 
         This does not reflect tempo envelopes but is purely what is set in the
         project settings.
 
-        Returns
-        -------
         bpm : float
             Project BPM (beats per minute)
         bpi : float
@@ -784,19 +707,15 @@ class Project(ReapyObject):
     @property
     def tracks(self):
         """
-        Return list of project tracks.
+        List of project tracks.
 
-        Returns
-        -------
-        tracks : list of Track
-            List of project tracks.
+        :type: list of reapy.Track
         """
         code = """
         n_tracks = RPR.CountTracks(project_id)
-        track_ids = [RPR.GetTrack(project_id, i) for i in range(n_tracks)]
+        tracks = [reapy.Track(project_id, i) for i in range(n_tracks)]
         """
-        track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
-        tracks = [Track(track_id) for track_id in track_ids]
+        tracks = Program(code, "tracks").run(project_id=self.id)[0]
         return tracks
 
     def undo(self):
@@ -817,11 +736,3 @@ class Project(ReapyObject):
         Unmute all tracks.
         """
         self.mute_all_tracks(mute=False)
-
-
-from ..item.item import Item
-from ..track.envelope import Envelope
-from ..track.track import Track
-from .marker import Marker
-from .region import Region
-from .time_selection import TimeSelection

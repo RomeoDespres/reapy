@@ -30,11 +30,11 @@ class Envelope(ReapyObject):
 
         Returns
         -------
-        item : AutomationItem
+        item : reapy.AutomationItem
             New automation item.
         """
         item_index = RPR.InsertAutomationItem(self.id, pool, position, length)
-        item = AutomationItem(envelope=self, index=item_index)
+        item = reapy.AutomationItem(envelope=self, index=item_index)
         return item
 
     def delete_points_in_range(self, start, end):
@@ -57,11 +57,11 @@ class Envelope(ReapyObject):
 
         Returns
         -------
-        items : list of AutomationItem
+        items : list of reapy.AutomationItem
             List of automation items in envelope.
         """
         n_items = self.n_items
-        items = [AutomationItem(self, i) for i in range(n_items)]
+        items = [reapy.AutomationItem(self, i) for i in range(n_items)]
         return items
 
     @property
@@ -94,6 +94,3 @@ class Envelope(ReapyObject):
     def name(self):
         name = RPR.GetEnvelopeName(self.id, "", 2048)[2]
         return name
-
-
-from .automation_item import AutomationItem

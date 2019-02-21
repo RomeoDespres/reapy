@@ -46,10 +46,10 @@ class Take(ReapyObject):
 
         Returns
         -------
-        item : item
+        item : reapy.Item
             Parent item.
         """
-        item = Item(RPR.GetMediaItemTake_Item(self.id))
+        item = reapy.Item(RPR.GetMediaItemTake_Item(self.id))
         return item
 
     def make_active_take(self):
@@ -78,10 +78,10 @@ class Take(ReapyObject):
 
         Returns
         -------
-        source : Source
+        source : reapy.Source
             Take source.
         """
-        source = Source(RPR.GetMediaItemTake_Source(self.id))
+        source = reapy.Source(RPR.GetMediaItemTake_Source(self.id))
         return source
 
     @property
@@ -104,14 +104,9 @@ class Take(ReapyObject):
 
         Returns
         -------
-        track : Track
+        track : reapy.Track
             Parent track of take.
         """
         track_id = RPR.GetMediaItemTake_Track(self.id)
-        track = Track(track_id)
+        track = reapy.Track(track_id)
         return track
-
-
-from ..track.track import Track
-from .item import Item
-from .source import Source

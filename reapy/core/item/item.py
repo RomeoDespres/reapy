@@ -25,10 +25,10 @@ class Item(ReapyObject):
 
         Returns
         -------
-        take : Take
+        take : reapy.Take
             Active take of the item.
         """
-        take = Take(RPR.GetActiveTake(self.id))
+        take = reapy.Take(RPR.GetActiveTake(self.id))
         return take
 
     def add_take(self):
@@ -41,7 +41,7 @@ class Item(ReapyObject):
             New take in item.
         """
         take_id = RPR.AddTakeToMediaItem(self.id)
-        take = Take(take_id)
+        take = reapy.Take(take_id)
         return take
 
     def get_info_value(self, param_name):
@@ -59,11 +59,11 @@ class Item(ReapyObject):
 
         Returns
         -------
-        take : Take
+        take : reapy.Take
             index-th take of media item.
         """
         take_id = RPR.GetItemTake(self.id, i)
-        take = Take(take_id)
+        take = reapy.Take(take_id)
         return take
 
     @property
@@ -150,11 +150,11 @@ class Item(ReapyObject):
 
         Returns
         -------
-        project : Project
+        project : reapy.Project
             Item parent project.
         """
         project_id = RPR.GetItemProjectContext(self.id)
-        project = Project(project_id)
+        project = reapy.Project(project_id)
         return project
 
     def split(self, position):
@@ -190,7 +190,7 @@ class Item(ReapyObject):
         take_ids = [RPR.GetMediaItemTake(item_id, i) for i in range(n_takes)]
         """
         take_ids = Program(code, "take_ids").run(item_id=self.id)[0]
-        takes = [Take(take_id) for take_id in take_ids]
+        takes = [reapy.Take(take_id) for take_id in take_ids]
         return takes
 
     @property
@@ -200,11 +200,11 @@ class Item(ReapyObject):
 
         Returns
         -------
-        track : Track
+        track : reapy.Track
             Parent track of item.
         """
         track_id = RPR.GetMediaItemTrack(self.id)
-        track = Track(track_id)
+        track = reapy.Track(track_id)
         return track
 
     @track.setter
@@ -214,8 +214,9 @@ class Item(ReapyObject):
 
         Parameters
         ----------
-        track : Track, int
-            If Track, destination track for item. If int, track index.
+        track : reapy.Track, int
+            If reapy.Track, destination track for item. If int, track
+            index.
 
         Raises
         ------
@@ -223,7 +224,7 @@ class Item(ReapyObject):
             If operation failed within REAPER.
         """
         if isisintance(track, int):
-            track = Track(track, project=self.project)
+            track = reapy.Track(track, project=self.project)
         success = RPR.MoveMediaItemToTrack(self.id, track.id)
         if not success:
             raise Exception("Couldn't move item to track.")
@@ -232,8 +233,3 @@ class Item(ReapyObject):
 class MIDIItem(Item):
 
     pass
-
-
-from ..project.project import Project
-from ..track.track import Track
-from .take import Take

@@ -34,7 +34,7 @@ class Track(ReapyObject):
 
         Returns
         -------
-        item : Item
+        item : reapy.Item
             New item on track.
         """
         if end is None:
@@ -65,7 +65,7 @@ class Track(ReapyObject):
             default).
         """
         item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)
-        item = MIDIItem(item_id)
+        item = reapy.MIDIItem(item_id)
         return item
 
     def add_send(self, destination=None):
@@ -80,14 +80,14 @@ class Track(ReapyObject):
 
         Returns
         -------
-        send : Send
+        send : reapy.Send
             New send on track.
         """
         if isinstance(destination, Track):
             destination = destination.id
         send_id = RPR.CreateTrackSend(self.id, destination)
         type = "hardware" if destination is None else "send"
-        send = Send(self, send_id, type=type)
+        send = reapy.Send(self, send_id, type=type)
         return send
 
     @property
@@ -187,10 +187,10 @@ class Track(ReapyObject):
 
         Returns
         -------
-        fxs : list of TrackFX
+        fxs : list of reapy.TrackFX
             List of FXs on track.
         """
-        fxs = [TrackFX(self, i) for i in range(self.n_fxs)]
+        fxs = [reapy.TrackFX(self, i) for i in range(self.n_fxs)]
         return fxs
 
     def get_envelope(self, index=None, name=None, chunk_name=None):
@@ -208,7 +208,7 @@ class Track(ReapyObject):
 
         Returns
         -------
-        envelope : Envelope
+        envelope : reapy.Envelope
             Track envelope.
         """
         if index is not None:
@@ -221,7 +221,7 @@ class Track(ReapyObject):
             )
             assert chunk_name is not None, message
             function, arg = RPR.GetTrackEnvelopeByChunkName, chunk_name
-        envelope = Envelope(function(self.id, arg))
+        envelope = reapy.Envelope(function(self.id, arg))
         if not envelope._is_defined:
             raise UndefinedEnvelopeError(index, name, chunk_name)
         return envelope
@@ -233,11 +233,11 @@ class Track(ReapyObject):
 
         Returns
         -------
-        instrument : TrackFX or None
+        instrument : reapy.TrackFX or None
             First instrument FX on track if it exists, else None.
         """
         fx_index = RPR.TrackFX_GetInstrument(self.id)
-        instrument = None if fx_index == -1 else TrackFX(self, fx_index)
+        instrument = None if fx_index == -1 else reapy.TrackFX(self, fx_index)
         return instrument
 
     @property
@@ -247,7 +247,7 @@ class Track(ReapyObject):
 
         Returns
         -------
-        items : list of Item
+        items : list of reapy.Item
             List of items on track.
         """
         code = """
@@ -257,7 +257,7 @@ class Track(ReapyObject):
         ]
         """
         item_ids = Program(code, "item_ids").run(track_id=self.id)[0]
-        items = [Item(item_id) for item_id in item_ids]
+        items = [reapy.Item(item_id) for item_id in item_ids]
         return items
 
     @property
@@ -371,7 +371,9 @@ class Track(ReapyObject):
     @property
     def sends(self):
         code = """
-        sends = [Send(track, i, type="send") for i in range(track.n_sends)]
+        sends = [
+            reapy.Send(track, i, type="send") for i in range(track.n_sends)
+        ]
         """
         sends = Program(code, "sends").run(track=self)[0]
         return sends
@@ -381,9 +383,3 @@ class Track(ReapyObject):
         Unselect track.
         """
         RPR.SetTrackSelected(self.id, False)
-
-
-from ..item.item import Item, MIDIItem
-from .envelope import Envelope
-from .send import Send
-from .track_fx import TrackFX

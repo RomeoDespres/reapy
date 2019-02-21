@@ -1,12 +1,13 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.tools import json
-if reapy.is_inside_reaper():
-    from reapy.tools.program import Program
 from .socket import Socket
 
 import socket
 import traceback
+
+if reapy.is_inside_reaper():
+    from reapy.tools.program import Program
 
 
 class Server(Socket):

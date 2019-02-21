@@ -134,7 +134,7 @@ class Send(ReapyObject):
 
     @property
     def source_track(self):
-        track = Track(self.track_id)
+        track = reapy.Track(self.track_id)
         return track
 
     def unmute(self):
@@ -151,6 +151,3 @@ class Send(ReapyObject):
     @volume.setter
     def volume(self, volume):
         self.set_info("D_VOL", volume)
-
-
-from .track import Track
