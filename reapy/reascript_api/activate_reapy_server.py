@@ -29,7 +29,9 @@ def generate_api_module():
         file.write("\n".join(lines))
         for name in function_names:
             file.write(
-                "{name} = Program.from_function(\"RPR.{name}\")\n".format(name=name)
+                "{name} = Program.from_function(\"RPR.{name}\")\n".format(
+                    name=name
+                )
             )
             
 def get_new_reapy_server():

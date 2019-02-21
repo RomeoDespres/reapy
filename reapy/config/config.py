@@ -56,8 +56,8 @@ def enable_dist_api():
     section, key, value = "reapy", "activate_reapy_server", command_name
     reapy.set_ext_state(section, key, value, persist=True)
     message = (
-        "reapy successfully enabled!\n\nPlease restart REAPER.\n\nYou will then be "
-        "able to import reapy from the outside."
+        "reapy successfully enabled!\n\nPlease restart REAPER.\n\nYou will "
+        "then be able to import reapy from the outside."
     )
     reapy.show_message_box(message)
     

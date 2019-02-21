@@ -32,7 +32,8 @@ def add_reascript(path, section_id=0, commit=True):
         True, section_id, path, commit
     )
     if action_id == 0:
-        raise ValueError("Script at {} wasn't successfully added.".format(path))
+        message = "Script at {} wasn't successfully added.".format(path)
+        raise ValueError(message)
     return action_id
     
 def arm_command(command_id, section=""):
@@ -279,7 +280,8 @@ def remove_reascript(path, section_id=0, commit=True):
         False, section_id, path, commit
     )
     if not success:
-        raise ValueError("Script at {} wasn't successfully added.".format(path))
+        message = "Script at {} wasn't successfully added.".format(path)
+        raise ValueError(message)
     
 def rgb_from_native(native_color):
     """

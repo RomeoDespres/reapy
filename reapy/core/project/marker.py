@@ -77,4 +77,6 @@ class Marker(ReapyObject):
         position : float
             Marker position in seconds.
         """
-        RPR.SetProjectMarker2(self.project_id, self.index, False, position, 0, "")
+        RPR.SetProjectMarker2(
+            self.project_id, self.index, False, position, 0, ""
+        )

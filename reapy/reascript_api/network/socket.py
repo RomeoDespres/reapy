@@ -12,7 +12,8 @@ class Socket:
     @staticmethod
     def _non_blocking(f):
         """
-        Modify a socket method so that it returns `None` when time out is reached.
+        Modify a socket method so that it returns `None` when time
+        out is reached.
         """
         def g(*args, **kwargs):
             try:

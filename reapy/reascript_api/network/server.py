@@ -22,7 +22,8 @@ class Server(Socket):
         try:
             request = connection.recv()
             request = json.loads(request.decode())
-        except (ConnectionAbortedError, ConnectionResetError): # Client has disconnected
+        except (ConnectionAbortedError, ConnectionResetError):
+            # Client has disconnected
             [address] = [
                 a for a, c in self.connections.items() if c is connection
             ]
