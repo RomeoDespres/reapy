@@ -12,6 +12,13 @@ if reapy.is_inside_reaper():
 
 class Server(Socket):
 
+    """
+    Server part of the ``reapy`` dist API.
+    
+    It is instantiated inside REAPER. It receives and processes API
+    call requests coming from the outside.
+    """
+
     def __init__(self, port):
         super(Server, self).__init__()
         self.bind(("", port))

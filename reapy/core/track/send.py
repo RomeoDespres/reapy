@@ -55,6 +55,11 @@ class Send(ReapyObject):
 
     @property
     def is_mono(self):
+        """
+        Whether send is mono or stereo.
+        
+        :type: bool
+        """
         is_mono = bool(self.get_info("B_MONO"))
         return is_mono
 
@@ -65,12 +70,9 @@ class Send(ReapyObject):
     @property
     def is_muted(self):
         """
-        Return whether send is muted.
+        Whether send is muted.
 
-        Returns
-        -------
-        is_muted : bool
-            Whether send is muted.
+        :type: bool
         """
         is_muted = bool(self.get_info("B_MUTE"))
         return is_muted
@@ -89,6 +91,11 @@ class Send(ReapyObject):
 
     @property
     def is_phase_flipped(self):
+        """
+        Whether send phase is flipped (i.e. signal multiplied by -1).
+        
+        :type: bool
+        """
         is_phase_flipped = bool(self.get_info("B_PHASE"))
         return is_phase_flipped
 
@@ -105,12 +112,9 @@ class Send(ReapyObject):
     @property
     def pan(self):
         """
-        Return send pan (from -1=left to 1=right).
+        Send pan (from -1=left to 1=right).
 
-        Returns
-        -------
-        pan : float
-            Send pan.
+        :type: float
         """
         pan = self.get_info("D_PAN")
         return pan
@@ -134,6 +138,11 @@ class Send(ReapyObject):
 
     @property
     def source_track(self):
+        """
+        Source track.
+        
+        :type: reapy.Track
+        """
         track = reapy.Track(self.track_id)
         return track
 
@@ -145,6 +154,11 @@ class Send(ReapyObject):
 
     @property
     def volume(self):
+        """
+        Send volume.
+        
+        :type: float
+        """
         volume = self.get_info("D_VOL")
         return volume
 

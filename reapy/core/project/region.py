@@ -82,11 +82,9 @@ class Region(ReapyObject):
     @property
     def end(self):
         """
-        Return region end.
+        Region end.
 
-        Returns
-        -------
-        end : float
+        :type: float
             Region end in seconds.
         """
         code = """
@@ -161,12 +159,9 @@ class Region(ReapyObject):
     @property
     def rendered_tracks(self):
         """
-        Return list of tracks for this region in region render matrix.
+        List of tracks for this region in region render matrix.
 
-        Returns
-        -------
-        rendered_tracks : list of reapy.Track
-            List of tracks for this region in region render matrix.
+        :type: list of reapy.Track
         """
         code = """
         i = 0
@@ -185,12 +180,9 @@ class Region(ReapyObject):
     @property
     def start(self):
         """
-        Return region start.
+        Region start.
 
-        Returns
-        -------
-        start : float
-            Region start in seconds.
+        :type: float
         """
         code = """
         index = region._get_enum_index()

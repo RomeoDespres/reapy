@@ -14,9 +14,6 @@ class Program:
             Code to execute. Note that if all lines except the empty first ones
             have constant indentation, this indentation is removed (allows for
             docstring code).
-        input : dict
-            Dictionary with variable names as keys variables values as values.
-            Passed as input to the program when running.
         output : iterable of str
             Variable names for which values at the end of the program are
             returned after execution.
@@ -62,6 +59,12 @@ class Program:
     def run(self, **input):
         """
         Run program and return output.
+
+        Parameters
+        ----------
+        input : dict
+            Dictionary with variable names as keys variables values as values.
+            Passed as input to the program when running.
 
         Returns
         -------

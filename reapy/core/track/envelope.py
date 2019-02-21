@@ -53,12 +53,9 @@ class Envelope(ReapyObject):
     @property
     def items(self):
         """
-        Return list of automation items in envelope.
+        List of automation items in envelope.
 
-        Returns
-        -------
-        items : list of reapy.AutomationItem
-            List of automation items in envelope.
+        :type: list of reapy.AutomationItem
         """
         n_items = self.n_items
         items = [reapy.AutomationItem(self, i) for i in range(n_items)]
@@ -67,12 +64,9 @@ class Envelope(ReapyObject):
     @property
     def n_items(self):
         """
-        Return number of automation items in envelope.
+        Number of automation items in envelope.
 
-        Returns
-        -------
-        n_items : int
-            Number of automation items in envelope.
+        :type: int
         """
         n_items = RPR.CountAutomationItems(self.id)
         return n_items
@@ -80,17 +74,19 @@ class Envelope(ReapyObject):
     @property
     def n_points(self):
         """
-        Return number of points in envelope.
+        Number of points in envelope.
 
-        Returns
-        -------
-        n_points : int
-            Number of points in envelope.
+        :type: int
         """
         n_points = RPR.CountEnvelopePoints(self.id)
         return n_points
 
     @property
     def name(self):
+        """
+        Envelope name.
+        
+        :type: str
+        """
         name = RPR.GetEnvelopeName(self.id, "", 2048)[2]
         return name

@@ -93,18 +93,17 @@ class Track(ReapyObject):
     @property
     def automation_mode(self):
         """
-        Return track automation mode.
+        Track automation mode.
 
-        Returns
-        -------
-        automation_mode : str
-            One of the following values:
-                "latch"
-                "latch preview"
-                "read"
-                "touch"
-                "trim/read"
-                "write"
+        One of the following values:
+            "latch"
+            "latch preview"
+            "read"
+            "touch"
+            "trim/read"
+            "write"
+
+        :type: str
         """
         modes = "trim/read", "read", "touch", "write", "latch", "latch preview"
         automation_mode = modes[RPR.GetTrackAutomationMode(self.id)]
@@ -132,16 +131,9 @@ class Track(ReapyObject):
     @property
     def color(self):
         """
-        Return track color in RGB format.
+        Track color in RGB format.
 
-        Returns
-        -------
-        r : int
-            Red value of track color.
-        g : int
-            Green value of track color.
-        b : int
-            Blue value of track color.
+        :type: tuple of int
         """
         native_color = RPR.GetTrackColor(self.id)
         r, g, b = reapy.rgb_from_native(native_color)
@@ -170,12 +162,9 @@ class Track(ReapyObject):
     @property
     def depth(self):
         """
-        Return track depth.
+        Track depth.
 
-        Returns
-        -------
-        depth : int
-            Track depth.
+        :type: int
         """
         depth = RPR.GetTrackDepth(self.id)
         return depth
@@ -183,12 +172,9 @@ class Track(ReapyObject):
     @property
     def fxs(self):
         """
-        Return list of FXs on track.
+        List of FXs on track.
 
-        Returns
-        -------
-        fxs : list of reapy.TrackFX
-            List of FXs on track.
+        :type: list of reapy.TrackFX
         """
         fxs = [reapy.TrackFX(self, i) for i in range(self.n_fxs)]
         return fxs
@@ -229,12 +215,9 @@ class Track(ReapyObject):
     @property
     def instrument(self):
         """
-        Return first instrument FX on track if it exists.
+        First instrument FX on track if it exists, else None.
 
-        Returns
-        -------
-        instrument : reapy.TrackFX or None
-            First instrument FX on track if it exists, else None.
+        :type: reapy.TrackFX or None
         """
         fx_index = RPR.TrackFX_GetInstrument(self.id)
         instrument = None if fx_index == -1 else reapy.TrackFX(self, fx_index)
@@ -243,12 +226,9 @@ class Track(ReapyObject):
     @property
     def items(self):
         """
-        Return list of items on track.
+        List of items on track.
 
-        Returns
-        -------
-        items : list of reapy.Item
-            List of items on track.
+        :type: list of reapy.Item
         """
         code = """
         n_items = RPR.CountTrackMediaItems(track_id)
@@ -263,12 +243,9 @@ class Track(ReapyObject):
     @property
     def is_selected(self):
         """
-        Return whether track is selected.
+        Whether track is selected.
 
-        Returns
-        -------
-        is_selected : bool
-            Whether track is selected.
+        :type: bool
         """
         is_selected = bool(RPR.IsTrackSelected(self.id))
         return is_selected
@@ -297,12 +274,9 @@ class Track(ReapyObject):
     @property
     def n_envelopes(self):
         """
-        Return number of envelopes on track.
+        Number of envelopes on track.
 
-        Returns
-        -------
-        n_envelopes : int
-            Number of envelopes on track.
+        :type: int
         """
         n_envelopes = RPR.CountTrackEnvelopes(self.id)
         return n_envelopes
@@ -310,30 +284,29 @@ class Track(ReapyObject):
     @property
     def n_fxs(self):
         """
-        Return number of FXs on track.
+        Number of FXs on track.
 
-        Returns
-        -------
-        n_fxs : int
-            Number of FXs on track.
+        :type: int
         """
         n_fxs = RPR.TrackFX_GetCount(self.id)
         return n_fxs
 
     @property
     def n_hardware_sends(self):
+        """
+        Number of hardware sends on track.
+
+        :type: int
+        """
         n_hardware_sends = RPR.GetTrackNumSends(self.id, 1)
         return n_hardware_sends
 
     @property
     def n_items(self):
         """
-        Return number of items on track.
+        Number of items on track.
 
-        Returns
-        -------
-        n_items : int
-            Number of items on track.
+        :type: int
         """
         n_items = RPR.CountTrackMediaItems(self.id)
         return n_items
@@ -351,13 +324,13 @@ class Track(ReapyObject):
     @property
     def name(self):
         """
-        Return track name.
+        Track name.
+        
+        Name is "MASTER" for master track, "Track N" if track has no
+        name.
 
-        Returns
-        -------
-        name : str
-            Track name ("MASTER" for master track, "Track N" if track
-            has no name).
+        :type: str
+            Track name .
         """
         _, _, name, _ = RPR.GetTrackName(self.id, "", 2048)
         return name
