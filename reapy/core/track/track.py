@@ -174,9 +174,9 @@ class Track(ReapyObject):
         """
         List of FXs on track.
 
-        :type: list of reapy.TrackFX
+        :type: list of reapy.FX
         """
-        fxs = [reapy.TrackFX(self, i) for i in range(self.n_fxs)]
+        fxs = [reapy.FX(self, i) for i in range(self.n_fxs)]
         return fxs
 
     def get_envelope(self, index=None, name=None, chunk_name=None):
@@ -217,10 +217,10 @@ class Track(ReapyObject):
         """
         First instrument FX on track if it exists, else None.
 
-        :type: reapy.TrackFX or None
+        :type: reapy.FX or None
         """
         fx_index = RPR.TrackFX_GetInstrument(self.id)
-        instrument = None if fx_index == -1 else reapy.TrackFX(self, fx_index)
+        instrument = None if fx_index == -1 else reapy.FX(self, fx_index)
         return instrument
 
     @property

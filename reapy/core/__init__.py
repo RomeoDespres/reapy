@@ -13,7 +13,8 @@ from .track.track import Track
 from .track.automation_item import AutomationItem
 from .track.envelope import Envelope
 from .track.send import Send
-from .track.track_fx import TrackFX, TrackFXParam, TrackFXParamsList
+
+from .fx import FX, FXParam, FXParamsList
 
 
 __all__ = [
@@ -34,7 +35,8 @@ __all__ = [
     "Envelope",
     "AutomationItem",
     "Send",
-    "TrackFX",
-    "TrackFXParam",
-    "TrackFXParamsList"
+    # core.fx
+    "FX",
+    "FXParam",
+    "FXParamsList"
 ]
