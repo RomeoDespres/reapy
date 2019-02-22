@@ -177,6 +177,11 @@ class FX(ReapyObject):
 
     @property
     def is_ui_open(self):
+        """
+        Whether FX user interface is open.
+
+        :type: bool
+        """
         is_ui_open = bool(
             self.functions["GetOpen"](self.parent_id, self.index)
         )
@@ -184,11 +189,6 @@ class FX(ReapyObject):
 
     @is_ui_open.setter
     def is_ui_open(self, open):
-        """
-        Whether FX user interface is open.
-
-        :type: bool
-        """
         self.functions["SetOpen"](self.parent_id, self.index, open)
 
     def make_offline(self):
@@ -449,5 +449,10 @@ class FXParamsList(ReapyObject):
 
     @property
     def parent_fx(self):
+        """
+        Parent FX.
+
+        :type: reapy.FX
+        """
         fx = FX(parent_id=self.parent_id, index=self.fx_index)
         return fx
