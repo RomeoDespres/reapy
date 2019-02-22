@@ -57,11 +57,23 @@ def delete_web_interface(port):
         Web interface port.
     """
     config = Config()
+    # Get number of enabled control surfaces
     csurf_count = int(config["reaper"]["csurf_cnt"])
-    csurf_count -= 1
-    config["reaper"]["csurf_cnt"] = str(csurf_count)
-    key = "csurf_{}".format(csurf_count)
-    del config["reaper"][key]
+    # Find the one describing the web interface
+    for i in range(csurf_count):
+        string = config["reaper"]["csurf_{}".format(i)]
+        if string.startswith("HTTP"):  # It's a web interface
+            if string.split(" ")[2] == str(port):  # It's the one
+                webi_index = i
+    # Remove the line...
+    del config["reaper"]["csurf_{}".format(webi_index)]
+    # ...and move the following lines one step above
+    for i in range(webi_index, csurf_count - 1):
+        next_line = config["reaper"]["csurf_{}".format(i + 1)]
+        config["reaper"]["csurf_{}".format(i)] = next_line
+    # Update number of control surfaces
+    config["reaper"]["csurf_cnt"] = str(csurf_count - 1)
+    # And write it out
     config.write()
 
 
