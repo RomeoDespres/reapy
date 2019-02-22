@@ -712,10 +712,10 @@ class Project(ReapyObject):
         :type: list of reapy.Track
         """
         code = """
-        n_tracks = RPR.CountTracks(project_id)
-        tracks = [reapy.Track(project_id, i) for i in range(n_tracks)]
+        n_tracks = project.n_tracks
+        tracks = [reapy.Track(i, project) for i in range(n_tracks)]
         """
-        tracks = Program(code, "tracks").run(project_id=self.id)[0]
+        tracks = Program(code, "tracks").run(project=self)[0]
         return tracks
 
     def undo(self):
