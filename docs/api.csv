@@ -526,7 +526,7 @@ TakeFX_GetOpen,FX.is_ui_open
 TakeFX_GetParam,FX.params
 TakeFX_GetParameterStepSizes,TODO
 TakeFX_GetParamEx,TODO
-TakeFX_GetParamName,TrackFXParam.name
+TakeFX_GetParamName,FXParam.name
 TakeFX_GetParamNormalized,TODO
 TakeFX_GetPinMappings,TODO
 TakeFX_GetPreset,FX.preset
@@ -592,7 +592,7 @@ TrackFX_GetOpen,FX.is_ui_open
 TrackFX_GetParam,FX.params
 TrackFX_GetParameterStepSizes,TODO
 TrackFX_GetParamEx,TODO
-TrackFX_GetParamName,TrackFXParam.name
+TrackFX_GetParamName,FXParam.name
 TrackFX_GetParamNormalized,TODO
 TrackFX_GetPinMappings,TODO
 TrackFX_GetPreset,FX.preset
