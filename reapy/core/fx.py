@@ -8,6 +8,8 @@ from reapy.tools import Program
 
 class FX(ReapyObject):
 
+    """FX on a Track or a Take."""
+
     _class_name = "FX"
 
     def __init__(self, parent=None, index=None, parent_id=None):
@@ -87,6 +89,7 @@ class FX(ReapyObject):
         return {"parent_id": self.parent_id, "index": self.index}
 
     def close_ui(self):
+        """Close user interface."""
         self.is_ui_open = False
 
     def copy_to_take(self, take, index=0):
@@ -128,19 +131,24 @@ class FX(ReapyObject):
         )
 
     def delete(self):
-        """
-        Delete FX.
-        """
+        """Delete FX."""
         self.functions["Delete"](self.parent_id, self.index)
 
     def disable(self):
+        """Disable FX."""
         self.is_enabled = False
 
     def enable(self):
+        """Enable FX."""
         self.is_enabled = True
 
     @property
     def is_enabled(self):
+        """
+        Whether FX is enabled.
+
+        :type: bool
+        """
         is_enabled = bool(
             self.functions["GetEnabled"](self.parent_id, self.index)
         )
@@ -152,6 +160,11 @@ class FX(ReapyObject):
 
     @property
     def is_online(self):
+        """
+        Whether FX is online.
+
+        :type: bool
+        """
         is_online = not bool(
             self.functions["GetOffline"](self.parent_id, self.index)
         )
@@ -171,12 +184,19 @@ class FX(ReapyObject):
 
     @is_ui_open.setter
     def is_ui_open(self, open):
+        """
+        Whether FX user interface is open.
+
+        :type: bool
+        """
         self.functions["SetOpen"](self.parent_id, self.index, open)
 
     def make_offline(self):
+        """Make FX offline."""
         self.is_online = False
 
     def make_online(self):
+        """Make FX online."""
         self.is_online = True
 
     def move_to_take(self, take, index=0):
@@ -219,11 +239,21 @@ class FX(ReapyObject):
 
     @property
     def n_params(self):
+        """
+        Number of parameters.
+
+        :type: int
+        """
         n_params = self.functions["GetNumParams"](self.parent_id, self.index)
         return n_params
 
     @property
     def n_presets(self):
+        """
+        Number of presets.
+
+        :type: int
+        """
         n_presets = self.functions["GetPresetIndex"](
             self.parent_id, self.index, 0
         )[-1]
@@ -231,26 +261,47 @@ class FX(ReapyObject):
 
     @property
     def name(self):
+        """
+        FX name.
+
+        :type: str
+        """
         name = self.functions["GetFXName"](
             self.parent_id, self.index, "", 2048
         )[3]
         return name
 
     def open_ui(self):
+        """Open FX user interface."""
         self.is_ui_open = True
 
     @property
     def params(self):
+        """
+        List of parameters.
+
+        :type: FXParamsList
+        """
         params = FXParamsList(self)
         return params
 
     @property
     def parent_track(self):
+        """
+        FX parent track.
+
+        :type: reapy.Track
+        """
         track = Track(self.parent_id)
         return track
 
     @property
     def preset(self):
+        """
+        FX preset name.
+
+        :type: str
+        """
         preset = self.functions["GetPreset"](
             self.parent_id, self.index, "", 2048
         )[3]
@@ -279,6 +330,11 @@ class FX(ReapyObject):
 
     @property
     def preset_index(self):
+        """
+        FX preset index.
+
+        :type: int
+        """
         index = self.functions["GetPresetIndex"](
             self.parent_id, self.index, 0
         )[0]
@@ -286,22 +342,36 @@ class FX(ReapyObject):
 
     @property
     def preset_file(self):
+        """
+        Path to FX preset file.
+
+        :type: str
+        """
         file = self.functions["GetUserPresetFilename"](
             self.parent_id, self.index, "", 2048
         )[2]
         return file
 
     def use_previous_preset(self):
+        """Use previous preset in the presets list."""
         self.functions["NavigatePresets"](self.parent_id, self.index, -1)
 
     def use_next_preset(self):
+        """Use next preset in the presets list."""
         self.functions["NavigatePresets"](self.parent_id, self.index, 1)
 
 
 class FXParam(float):
 
+    """FX parameter."""
+
     @property
     def name(self):
+        """
+        Parameter name.
+
+        :type: str
+        """
         parent_list = self.parent_list
         name = self.functions["GetParamName"](
             parent_list.parent_id, parent_list.fx_index, self.index, "", 2048
@@ -310,6 +380,11 @@ class FXParam(float):
 
     @property
     def range(self):
+        """
+        Parameter range.
+
+        :type: float, float
+        """
         parent_list = self.parent_list
         min, max = self.functions["GetParam"](
             parent_list.parent_id, parent_list.fx_index, self.index, 0, 0
