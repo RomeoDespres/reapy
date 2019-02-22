@@ -325,7 +325,7 @@ class Track(ReapyObject):
     def name(self):
         """
         Track name.
-        
+
         Name is "MASTER" for master track, "Track N" if track has no
         name.
 

@@ -16,7 +16,7 @@ class Server(Socket):
 
     """
     Server part of the ``reapy`` dist API.
-    
+
     It is instantiated inside REAPER. It receives and processes API
     call requests coming from the outside.
     """

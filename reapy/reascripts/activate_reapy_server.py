@@ -1,11 +1,21 @@
+"""
+Activate ``reapy`` server.
+
+Running this ReaScript from inside REAPER sets the ``reapy`` server
+that receives and executes API calls requests from outside. It will
+automatically be run when importing ``reapy`` from outside, if it is
+enabled.
+"""
+
 import reapy
-from reapy import reascript_api as RPR
-from reapy.config import config
-from reapy.reascript_api.network import Server
 
 import os
 import sys
 import tempfile
+
+if reapy.is_inside_reaper():
+    from reapy import reascript_api as RPR
+    from reapy.reascript_api.network import Server
 
 
 def main_loop():
@@ -40,7 +50,7 @@ def generate_api_module():
 
 
 def get_new_reapy_server():
-    server_port = config.REAPY_SERVER_PORT
+    server_port = reapy.config.REAPY_SERVER_PORT
     reapy.set_ext_state("reapy", "server_port", server_port)
     server = Server(server_port)
     return server
@@ -50,4 +60,4 @@ if __name__ == "__main__":
     SERVER = get_new_reapy_server()
     generate_api_module()
     main_loop()
-    RPR_atexit("""reapy.delete_ext_state("reapy", "server_port")""")
+    RPR_atexit("reapy.delete_ext_state('reapy', 'server_port')")

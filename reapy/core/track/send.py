@@ -57,7 +57,7 @@ class Send(ReapyObject):
     def is_mono(self):
         """
         Whether send is mono or stereo.
-        
+
         :type: bool
         """
         is_mono = bool(self.get_info("B_MONO"))
@@ -93,7 +93,7 @@ class Send(ReapyObject):
     def is_phase_flipped(self):
         """
         Whether send phase is flipped (i.e. signal multiplied by -1).
-        
+
         :type: bool
         """
         is_phase_flipped = bool(self.get_info("B_PHASE"))
@@ -140,7 +140,7 @@ class Send(ReapyObject):
     def source_track(self):
         """
         Source track.
-        
+
         :type: reapy.Track
         """
         track = reapy.Track(self.track_id)
@@ -156,7 +156,7 @@ class Send(ReapyObject):
     def volume(self):
         """
         Send volume.
-        
+
         :type: float
         """
         volume = self.get_info("D_VOL")

@@ -85,7 +85,7 @@ class Envelope(ReapyObject):
     def name(self):
         """
         Envelope name.
-        
+
         :type: str
         """
         name = RPR.GetEnvelopeName(self.id, "", 2048)[2]

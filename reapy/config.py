@@ -1,5 +1,6 @@
 import reapy
 from reapy.errors import OutsideREAPERError
+from reapy.reascripts import activate_reapy_server
 
 from configparser import ConfigParser
 import json
@@ -69,9 +70,4 @@ def enable_dist_api():
 
 
 def get_activate_reapy_server_path():
-    path = os.path.join(
-        os.path.dirname(reapy.__file__),
-        "reascript_api",
-        "activate_reapy_server.py"
-    )
-    return path
+    return os.path.abspath(activate_reapy_server.__file__)

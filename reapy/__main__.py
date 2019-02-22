@@ -1,17 +1,18 @@
 """Get setup infos."""
 
+from reapy.reascripts import enable_dist_api, disable_dist_api
+
 import os
 import sys
 
 
 def get_config_scripts():
     """
-    Return path to configuration ReaScripts.
+    Return paths to configuration ReaScripts.
     """
-    dir = os.path.dirname(__file__)
     return (
-        os.path.join(dir, "config", "enable_dist_api.py"),
-        os.path.join(dir, "config", "disable_dist_api.py")
+        os.path.abspath(enable_dist_api.__file__),
+        os.path.abspath(disable_dist_api.__file__)
     )
 
 
