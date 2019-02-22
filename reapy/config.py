@@ -12,6 +12,8 @@ WEB_INTERFACE_PORT = 2307
 
 class Config(ConfigParser):
 
+    """Parser for REAPER .ini file."""
+
     def __init__(self):
         super(Config, self).__init__()
         self.read(reapy.get_ini_file())
@@ -22,6 +24,17 @@ class Config(ConfigParser):
 
 
 def create_new_web_interface(port):
+    """
+    Create a Web interface in REAPER at a specified port.
+
+    It is added by writing a line directly in REAPER .ini file. Thus
+    it will only be available on restart.
+
+    Parameters
+    ----------
+    port : int
+        Web interface port.
+    """
     config = Config()
     csurf_count = int(config["reaper"]["csurf_cnt"])
     csurf_count += 1
@@ -32,6 +45,17 @@ def create_new_web_interface(port):
 
 
 def delete_web_interface(port):
+    """
+    Delete Web interface listening to a specified port.
+
+    It is deleted by writing a line directly in REAPER .ini file. Thus
+    it will only be deleted on restart.
+
+    Parameters
+    ----------
+    port : int
+        Web interface port.
+    """
     config = Config()
     csurf_count = int(config["reaper"]["csurf_cnt"])
     csurf_count -= 1
@@ -42,6 +66,13 @@ def delete_web_interface(port):
 
 
 def disable_dist_api():
+    """
+    Disable distant API.
+
+    Delete ``reapy`` Web interface, and remove the ReaScript
+    ``reapy.reascripts.activate_reapy_server`` from the
+    Actions list.
+    """
     if not reapy.is_inside_reaper():
         raise OutsideREAPERError
     delete_web_interface(WEB_INTERFACE_PORT)
@@ -54,6 +85,12 @@ def disable_dist_api():
 
 
 def enable_dist_api():
+    """
+    Enable distant API.
+
+    Create a Web interface and add the ReaScript
+    ``reapy.reascripts.activate_reapy_server`` to the Actions list.
+    """
     if not reapy.is_inside_reaper():
         raise OutsideREAPERError
     create_new_web_interface(WEB_INTERFACE_PORT)
@@ -70,4 +107,5 @@ def enable_dist_api():
 
 
 def get_activate_reapy_server_path():
+    """Return path to the ``activate_reapy_server`` ReaScript."""
     return os.path.abspath(activate_reapy_server.__file__)
