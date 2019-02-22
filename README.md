@@ -2,6 +2,18 @@
 
 `reapy` is a nice pythonic wrapper around the quite unpythonic [ReaScript Python API](https://www.reaper.fm/sdk/reascript/reascripthelp.html#p "ReaScript Python API documentation") for [REAPER](https://www.reaper.fm/ "REAPER").
 
+## Contents
+
+1. [Installation](#installation)
+2. [Usage](#usage)
+    * [ReaScript API](#reascript-api)
+    * [`reapy` API](#reapy-api)
+    * [Performance](#performance)
+    * [More](#more)
+3. [Contributing](#contributing)
+4. [Author](#author)
+5. [License](#license)
+
 ## Installation
 
 1. First install from `pip`:
