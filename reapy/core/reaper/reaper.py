@@ -30,6 +30,7 @@ def add_reascript(path, section_id=0, commit=True):
     """
     if not os.path.isfile(path):
         raise FileNotFoundError(path)
+    path = os.path.abspath(path)
     action_id = RPR.AddRemoveReaScript(
         True, section_id, path, commit
     )
@@ -296,6 +297,7 @@ def remove_reascript(path, section_id=0, commit=True):
         `commit=False` for the first `n-1` calls and `commit=True` for
         the last call.
     """
+    path = os.path.abspath(path)
     success = RPR.AddRemoveReaScript(
         False, section_id, path, commit
     )
