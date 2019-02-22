@@ -8,7 +8,12 @@ Welcome to reapy's documentation!
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :hidden:
+   
+   Api guide <api_guide.html#://>
+   Translation Table <api_table.html#://>
+   Module Index <py-modindex.html#://>
+   Index <genindex.html#://>
    
 ``reapy`` is a nice pythonic wrapper around the quite unpythonic `ReaScript Python API <https://www.reaper.fm/sdk/reascript/reascripthelp.html#p>`_ for `REAPER <https://www.reaper.fm/>`_.
 
@@ -99,6 +104,10 @@ Note that the modules ``reapy`` and ``reascript_api`` (as `RPR`) are always avai
     ... """
     >>> [bpms] = Program(code, "bpms").run(project_id = project.id)
     >>> # Takes 1/30 seconds (= one distant call)
+    
+More
+****
+Check out the `API guide <api_guide.html>`_ to discover ``reapy`` classes.
 
 Contributing
 ------------
@@ -114,11 +123,3 @@ License
 -------
 
 This project is licensed under the MIT License - see the `LICENSE.txt <https://github.com/RomeoDespres/reapy/blob/master/LICENSE.txt>`_ file for details.
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
