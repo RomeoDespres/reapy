@@ -1,3 +1,7 @@
+"""
+Build ``docs/source/api_table.rst`` from ``docs/api.csv``.
+"""
+
 import reapy
 import reapy.core
 
