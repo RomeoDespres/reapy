@@ -16,4 +16,27 @@ from .tools import InsideReaper
 
 
 def inside_reaper():
+    """
+    Return context manager for efficient calls from outside REAPER.
+    
+    Returns
+    -------
+    inside_reaper : InsideReaper
+    
+    Examples
+    --------
+    Instead of running:
+    
+    >>> project = reapy.Project()
+    >>> l = [project.bpm for i in range(1000)
+    
+    which takes around 30 seconds, run:
+    
+    >>> project = reapy.Project()
+    >>> with reapy.inside_reaper():
+    ...     l = [project.bpm for i in range(1000)
+    ...
+    
+    which takes 0.1 seconds!
+    """
     return InsideReaper()
