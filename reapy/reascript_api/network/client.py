@@ -11,10 +11,10 @@ class Client(Socket):
 
     def _connect(self, port):
         super(Client, self).connect(("localhost", port))
-        self.address = self.recv().decode("ascii")
+        self.address = self.recv(timeout=None).decode("ascii")
 
     def _get_result(self):
-        result = json.loads(self.recv().decode())
+        result = json.loads(self.recv(timeout=None).decode())
         return result
 
     def run_program(self, program, input):
