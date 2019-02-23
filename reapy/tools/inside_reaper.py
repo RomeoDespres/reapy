@@ -5,6 +5,26 @@ if not reapy.is_inside_reaper():
 
 class InsideReaper:
 
+    """
+    Context manager for efficient calls from outside REAPER.
+
+    Examples
+    --------
+    Instead of running:
+
+    >>> project = reapy.Project()
+    >>> l = [project.bpm for i in range(1000)
+
+    which takes around 30 seconds, run:
+
+    >>> project = reapy.Project()
+    >>> with reapy.inside_reaper():
+    ...     l = [project.bpm for i in range(1000)
+    ...
+
+    which takes 0.1 seconds!
+    """
+
     def __enter__(self):
         if not reapy.is_inside_reaper():
             dist_program.Program("HOLD").run()
