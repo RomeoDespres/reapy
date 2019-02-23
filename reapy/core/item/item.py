@@ -25,7 +25,7 @@ class Item(ReapyObject):
 
         Returns
         -------
-        take : reapy.Take
+        take : Take
             Active take of the item.
         """
         take = reapy.Take(RPR.GetActiveTake(self.id))
@@ -59,7 +59,7 @@ class Item(ReapyObject):
 
         Returns
         -------
-        take : reapy.Take
+        take : Take
             index-th take of media item.
         """
         take_id = RPR.GetItemTake(self.id, i)
@@ -150,7 +150,7 @@ class Item(ReapyObject):
 
         Returns
         -------
-        project : reapy.Project
+        project : Project
             Item parent project.
         """
         project_id = RPR.GetItemProjectContext(self.id)
@@ -182,7 +182,7 @@ class Item(ReapyObject):
 
         Returns
         -------
-        takes : list
+        takes : list of Take
             List of all takes of media item.
         """
         code = """
@@ -200,7 +200,7 @@ class Item(ReapyObject):
 
         Returns
         -------
-        track : reapy.Track
+        track : Track
             Parent track of item.
         """
         track_id = RPR.GetMediaItemTrack(self.id)
@@ -214,8 +214,8 @@ class Item(ReapyObject):
 
         Parameters
         ----------
-        track : reapy.Track, int
-            If reapy.Track, destination track for item. If int, track
+        track : Track, int
+            If Track, destination track for item. If int, track
             index.
 
         Raises

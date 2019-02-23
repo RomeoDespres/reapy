@@ -141,7 +141,7 @@ class Send(ReapyObject):
         """
         Source track.
 
-        :type: reapy.Track
+        :type: Track
         """
         track = reapy.Track(self.track_id)
         return track

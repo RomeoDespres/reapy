@@ -46,7 +46,7 @@ class Take(ReapyObject):
 
         Returns
         -------
-        item : reapy.Item
+        item : Item
             Parent item.
         """
         item = reapy.Item(RPR.GetMediaItemTake_Item(self.id))
@@ -78,7 +78,7 @@ class Take(ReapyObject):
 
         Returns
         -------
-        source : reapy.Source
+        source : Source
             Take source.
         """
         source = reapy.Source(RPR.GetMediaItemTake_Source(self.id))
@@ -104,7 +104,7 @@ class Take(ReapyObject):
 
         Returns
         -------
-        track : reapy.Track
+        track : Track
             Parent track of take.
         """
         track_id = RPR.GetMediaItemTake_Track(self.id)

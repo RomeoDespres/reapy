@@ -109,7 +109,7 @@ class Project(ReapyObject):
 
         Returns
         -------
-        track : reapy.Track
+        track : Track
             New track.
         """
         code = """
@@ -278,7 +278,7 @@ class Project(ReapyObject):
 
         Returns
         -------
-        item : reapy.Item
+        item : Item
             index-th selected item.
         """
         item_id = RPR.GetSelectedMediaItem(self.id, index)
@@ -296,7 +296,7 @@ class Project(ReapyObject):
 
         Returns
         -------
-        track : reapy.Track
+        track : Track
             index-th selected track.
         """
         track_id = RPR.GetSelectedTrack(self.id, index)
@@ -383,7 +383,7 @@ class Project(ReapyObject):
         """
         Project master track.
 
-        :type: reapy.Track
+        :type: Track
         """
         track_id = RPR.GetMasterTrack(self.id)
         master_track = reapy.Track(track_id)
@@ -622,7 +622,7 @@ class Project(ReapyObject):
         """
         List of all selected items.
 
-        :type: list of reapy.Item
+        :type: list of Item
 
         See also
         --------
@@ -644,7 +644,7 @@ class Project(ReapyObject):
         """
         List of selected tracks (excluding master).
 
-        :type: list of reapy.Track
+        :type: list of Track
         """
         code = """
         track_ids = [
@@ -709,7 +709,7 @@ class Project(ReapyObject):
         """
         List of project tracks.
 
-        :type: list of reapy.Track
+        :type: list of Track
         """
         code = """
         n_tracks = project.n_tracks

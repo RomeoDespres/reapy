@@ -34,7 +34,7 @@ class Track(ReapyObject):
 
         Returns
         -------
-        item : reapy.Item
+        item : Item
             New item on track.
         """
         if end is None:
@@ -80,7 +80,7 @@ class Track(ReapyObject):
 
         Returns
         -------
-        send : reapy.Send
+        send : Send
             New send on track.
         """
         if isinstance(destination, Track):
@@ -174,7 +174,7 @@ class Track(ReapyObject):
         """
         List of FXs on track.
 
-        :type: list of reapy.FX
+        :type: list of FX
         """
         fxs = [reapy.FX(self, i) for i in range(self.n_fxs)]
         return fxs
@@ -194,7 +194,7 @@ class Track(ReapyObject):
 
         Returns
         -------
-        envelope : reapy.Envelope
+        envelope : Envelope
             Track envelope.
         """
         if index is not None:
@@ -217,7 +217,7 @@ class Track(ReapyObject):
         """
         First instrument FX on track if it exists, else None.
 
-        :type: reapy.FX or None
+        :type: FX or None
         """
         fx_index = RPR.TrackFX_GetInstrument(self.id)
         instrument = None if fx_index == -1 else reapy.FX(self, fx_index)
@@ -228,7 +228,7 @@ class Track(ReapyObject):
         """
         List of items on track.
 
-        :type: list of reapy.Item
+        :type: list of Item
         """
         code = """
         n_items = RPR.CountTrackMediaItems(track_id)

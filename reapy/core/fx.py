@@ -224,7 +224,7 @@ class FX(ReapyObject):
 
         Parameters
         ----------
-        track : reapy.Track
+        track : Track
             Destination track.
         index : int
             Index on destination track.
@@ -290,7 +290,7 @@ class FX(ReapyObject):
         """
         FX parent track.
 
-        :type: reapy.Track
+        :type: Track
         """
         track = Track(self.parent_id)
         return track
