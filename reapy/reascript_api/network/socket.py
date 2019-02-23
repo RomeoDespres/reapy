@@ -40,16 +40,18 @@ class Socket:
     def listen(self, *args, **kwargs):
         return self._socket.listen(*args, **kwargs)
 
-    def recv(self):
+    def recv(self, timeout=.0001):
         """
         Receive data of arbitrary length.
         """
         # First get data length
+        self.settimeout(timeout)
         length = self._socket.recv(8)
         length = int.from_bytes(length, "little")
         if length == 0:
             raise ConnectionAbortedError
         # Then receive data (split it into smaller bits if too big)
+        self.settimeout(None)
         data = b""
         max_size = 2**32
         for _ in range(length // max_size):

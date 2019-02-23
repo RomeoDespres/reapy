@@ -29,15 +29,12 @@ class Server(Socket):
         self.settimeout(.0001)
 
     @Socket._non_blocking
-    def _get_request(self, connection):
+    def _get_request(self, connection, address):
         try:
             request = connection.recv()
             request = json.loads(request.decode())
         except (ConnectionAbortedError, ConnectionResetError):
             # Client has disconnected
-            [address] = [
-                a for a, c in self.connections.items() if c is connection
-            ]
             # Pretend client has nicely requested to disconnect
             code = "server.disconnect(address)"
             program = Program(code).to_dict()
@@ -45,7 +42,28 @@ class Server(Socket):
             request = {"program": program, "input": input}
         return request
 
-    def _process_request(self, request):
+    def _hold_connection(self, address):
+        connection = self.connections[address]
+        result = {"type": "result", "value": None}
+        self._send_result(connection, result)
+        request = self._get_request(connection, address)
+        while request is None or request["program"][0] != "RELEASE":
+            if request is None:
+                request = self._get_request(connection, address)
+                continue
+            result = self._process_request(request, address)
+            try:
+                self._send_result(connection, result)
+                request = self._get_request(connection, address)
+            except (ConnectionAbortedError, ConnectionResetError):
+                # request was to disconnect
+                request = {"program": ["RELEASE"]}
+        result = {"type": "result", "value": None}
+        return result
+
+    def _process_request(self, request, address):
+        if request["program"][0] == "HOLD":
+            return self._hold_connection(address)
         program = Program(*request["program"])
         result = {}
         request["input"].update({"RPR": RPR, "reapy": reapy})
@@ -67,7 +85,6 @@ class Server(Socket):
     def accept(self):
         connection, address = super(Server, self).accept()
         self.connections[address] = connection
-        connection.settimeout(.001)
         connection.send("{}".format(address).encode("ascii"))
 
     def disconnect(self, address):
@@ -79,7 +96,7 @@ class Server(Socket):
     def get_requests(self):
         requests = {}
         for address, connection in self.connections.items():
-            request = self._get_request(connection)
+            request = self._get_request(connection, address)
             if request is not None:
                 requests[address] = request
         return requests
@@ -87,14 +104,15 @@ class Server(Socket):
     def process_requests(self, requests):
         results = {}
         for address, request in requests.items():
-            result = self._process_request(request)
+            result = self._process_request(request, address)
             results[address] = result
         return results
 
     def send_results(self, results):
         for address, result in results.items():
             try:
-                self._send_result(self.connections[address], result)
+                connection = self.connections[address]
+                self._send_result(connection, result)
             except KeyError:
                 # Happens when the client requested to disconnect.
                 # Nothing must be returned in that case.
