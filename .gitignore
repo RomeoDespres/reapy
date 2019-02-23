@@ -1,4 +1,5 @@
 *.pyc
+dist/*
 docs/build/*
 docs/make.bat
 docs/Makefile
