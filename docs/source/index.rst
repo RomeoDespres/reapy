@@ -80,30 +80,22 @@ The `Translation table <api_table.html>`_ matches ReaScript functions with their
 Performance
 ***********
 
-When used from inside REAPER, ``reapy`` has almost identical performance than native ReaScript API. Yet when it is used from the outside, the performance is quite worse. More precisely, since external API calls are processed in a ``defer`` loop inside REAPER, there can only be around 30 to 60 of them per second.
-
-In a time-critical context, you can make use of the ``reapy.tools.Program`` feature. It allows to execute arbitrary code inside REAPER, with input and output sent over the local network.
-
-In the example below, one can see how to make use of ``Program`` to improve efficiency. Input parameters are passed to the program as ``Program.run`` keyword arguments. Required output values are specified as ``Program`` positional arguments after ``code`` (first positional argument).
-
-Note that the modules ``reapy`` and ``reascript_api`` (as `RPR`) are always available in ``Program``. Any other needed module must be explicitly imported in the ``code``.
+When used from inside REAPER, ``reapy`` has almost identical performance than native ReaScript API. Yet when it is used from the outside, the performance is quite worse. More precisely, since external API calls are processed in a ``defer`` loop inside REAPER, there can only be around 30 to 60 of them per second. In a time-critical context, you should make use of the ``reapy.inside_reaper`` context manager.
 
 
     >>> import reapy
     >>> project = reapy.Project() # Current project
     >>>
     >>> # Unefficient (and useless) call
-    >>> start = time.time(); bpms = [project.bpm for _ in range(100)]
-    >>> # Takes at least 3 seconds!
+    >>> bpms = [project.bpm for _ in range(1000)] # Takes at least 30 seconds...
     >>>
     >>> # Efficient call
-    >>> from reapy.tools import Program
-    >>> code = """
-    ... project = reapy.Project(project_id)
-    ... bpms = [project.bpm for _ in range(100)]
-    ... """
-    >>> [bpms] = Program(code, "bpms").run(project_id = project.id)
-    >>> # Takes 1/30 seconds (= one distant call)
+    >>> with reapy.inside_reaper():
+    ...     bpms = [project.bpm for _ in range(1000)]
+    ...
+    >>> # Takes only 0.1 second!
+
+Although this method should be sufficient in most cases, note that optimality is only reached by making use of ``reapy.tools.Program`` (see documentation `here <reapy.tools.html#reapy.tools.program.Program>`_).
     
 More
 ****
