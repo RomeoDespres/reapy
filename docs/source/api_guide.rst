@@ -4,6 +4,7 @@ API guide
 This guide describes the main ``reapy`` classes you will probably use in your ReaScripts, and the way to build them. For more detailed documentation and access to the source code, check out the :ref:`modindex`.
 
 .. contents:: Contents
+    :local:
     :depth: 3
     
 reapy
@@ -23,6 +24,26 @@ All functions in `reapy.core.reaper.reaper <reapy.core.reaper.html#module-reapy.
     53007
     >>> reapy.get_command_name(command_id)
     '_RSbcbf8f64cb92ff8062457098ee1194c7742e6431'
+    
+Improve performance with ``reapy.inside_reaper``
+************************************************
+
+When used from inside REAPER, ``reapy`` has almost identical performance than native ReaScript API. Yet when it is used from the outside, the performance is quite worse. More precisely, since external API calls are processed in a ``defer`` loop inside REAPER, there can only be around 30 to 60 of them per second. In a time-critical context, you should make use of the ``reapy.inside_reaper`` context manager.
+
+
+    >>> import reapy
+    >>> project = reapy.Project() # Current project
+    >>>
+    >>> # Unefficient (and useless) call
+    >>> bpms = [project.bpm for _ in range(1000)] # Takes at least 30 seconds...
+    >>>
+    >>> # Efficient call
+    >>> with reapy.inside_reaper():
+    ...     bpms = [project.bpm for _ in range(1000)]
+    ...
+    >>> # Takes only 0.1 second!
+
+Although this method should be sufficient in most cases, note that optimality is only reached by making use of ``reapy.tools.Program`` (see documentation `here <reapy.tools.html#reapy.tools.program.Program>`_).
     
 reapy.Project
 -------------
