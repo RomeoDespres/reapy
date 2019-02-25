@@ -1,3 +1,4 @@
+import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.tools import Program
@@ -17,40 +18,40 @@ class Take(ReapyObject):
     def _args(self):
         return (self.id,)
 
+    @property
+    def fxs(self):
+        """
+        FXs on take.
+
+        :type: FXList
+        """
+        return reapy.FXList(self)
+
     def get_info_value(self, param_name):
-        value = RPR.GettakeInfo_Value(self.id, param_name)
-        return value
+        return RPR.GettakeInfo_Value(self.id, param_name)
 
     @property
     def is_active(self):
         """
-        Return whether take is active.
+        Whether take is active.
 
-        Returns
-        -------
-        is_active : bool
-            Whether take is active.
+        :type: bool
         """
         code = """
         from reapy.core.item.take import Take
         take = Take(take_id)
         is_active = take == take.item.active_take
         """
-        is_active = Program(code, "is_active").run(take_id=self.id)[0]
-        return is_active
+        return Program(code, "is_active").run(take_id=self.id)[0]
 
     @property
     def item(self):
         """
-        Return parent item.
+        Parent item.
 
-        Returns
-        -------
-        item : Item
-            Parent item.
+        :type: Item
         """
-        item = reapy.Item(RPR.GetMediaItemTake_Item(self.id))
-        return item
+        return reapy.Item(RPR.GetMediaItemTake_Item(self.id))
 
     def make_active_take(self):
         """
@@ -61,52 +62,45 @@ class Take(ReapyObject):
     @property
     def n_envelopes(self):
         """
-        Return number of envelopes on take.
+        Number of envelopes on take.
 
-        Returns
-        -------
-        n_envelopes : int
-            Number of envelopes on take.
+        :type: int
         """
-        n_envelopes = RPR.CountTakeEnvelopes(self.id)
-        return n_envelopes
+        return RPR.CountTakeEnvelopes(self.id)
+
+    @property
+    def n_fxs(self):
+        """
+        Number of FXs on take.
+
+        :type: int
+        """
+        return RPR.TakeFX_GetCount(self.id)
 
     @property
     def source(self):
         """
-        Return take source.
+        Take source.
 
-        Returns
-        -------
-        source : Source
-            Take source.
+        :type: Source
         """
-        source = reapy.Source(RPR.GetMediaItemTake_Source(self.id))
-        return source
+        return reapy.Source(RPR.GetMediaItemTake_Source(self.id))
 
     @property
     def start_offset(self):
         """
-        Return start time of the take relative to start of source file.
+        Start time of the take relative to start of source file.
 
-        Returns
-        -------
-        start_offset : float
-            Start offset in seconds.
+        :type: float
         """
-        start_offset = self.get_info_value("D_STARTOFFS")
-        return start_offset
+        return self.get_info_value("D_STARTOFFS")
 
     @property
     def track(self):
         """
-        Return parent track of take.
+        Parent track of take.
 
-        Returns
-        -------
-        track : Track
-            Parent track of take.
+        :type: Track
         """
         track_id = RPR.GetMediaItemTake_Track(self.id)
-        track = reapy.Track(track_id)
-        return track
+        return reapy.Track(track_id)

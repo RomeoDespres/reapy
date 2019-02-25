@@ -3,7 +3,7 @@ class ReapyObject:
     """Base class for reapy objects."""
 
     _class_name = "ReapyObject"
-    
+
     def __eq__(self, other):
         return repr(self) == repr(other)
 

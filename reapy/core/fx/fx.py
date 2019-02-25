@@ -1,8 +1,9 @@
 """Define FX and FXParam classes."""
 
+import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.errors import UndefinedFXParamError
+from reapy.errors import DistError, UndefinedFXParamError
 from reapy.tools import Program
 
 
@@ -24,63 +25,14 @@ class FX(ReapyObject):
         self.functions = self._get_functions()
 
     def _get_functions(self):
-        function_names = [
-            "AddByName",
-            "CopyToTake",
-            "CopyToTrack",
-            "Delete",
-            "EndParamEdit",
-            "FormatParamValue",
-            "FormatParamValueNormalized",
-            "GetByName",
-            "GetChainVisible",
-            "GetCount",
-            "GetEnabled",
-            "GetEQ",
-            "GetEQBandEnabled",
-            "GetEQParam",
-            "GetFloatingWindow",
-            "GetFormattedParamValue",
-            "GetFXGUID",
-            "GetFXName",
-            "GetInstrument",
-            "GetIOSize",
-            "GetNamedConfigParm",
-            "GetNumParams",
-            "GetOffline",
-            "GetOpen",
-            "GetParam",
-            "GetParameterStepSizes",
-            "GetParamEx",
-            "GetParamName",
-            "GetParamNormalized",
-            "GetPinMappings",
-            "GetPreset",
-            "GetPresetIndex",
-            "GetRecChainVisible",
-            "GetRecCount",
-            "GetUserPresetFilename",
-            "NavigatePresets",
-            "SetEnabled",
-            "SetEQBandEnabled",
-            "SetEQParam",
-            "SetNamedConfigParm",
-            "SetOffline",
-            "SetOpen",
-            "SetParam",
-            "SetParamNormalized",
-            "SetPinMappings",
-            "SetPreset",
-            "SetPresetByIndex",
-            "Show"
-        ]
-        if self.parent_id.startswith("(MediaTrack*)"):
-            fx_type = "TrackFX"
+        if isinstance(self.parent, reapy.Track):
+            prefix = "TrackFX_"
         else:
-            fx_type = "TakeFX"
+            prefix = "TakeFX_"
         functions = {
-            name: getattr(RPR, "{}_{}".format(fx_type, name))
-            for name in function_names
+            name.replace(prefix, ""): function
+            for name, function in RPR.__dict__.items()
+            if name.startswith(prefix)
         }
         return functions
 
@@ -282,18 +234,19 @@ class FX(ReapyObject):
 
         :type: FXParamsList
         """
-        params = FXParamsList(self)
+        params = reapy.FXParamsList(self)
         return params
 
     @property
-    def parent_track(self):
+    def parent(self):
         """
-        FX parent track.
+        FX parent.
 
-        :type: Track
+        :type: Track or Take
         """
-        track = Track(self.parent_id)
-        return track
+        if self.parent_id.startswith("(MediaTrack*)"):
+            return reapy.Track(self.parent_id)
+        return reapy.Take(self.parent_id)
 
     @property
     def preset(self):
@@ -361,98 +314,63 @@ class FX(ReapyObject):
         self.functions["NavigatePresets"](self.parent_id, self.index, 1)
 
 
-class FXParam(float):
+class FXList(ReapyObject):
 
-    """FX parameter."""
+    """
+    Container class for a list of FXs.
 
-    @property
-    def name(self):
-        """
-        Parameter name.
+    FXs can be accessed by name or index.
 
-        :type: str
-        """
-        parent_list = self.parent_list
-        name = self.functions["GetParamName"](
-            parent_list.parent_id, parent_list.fx_index, self.index, "", 2048
-        )[4]
-        return name
+    Examples
+    --------
+    >>> fx_list = track.fxs
+    >>> fx_list[0]
+    FX(parent_id="(MediaTrack*)0x0000000006CDEBE0", index=0)
+    >>> len(fx_list)
+    1
+    >>> fx_list["VST: ReaComp (Cockos)"]
+    FX(parent_id="(MediaTrack*)0x0000000006CDEBE0", index=0)
+    """
 
-    @property
-    def range(self):
-        """
-        Parameter range.
+    _class_name = "FXList"
 
-        :type: float, float
-        """
-        parent_list = self.parent_list
-        min, max = self.functions["GetParam"](
-            parent_list.parent_id, parent_list.fx_index, self.index, 0, 0
-        )[-2:]
-        return min, max
-
-
-class FXParamsList(ReapyObject):
-
-    _class_name = "FXParamsList"
-
-    def __init__(
-        self, parent_fx=None, parent_id=None, parent_fx_index=None
-    ):
-        if parent_fx is None:
-            parent_fx = FX(parent_id=parent_id, index=parent_fx_index)
-        self.parent_id = parent_fx.parent_id
-        self.fx_index = parent_fx.index
-        self.functions = parent_fx.functions
+    def __init__(self, parent=None, parent_id=None):
+        if parent is None:
+            if parent_id.startswith("(MediaTrack*)"):
+                parent_class = reapy.Track
+            else:
+                parent_class = reapy.Take
+            parent = parent_class(parent_id)
+        self.parent = parent
 
     def __getitem__(self, i):
-        if isinstance(i, str):
-            i = self._get_param_index(i)
-        value = self.functions["GetParam"](
-            self.parent_id, self.fx_index, i, 0, 0
-        )[0]
-        param = FXParam(value)
-        param.parent_list = self
-        param.index = i
-        param.functions = self.functions
-        return param
+        with reapy.inside_reaper():
+            if isinstance(i, str):
+                i = self._get_fx_index(name=i)
+            n_fxs = self.parent.n_fxs
+        if i >= n_fxs:
+            raise IndexError("{} has only {} fxs".format(self.parent, n_fxs))
+        fx = FX(self.parent, i)
+        return fx
 
     def __len__(self):
-        length = self.parent_fx.n_params
-        return length
+        return self.parent.n_fxs
 
-    def __setitem__(self, i, value):
-        if isinstance(i, str):
-            i = self._get_param_index(i)
-        self.functions["SetParam"](
-            self.parent_id, self.fx_index, i, value
-        )
-
-    def _get_param_index(self, name):
+    def _get_fx_index(self, name):
         code = """
-        names = [param_list[i].name for i in range(len(param_list))]
-        try:
-            index = names.index(name)
-        except ValueError:
-            index = -1
+        names = [fx.name for fx in parent.fxs]
+        index = names.index(name)
         """
-        index = Program(code, "index").run(name=name, param_list=self)[0]
-        if index == -1:
-            raise UndefinedFXParamError(self.parent_fx.name, name)
-        return index
+        try:
+            index = Program(code, "index").run(
+                name=name, parent=self.parent
+            )[0]
+            return index
+        except DistError:
+            raise IndexError(
+                "{} has no FX named {}".format(self.parent, name)
+            )
 
     @property
     def _kwargs(self):
-        return {
-            "parent_fx_index": self.fx_index, "parent_id": self.parent_id
-        }
-
-    @property
-    def parent_fx(self):
-        """
-        Parent FX.
-
-        :type: reapy.FX
-        """
-        fx = FX(parent_id=self.parent_id, index=self.fx_index)
-        return fx
+        return {"parent_id": self.parent.id}

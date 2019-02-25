@@ -174,9 +174,9 @@ class Track(ReapyObject):
         """
         List of FXs on track.
 
-        :type: list of FX
+        :type: FXList
         """
-        fxs = [reapy.FX(self, i) for i in range(self.n_fxs)]
+        fxs = reapy.FXList(self)
         return fxs
 
     def get_envelope(self, index=None, name=None, chunk_name=None):

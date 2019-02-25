@@ -15,7 +15,8 @@ class Config(ConfigParser):
     """Parser for REAPER .ini file."""
 
     def __init__(self):
-        super(Config, self).__init__()
+        super(Config, self).__init__(strict=False, delimiters="=")
+        self.optionxform = str
         self.read(reapy.get_ini_file())
 
     def write(self):
