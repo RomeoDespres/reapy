@@ -357,19 +357,16 @@ class FXList(ReapyObject):
         return self.parent.n_fxs
 
     def _get_fx_index(self, name):
-        code = """
-        names = [fx.name for fx in parent.fxs]
-        index = names.index(name)
-        """
-        try:
-            index = Program(code, "index").run(
-                name=name, parent=self.parent
-            )[0]
-            return index
-        except DistError:
-            raise IndexError(
-                "{} has no FX named {}".format(self.parent, name)
-            )
+        if isinstance(self.parent, reapy.Track):
+            prefix = "TrackFX_"
+            args = (self.parent.id, name, False, 0)
+        else:
+            prefix = "TakeFX_"
+            args = (self.parent_id, name, 0)
+        index = getattr(RPR, prefix + "AddByName")(*args)
+        if index == -1:
+            raise KeyError("No FX named {}".format(name))
+        return index
 
     @property
     def _kwargs(self):
