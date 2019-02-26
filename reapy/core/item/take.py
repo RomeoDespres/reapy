@@ -18,6 +18,37 @@ class Take(ReapyObject):
     def _args(self):
         return (self.id,)
 
+    def add_fx(self, name, even_if_exists=True):
+        """
+        Add FX to track and return it.
+
+        Parameters
+        ----------
+        name : str
+            FX name.
+        even_if_exists : bool, optional
+            Whether the FX should be added even if there already is an
+            instance of the same FX on the track (default=True).
+
+        Returns
+        -------
+        fx : FX
+            New FX on take (or previously existing instance of FX if
+            even_if_exists=False).
+
+        Raises
+        ------
+        ValueError
+            If there is no FX with the specified name.
+        """
+        index = RPR.TakeFX_AddByName(
+            self.id, name, 1 - 2*even_if_exists
+        )
+        if index == -1:
+            raise ValueError("Can't find FX named {}".format(name))
+        fx = reapy.FX(self, index)
+        return fx
+
     @property
     def fxs(self):
         """

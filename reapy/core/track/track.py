@@ -18,6 +18,41 @@ class Track(ReapyObject):
     def _args(self):
         return (self.id,)
 
+    def add_fx(self, name, input_fx=False, even_if_exists=True):
+        """
+        Add FX to track and return it.
+
+        Parameters
+        ----------
+        name : str
+            FX name.
+        input_fx : bool, optional
+            Whether the FX should be an input (aka recording) FX or a
+            standard FX (default=False). Note that if the track is the
+            master track, input_fx=True will create a monitoring FX.
+        even_if_exists : bool, optional
+            Whether the FX should be added even if there already is an
+            instance of the same FX on the track (default=True).
+
+        Returns
+        -------
+        fx : FX
+            New FX on track (or previously existing instance of FX if
+            even_if_exists=False).
+
+        Raises
+        ------
+        ValueError
+            If there is no FX with the specified name.
+        """
+        index = RPR.TrackFX_AddByName(
+            self.id, name, input_fx, 1 - 2*even_if_exists
+        )
+        if index == -1:
+            raise ValueError("Can't find FX named {}".format(name))
+        fx = reapy.FX(self, index)
+        return fx
+
     def add_item(self, start=0, end=None, length=0):
         """
         Create new item on track and return it.
