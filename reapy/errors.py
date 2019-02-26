@@ -5,8 +5,9 @@ class DisabledDistAPIError(Exception):
 
     def __init__(self):
         message = (
-            "reapy distant API is disabled. Please call "
-            "`reapy.config.enable_dist_api()` from inside REAPER."
+            "Can't reach distant API. Please start REAPER, or call "
+            "reapy.config.enable_dist_api() from inside REAPER to enable "
+            "distant API."
         )
         super(DisabledDistAPIError, self).__init__(message)
 
@@ -15,8 +16,9 @@ class DisabledDistAPIWarning(Warning):
 
     def __init__(self):
         message = (
-            "reapy distant API is disabled. Please call "
-            "`reapy.config.enable_dist_api()` from inside REAPER."
+            "Can't reach distant API. Please start REAPER, or call "
+            "reapy.config.enable_dist_api() from inside REAPER to enable "
+            "distant API."
         )
         super(DisabledDistAPIWarning, self).__init__(message)
 
