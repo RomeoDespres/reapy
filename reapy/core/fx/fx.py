@@ -362,7 +362,7 @@ class FXList(ReapyObject):
             args = (self.parent.id, name, False, 0)
         else:
             prefix = "TakeFX_"
-            args = (self.parent_id, name, 0)
+            args = (self.parent.id, name, 0)
         index = getattr(RPR, prefix + "AddByName")(*args)
         if index == -1:
             raise KeyError("No FX named {}".format(name))
