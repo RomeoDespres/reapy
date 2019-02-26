@@ -12,7 +12,7 @@ Welcome to reapy's documentation!
    
    Api guide <api_guide.html#://>
    Translation Table <api_table.html#://>
-   Install and uninstall guide <install_guide.html#://>
+   Install or uninstall reapy <install_guide.html#://>
    Module Index <py-modindex.html#://>
    Index <genindex.html#://>
 
