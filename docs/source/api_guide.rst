@@ -1,14 +1,17 @@
 API guide
 =========
 
-This guide describes the main ``reapy`` classes you will probably use in your ReaScripts, and the way to build them. For more detailed documentation and access to the source code, check out the :ref:`modindex`.
+This guide describes the main ``reapy`` functions and classes you will probably use in your ReaScripts. For more detailed documentation and access to the source code, check out the :ref:`modindex`.
 
 .. contents:: Contents
     :local:
     :depth: 3
-    
+   
+
+   
 reapy
 -----
+
 
 The top-level package ``reapy`` includes general purpose functions that act at the level of REAPER itself, and not at the sub-level of a project, a track, etc.
 
@@ -24,6 +27,7 @@ All functions in `reapy.core.reaper.reaper <reapy.core.reaper.html#module-reapy.
     53007
     >>> reapy.get_command_name(command_id)
     '_RSbcbf8f64cb92ff8062457098ee1194c7742e6431'
+
     
 Improve performance with ``reapy.inside_reaper``
 ************************************************
@@ -44,6 +48,52 @@ When used from inside REAPER, ``reapy`` has almost identical performance than na
     >>> # Takes only 0.1 second!
 
 Although this method should be sufficient in most cases, note that optimality is only reached by making use of ``reapy.tools.Program`` (see documentation `here <reapy.tools.html#reapy.tools.program.Program>`_).
+
+
+Non-blocking loops inside REAPER with reapy.defer and reapy.at_exit
+*******************************************************************
+
+Inside REAPER, ReaScripts are run in the main thread. Thus, the REAPER interface is blocked until script execution is over. For that reason, you can't have infinite loops running in ReaScripts, which is why most GUI libraries that include a main loop detecting user actions can't be used in ReaScripts.
+
+Of course, if you run reapy ReaScripts outside REAPER, there is no problem with infinite loops. Yet if you want to have loops running inside REAPER, you can make use of ``reapy.defer``.
+
+Here is what ``reapy.defer`` does:
+
+    **reapy**: hey REAPER I need you to call that function I wrote
+    
+    **REAPER**: man I can't spend my whole life running your scripts. I have stuff to do like... you know... making music
+    
+    **reapy**: all right well it's not that urgent. I only need you to call it soon, but not like just right now.
+    
+    **REAPER**: ok, well give it to me and I'll put it in my schedule. It should be done within the next 0.03 seconds.
+
+
+REAPER typically executes around 30 deferred calls per second. The following example creates a loop that indefinitely prints integers to the REAPER console, without blocking REAPER::
+
+    import reapy
+        
+    def stupid_loop(i):
+        reapy.print(i)
+        # hey REAPER could you do that again please?...
+        reapy.defer(stupid_loop, i + 1)
+    
+    stupid_loop(0)  # Start the loop
+
+When such a loop is running, the user might terminate it at some point, maybe by killing the ReaScript. If you need some clean-up code to be executed when it happens, you can make use of ``reapy.at_exit``. It tells REAPER to run the function whenever the script stops running (either because it reached its end, or because it has been manually terminated).
+
+The following example opens a file and starts a loop that indefinitely writes integers to that file. Since we want the file to be closed when the user terminates script execution, call to its ``close`` method is deferred to ``reapy.at_exit``::
+
+    import reapy
+    
+    file = open("somefile.txt", "w")
+    
+    def stupid_loop(i):
+        file.write(i)
+        reapy.defer(stupid_loop, i + 1)
+    
+    reapy.at_exit(file.close)  # Make sure REAPER cleans up after loop
+    stupid_loop(0)  # Start the loop
+    
     
 reapy.Project
 -------------
