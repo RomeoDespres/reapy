@@ -12,6 +12,14 @@ reapy.core.reaper.audio module
     :undoc-members:
     :show-inheritance:
 
+reapy.core.reaper.defer module
+-------------------------------
+
+.. automodule:: reapy.core.reaper.defer
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reapy.core.reaper.reaper module
 -------------------------------
 
