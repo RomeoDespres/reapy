@@ -632,7 +632,7 @@ MIDI Management
 	"`GetTrackMIDINoteRange <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetTrackMIDINoteRange>`_",""
 	"`HasTrackMIDIPrograms <https://www.reaper.fm/sdk/reascript/reascripthelp.html#HasTrackMIDIPrograms>`_",""
 	"`HasTrackMIDIProgramsEx <https://www.reaper.fm/sdk/reascript/reascripthelp.html#HasTrackMIDIProgramsEx>`_",""
-	"`MIDI_CountEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_CountEvts>`_",""
+	"`MIDI_CountEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_CountEvts>`_","`Take.n_cc <reapy.core.html#reapy.core.Take.n_cc>`_; `Take.n_notes <reapy.core.html#reapy.core.Take.n_notes>`_; `Take.n_text_sysex <reapy.core.html#reapy.core.Take.n_text_sysex>`_"
 	"`MIDI_DeleteCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteCC>`_",""
 	"`MIDI_DeleteEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteEvt>`_",""
 	"`MIDI_DeleteNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteNote>`_",""

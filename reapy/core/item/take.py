@@ -100,6 +100,15 @@ class Take(ReapyObject):
         RPR.SetActiveTake(self.id)
 
     @property
+    def n_cc(self):
+        """
+        Number of MIDI CC events in take (always 0 for audio takes).
+
+        :type: int
+        """
+        return RPR.MIDI_CountEvts(self.id, 0, 0, 0)[3]
+
+    @property
     def n_envelopes(self):
         """
         Number of envelopes on take.
@@ -116,6 +125,24 @@ class Take(ReapyObject):
         :type: int
         """
         return RPR.TakeFX_GetCount(self.id)
+
+    @property
+    def n_notes(self):
+        """
+        Number of MIDI notes in take (always 0 for audio takes).
+
+        :type: int
+        """
+        return RPR.MIDI_CountEvts(self.id, 0, 0, 0)[2]
+
+    @property
+    def n_text_sysex(self):
+        """
+        Number of MIDI text/sysex events in take (0 for audio takes).
+
+        :type: int
+        """
+        return RPR.MIDI_CountEvts(self.id, 0, 0, 0)[4]
 
     @property
     def source(self):
