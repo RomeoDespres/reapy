@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - `Take.n_notes` (number of MIDI notes on take)
 - `Take.n_text_sysex` (number of MIDI text/sysex on take)
 - `Take.select_all_midi_events` and `Take.unselect_all_midi_events`
+- class `reapy.MIDIEditor`
 - `reapy.midi.reinit` (reset all MIDI devices)
 
 ## [0.1.0] - 2019-02-28

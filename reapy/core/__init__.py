@@ -16,6 +16,8 @@ from .track.send import Send
 
 from .fx import FX, FXList, FXParam, FXParamsList
 
+from .window import Window, MIDIEditor
+
 
 __all__ = [
     # core.reapy_object
@@ -39,5 +41,8 @@ __all__ = [
     "FX",
     "FXList",
     "FXParam",
-    "FXParamsList"
+    "FXParamsList",
+    # core.window
+    "Window",
+    "MIDIEditor"
 ]
