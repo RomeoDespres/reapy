@@ -76,6 +76,15 @@ class Take(ReapyObject):
         return Program(code, "is_active").run(take_id=self.id)[0]
 
     @property
+    def is_midi(self):
+        """
+        Whether take contains MIDI or audio.
+
+        :type: bool
+        """
+        return bool(RPR.TakeIsMIDI(self.id))
+
+    @property
     def item(self):
         """
         Parent item.

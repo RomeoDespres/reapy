@@ -153,7 +153,7 @@ API Helper Functions
 	"`ShowConsoleMsg <https://www.reaper.fm/sdk/reascript/reascripthelp.html#ShowConsoleMsg>`_","`print <reapy.core.reaper.html#reapy.core.reaper.reaper.print>`_; `show_console_message <reapy.core.reaper.html#reapy.core.reaper.reaper.show_console_message>`_"
 	"`SLIDER2DB <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SLIDER2DB>`_","`slider_to_dB <reapy.core.reaper.html#reapy.core.reaper.reaper.slider_to_dB>`_"
 	"`stringToGuid <https://www.reaper.fm/sdk/reascript/reascripthelp.html#stringToGuid>`_",""
-	"`time_precise <https://www.reaper.fm/sdk/reascript/reascripthelp.html#time_precise>`_",""
+	"`time_precise <https://www.reaper.fm/sdk/reascript/reascripthelp.html#time_precise>`_","`time.time <reapy.core.reaper.html#reapy.core.reaper.time.time>`_"
 	"`ToggleTrackSendUIMute <https://www.reaper.fm/sdk/reascript/reascripthelp.html#ToggleTrackSendUIMute>`_",""
 	"`ValidatePtr <https://www.reaper.fm/sdk/reascript/reascripthelp.html#ValidatePtr>`_",""
 	"`ValidatePtr2 <https://www.reaper.fm/sdk/reascript/reascripthelp.html#ValidatePtr2>`_",""
@@ -681,7 +681,7 @@ MIDI Management
 	"`SetTrackMIDINoteName <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SetTrackMIDINoteName>`_",""
 	"`SetTrackMIDINoteNameEx <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SetTrackMIDINoteNameEx>`_",""
 	"`StuffMIDIMessage <https://www.reaper.fm/sdk/reascript/reascripthelp.html#StuffMIDIMessage>`_",""
-	"`TakeIsMIDI <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeIsMIDI>`_",""
+	"`TakeIsMIDI <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeIsMIDI>`_","`Take.is_midi <reapy.core.html#reapy.core.Take.is_midi>`_"
 
 
 FX Management

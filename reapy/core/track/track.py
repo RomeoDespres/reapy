@@ -100,7 +100,7 @@ class Track(ReapyObject):
             default).
         """
         item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)
-        item = reapy.MIDIItem(item_id)
+        item = reapy.Item(item_id)
         return item
 
     def add_send(self, destination=None):
