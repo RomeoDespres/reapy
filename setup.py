@@ -8,7 +8,7 @@ with open(path.join(here, "README.md")) as f:
 
 setup(
     name="python-reapy",
-    version="0.1.0.dev5",
+    version="0.1.0",
     description="A pythonic wrapper for REAPER's ReaScript Python API",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -16,7 +16,6 @@ setup(
     author_email="mail.reapy@gmail.com",
     license="MIT",
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3"
     ],
