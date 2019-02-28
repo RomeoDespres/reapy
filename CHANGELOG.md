@@ -7,10 +7,11 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - `Take.is_midi`
-- `Take.n_cc`
-- `Take.n_notes`
-- `Take.n_text_sysex`
-- `reapy.midi.reinit`
+- `Take.n_cc` (number of MIDI CC on take)
+- `Take.n_notes` (number of MIDI notes on take)
+- `Take.n_text_sysex` (number of MIDI text/sysex on take)
+- `Take.select_all_midi_events` and `Take.unselect_all_midi_events`
+- `reapy.midi.reinit` (reset all MIDI devices)
 
 ## [0.1.0] - 2019-02-28
 

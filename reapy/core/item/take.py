@@ -144,6 +144,21 @@ class Take(ReapyObject):
         """
         return RPR.MIDI_CountEvts(self.id, 0, 0, 0)[4]
 
+    def select_all_midi_events(self, select=True):
+        """
+        Select or unselect all MIDI events.
+
+        Parameters
+        ----------
+        select : bool
+            Whether to select or unselect events.
+
+        See also
+        --------
+        Take.unselect_all_midi_events
+        """
+        RPR.MIDI_SelectAll(self.id, select)
+
     @property
     def source(self):
         """
@@ -171,3 +186,13 @@ class Take(ReapyObject):
         """
         track_id = RPR.GetMediaItemTake_Track(self.id)
         return reapy.Track(track_id)
+
+    def unselect_all_midi_events(self):
+        """
+        Unselect all MIDI events.
+
+        See also
+        --------
+        Take.select_all_midi_events
+        """
+        self.select_all_midi_events(select=False)
