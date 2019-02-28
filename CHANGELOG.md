@@ -6,7 +6,11 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Take.is_midi
+- `Take.is_midi`
+- `Take.n_cc`
+- `Take.n_notes`
+- `Take.n_text_sysex`
+- `reapy.midi.reinit`
 
 ## [0.1.0] - 2019-02-28
 
