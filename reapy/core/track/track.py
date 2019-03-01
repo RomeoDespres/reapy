@@ -7,8 +7,6 @@ from reapy.errors import UndefinedEnvelopeError
 
 class Track(ReapyObject):
 
-    _class_name = "Track"
-
     def __init__(self, id, project=None):
         if isinstance(id, int):
             id = RPR.GetTrack(project.id, id)
@@ -205,6 +203,15 @@ class Track(ReapyObject):
         return depth
 
     @property
+    def envelopes(self):
+        """
+        List of envelopes on track.
+
+        :type: EnvelopeList
+        """
+        return reapy.EnvelopeList(self)
+
+    @property
     def fxs(self):
         """
         List of FXs on track.
@@ -213,39 +220,6 @@ class Track(ReapyObject):
         """
         fxs = reapy.FXList(self)
         return fxs
-
-    def get_envelope(self, index=None, name=None, chunk_name=None):
-        """
-        Return track envelope for a given index, name or chunk name.
-
-        Parameters
-        ----------
-        index : int, optional
-            Envelope index.
-        name : str, optional
-            Envelope name.
-        chunk_name : str, optional
-            Built-in envelope configuration chunk name, e.g. "<VOLENV".
-
-        Returns
-        -------
-        envelope : Envelope
-            Track envelope.
-        """
-        if index is not None:
-            function, arg = RPR.GetTrackEnvelope, index
-        elif name is not None:
-            function, arg = RPR.GetTrackEnvelopeByName, name
-        else:
-            message = (
-                "One of `index`, `name` or `chunk_name` must be specified"
-            )
-            assert chunk_name is not None, message
-            function, arg = RPR.GetTrackEnvelopeByChunkName, chunk_name
-        envelope = reapy.Envelope(function(self.id, arg))
-        if not envelope._is_defined:
-            raise UndefinedEnvelopeError(index, name, chunk_name)
-        return envelope
 
     @property
     def instrument(self):
@@ -305,6 +279,10 @@ class Track(ReapyObject):
         Make track the only selected track in parent project.
         """
         RPR.SetOnlyTrackSelected(self.id)
+
+    @property
+    def midi_note_names(self):
+        return reapy.MIDINoteNames(self)
 
     @property
     def n_envelopes(self):

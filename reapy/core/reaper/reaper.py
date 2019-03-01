@@ -1,3 +1,4 @@
+import reapy
 from reapy import reascript_api as RPR
 
 import io
@@ -244,6 +245,45 @@ def get_ini_file():
     return path
 
 
+def get_last_color_theme_file():
+    """
+    Return path to last color theme file.
+
+    Returns
+    -------
+    color_theme : str
+        Path to last color theme file.
+    """
+    return RPR.GetLastColorThemeFile()
+
+
+def get_last_touched_track():
+    """
+    Return last touched track, or None if no track has been touched.
+
+    Returns
+    -------
+    track : Track or None if no track has been touched.
+    """
+    track = reapy.Track(RPR.GetLastTouchedTrack())
+    if not track._is_defined:
+        track = None
+    return track
+
+
+def get_main_window():
+    """
+    Return main window.
+
+    Returns
+    -------
+    window : Window
+        Main window.
+    """
+    window = reapy.Window(RPR.GetMainHwnd())
+    return window
+
+
 def get_reaper_version():
     version = RPR.GetAppVersion()
     return version
@@ -260,6 +300,20 @@ def get_resource_path():
     """
     path = RPR.GetResourcePath()
     return path
+
+
+def open_project(filepath):
+    """
+    Open project and return it.
+
+    Returns
+    -------
+    project : Project
+        Opened project.
+    """
+    RPR.Main_openProject(filepath)
+    project = reapy.Project()
+    return project
 
 
 def perform_action(action_id):
