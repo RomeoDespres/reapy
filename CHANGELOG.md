@@ -6,6 +6,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+#### MIDI Management
+
 - `Take.is_midi`
 - `Take.n_cc` (number of MIDI CC on take)
 - `Take.n_notes` (number of MIDI notes on take)
@@ -13,6 +15,17 @@ All notable changes to this project will be documented in this file.
 - `Take.select_all_midi_events` and `Take.unselect_all_midi_events`
 - class `reapy.MIDIEditor`
 - `reapy.midi.reinit` (reset all MIDI devices)
+
+#### User Interface
+
+- `reapy.get_last_color_theme_file`
+- `reapy.get_main_window`
+
+#### Project Management
+
+- `reapy.open_project`
+
+
 
 ## [0.1.0] - 2019-02-28
 
