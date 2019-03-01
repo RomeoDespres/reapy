@@ -50,6 +50,10 @@ class Take(ReapyObject):
         return fx
 
     @property
+    def envelopes(self):
+        return reapy.EnvelopeList(self)
+
+    @property
     def fxs(self):
         """
         FXs on take.
@@ -143,6 +147,17 @@ class Take(ReapyObject):
         :type: int
         """
         return RPR.MIDI_CountEvts(self.id, 0, 0, 0)[4]
+
+    @property
+    def name(self):
+        """
+        Take name.
+
+        :type: str
+        """
+        if self._is_defined:
+            return RPR.GetTakeName(self.id)
+        return ""
 
     def select_all_midi_events(self, select=True):
         """

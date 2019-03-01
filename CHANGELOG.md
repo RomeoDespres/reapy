@@ -6,9 +6,19 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+#### Item Management
+
+- `Take.name`
+
 #### Envelope Management
 
+- `Envelope.parent`
+- `Envelope.get_value`
+- `Envelope.get_derivatives`
+- `FXParam.add_envelope`
 - `FXParam.envelope`
+- `Take.envelopes`
+- `Track.envelopes`
 
 #### MIDI Management
 
@@ -29,6 +39,11 @@ All notable changes to this project will be documented in this file.
 - `reapy.get_last_color_theme_file`
 - `reapy.get_main_window`
 
+### Removed
+
+#### Envelope Management
+
+- `Track.get_envelope` (replaced by `Track.envelopes`)
 
 
 ## [0.1.0] - 2019-02-28

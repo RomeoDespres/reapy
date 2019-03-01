@@ -2,8 +2,6 @@ class ReapyObject:
 
     """Base class for reapy objects."""
 
-    _class_name = "ReapyObject"
-
     def __eq__(self, other):
         return repr(self) == repr(other)
 
@@ -20,7 +18,7 @@ class ReapyObject:
             brackets = ", ".join((args, kwargs))
         else:
             brackets = args if args else kwargs
-        rep = "{}({})".format(self._class_name, brackets)
+        rep = "{}({})".format(self.__class__.__name__, brackets)
         return rep
 
     @property
@@ -40,7 +38,7 @@ class ReapyObject:
     def _to_dict(self):
         return {
             "__reapy__": True,
-            "class": self._class_name,
+            "class": self.__class__.__name__,
             "args": self._args,
             "kwargs": self._kwargs
         }

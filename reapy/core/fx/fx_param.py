@@ -17,6 +17,30 @@ class FXParam(float):
     def __new__(self, value, *args, **kwargs):
         return float.__new__(self, value)
 
+    def add_envelope(self):
+        """
+        Create envelope for the parameter and return it.
+
+        Returns
+        -------
+        envelope : Envelope
+            New envelope for the parameter.
+
+        Notes
+        -----
+        If the envelope already exists, the function returns it.
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        if isinstance(parent, reapy.Track):
+            callback = RPR.GetFXEnvelope
+        else:  # Then it is a Take
+            callback = self.functions["GetEnvelope"]
+        envelope = reapy.Envelope(parent, callback(
+            parent.id, parent_fx.index, self.index, True
+        ))
+        return envelope
+
     @property
     def envelope(self):
         """
@@ -25,14 +49,17 @@ class FXParam(float):
         :type: Envelope or NoneType
         """
         parent_fx = self.parent_list.parent_fx
-        parent_track = parent_fx.parent
-        if isinstance(parent_track, reapy.Track):
-            envelope = reapy.Envelope(RPR.GetFXEnvelope(
-                parent_track.id, parent_fx.index, self.index, False
-            ))
-            if not envelope._is_defined:
-                envelope = None
-            return envelope
+        parent = parent_fx.parent
+        if isinstance(parent, reapy.Track):
+            callback = RPR.GetFXEnvelope
+        else:  # Then it is a Take
+            callback = self.functions["GetEnvelope"]
+        envelope = reapy.Envelope(parent, callback(
+            parent.id, parent_fx.index, self.index, False
+        ))
+        if not envelope._is_defined:
+            envelope = None
+        return envelope
 
     @property
     def name(self):
@@ -79,8 +106,6 @@ class FXParamsList(ReapyObject):
     >>> params_list[0]
     0.1
     """
-
-    _class_name = "FXParamsList"
 
     def __init__(
         self, parent_fx=None, parent_id=None, parent_fx_index=None

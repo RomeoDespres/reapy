@@ -5,8 +5,6 @@ import reapy.reascript_api as RPR
 
 class Window(ReapyObject):
 
-    _class_name = "Window"
-
     def __init__(self, id):
         self.id = id
 
