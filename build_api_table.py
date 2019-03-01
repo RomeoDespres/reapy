@@ -96,6 +96,9 @@ def get_reapy_module(s):
 def reapy_link(s):
     if s in ("TODO", "DEPRECATED"):
         return s
+    if s in ("defer", "at_exit"):
+        url = "reapy.core.reaper.html#reapy.core.reaper.defer.{}".format(s)
+        return rst_link(s, url)
     if s[0].lower() != s[0]:
         page = "reapy.core.html"
         anchor = "reapy.core." + s
@@ -113,6 +116,8 @@ def reapy_link(s):
 def reascript_link(s):
     page = "https://www.reaper.fm/sdk/reascript/reascripthelp.html"
     anchor = s
+    if s in ("defer", "atexit"):
+        anchor = "python_" + anchor
     url = page + "#" + anchor
     return rst_link(s, url)
 
@@ -127,6 +132,6 @@ if __name__ == "__main__":
     output_path = get_output_path()
     f = open(output_path, "w")
     f.write(HEADER)
-    for group_name, group in groups.items():
+    for group_name, group in sorted(groups.items()):
         f.write(get_group_string(group_name, group))
     f.close()
