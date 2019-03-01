@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+#### Envelope Management
+
+- `FXParam.envelope`
+
 #### MIDI Management
 
 - `Take.is_midi`
@@ -16,14 +20,14 @@ All notable changes to this project will be documented in this file.
 - class `reapy.MIDIEditor`
 - `reapy.midi.reinit` (reset all MIDI devices)
 
+#### Project Management
+
+- `reapy.open_project`
+
 #### User Interface
 
 - `reapy.get_last_color_theme_file`
 - `reapy.get_main_window`
-
-#### Project Management
-
-- `reapy.open_project`
 
 
 

@@ -1,4 +1,5 @@
 import reapy
+import reapy.reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.errors import DistError
 
@@ -6,6 +7,32 @@ from reapy.errors import DistError
 class FXParam(float):
 
     """FX parameter."""
+
+    def __init__(self, value, parent_list, index, functions):
+        float.__init__(value)
+        self.parent_list = parent_list
+        self.index = index
+        self.functions = functions
+
+    def __new__(self, value, *args, **kwargs):
+        return float.__new__(self, value)
+
+    @property
+    def envelope(self):
+        """
+        Parameter envelope (or None if it doesn't exist).
+
+        :type: Envelope or NoneType
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent_track = parent_fx.parent
+        if isinstance(parent_track, reapy.Track):
+            envelope = reapy.Envelope(RPR.GetFXEnvelope(
+                parent_track.id, parent_fx.index, self.index, False
+            ))
+            if not envelope._is_defined:
+                envelope = None
+            return envelope
 
     @property
     def name(self):
@@ -76,10 +103,7 @@ class FXParamsList(ReapyObject):
         value = self.functions["GetParam"](
             self.parent_id, self.fx_index, i, 0, 0
         )[0]
-        param = FXParam(value)
-        param.parent_list = self
-        param.index = i
-        param.functions = self.functions
+        param = FXParam(value, self, i, self.functions)
         return param
 
     def __len__(self):

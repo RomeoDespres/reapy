@@ -199,7 +199,7 @@ Envelope Management
 	"`GetEnvelopePointEx <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetEnvelopePointEx>`_",""
 	"`GetEnvelopeScalingMode <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetEnvelopeScalingMode>`_",""
 	"`GetEnvelopeStateChunk <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetEnvelopeStateChunk>`_",""
-	"`GetFXEnvelope <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetFXEnvelope>`_",""
+	"`GetFXEnvelope <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetFXEnvelope>`_","`FXParam.envelope <reapy.core.html#reapy.core.FXParam.envelope>`_"
 	"`GetGlobalAutomationOverride <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetGlobalAutomationOverride>`_","`get_global_automation_mode <reapy.core.reaper.html#reapy.core.reaper.reaper.get_global_automation_mode>`_"
 	"`GetSelectedEnvelope <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetSelectedEnvelope>`_",""
 	"`GetSelectedTrackEnvelope <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetSelectedTrackEnvelope>`_","`Project.selected_envelope <reapy.core.html#reapy.core.Project.selected_envelope>`_"
