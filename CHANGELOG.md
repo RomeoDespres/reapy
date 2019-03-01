@@ -6,6 +6,21 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+#### Audio/MIDI Device Management
+
+- `reapy.audio.get_n_inputs`
+- `reapy.audio.get_n_outputs`
+- `reapy.audio.get_input_latency`
+- `reapy.audio.get_output_latency`
+- `reapy.audio.get_input_names`
+- `reapy.audio.get_output_names`
+- `reapy.midi.get_max_inputs`
+- `reapy.midi.get_max_outputs`
+- `reapy.midi.get_n_inputs`
+- `reapy.midi.get_n_outputs`
+- `reapy.midi.get_input_names`
+- `reapy.midi.get_output_names`
+
 #### Item Management
 
 - `Take.name`
