@@ -4,7 +4,7 @@ from .window import Window
 
 
 class MIDIEditor(Window):
-    
+
     def _get_int_setting(self, setting):
         return RPR.MIDIEditor_GetSetting_int(self.id, setting)
 

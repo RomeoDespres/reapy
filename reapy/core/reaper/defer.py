@@ -152,4 +152,3 @@ def defer(f, *args, **kwargs):
     message = "reapy.defer can only be called inside REAPER."
     assert reapy.is_inside_reaper(), message
     Deferrer().defer(f, args, kwargs)
-
