@@ -134,6 +134,7 @@ def reapy_link(s, type="rst"):
     if type == "rst":
         return rst_link(s, url)
     else:
+        url = "https://python-reapy.readthedocs.io/en/latest/" + url
         return markdown_link("`{}`".format(s), url)
 
 
