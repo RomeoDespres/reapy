@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 
 - class [`AudioAccessor`]
 - [`Take.add_audio_accessor`], [`Track.add_audio_accessor`]
+- [`Source.delete`]
 
 #### Audio/MIDI Device Management
 
@@ -83,6 +84,10 @@ All notable changes to this project will be documented in this file.
 - [Documentation for uninstalling process](https://python-reapy.readthedocs.io/en/latest/install_guide.html)
 
 [//]: # (LINKS)
+[`AudioAccessor.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.delete
+[`AudioAccessor.get_samples`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.get_samples
+[`AudioAccessor.hash`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.hash
+[`AudioAccessor.start_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.start_time
 [`AutomationItem.delete_points_in_range`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AutomationItem.delete_points_in_range
 [`AutomationItem.length`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AutomationItem.length
 [`AutomationItem.n_points`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AutomationItem.n_points
@@ -208,11 +213,13 @@ All notable changes to this project will be documented in this file.
 [`Region`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Region
 [`Send.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Send.delete
 [`Send`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Send
+[`Source.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.delete
 [`Source.filename`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.filename
 [`Source.length`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.length
 [`Source.n_channels`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.n_channels
 [`Source.sample_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.sample_rate
 [`Source.type`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.type
+[`Take.add_audio_accessor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_audio_accessor
 [`Take.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_fx
 [`Take.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.envelopes
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value
@@ -235,6 +242,7 @@ All notable changes to this project will be documented in this file.
 [`TimeSelection.looping`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.looping
 [`TimeSelection.shift`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.shift
 [`TimeSelection.unloop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.unloop
+[`Track.add_audio_accessor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_audio_accessor
 [`Track.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_fx
 [`Track.add_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_item
 [`Track.add_midi_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_midi_item
