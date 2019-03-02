@@ -33,8 +33,8 @@ All notable changes to this project will be documented in this file.
 
 #### FX Management
 
-- [`FX.normalized`] for getting and setting normalized param values
 - [`FX.window`]
+- [`FXParam.normalized`] for getting and setting normalized param values
 
 #### Item Management
 
