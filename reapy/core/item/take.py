@@ -211,3 +211,13 @@ class Take(ReapyObject):
         Take.select_all_midi_events
         """
         self.select_all_midi_events(select=False)
+
+    @property
+    def visible_fx(self):
+        """
+        Visible FX in FX chain if any, else None.
+
+        :type: FX or NoneType
+        """
+        with reapy.inside_reaper():
+            return self.fxs[RPR.TakeFX_GetChainVisible(self.id)]

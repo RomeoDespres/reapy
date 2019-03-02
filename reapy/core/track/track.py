@@ -369,3 +369,13 @@ class Track(ReapyObject):
         Unselect track.
         """
         RPR.SetTrackSelected(self.id, False)
+
+    @property
+    def visible_fx(self):
+        """
+        Visible FX in FX chain if any, else None.
+
+        :type: FX or NoneType
+        """
+        with reapy.inside_reaper():
+            return self.fxs[RPR.TrackFX_GetChainVisible(self.id)]

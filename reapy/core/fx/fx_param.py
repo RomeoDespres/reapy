@@ -61,6 +61,45 @@ class FXParam(float):
             envelope = None
         return envelope
 
+    def format_value(self, value):
+        """
+        Return human readable string for value.
+
+        It is the way ``value`` would be printed in REAPER GUI if it
+        was the actual parameter value. Only works with FX that
+        support Cockos VST extensions.
+
+        Parameters
+        ----------
+        value : float
+            Value to format.
+
+        Returns
+        -------
+        formatted : str
+            Formatted value.
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        return self.functions["FormatParamValue"](
+            parent.id, parent_fx.index, self.index, value, "", 2048
+        )[5]
+
+    @property
+    def formatted(self):
+        """
+        Human readable string for parameter value.
+
+        Only works with FX that support Cockos VST extensions.
+
+        :type: str
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        return self.functions["GetFormattedParamValue"](
+            parent.id, parent_fx.index, self.index, "", 2048
+        )[4]
+
     @property
     def name(self):
         """
@@ -248,6 +287,30 @@ class NormalizedFXParam(FXParam):
     >>> fx.params[0].normalized.range
     (0.0, 1.0)
     """
+
+    def format_value(self, value):
+        """
+        Return human readable string for value.
+
+        It is the way ``value`` would be printed in REAPER GUI if it
+        was the actual parameter value. Only works with FX that
+        support Cockos VST extensions.
+
+        Parameters
+        ----------
+        value : float
+            Value to format.
+
+        Returns
+        -------
+        formatted : str
+            Formatted value.
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        return self.functions["FormatParamValueNormalized"](
+            parent.id, parent_fx.index, self.index, value, "", 2048
+        )[5]
 
     @property
     def range(self):

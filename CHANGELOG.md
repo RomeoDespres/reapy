@@ -8,18 +8,12 @@ All notable changes to this project will be documented in this file.
 
 #### Audio/MIDI Device Management
 
-- [`audio.get_n_inputs`]
-- [`audio.get_n_outputs`]
-- [`audio.get_input_latency`]
-- [`audio.get_output_latency`]
-- [`audio.get_input_names`]
-- [`audio.get_output_names`]
-- [`midi.get_max_inputs`]
-- [`midi.get_max_outputs`]
-- [`midi.get_n_inputs`]
-- [`midi.get_n_outputs`]
-- [`midi.get_input_names`]
-- [`midi.get_output_names`]
+- [`audio.get_n_inputs`], [`audio.get_n_outputs`]
+- [`audio.get_input_latency`], [`audio.get_output_latency`]
+- [`audio.get_input_names`], [`audio.get_output_names`]
+- [`midi.get_max_inputs`], [`midi.get_max_outputs`]
+- [`midi.get_n_inputs`], [`midi.get_n_outputs`]
+- [`midi.get_input_names`], [`midi.get_output_names`]
 
 #### Envelope Management
 
@@ -28,13 +22,15 @@ All notable changes to this project will be documented in this file.
 - [`Envelope.get_derivatives`]
 - [`FXParam.add_envelope`]
 - [`FXParam.envelope`]
-- [`Take.envelopes`]
-- [`Track.envelopes`]
+- [`Take.envelopes`], [`Track.envelopes`]
 
 #### FX Management
 
+- [`FX.open_chain`], [`FX.close_chain`], [`FX.open_floating_window`], [`FX.close_floating_window`]
 - [`FX.window`]
 - [`FXParam.normalized`] for getting and setting normalized param values
+- [`FXParam.formatted`], [`FXParam.format_value`], [`NormalizedFXParam.formatted`], [`NormalizedFXParam.format_value`]
+- [`Take.visible_fx`], [`Track.visible_fx`]
 
 #### Item Management
 
@@ -88,6 +84,8 @@ All notable changes to this project will be documented in this file.
 [`Envelope.n_points`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.n_points
 [`Envelope.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.name
 [`Envelope.parent`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.parent
+[`FX.close_chain`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.close_chain
+[`FX.close_floating_window`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.close_floating_window
 [`FX.close_ui`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.close_ui
 [`FX.copy_to_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.copy_to_take
 [`FX.copy_to_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.copy_to_track
@@ -103,6 +101,8 @@ All notable changes to this project will be documented in this file.
 [`FX.move_to_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.move_to_track
 [`FX.n_params`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.n_params
 [`FX.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.name
+[`FX.open_chain`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.open_chain
+[`FX.open_floating_window`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.open_floating_window
 [`FX.open_ui`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.open_ui
 [`FX.params`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.params
 [`FX.preset_file`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.preset_file
@@ -113,6 +113,8 @@ All notable changes to this project will be documented in this file.
 [`FX.window`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.window
 [`FXParam.add_envelope`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.add_envelope
 [`FXParam.envelope`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.envelope
+[`FXParam.format_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.format_value
+[`FXParam.formatted`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.formatted
 [`FXParam.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.name
 [`FXParam.normalized`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.normalized
 [`Item.active_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.active_take
@@ -133,6 +135,7 @@ All notable changes to this project will be documented in this file.
 [`MIDIEditor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.MIDIEditor
 [`Marker.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Marker.delete
 [`Marker`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Marker
+[`NormalizedFXParam.format_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.NormalizedFXParam.format_value
 [`Project.add_marker`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_marker
 [`Project.add_region`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_region
 [`Project.add_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_track
@@ -194,6 +197,7 @@ All notable changes to this project will be documented in this file.
 [`Source.n_channels`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.n_channels
 [`Source.sample_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.sample_rate
 [`Source.type`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.type
+[`Take.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_fx
 [`Take.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.envelopes
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value
 [`Take.is_midi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.is_midi
@@ -209,11 +213,13 @@ All notable changes to this project will be documented in this file.
 [`Take.source`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.source
 [`Take.track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.track
 [`Take.unselect_all_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.unselect_all_midi_events
+[`Take.visible_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.visible_fx
 [`TimeSelection.is_looping`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.is_looping
 [`TimeSelection.loop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.loop
 [`TimeSelection.looping`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.looping
 [`TimeSelection.shift`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.shift
 [`TimeSelection.unloop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.unloop
+[`Track.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_fx
 [`Track.add_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_item
 [`Track.add_midi_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_midi_item
 [`Track.add_send`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_send
@@ -234,6 +240,7 @@ All notable changes to this project will be documented in this file.
 [`Track.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.name
 [`Track.select`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.select
 [`Track.unselect`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.unselect
+[`Track.visible_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.visible_fx
 [`add_reascript`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.add_reascript
 [`arm_command`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.arm_command
 [`at_exit`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.defer.at_exit

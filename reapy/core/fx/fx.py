@@ -40,6 +40,14 @@ class FX(ReapyObject):
     def _kwargs(self):
         return {"parent_id": self.parent_id, "index": self.index}
 
+    def close_chain(self):
+        """Close FX chain."""
+        self.functions["Show"](self.parent.id, self.index, 0)
+
+    def close_floating_window(self):
+        """Close FX floating window."""
+        self.functions["Show"](self.parent.id, self.index, 2)
+
     def close_ui(self):
         """Close user interface."""
         self.is_ui_open = False
@@ -222,6 +230,14 @@ class FX(ReapyObject):
             self.parent_id, self.index, "", 2048
         )[3]
         return name
+
+    def open_chain(self):
+        """Open FX chain with focus on FX."""
+        self.functions["Show"](self.parent.id, self.index, 1)
+
+    def open_floating_window(self):
+        """Open FX floating window."""
+        self.functions["Show"](self.parent.id, self.index, 3)
 
     def open_ui(self):
         """Open FX user interface."""
