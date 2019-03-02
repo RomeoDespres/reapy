@@ -313,6 +313,20 @@ class FX(ReapyObject):
         """Use next preset in the presets list."""
         self.functions["NavigatePresets"](self.parent_id, self.index, 1)
 
+    @property
+    def window(self):
+        """
+        Floating window associated to FX, if it exists.
+
+        :type: Window or NoneType
+        """
+        window = reapy.Window(
+            self.functions["GetFloatingWindow"](self.parent.id, self.index)
+        )
+        if not window._is_defined:
+            window = None
+        return window
+
 
 class FXList(ReapyObject):
 

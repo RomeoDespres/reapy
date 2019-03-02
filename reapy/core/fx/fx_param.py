@@ -75,6 +75,56 @@ class FXParam(float):
         return name
 
     @property
+    def normalized(self):
+        """
+        Normalized FX parameter.
+
+        Attribute can be set with a float, but be careful that since
+        floats are immutable, this parameter won't have to right value
+        anymore. See Examples below.
+
+        :type: NormalizedFXParam
+
+        Examples
+        --------
+        Say the parameter range is (0.0, 20.0).
+        
+        >>> param = fx.params[0]
+        >>> param
+        10.0
+        >>> param.normalized
+        0.5
+
+        If you set the parameter like below, the parameter moves in
+        REPAER, but the FXParam object you are using is not valid
+        anymore.
+        
+        >>> param.normalized = 1
+        >>> param, param.normalized
+        10.0, 0.5
+        
+        You thus have to grab the updated FXParam from the FX like
+        below.
+        
+        >>> param = fx.params[0]
+        >>> param, param.normalized
+        20.0, 1.0
+        """
+        min, max = self.range
+        value = (self - min)/(max - min)
+        return NormalizedFXParam(
+            value, self.parent_list, self.index, self.functions
+        )
+
+    @normalized.setter
+    def normalized(self, value):
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        self.functions["SetParamNormalized"](
+            parent.id, parent_fx.id, self.index, value
+        )
+
+    @property
     def range(self):
         """
         Parameter range.
@@ -178,3 +228,39 @@ class FXParamsList(ReapyObject):
         """
         fx = reapy.FX(parent_id=self.parent_id, index=self.fx_index)
         return fx
+
+
+class NormalizedFXParam(FXParam):
+
+    """
+    Normalized FX parameter.
+
+    Access it via FXParam.normalized.
+
+    Examples
+    --------
+    >>> fx.params[0]
+    0.0
+    >>> fx.params[0].range
+    (-2.0, 0.0)
+    >>> fx.params[0].normalized
+    1.0
+    >>> fx.params[0].normalized.range
+    (0.0, 1.0)
+    """
+
+    @property
+    def range(self):
+        """
+        Parameter range (always equal to (0.0, 1.0)).
+        """
+        return (0.0, 1.0)
+
+    @property
+    def raw(self):
+        """
+        Raw (i.e. unnormalized) parameter.
+
+        :type: FXParam
+        """
+        return self.parent_list[self.index]

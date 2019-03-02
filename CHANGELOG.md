@@ -21,10 +21,6 @@ All notable changes to this project will be documented in this file.
 - [`midi.get_input_names`]
 - [`midi.get_output_names`]
 
-#### Item Management
-
-- [`Take.name`]
-
 #### Envelope Management
 
 - [`Envelope.parent`]
@@ -34,6 +30,15 @@ All notable changes to this project will be documented in this file.
 - [`FXParam.envelope`]
 - [`Take.envelopes`]
 - [`Track.envelopes`]
+
+#### FX Management
+
+- [`FX.normalized`] for getting and setting normalized param values
+- [`FX.window`]
+
+#### Item Management
+
+- [`Take.name`]
 
 #### MIDI Management
 
@@ -105,9 +110,11 @@ All notable changes to this project will be documented in this file.
 [`FX.preset`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.preset
 [`FX.use_next_preset`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.use_next_preset
 [`FX.use_previous_preset`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.use_previous_preset
+[`FX.window`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.window
 [`FXParam.add_envelope`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.add_envelope
 [`FXParam.envelope`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.envelope
 [`FXParam.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.name
+[`FXParam.normalized`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.normalized
 [`Item.active_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.active_take
 [`Item.add_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.add_take
 [`Item.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.get_info_value
@@ -268,6 +275,7 @@ All notable changes to this project will be documented in this file.
 [`midi.reinit`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.midi.reinit
 [`open_project`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.open_project
 [`os.listdir`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.os.listdir
+[`os.makedirs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.os.makedirs
 [`os.path.isfile`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.os.path.isfile
 [`perform_action`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.perform_action
 [`print`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.print
