@@ -348,6 +348,18 @@ class Track(ReapyObject):
         _, _, name, _ = RPR.GetTrackName(self.id, "", 2048)
         return name
 
+    @property
+    def parent_track(self):
+        """
+        Parent track, or None if track has none.
+
+        :type: Track or NoneType
+        """
+        parent = Track(RPR.GetParentTrack(self.id))
+        if not parent._is_defined:
+            parent = None
+        return parent
+
     def select(self):
         """
         Select track.

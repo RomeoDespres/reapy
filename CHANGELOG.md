@@ -26,29 +26,34 @@ All notable changes to this project will be documented in this file.
 
 #### FX Management
 
-- [`FX.open_chain`], [`FX.close_chain`], [`FX.open_floating_window`], [`FX.close_floating_window`]
-- [`FX.window`]
+- [`FX.open_chain`], [`FX.close_chain`], [`FX.open_floating_window`], [`FX.close_floating_window`], [`FX.window`]
 - [`FXParam.normalized`] for getting and setting normalized param values
-- [`FXParam.formatted`], [`FXParam.format_value`], [`NormalizedFXParam.formatted`], [`NormalizedFXParam.format_value`]
+- [`FXParam.formatted`], [`FXParam.format_value`], [`NormalizedFXParam.format_value`]
 - [`Take.visible_fx`], [`Track.visible_fx`]
 
 #### Item Management
 
+- [`Item.delete`]
+- [`Item.update`]
+- [`Project.items`]
 - [`Take.name`]
 
 #### MIDI Management
 
 - [`Take.is_midi`]
-- [`Take.n_cc`] (number of MIDI CC on take)
-- [`Take.n_notes`] (number of MIDI notes on take)
-- [`Take.n_text_sysex`] (number of MIDI text/sysex on take)
-- [`Take.select_all_midi_events`] and [`Take.unselect_all_midi_events`]
+- [`Take.n_cc`], [`Take.n_notes`], [`Take.n_text_sysex`]
+- [`Take.select_all_midi_events`], [`Take.unselect_all_midi_events`]
 - class [`MIDIEditor`]
 - [`midi.reinit`] (reset all MIDI devices)
 
 #### Project Management
 
 - [`open_project`]
+
+#### Track Management
+
+- [`Project.solo_all_tracks`], [`Project.unsolo_all_tracks`]
+- [`Track.parent_track`]
 
 #### User Interface
 
@@ -119,6 +124,7 @@ All notable changes to this project will be documented in this file.
 [`FXParam.normalized`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FXParam.normalized
 [`Item.active_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.active_take
 [`Item.add_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.add_take
+[`Item.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.delete
 [`Item.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.get_info_value
 [`Item.get_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.get_take
 [`Item.is_selected`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.is_selected
@@ -129,6 +135,7 @@ All notable changes to this project will be documented in this file.
 [`Item.split`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.split
 [`Item.takes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.takes
 [`Item.track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.track
+[`Item.update`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.update
 [`MIDIEditor.mode`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.MIDIEditor.mode
 [`MIDIEditor.perform_action`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.MIDIEditor.perform_action
 [`MIDIEditor.take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.MIDIEditor.take
@@ -152,6 +159,7 @@ All notable changes to this project will be documented in this file.
 [`Project.get_selected_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_item
 [`Project.get_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_track
 [`Project.is_dirty`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_dirty
+[`Project.items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.items
 [`Project.length`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.length
 [`Project.make_current_project`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.make_current_project
 [`Project.mark_dirty`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.mark_dirty
@@ -179,11 +187,13 @@ All notable changes to this project will be documented in this file.
 [`Project.selected_envelope`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_envelope
 [`Project.selected_items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_items
 [`Project.selected_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_tracks
+[`Project.solo_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.solo_all_tracks
 [`Project.stop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.stop
 [`Project.time_selection`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.time_selection
 [`Project.tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.tracks
 [`Project.undo`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.undo
 [`Project.unmute_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.unmute_all_tracks
+[`Project.unsolo_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.unsolo_all_tracks
 [`Project`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project
 [`Region.add_rendered_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Region.add_rendered_track
 [`Region.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Region.delete
@@ -238,6 +248,7 @@ All notable changes to this project will be documented in this file.
 [`Track.n_receives`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.n_receives
 [`Track.n_sends`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.n_sends
 [`Track.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.name
+[`Track.parent_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.parent_track
 [`Track.select`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.select
 [`Track.unselect`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.unselect
 [`Track.visible_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.visible_fx

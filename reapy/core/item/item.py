@@ -44,6 +44,11 @@ class Item(ReapyObject):
         take = reapy.Take(take_id)
         return take
 
+    def delete(self):
+        """Delete item."""
+        code = "RPR.DeleteTrackMediaItem(item.track.id, item.id)"
+        Program(code).run(item=self)        
+
     def get_info_value(self, param_name):
         value = RPR.GetMediaItemInfo_Value(self.id, param_name)
         return value
@@ -196,12 +201,20 @@ class Item(ReapyObject):
     @property
     def track(self):
         """
-        Return parent track of item.
+        Parent track of item.
 
-        Returns
-        -------
-        track : Track
-            Parent track of item.
+        Set it by passing a track, or a track index.
+
+        :type: Track
+
+        Examples
+        --------
+        >>> track0, track1 = project.tracks[0:2]
+        >>> item = track0.items[0]
+        >>> item.track == track0
+        True
+        >>> item.track = track1  # Move to track 1
+        >>> item.track = 0  # Move to track 0
         """
         track_id = RPR.GetMediaItemTrack(self.id)
         track = reapy.Track(track_id)
@@ -209,25 +222,13 @@ class Item(ReapyObject):
 
     @track.setter
     def track(self, track):
-        """
-        Move item to track `track`.
-
-        Parameters
-        ----------
-        track : Track, int
-            If Track, destination track for item. If int, track
-            index.
-
-        Raises
-        ------
-        Exception
-            If operation failed within REAPER.
-        """
         if isisintance(track, int):
             track = reapy.Track(track, project=self.project)
-        success = RPR.MoveMediaItemToTrack(self.id, track.id)
-        if not success:
-            raise Exception("Couldn't move item to track.")
+        RPR.MoveMediaItemToTrack(self.id, track.id)
+
+    def update(self):
+        """Update item in REAPER interface."""
+        RPR.UpdateItemInProject(self.id)
 
 
 class MIDIItem(Item):

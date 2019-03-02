@@ -336,6 +336,20 @@ class Project(ReapyObject):
         return is_current
 
     @property
+    def items(self):
+        """
+        List of items in project.
+
+        :type: list of Item
+        """
+        code = """
+        n_items = project.n_items
+        item_ids = [RPR.GetMediaItem(project.id, i) for i in range(n_items)]
+        """
+        item_ids, = Program(code, "item_ids").run(project=self)
+        return list(map(reapy.Item, item_ids))
+
+    @property
     def length(self):
         """
         Project length in seconds.
@@ -656,6 +670,22 @@ class Project(ReapyObject):
         tracks = list(map(reapy.Track, track_ids))
         return tracks
 
+    def solo_all_tracks(self):
+        """
+        Solo all tracks in project.
+
+        See also
+        --------
+        Project.unsolo_all_tracks
+        """
+        code = """
+        current_project = reapy.Project()
+        project.make_current_project()
+        RPR.SoloAllTracks(1)
+        current_project.make_current_project()
+        """
+        Program(code).run(project=self)
+
     def stop(self):
         """
         Hit stop button.
@@ -736,3 +766,19 @@ class Project(ReapyObject):
         Unmute all tracks.
         """
         self.mute_all_tracks(mute=False)
+
+    def unsolo_all_tracks(self):
+        """
+        Unsolo all tracks in project.
+
+        See also
+        --------
+        Project.solo_all_tracks
+        """
+        code = """
+        current_project = reapy.Project()
+        project.make_current_project()
+        RPR.SoloAllTracks(0)
+        current_project.make_current_project()
+        """
+        Program(code).run(project=self)
