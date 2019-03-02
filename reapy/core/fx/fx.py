@@ -380,6 +380,7 @@ class FXList(ReapyObject):
             n_fxs = self.parent.n_fxs
         if i >= n_fxs:
             raise IndexError("{} has only {} fxs".format(self.parent, n_fxs))
+        i = i % n_fxs  # Allows for negative values
         fx = FX(self.parent, i)
         return fx
 

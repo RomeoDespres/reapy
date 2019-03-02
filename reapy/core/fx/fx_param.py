@@ -214,6 +214,7 @@ class FXParamsList(ReapyObject):
                 raise IndexError(
                     "{} has only {} params".format(self.parent_fx, n_params)
                 )
+            i = i % n_params  # Allows for negative values
         value = self.functions["GetParam"](
             self.parent_id, self.fx_index, i, 0, 0
         )[0]
@@ -233,6 +234,7 @@ class FXParamsList(ReapyObject):
                 raise IndexError(
                     "{} has only {} params".format(self.parent_fx, n_params)
                 )
+            i = i % n_params  # Allows for negative values
         self.functions["SetParam"](
             self.parent_id, self.fx_index, i, value
         )

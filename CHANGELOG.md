@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+#### Audio Management
+
+- class [`AudioAccessor`]
+- [`Take.add_audio_accessor`], [`Track.add_audio_accessor`]
+
 #### Audio/MIDI Device Management
 
 - [`audio.get_n_inputs`], [`audio.get_n_outputs`]
@@ -30,6 +35,7 @@ All notable changes to this project will be documented in this file.
 - [`FXParam.normalized`] for getting and setting normalized param values
 - [`FXParam.formatted`], [`FXParam.format_value`], [`NormalizedFXParam.format_value`]
 - [`Take.visible_fx`], [`Track.visible_fx`]
+- [`Track.fxs`] and [`Take.fxs`] now support negative indexing
 
 #### Item Management
 

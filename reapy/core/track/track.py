@@ -14,7 +14,20 @@ class Track(ReapyObject):
 
     @property
     def _args(self):
-        return (self.id,)
+        return self.id,
+
+    def add_audio_accessor(self):
+        """
+        Create audio accessor and return it.
+
+        Returns
+        -------
+        audio_accessor : AudioAccessor
+            Audio accessor on track.
+        """
+        audio_accessor_id = RPR.CreateTrackAudioAccessor(self.id)
+        audio_accessor = reapy.AudioAccessor(audio_accessor_id)
+        return audio_accessor
 
     def add_fx(self, name, input_fx=False, even_if_exists=True):
         """

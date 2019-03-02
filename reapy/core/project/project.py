@@ -34,7 +34,7 @@ class Project(ReapyObject):
 
     @property
     def _args(self):
-        return (self.id,)
+        return self.id,
 
     def add_marker(self, position, name="", color=0):
         """

@@ -1,5 +1,6 @@
 from .reapy_object import ReapyObject
 
+from .audio_accessor import AudioAccessor
 from .envelope import Envelope, EnvelopeList
 from .fx import FX, FXList, FXParam, FXParamsList
 from .item import Item, MIDIItem, Source, Take
@@ -11,6 +12,8 @@ from .window import MIDIEditor, Window
 __all__ = [
     # core.reapy_object
     "ReapyObject",
+    #core.audio_accessor
+    "AudioAccessor",
     # core.envelope
     "Envelope",
     "EnvelopeList",

@@ -14,8 +14,13 @@ class Client(Socket):
         self.address = self.recv(timeout=None).decode("ascii")
 
     def _get_result(self):
-        result = json.loads(self.recv(timeout=None).decode())
-        return result
+        s = self.recv(timeout=None).decode()
+        print(s)
+        try:
+            result = json.loads(s)
+            return result
+        except:
+            pass
 
     def run_program(self, program, input):
         """

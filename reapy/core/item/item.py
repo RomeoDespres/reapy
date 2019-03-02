@@ -16,7 +16,7 @@ class Item(ReapyObject):
 
     @property
     def _args(self):
-        return (self.id,)
+        return self.id,
 
     @property
     def active_take(self):
