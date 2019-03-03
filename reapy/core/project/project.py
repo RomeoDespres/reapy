@@ -267,6 +267,37 @@ class Project(ReapyObject):
         """
         RPR.Undo_EndBlock2(self.id, description, 0)
 
+    @property
+    def focused_fx(self):
+        """
+        FX that has focus if any, else None.
+
+        :type: FX or NoneType
+        """
+        code = """
+        
+        def get_focused_fx():
+            if not project.is_current_project:
+                return
+            res = RPR.GetFocusedFX(0, 0, 0)
+            if not res[0]:
+                return
+            if res[1] == 0:
+                track = project.master_track
+            else:
+                track = project.tracks[res[1] - 1]
+            if res[0] == 1:  # Track FX
+                return track.fxs[res[3]]
+            # Take FX
+            item = track.items[res[2]]
+            take = item.takes[res[3] // 2**16]
+            return take.fxs[res[3] % 2**16]
+        
+        fx = get_focused_fx()
+        """
+        fx, = Program(code, "fx").run(project=self)
+        return fx
+
     def get_selected_item(self, index):
         """
         Return index-th selected item.
@@ -358,6 +389,42 @@ class Project(ReapyObject):
         """
         length = RPR.GetProjectLength(self.id)
         return length
+
+    @property
+    def last_touched_fx(self):
+        """
+        Last touched FX and corresponding parameter index.
+
+        :type: FX, int or NoneType, NoneType
+
+        Notes
+        -----
+        Only Track FX are detected by this property. If last touched
+        FX is a Take FX, this property is ``(None, None)``.
+
+        Examples
+        --------
+        >>> fx, index = project.last_touched_fx
+        >>> fx.name
+        'VSTi: ReaSamplOmatic5000 (Cockos)'
+        >>> fx.params[index].name
+        "Volume"
+        """
+        code = """
+        if not project.is_current_project:
+            fx, index = None, None
+        else:
+            res = RPR.GetLastTouchedFX(0, 0, 0)
+            if not res[0]:
+                fx, index = None, None
+            else:
+                if res[1]:
+                    track = project.tracks[res[1] - 1]
+                else:
+                    track = project.master_track
+                fx, index = track.fxs[res[2]], res[3]
+        """
+        return tuple(Program(code, "fx", "index").run(project=self))
 
     def make_current_project(self):
         """

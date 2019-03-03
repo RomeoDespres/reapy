@@ -16,6 +16,17 @@ class AudioAccessor(ReapyObject):
         """Delete audio accessor."""
         RPR.DestroyAudioAccessor(self.id)
 
+    @property
+    def end_time(self):
+        """
+        End time of audio that can be returned from this accessor.
+
+        Return value is in seconds.
+
+        :type: float
+        """
+        return RPR.GetAudioAccessorEndTime(self.id)
+
     def get_samples(
         self, start, n_samples_per_channel, n_channels=1, sample_rate=44100
      ):
@@ -52,6 +63,15 @@ class AudioAccessor(ReapyObject):
             buffer
         )[1]
         return samples
+
+    @property
+    def has_state_changed(self):
+        """
+        Whether underlying state has changed.
+
+        :type: bool
+        """
+        return bool(RPR.AudioAccessorValidateState(self.id))
 
     def hash(self):
         """

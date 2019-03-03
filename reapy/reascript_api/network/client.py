@@ -15,12 +15,7 @@ class Client(Socket):
 
     def _get_result(self):
         s = self.recv(timeout=None).decode()
-        print(s)
-        try:
-            result = json.loads(s)
-            return result
-        except:
-            pass
+        return json.loads(s)
 
     def run_program(self, program, input):
         """

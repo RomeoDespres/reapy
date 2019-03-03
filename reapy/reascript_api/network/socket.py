@@ -48,7 +48,6 @@ class Socket:
         self.settimeout(timeout)
         length = self._socket.recv(8)
         length = int.from_bytes(length, "little")
-        print(length)
         if length == 0:
             raise ConnectionAbortedError
         # Then receive data (split it into smaller bits if too big)

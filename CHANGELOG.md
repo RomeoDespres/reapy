@@ -30,11 +30,17 @@ All notable changes to this project will be documented in this file.
 - [`FXParam.envelope`]
 - [`Take.envelopes`], [`Track.envelopes`]
 
+#### Extended states
+
+- [`has_ext_state`]
+
 #### FX Management
 
 - [`FX.open_chain`], [`FX.close_chain`], [`FX.open_floating_window`], [`FX.close_floating_window`], [`FX.window`]
+- [`FX.n_inputs`], [`FX.n_outputs`]
 - [`FXParam.normalized`] for getting and setting normalized param values
 - [`FXParam.formatted`], [`FXParam.format_value`], [`NormalizedFXParam.format_value`]
+- [`Project.focused_fx`], [`Project.last_touched_fx`]
 - [`Take.visible_fx`], [`Track.visible_fx`]
 - [`Track.fxs`] and [`Take.fxs`] now support negative indexing
 
@@ -85,7 +91,9 @@ All notable changes to this project will be documented in this file.
 
 [//]: # (LINKS)
 [`AudioAccessor.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.delete
+[`AudioAccessor.end_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.end_time
 [`AudioAccessor.get_samples`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.get_samples
+[`AudioAccessor.has_state_changed`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.has_state_changed
 [`AudioAccessor.hash`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.hash
 [`AudioAccessor.start_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.start_time
 [`AutomationItem.delete_points_in_range`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AutomationItem.delete_points_in_range
@@ -115,6 +123,8 @@ All notable changes to this project will be documented in this file.
 [`FX.make_online`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.make_online
 [`FX.move_to_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.move_to_take
 [`FX.move_to_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.move_to_track
+[`FX.n_inputs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.n_inputs
+[`FX.n_outputs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.n_outputs
 [`FX.n_params`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.n_params
 [`FX.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.name
 [`FX.open_chain`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.FX.open_chain
@@ -167,10 +177,12 @@ All notable changes to this project will be documented in this file.
 [`Project.cursor_position`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.cursor_position
 [`Project.disarm_rec_on_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.disarm_rec_on_all_tracks
 [`Project.end_undo_block`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.end_undo_block
+[`Project.focused_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.focused_fx
 [`Project.get_selected_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_item
 [`Project.get_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_track
 [`Project.is_dirty`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_dirty
 [`Project.items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.items
+[`Project.last_touched_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.last_touched_fx
 [`Project.length`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.length
 [`Project.make_current_project`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.make_current_project
 [`Project.mark_dirty`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.mark_dirty
@@ -297,6 +309,7 @@ All notable changes to this project will be documented in this file.
 [`get_main_window`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_main_window
 [`get_reaper_version`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_reaper_version
 [`get_resource_path`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_resource_path
+[`has_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.has_ext_state
 [`midi.get_active_editor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.midi.get_active_editor
 [`midi.get_input_names`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.midi.get_input_names
 [`midi.get_max_inputs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.midi.get_max_inputs

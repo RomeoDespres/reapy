@@ -92,11 +92,11 @@ Audio Management
 .. csv-table::
 	:header: "ReaScript API function", "reapy API function"
 
-	"`AudioAccessorValidateState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#AudioAccessorValidateState>`_",""
+	"`AudioAccessorValidateState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#AudioAccessorValidateState>`_","`AudioAccessor.has_state_changed <reapy.core.html#reapy.core.AudioAccessor.has_state_changed>`_"
 	"`CreateTakeAudioAccessor <https://www.reaper.fm/sdk/reascript/reascripthelp.html#CreateTakeAudioAccessor>`_","`Take.add_audio_accessor <reapy.core.html#reapy.core.Take.add_audio_accessor>`_"
 	"`CreateTrackAudioAccessor <https://www.reaper.fm/sdk/reascript/reascripthelp.html#CreateTrackAudioAccessor>`_","`Track.add_audio_accessor <reapy.core.html#reapy.core.Track.add_audio_accessor>`_"
 	"`DestroyAudioAccessor <https://www.reaper.fm/sdk/reascript/reascripthelp.html#DestroyAudioAccessor>`_","`AudioAccessor.delete <reapy.core.html#reapy.core.AudioAccessor.delete>`_"
-	"`GetAudioAccessorEndTime <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetAudioAccessorEndTime>`_",""
+	"`GetAudioAccessorEndTime <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetAudioAccessorEndTime>`_","`AudioAccessor.end_time <reapy.core.html#reapy.core.AudioAccessor.end_time>`_"
 	"`GetAudioAccessorHash <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetAudioAccessorHash>`_","`AudioAccessor.hash <reapy.core.html#reapy.core.AudioAccessor.hash>`_"
 	"`GetAudioAccessorSamples <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetAudioAccessorSamples>`_","`AudioAccessor.get_samples <reapy.core.html#reapy.core.AudioAccessor.get_samples>`_"
 	"`GetAudioAccessorStartTime <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetAudioAccessorStartTime>`_","`AudioAccessor.start_time <reapy.core.html#reapy.core.AudioAccessor.start_time>`_"
@@ -231,7 +231,7 @@ Extended States
 
 	"`DeleteExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#DeleteExtState>`_","`delete_ext_state <reapy.core.reaper.html#reapy.core.reaper.reaper.delete_ext_state>`_"
 	"`GetExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetExtState>`_","`get_ext_state <reapy.core.reaper.html#reapy.core.reaper.reaper.get_ext_state>`_"
-	"`HasExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#HasExtState>`_",""
+	"`HasExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#HasExtState>`_","`has_ext_state <reapy.core.reaper.html#reapy.core.reaper.reaper.has_ext_state>`_"
 	"`SetExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SetExtState>`_","`set_ext_state <reapy.core.reaper.html#reapy.core.reaper.reaper.set_ext_state>`_"
 
 
@@ -241,8 +241,8 @@ FX Management
 .. csv-table::
 	:header: "ReaScript API function", "reapy API function"
 
-	"`GetFocusedFX <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetFocusedFX>`_",""
-	"`GetLastTouchedFX <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetLastTouchedFX>`_",""
+	"`GetFocusedFX <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetFocusedFX>`_","`Project.focused_fx <reapy.core.html#reapy.core.Project.focused_fx>`_"
+	"`GetLastTouchedFX <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetLastTouchedFX>`_","`Project.last_touched_fx <reapy.core.html#reapy.core.Project.last_touched_fx>`_"
 	"`GetTCPFXParm <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetTCPFXParm>`_",""
 	"`PluginWantsAlwaysRunFx <https://www.reaper.fm/sdk/reascript/reascripthelp.html#PluginWantsAlwaysRunFx>`_",""
 	"`TakeFX_AddByName <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_AddByName>`_","`Take.add_fx <reapy.core.html#reapy.core.Take.add_fx>`_"
@@ -255,12 +255,12 @@ FX Management
 	"`TakeFX_GetChainVisible <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetChainVisible>`_","`Take.visible_fx <reapy.core.html#reapy.core.Take.visible_fx>`_"
 	"`TakeFX_GetCount <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetCount>`_","`Take.n_fxs <reapy.core.html#reapy.core.Take.n_fxs>`_"
 	"`TakeFX_GetEnabled <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetEnabled>`_","`FX.is_enabled <reapy.core.html#reapy.core.FX.is_enabled>`_"
-	"`TakeFX_GetEnvelope <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetEnvelope>`_",""
+	"`TakeFX_GetEnvelope <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetEnvelope>`_","`FXParam.envelope <reapy.core.html#reapy.core.FXParam.envelope>`_; `FXParam.add_envelope <reapy.core.html#reapy.core.FXParam.add_envelope>`_"
 	"`TakeFX_GetFloatingWindow <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetFloatingWindow>`_","`FX.window <reapy.core.html#reapy.core.FX.window>`_"
 	"`TakeFX_GetFormattedParamValue <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetFormattedParamValue>`_","`FXParam.formatted <reapy.core.html#reapy.core.FXParam.formatted>`_"
 	"`TakeFX_GetFXGUID <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetFXGUID>`_",""
 	"`TakeFX_GetFXName <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetFXName>`_","`FX.name <reapy.core.html#reapy.core.FX.name>`_"
-	"`TakeFX_GetIOSize <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetIOSize>`_",""
+	"`TakeFX_GetIOSize <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetIOSize>`_","`FX.n_inputs <reapy.core.html#reapy.core.FX.n_inputs>`_; `FX.n_outputs <reapy.core.html#reapy.core.FX.n_outputs>`_"
 	"`TakeFX_GetNamedConfigParm <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetNamedConfigParm>`_",""
 	"`TakeFX_GetNumParams <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetNumParams>`_","`FX.n_params <reapy.core.html#reapy.core.FX.n_params>`_"
 	"`TakeFX_GetOffline <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TakeFX_GetOffline>`_","`FX.is_online <reapy.core.html#reapy.core.FX.is_online>`_"
@@ -304,7 +304,7 @@ FX Management
 	"`TrackFX_GetFXGUID <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TrackFX_GetFXGUID>`_",""
 	"`TrackFX_GetFXName <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TrackFX_GetFXName>`_","`FX.name <reapy.core.html#reapy.core.FX.name>`_"
 	"`TrackFX_GetInstrument <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TrackFX_GetInstrument>`_","`Track.instrument <reapy.core.html#reapy.core.Track.instrument>`_"
-	"`TrackFX_GetIOSize <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TrackFX_GetIOSize>`_",""
+	"`TrackFX_GetIOSize <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TrackFX_GetIOSize>`_","`FX.n_inputs <reapy.core.html#reapy.core.FX.n_inputs>`_; `FX.n_outputs <reapy.core.html#reapy.core.FX.n_outputs>`_"
 	"`TrackFX_GetNamedConfigParm <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TrackFX_GetNamedConfigParm>`_",""
 	"`TrackFX_GetNumParams <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TrackFX_GetNumParams>`_","`FX.n_params <reapy.core.html#reapy.core.FX.n_params>`_"
 	"`TrackFX_GetOffline <https://www.reaper.fm/sdk/reascript/reascripthelp.html#TrackFX_GetOffline>`_","`FX.is_online <reapy.core.html#reapy.core.FX.is_online>`_"

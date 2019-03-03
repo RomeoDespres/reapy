@@ -198,6 +198,28 @@ class FX(ReapyObject):
         )
 
     @property
+    def n_inputs(self):
+        """
+        Number of inputs of FX.
+
+        :type: int
+        """
+        return self.functions["GetIOSize"](
+            self.parent.id, self.index, 0, 0
+        )[3]
+
+    @property
+    def n_outputs(self):
+        """
+        Number of outputs of FX.
+
+        :type: int
+        """
+        return self.functions["GetIOSize"](
+            self.parent.id, self.index, 0, 0
+        )[4]
+
+    @property
     def n_params(self):
         """
         Number of parameters.

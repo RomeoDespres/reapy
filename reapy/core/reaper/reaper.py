@@ -302,6 +302,25 @@ def get_resource_path():
     return path
 
 
+def has_ext_state(self, section, key):
+    """
+    Return whether extended state exists for given section and key.
+
+    Parameters
+    ----------
+    section : str
+        Extended state section.
+    key : str
+        Extended state key.
+
+    Returns
+    -------
+    has_ext_state : bool
+    """
+    has_ext_state = bool(RPR.HasExtState(section, key))
+    return has_ext_state
+
+
 def open_project(filepath):
     """
     Open project and return it.
