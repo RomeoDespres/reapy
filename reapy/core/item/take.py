@@ -62,6 +62,60 @@ class Take(ReapyObject):
         fx = reapy.FX(self, index)
         return fx
 
+    def add_note(
+        self, start, end, pitch, velocity=100, channel=0, selected=False,
+        muted=False, unit="seconds", sort_notes=True
+    ):
+        """
+        Add MIDI note to take.
+
+        Parameters
+        ----------
+        start : float
+            Note start. Unit depends on ``unit``.
+        end : float
+            Note end. Unit depends on ``unit``.
+        pitch : int
+            Note pitch between 0 and 127.
+        velocity : int, optional
+            Note velocity between 0 and 127 (default=100).
+        channel : int, optional
+            MIDI channel between 0 and 15.
+        selected : bool, optional
+            Whether to select new note (default=False).
+        muted : bool
+            Whether to mute new note (default=False).
+        unit : {"seconds", "ppq", "beats"}, optional
+            Time unit for ``start`` and ``end`` (default="seconds").
+            ``"ppq"`` refers to MIDI ticks.
+        sort_notes : bool, optional
+            Whether to resort notes after creating new note
+            (default=True). If False, then the new note will be
+            ``take.notes[-1]``. Otherwise it will be at its place in
+            the time-sorted list ``take.notes``. Set to False for
+            improved efficiency when adding several notes, then call
+            ``take.sort_notes`` at the end.
+
+        See also
+        --------
+        Take.sort_notes
+        """
+        code = """
+        if unit == "beats":
+            args[3] = take.track._get_project().beats_to_time(args[3])
+            args[4] = take.track._get_project().beats_to_time(args[4])
+            unit = "seconds"
+        if unit == "seconds":
+            args[3] = take.time_to_ppq(args[3])
+            args[4] = take.time_to_ppq(args[4])
+        RPR.MIDI_InsertNote(*args)
+        """
+        args = (
+            self.id, selected, muted, start, end, channel, pitch, velocity,
+            sort_notes
+        )
+        Program(code).run(take=self, unit=unit, args=args)
+
     @property
     def envelopes(self):
         return reapy.EnvelopeList(self)
@@ -172,6 +226,27 @@ class Take(ReapyObject):
             return RPR.GetTakeName(self.id)
         return ""
 
+    def ppq_to_time(self, ppq):
+        """
+        Convert time in MIDI ticks to seconds.
+
+        Parameters
+        ----------
+        ppq : float
+            Time to convert in MIDI ticks.
+
+        Returns
+        -------
+        time : float
+            Converted time in seconds.
+
+        See also
+        --------
+        Take.time_to_ppq
+        """
+        time = RPR.MIDI_GetProjTimeFromPPQPos(self.id, ppq)
+        return time
+
     def select_all_midi_events(self, select=True):
         """
         Select or unselect all MIDI events.
@@ -204,6 +279,27 @@ class Take(ReapyObject):
         :type: float
         """
         return self.get_info_value("D_STARTOFFS")
+
+    def time_to_ppq(self, time):
+        """
+        Convert time in seconds to MIDI ticks.
+
+        Parameters
+        ----------
+        time : float
+            Time to convert in seconds.
+
+        Returns
+        -------
+        ppq : float
+            Converted time in MIDI ticks.
+
+        See also
+        --------
+        Take.ppq_to_time
+        """
+        ppq = RPR.MIDI_GetPPQPosFromProjTime(self.id, time)
+        return ppq
 
     @property
     def track(self):

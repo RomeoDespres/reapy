@@ -138,6 +138,27 @@ class Project(ReapyObject):
         any_track_solo = bool(RPR.AnyTrackSolo(self.id))
         return any_track_solo
 
+    def beats_to_time(self, beats):
+        """
+        Convert beats to time in seconds.
+
+        Parameters
+        ----------
+        beats : float
+            Time in beats
+
+        Returns
+        -------
+        time : float
+            Converted time in seconds.
+
+        See also
+        --------
+        Project.time_to_beats
+        """
+        time = RPR.TimeMap2_QNToTime(self.id, beats)
+        return time
+
     def begin_undo_block(self):
         """
         Start a new undo block.
@@ -855,6 +876,27 @@ class Project(ReapyObject):
         """
         _, bpm, bpi = RPR.GetProjectTimeSignature2(self.id, 0, 0)
         return bpm, bpi
+
+    def time_to_beats(self, time):
+        """
+        Convert time in seconds to beats.
+
+        Parameters
+        ----------
+        time : float
+            Time in seconds.
+
+        Returns
+        -------
+        beats : float
+            Time in beats.
+
+        See also
+        --------
+        Projecr.beats_to_time
+        """
+        beats = RPR.TimeMap2_timeToQN(self.id, time)
+        return beats
 
     @property
     def tracks(self):

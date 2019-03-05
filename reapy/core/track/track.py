@@ -16,6 +16,21 @@ class Track(ReapyObject):
     def _args(self):
         return self.id,
 
+    def _get_project(self):
+        """
+        Return parent project of track.
+
+        Should only be used internally; one should directly access
+        Track.project instead of calling this method.
+        """
+        code = """
+        for project in reapy.projects():
+            if track.id in [t.id for t in project.tracks]:
+                break
+        """
+        project, = Program(code, "project").run(track=self)
+        return project
+
     def add_audio_accessor(self):
         """
         Create audio accessor and return it.
@@ -372,6 +387,15 @@ class Track(ReapyObject):
         if not parent._is_defined:
             parent = None
         return parent
+
+    @property
+    def project(self):
+        """
+        Track parent project.
+
+        :type: Project
+        """
+        return self._project
 
     def select(self):
         """

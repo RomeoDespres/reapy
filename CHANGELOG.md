@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+TODO Take.sort_notes
+
 ### Added
+
+UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_time, time_to_ppq)
 
 #### Audio Management
 
@@ -55,9 +59,15 @@ All notable changes to this project will be documented in this file.
 
 - [`Take.is_midi`]
 - [`Take.n_cc`], [`Take.n_notes`], [`Take.n_text_sysex`]
+- [`Take.add_note`]
+- [`Take.time_to_ppq`], [`Take.ppq_to_time`]
 - [`Take.select_all_midi_events`], [`Take.unselect_all_midi_events`]
 - class [`MIDIEditor`]
 - [`midi.reinit`]
+
+#### Other
+
+- [`Project.time_to_beats`], [`Project.beats_to_time`]
 
 #### Project Management
 
@@ -174,6 +184,7 @@ All notable changes to this project will be documented in this file.
 [`Project.add_region`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_region
 [`Project.add_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_track
 [`Project.any_track_solo`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.any_track_solo
+[`Project.beats_to_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.beats_to_time
 [`Project.begin_undo_block`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.begin_undo_block
 [`Project.bpi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.bpi
 [`Project.bpm`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.bpm
@@ -222,6 +233,7 @@ All notable changes to this project will be documented in this file.
 [`Project.solo_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.solo_all_tracks
 [`Project.stop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.stop
 [`Project.time_selection`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.time_selection
+[`Project.time_to_beats`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.time_to_beats
 [`Project.tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.tracks
 [`Project.undo`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.undo
 [`Project.unmute_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.unmute_all_tracks
@@ -242,6 +254,7 @@ All notable changes to this project will be documented in this file.
 [`Source.type`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.type
 [`Take.add_audio_accessor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_audio_accessor
 [`Take.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_fx
+[`Take.add_note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_note
 [`Take.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.envelopes
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value
 [`Take.is_midi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.is_midi
@@ -253,8 +266,10 @@ All notable changes to this project will be documented in this file.
 [`Take.n_notes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_notes
 [`Take.n_text_sysex`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_text_sysex
 [`Take.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.name
+[`Take.ppq_to_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_time
 [`Take.select_all_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.select_all_midi_events
 [`Take.source`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.source
+[`Take.time_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.time_to_ppq
 [`Take.track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.track
 [`Take.unselect_all_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.unselect_all_midi_events
 [`Take.visible_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.visible_fx
