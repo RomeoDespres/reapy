@@ -1,5 +1,6 @@
 import reapy
-from reapy import reascript_api as RPR
+import reapy.reascript_api as RPR
+from reapy.tools import Program
 
 import io
 import os
@@ -284,6 +285,26 @@ def get_main_window():
     return window
 
 
+def get_projects():
+    """
+    Return list of all opened projects.
+
+    Returns
+    -------
+    projects : list of Project
+        List of all projects.
+    """
+    code = """
+    i = 0
+    projects = [reapy.Project(index=i)]
+    while projects[-1]._is_defined:
+        projects.append(reapy.Project(index=i + 1))
+    projects.pop()
+    """
+    projects, = Program(code, "projects").run()
+    return projects
+
+
 def get_reaper_version():
     version = RPR.GetAppVersion()
     return version
@@ -479,10 +500,6 @@ def show_console_message(*args, sep=" ", end="\n"):
         String inserted between values (default=" ").
     end : str, optional
         String appended after the last value (default="\n").
-
-    See also
-    --------
-    ReaProject.clear_console
     """
     file = io.StringIO()
     _ORIGINAL_PRINT(*args, sep=sep, end=end, file=file)

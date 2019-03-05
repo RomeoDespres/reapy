@@ -42,7 +42,7 @@ All notable changes to this project will be documented in this file.
 - [`FXParam.formatted`], [`FXParam.format_value`], [`NormalizedFXParam.format_value`]
 - [`Project.focused_fx`], [`Project.last_touched_fx`]
 - [`Take.visible_fx`], [`Track.visible_fx`]
-- [`Track.fxs`] and [`Take.fxs`] now support negative indexing
+- [`Track.fxs`] and [`Take.fxs`] support negative indexing
 
 #### Item Management
 
@@ -57,16 +57,22 @@ All notable changes to this project will be documented in this file.
 - [`Take.n_cc`], [`Take.n_notes`], [`Take.n_text_sysex`]
 - [`Take.select_all_midi_events`], [`Take.unselect_all_midi_events`]
 - class [`MIDIEditor`]
-- [`midi.reinit`] (reset all MIDI devices)
+- [`midi.reinit`]
 
 #### Project Management
 
 - [`open_project`]
+- [`get_projects`] UNTESTED
 
 #### Track Management
 
 - [`Project.solo_all_tracks`], [`Project.unsolo_all_tracks`]
 - [`Track.parent_track`]
+
+#### Transport Management
+
+- [`Project.play_position`], [`Project.buffer_position`]
+- [`Project.get_play_rate`]
 
 #### User Interface
 
@@ -171,6 +177,7 @@ All notable changes to this project will be documented in this file.
 [`Project.begin_undo_block`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.begin_undo_block
 [`Project.bpi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.bpi
 [`Project.bpm`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.bpm
+[`Project.buffer_position`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.buffer_position
 [`Project.bypass_fx_on_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.bypass_fx_on_all_tracks
 [`Project.can_redo`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.can_redo
 [`Project.can_undo`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.can_undo
@@ -178,6 +185,7 @@ All notable changes to this project will be documented in this file.
 [`Project.disarm_rec_on_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.disarm_rec_on_all_tracks
 [`Project.end_undo_block`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.end_undo_block
 [`Project.focused_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.focused_fx
+[`Project.get_play_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_play_rate
 [`Project.get_selected_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_item
 [`Project.get_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_track
 [`Project.is_dirty`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_dirty
@@ -200,6 +208,7 @@ All notable changes to this project will be documented in this file.
 [`Project.path`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.path
 [`Project.pause`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.pause
 [`Project.perform_action`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.perform_action
+[`Project.play_position`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.play_position
 [`Project.play_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.play_rate
 [`Project.play_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.play_state
 [`Project.play`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.play
@@ -307,6 +316,7 @@ All notable changes to this project will be documented in this file.
 [`get_last_color_theme_file`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_last_color_theme_file
 [`get_last_touched_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_last_touched_track
 [`get_main_window`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_main_window
+[`get_projects`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_projects
 [`get_reaper_version`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_reaper_version
 [`get_resource_path`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_resource_path
 [`has_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.has_ext_state
@@ -324,6 +334,7 @@ All notable changes to this project will be documented in this file.
 [`os.path.isfile`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.os.path.isfile
 [`perform_action`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.perform_action
 [`print`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.print
+[`reapy.show_message_box`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reapy.show_message_box
 [`remove_reascript`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.remove_reascript
 [`rgb_from_native`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.rgb_from_native
 [`rgb_to_native`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.rgb_to_native

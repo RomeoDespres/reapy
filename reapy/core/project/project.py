@@ -177,6 +177,20 @@ class Project(ReapyObject):
         """
         RPR.SetCurrentBPM(self.id, bpm, True)
 
+    @property
+    def buffer_position(self):
+        """
+        Position of next audio block being processed in seconds.
+
+        :type: float
+
+        See also
+        --------
+        Project.play_position
+            Latency-compensated actual-what-you-hear position.
+        """
+        return RPR.GetPlayPosition2Ex(self.id)
+
     def bypass_fx_on_all_tracks(self, bypass=True):
         """
         Bypass or un-bypass FX on all tracks.
@@ -297,6 +311,28 @@ class Project(ReapyObject):
         """
         fx, = Program(code, "fx").run(project=self)
         return fx
+
+    def get_play_rate(self, position):
+        """
+        Return project play rate at a given position.
+
+        Parameters
+        ----------
+        position : float
+            Position in seconds.
+
+        Returns
+        -------
+        play_rate : float
+            Play rate at the given position.
+
+        See also
+        --------
+        Project.play_rate
+            Project play rate at the current position.
+        """
+        play_rate = RPR.Master_GetPlayRateAtTime(position, self.id)
+        return play_rate
 
     def get_selected_item(self, index):
         """
@@ -605,11 +641,30 @@ class Project(ReapyObject):
         RPR.OnPlayButtonEx(self.id)
 
     @property
-    def play_rate(self):
+    def play_position(self):
         """
-        Project play rate.
+        Latency-compensated actual-what-you-hear position in seconds.
 
         :type: float
+
+        See also
+        --------
+        Project.buffer_position
+            Position of next audio block being processed.
+        """
+        return RPR.GetPlayPositionEx(self.id)
+
+    @property
+    def play_rate(self):
+        """
+        Project play rate at the cursor position.
+
+        :type: float
+
+        See also
+        --------
+        Project.get_play_rate
+            Return project play rate at a specified time.
         """
         play_rate = RPR.Master_GetPlayRate(self.id)
         return play_rate
