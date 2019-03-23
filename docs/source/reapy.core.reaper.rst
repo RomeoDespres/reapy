@@ -20,6 +20,15 @@ reapy.core.reaper.defer module
     :undoc-members:
     :show-inheritance:
 
+reapy.core.reaper.midi module
+-------------------------------
+
+.. automodule:: reapy.core.reaper.midi
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+
 reapy.core.reaper.reaper module
 -------------------------------
 

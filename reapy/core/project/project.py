@@ -34,7 +34,7 @@ class Project(ReapyObject):
 
     @property
     def _args(self):
-        return (self.id,)
+        return self.id,
 
     def add_marker(self, position, name="", color=0):
         """
@@ -138,6 +138,27 @@ class Project(ReapyObject):
         any_track_solo = bool(RPR.AnyTrackSolo(self.id))
         return any_track_solo
 
+    def beats_to_time(self, beats):
+        """
+        Convert beats to time in seconds.
+
+        Parameters
+        ----------
+        beats : float
+            Time in beats
+
+        Returns
+        -------
+        time : float
+            Converted time in seconds.
+
+        See also
+        --------
+        Project.time_to_beats
+        """
+        time = RPR.TimeMap2_QNToTime(self.id, beats)
+        return time
+
     def begin_undo_block(self):
         """
         Start a new undo block.
@@ -176,6 +197,20 @@ class Project(ReapyObject):
             Tempo in beats per minute.
         """
         RPR.SetCurrentBPM(self.id, bpm, True)
+
+    @property
+    def buffer_position(self):
+        """
+        Position of next audio block being processed in seconds.
+
+        :type: float
+
+        See also
+        --------
+        Project.play_position
+            Latency-compensated actual-what-you-hear position.
+        """
+        return RPR.GetPlayPosition2Ex(self.id)
 
     def bypass_fx_on_all_tracks(self, bypass=True):
         """
@@ -267,6 +302,59 @@ class Project(ReapyObject):
         """
         RPR.Undo_EndBlock2(self.id, description, 0)
 
+    @property
+    def focused_fx(self):
+        """
+        FX that has focus if any, else None.
+
+        :type: FX or NoneType
+        """
+        code = """
+        
+        def get_focused_fx():
+            if not project.is_current_project:
+                return
+            res = RPR.GetFocusedFX(0, 0, 0)
+            if not res[0]:
+                return
+            if res[1] == 0:
+                track = project.master_track
+            else:
+                track = project.tracks[res[1] - 1]
+            if res[0] == 1:  # Track FX
+                return track.fxs[res[3]]
+            # Take FX
+            item = track.items[res[2]]
+            take = item.takes[res[3] // 2**16]
+            return take.fxs[res[3] % 2**16]
+        
+        fx = get_focused_fx()
+        """
+        fx, = Program(code, "fx").run(project=self)
+        return fx
+
+    def get_play_rate(self, position):
+        """
+        Return project play rate at a given position.
+
+        Parameters
+        ----------
+        position : float
+            Position in seconds.
+
+        Returns
+        -------
+        play_rate : float
+            Play rate at the given position.
+
+        See also
+        --------
+        Project.play_rate
+            Project play rate at the current position.
+        """
+        play_rate = RPR.Master_GetPlayRateAtTime(position, self.id)
+        return play_rate
+
     def get_selected_item(self, index):
         """
         Return index-th selected item.
@@ -336,6 +424,20 @@ class Project(ReapyObject):
         return is_current
 
     @property
+    def items(self):
+        """
+        List of items in project.
+
+        :type: list of Item
+        """
+        code = """
+        n_items = project.n_items
+        item_ids = [RPR.GetMediaItem(project.id, i) for i in range(n_items)]
+        """
+        item_ids, = Program(code, "item_ids").run(project=self)
+        return list(map(reapy.Item, item_ids))
+
+    @property
     def length(self):
         """
         Project length in seconds.
@@ -344,6 +446,42 @@ class Project(ReapyObject):
         """
         length = RPR.GetProjectLength(self.id)
         return length
+
+    @property
+    def last_touched_fx(self):
+        """
+        Last touched FX and corresponding parameter index.
+
+        :type: FX, int or NoneType, NoneType
+
+        Notes
+        -----
+        Only Track FX are detected by this property. If last touched
+        FX is a Take FX, this property is ``(None, None)``.
+
+        Examples
+        --------
+        >>> fx, index = project.last_touched_fx
+        >>> fx.name
+        'VSTi: ReaSamplOmatic5000 (Cockos)'
+        >>> fx.params[index].name
+        "Volume"
+        """
+        code = """
+        if not project.is_current_project:
+            fx, index = None, None
+        else:
+            res = RPR.GetLastTouchedFX(0, 0, 0)
+            if not res[0]:
+                fx, index = None, None
+            else:
+                if res[1]:
+                    track = project.tracks[res[1] - 1]
+                else:
+                    track = project.master_track
+                fx, index = track.fxs[res[2]], res[3]
+        """
+        return tuple(Program(code, "fx", "index").run(project=self))
 
     def make_current_project(self):
         """
@@ -524,11 +662,30 @@ class Project(ReapyObject):
         RPR.OnPlayButtonEx(self.id)
 
     @property
-    def play_rate(self):
+    def play_position(self):
         """
-        Project play rate.
+        Latency-compensated actual-what-you-hear position in seconds.
 
         :type: float
+
+        See also
+        --------
+        Project.buffer_position
+            Position of next audio block being processed.
+        """
+        return RPR.GetPlayPositionEx(self.id)
+
+    @property
+    def play_rate(self):
+        """
+        Project play rate at the cursor position.
+
+        :type: float
+
+        See also
+        --------
+        Project.get_play_rate
+            Return project play rate at a specified time.
         """
         play_rate = RPR.Master_GetPlayRate(self.id)
         return play_rate
@@ -656,6 +813,22 @@ class Project(ReapyObject):
         tracks = list(map(reapy.Track, track_ids))
         return tracks
 
+    def solo_all_tracks(self):
+        """
+        Solo all tracks in project.
+
+        See also
+        --------
+        Project.unsolo_all_tracks
+        """
+        code = """
+        current_project = reapy.Project()
+        project.make_current_project()
+        RPR.SoloAllTracks(1)
+        current_project.make_current_project()
+        """
+        Program(code).run(project=self)
+
     def stop(self):
         """
         Hit stop button.
@@ -704,6 +877,27 @@ class Project(ReapyObject):
         _, bpm, bpi = RPR.GetProjectTimeSignature2(self.id, 0, 0)
         return bpm, bpi
 
+    def time_to_beats(self, time):
+        """
+        Convert time in seconds to beats.
+
+        Parameters
+        ----------
+        time : float
+            Time in seconds.
+
+        Returns
+        -------
+        beats : float
+            Time in beats.
+
+        See also
+        --------
+        Projecr.beats_to_time
+        """
+        beats = RPR.TimeMap2_timeToQN(self.id, time)
+        return beats
+
     @property
     def tracks(self):
         """
@@ -736,3 +930,19 @@ class Project(ReapyObject):
         Unmute all tracks.
         """
         self.mute_all_tracks(mute=False)
+
+    def unsolo_all_tracks(self):
+        """
+        Unsolo all tracks in project.
+
+        See also
+        --------
+        Project.solo_all_tracks
+        """
+        code = """
+        current_project = reapy.Project()
+        project.make_current_project()
+        RPR.SoloAllTracks(0)
+        current_project.make_current_project()
+        """
+        Program(code).run(project=self)

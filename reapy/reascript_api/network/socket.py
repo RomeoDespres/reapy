@@ -65,9 +65,9 @@ class Socket:
         """
         # First send data length
         length = len(data).to_bytes(8, "little")
-        self._socket.send(length)
+        self._socket.sendall(length)
         # Then send data
-        self._socket.send(data)
+        self._socket.sendall(data)
 
     def settimeout(self, *args, **kwargs):
         return self._socket.settimeout(*args, **kwargs)

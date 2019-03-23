@@ -16,7 +16,20 @@ class Take(ReapyObject):
 
     @property
     def _args(self):
-        return (self.id,)
+        return self.id,
+
+    def add_audio_accessor(self):
+        """
+        Create audio accessor and return it.
+
+        Returns
+        -------
+        audio_accessor : AudioAccessor
+            Audio accessor on take.
+        """
+        audio_accessor_id = RPR.CreateTakeAudioAccessor(self.id)
+        audio_accessor = reapy.AudioAccessor(audio_accessor_id)
+        return audio_accessor
 
     def add_fx(self, name, even_if_exists=True):
         """
@@ -49,6 +62,64 @@ class Take(ReapyObject):
         fx = reapy.FX(self, index)
         return fx
 
+    def add_note(
+        self, start, end, pitch, velocity=100, channel=0, selected=False,
+        muted=False, unit="seconds", sort_notes=True
+    ):
+        """
+        Add MIDI note to take.
+
+        Parameters
+        ----------
+        start : float
+            Note start. Unit depends on ``unit``.
+        end : float
+            Note end. Unit depends on ``unit``.
+        pitch : int
+            Note pitch between 0 and 127.
+        velocity : int, optional
+            Note velocity between 0 and 127 (default=100).
+        channel : int, optional
+            MIDI channel between 0 and 15.
+        selected : bool, optional
+            Whether to select new note (default=False).
+        muted : bool
+            Whether to mute new note (default=False).
+        unit : {"seconds", "ppq", "beats"}, optional
+            Time unit for ``start`` and ``end`` (default="seconds").
+            ``"ppq"`` refers to MIDI ticks.
+        sort_notes : bool, optional
+            Whether to resort notes after creating new note
+            (default=True). If False, then the new note will be
+            ``take.notes[-1]``. Otherwise it will be at its place in
+            the time-sorted list ``take.notes``. Set to False for
+            improved efficiency when adding several notes, then call
+            ``take.sort_notes`` at the end.
+
+        See also
+        --------
+        Take.sort_notes
+        """
+        code = """
+        if unit == "beats":
+            args[3] = take.track._get_project().beats_to_time(args[3])
+            args[4] = take.track._get_project().beats_to_time(args[4])
+            unit = "seconds"
+        if unit == "seconds":
+            args[3] = take.time_to_ppq(args[3])
+            args[4] = take.time_to_ppq(args[4])
+        RPR.MIDI_InsertNote(*args)
+        """
+        args = (
+            self.id, selected, muted, start, end, channel, pitch, velocity,
+            sort_notes
+        )
+        Program(code).run(take=self, unit=unit, args=args)
+
+    @property
+    def envelopes(self):
+        return reapy.EnvelopeList(self)
+
     @property
     def fxs(self):
         """
@@ -76,6 +147,15 @@ class Take(ReapyObject):
         return Program(code, "is_active").run(take_id=self.id)[0]
 
     @property
+    def is_midi(self):
+        """
+        Whether take contains MIDI or audio.
+
+        :type: bool
+        """
+        return bool(RPR.TakeIsMIDI(self.id))
+
+    @property
     def item(self):
         """
         Parent item.
@@ -89,6 +169,15 @@ class Take(ReapyObject):
         Make take active.
         """
         RPR.SetActiveTake(self.id)
+
+    @property
+    def n_cc(self):
+        """
+        Number of MIDI CC events in take (always 0 for audio takes).
+
+        :type: int
+        """
+        return RPR.MIDI_CountEvts(self.id, 0, 0, 0)[3]
 
     @property
     def n_envelopes(self):
@@ -109,6 +198,71 @@ class Take(ReapyObject):
         return RPR.TakeFX_GetCount(self.id)
 
     @property
+    def n_notes(self):
+        """
+        Number of MIDI notes in take (always 0 for audio takes).
+
+        :type: int
+        """
+        return RPR.MIDI_CountEvts(self.id, 0, 0, 0)[2]
+
+    @property
+    def n_text_sysex(self):
+        """
+        Number of MIDI text/sysex events in take (0 for audio takes).
+
+        :type: int
+        """
+        return RPR.MIDI_CountEvts(self.id, 0, 0, 0)[4]
+
+    @property
+    def name(self):
+        """
+        Take name.
+
+        :type: str
+        """
+        if self._is_defined:
+            return RPR.GetTakeName(self.id)
+        return ""
+
+    def ppq_to_time(self, ppq):
+        """
+        Convert time in MIDI ticks to seconds.
+
+        Parameters
+        ----------
+        ppq : float
+            Time to convert in MIDI ticks.
+
+        Returns
+        -------
+        time : float
+            Converted time in seconds.
+
+        See also
+        --------
+        Take.time_to_ppq
+        """
+        time = RPR.MIDI_GetProjTimeFromPPQPos(self.id, ppq)
+        return time
+
+    def select_all_midi_events(self, select=True):
+        """
+        Select or unselect all MIDI events.
+
+        Parameters
+        ----------
+        select : bool
+            Whether to select or unselect events.
+
+        See also
+        --------
+        Take.unselect_all_midi_events
+        """
+        RPR.MIDI_SelectAll(self.id, select)
+
+    @property
     def source(self):
         """
         Take source.
@@ -126,6 +280,27 @@ class Take(ReapyObject):
         """
         return self.get_info_value("D_STARTOFFS")
 
+    def time_to_ppq(self, time):
+        """
+        Convert time in seconds to MIDI ticks.
+
+        Parameters
+        ----------
+        time : float
+            Time to convert in seconds.
+
+        Returns
+        -------
+        ppq : float
+            Converted time in MIDI ticks.
+
+        See also
+        --------
+        Take.ppq_to_time
+        """
+        ppq = RPR.MIDI_GetPPQPosFromProjTime(self.id, time)
+        return ppq
+
     @property
     def track(self):
         """
@@ -135,3 +310,23 @@ class Take(ReapyObject):
         """
         track_id = RPR.GetMediaItemTake_Track(self.id)
         return reapy.Track(track_id)
+
+    def unselect_all_midi_events(self):
+        """
+        Unselect all MIDI events.
+
+        See also
+        --------
+        Take.select_all_midi_events
+        """
+        self.select_all_midi_events(select=False)
+
+    @property
+    def visible_fx(self):
+        """
+        Visible FX in FX chain if any, else None.
+
+        :type: FX or NoneType
+        """
+        with reapy.inside_reaper():
+            return self.fxs[RPR.TakeFX_GetChainVisible(self.id)]

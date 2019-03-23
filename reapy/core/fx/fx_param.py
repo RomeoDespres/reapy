@@ -1,4 +1,5 @@
 import reapy
+import reapy.reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.errors import DistError
 
@@ -6,6 +7,98 @@ from reapy.errors import DistError
 class FXParam(float):
 
     """FX parameter."""
+
+    def __init__(self, value, parent_list, index, functions):
+        float.__init__(value)
+        self.parent_list = parent_list
+        self.index = index
+        self.functions = functions
+
+    def __new__(self, value, *args, **kwargs):
+        return float.__new__(self, value)
+
+    def add_envelope(self):
+        """
+        Create envelope for the parameter and return it.
+
+        Returns
+        -------
+        envelope : Envelope
+            New envelope for the parameter.
+
+        Notes
+        -----
+        If the envelope already exists, the function returns it.
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        if isinstance(parent, reapy.Track):
+            callback = RPR.GetFXEnvelope
+        else:  # Then it is a Take
+            callback = self.functions["GetEnvelope"]
+        envelope = reapy.Envelope(parent, callback(
+            parent.id, parent_fx.index, self.index, True
+        ))
+        return envelope
+
+    @property
+    def envelope(self):
+        """
+        Parameter envelope (or None if it doesn't exist).
+
+        :type: Envelope or NoneType
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        if isinstance(parent, reapy.Track):
+            callback = RPR.GetFXEnvelope
+        else:  # Then it is a Take
+            callback = self.functions["GetEnvelope"]
+        envelope = reapy.Envelope(parent, callback(
+            parent.id, parent_fx.index, self.index, False
+        ))
+        if not envelope._is_defined:
+            envelope = None
+        return envelope
+
+    def format_value(self, value):
+        """
+        Return human readable string for value.
+
+        It is the way ``value`` would be printed in REAPER GUI if it
+        was the actual parameter value. Only works with FX that
+        support Cockos VST extensions.
+
+        Parameters
+        ----------
+        value : float
+            Value to format.
+
+        Returns
+        -------
+        formatted : str
+            Formatted value.
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        return self.functions["FormatParamValue"](
+            parent.id, parent_fx.index, self.index, value, "", 2048
+        )[5]
+
+    @property
+    def formatted(self):
+        """
+        Human readable string for parameter value.
+
+        Only works with FX that support Cockos VST extensions.
+
+        :type: str
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        return self.functions["GetFormattedParamValue"](
+            parent.id, parent_fx.index, self.index, "", 2048
+        )[4]
 
     @property
     def name(self):
@@ -19,6 +112,56 @@ class FXParam(float):
             parent_list.parent_id, parent_list.fx_index, self.index, "", 2048
         )[4]
         return name
+
+    @property
+    def normalized(self):
+        """
+        Normalized FX parameter.
+
+        Attribute can be set with a float, but be careful that since
+        floats are immutable, this parameter won't have to right value
+        anymore. See Examples below.
+
+        :type: NormalizedFXParam
+
+        Examples
+        --------
+        Say the parameter range is (0.0, 20.0).
+        
+        >>> param = fx.params[0]
+        >>> param
+        10.0
+        >>> param.normalized
+        0.5
+
+        If you set the parameter like below, the parameter moves in
+        REPAER, but the FXParam object you are using is not valid
+        anymore.
+        
+        >>> param.normalized = 1
+        >>> param, param.normalized
+        10.0, 0.5
+        
+        You thus have to grab the updated FXParam from the FX like
+        below.
+        
+        >>> param = fx.params[0]
+        >>> param, param.normalized
+        20.0, 1.0
+        """
+        min, max = self.range
+        value = (self - min)/(max - min)
+        return NormalizedFXParam(
+            value, self.parent_list, self.index, self.functions
+        )
+
+    @normalized.setter
+    def normalized(self, value):
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        self.functions["SetParamNormalized"](
+            parent.id, parent_fx.id, self.index, value
+        )
 
     @property
     def range(self):
@@ -53,8 +196,6 @@ class FXParamsList(ReapyObject):
     0.1
     """
 
-    _class_name = "FXParamsList"
-
     def __init__(
         self, parent_fx=None, parent_id=None, parent_fx_index=None
     ):
@@ -73,13 +214,11 @@ class FXParamsList(ReapyObject):
                 raise IndexError(
                     "{} has only {} params".format(self.parent_fx, n_params)
                 )
+            i = i % n_params  # Allows for negative values
         value = self.functions["GetParam"](
             self.parent_id, self.fx_index, i, 0, 0
         )[0]
-        param = FXParam(value)
-        param.parent_list = self
-        param.index = i
-        param.functions = self.functions
+        param = FXParam(value, self, i, self.functions)
         return param
 
     def __len__(self):
@@ -95,6 +234,7 @@ class FXParamsList(ReapyObject):
                 raise IndexError(
                     "{} has only {} params".format(self.parent_fx, n_params)
                 )
+            i = i % n_params  # Allows for negative values
         self.functions["SetParam"](
             self.parent_id, self.fx_index, i, value
         )
@@ -129,3 +269,63 @@ class FXParamsList(ReapyObject):
         """
         fx = reapy.FX(parent_id=self.parent_id, index=self.fx_index)
         return fx
+
+
+class NormalizedFXParam(FXParam):
+
+    """
+    Normalized FX parameter.
+
+    Access it via FXParam.normalized.
+
+    Examples
+    --------
+    >>> fx.params[0]
+    0.0
+    >>> fx.params[0].range
+    (-2.0, 0.0)
+    >>> fx.params[0].normalized
+    1.0
+    >>> fx.params[0].normalized.range
+    (0.0, 1.0)
+    """
+
+    def format_value(self, value):
+        """
+        Return human readable string for value.
+
+        It is the way ``value`` would be printed in REAPER GUI if it
+        was the actual parameter value. Only works with FX that
+        support Cockos VST extensions.
+
+        Parameters
+        ----------
+        value : float
+            Value to format.
+
+        Returns
+        -------
+        formatted : str
+            Formatted value.
+        """
+        parent_fx = self.parent_list.parent_fx
+        parent = parent_fx.parent
+        return self.functions["FormatParamValueNormalized"](
+            parent.id, parent_fx.index, self.index, value, "", 2048
+        )[5]
+
+    @property
+    def range(self):
+        """
+        Parameter range (always equal to (0.0, 1.0)).
+        """
+        return (0.0, 1.0)
+
+    @property
+    def raw(self):
+        """
+        Raw (i.e. unnormalized) parameter.
+
+        :type: FXParam
+        """
+        return self.parent_list[self.index]

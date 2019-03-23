@@ -1,43 +1,42 @@
 from .reapy_object import ReapyObject
 
-from .project.project import Project
-from .project.marker import Marker
-from .project.region import Region
-from .project.time_selection import TimeSelection
-
-from .item.item import Item, MIDIItem
-from .item.take import Take
-from .item.source import Source
-
-from .track.track import Track
-from .track.automation_item import AutomationItem
-from .track.envelope import Envelope
-from .track.send import Send
-
+from .audio_accessor import AudioAccessor
+from .envelope import Envelope, EnvelopeList
 from .fx import FX, FXList, FXParam, FXParamsList
+from .item import Item, MIDIItem, Source, Take
+from .project import Marker, Project, Region, TimeSelection
+from .track import AutomationItem, Send, Track
+from .window import MIDIEditor, Window
 
 
 __all__ = [
     # core.reapy_object
     "ReapyObject",
-    # core.project
-    "Project",
-    "Marker",
-    "Region",
-    "TimeSelection",
-    # core.item
-    "Item",
-    "MIDIItem",
-    "Take",
-    "Source",
-    # core.track
-    "Track",
+    #core.audio_accessor
+    "AudioAccessor",
+    # core.envelope
     "Envelope",
-    "AutomationItem",
-    "Send",
+    "EnvelopeList",
     # core.fx
     "FX",
     "FXList",
     "FXParam",
-    "FXParamsList"
+    "FXParamsList",
+    # core.item
+    "Item",
+    "MIDIItem",
+    "Source",
+    "Take",
+    # core.project
+    "Marker",
+    "Project",
+    "Region",
+    "TimeSelection",
+    # core.track
+    "AutomationItem",
+    "Send",
+    "Track",
+    # core.window
+    "MIDIEditor",
+    "Window",
 ]

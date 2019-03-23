@@ -40,6 +40,14 @@ class FX(ReapyObject):
     def _kwargs(self):
         return {"parent_id": self.parent_id, "index": self.index}
 
+    def close_chain(self):
+        """Close FX chain."""
+        self.functions["Show"](self.parent.id, self.index, 0)
+
+    def close_floating_window(self):
+        """Close FX floating window."""
+        self.functions["Show"](self.parent.id, self.index, 2)
+
     def close_ui(self):
         """Close user interface."""
         self.is_ui_open = False
@@ -190,6 +198,28 @@ class FX(ReapyObject):
         )
 
     @property
+    def n_inputs(self):
+        """
+        Number of inputs of FX.
+
+        :type: int
+        """
+        return self.functions["GetIOSize"](
+            self.parent.id, self.index, 0, 0
+        )[3]
+
+    @property
+    def n_outputs(self):
+        """
+        Number of outputs of FX.
+
+        :type: int
+        """
+        return self.functions["GetIOSize"](
+            self.parent.id, self.index, 0, 0
+        )[4]
+
+    @property
     def n_params(self):
         """
         Number of parameters.
@@ -222,6 +252,14 @@ class FX(ReapyObject):
             self.parent_id, self.index, "", 2048
         )[3]
         return name
+
+    def open_chain(self):
+        """Open FX chain with focus on FX."""
+        self.functions["Show"](self.parent.id, self.index, 1)
+
+    def open_floating_window(self):
+        """Open FX floating window."""
+        self.functions["Show"](self.parent.id, self.index, 3)
 
     def open_ui(self):
         """Open FX user interface."""
@@ -313,6 +351,20 @@ class FX(ReapyObject):
         """Use next preset in the presets list."""
         self.functions["NavigatePresets"](self.parent_id, self.index, 1)
 
+    @property
+    def window(self):
+        """
+        Floating window associated to FX, if it exists.
+
+        :type: Window or NoneType
+        """
+        window = reapy.Window(
+            self.functions["GetFloatingWindow"](self.parent.id, self.index)
+        )
+        if not window._is_defined:
+            window = None
+        return window
+
 
 class FXList(ReapyObject):
 
@@ -350,6 +402,7 @@ class FXList(ReapyObject):
             n_fxs = self.parent.n_fxs
         if i >= n_fxs:
             raise IndexError("{} has only {} fxs".format(self.parent, n_fxs))
+        i = i % n_fxs  # Allows for negative values
         fx = FX(self.parent, i)
         return fx
 

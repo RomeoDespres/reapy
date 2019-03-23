@@ -7,8 +7,6 @@ from reapy.errors import UndefinedEnvelopeError
 
 class Track(ReapyObject):
 
-    _class_name = "Track"
-
     def __init__(self, id, project=None):
         if isinstance(id, int):
             id = RPR.GetTrack(project.id, id)
@@ -16,7 +14,35 @@ class Track(ReapyObject):
 
     @property
     def _args(self):
-        return (self.id,)
+        return self.id,
+
+    def _get_project(self):
+        """
+        Return parent project of track.
+
+        Should only be used internally; one should directly access
+        Track.project instead of calling this method.
+        """
+        code = """
+        for project in reapy.projects():
+            if track.id in [t.id for t in project.tracks]:
+                break
+        """
+        project, = Program(code, "project").run(track=self)
+        return project
+
+    def add_audio_accessor(self):
+        """
+        Create audio accessor and return it.
+
+        Returns
+        -------
+        audio_accessor : AudioAccessor
+            Audio accessor on track.
+        """
+        audio_accessor_id = RPR.CreateTrackAudioAccessor(self.id)
+        audio_accessor = reapy.AudioAccessor(audio_accessor_id)
+        return audio_accessor
 
     def add_fx(self, name, input_fx=False, even_if_exists=True):
         """
@@ -100,7 +126,7 @@ class Track(ReapyObject):
             default).
         """
         item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)
-        item = reapy.MIDIItem(item_id)
+        item = reapy.Item(item_id)
         return item
 
     def add_send(self, destination=None):
@@ -205,6 +231,15 @@ class Track(ReapyObject):
         return depth
 
     @property
+    def envelopes(self):
+        """
+        List of envelopes on track.
+
+        :type: EnvelopeList
+        """
+        return reapy.EnvelopeList(self)
+
+    @property
     def fxs(self):
         """
         List of FXs on track.
@@ -213,39 +248,6 @@ class Track(ReapyObject):
         """
         fxs = reapy.FXList(self)
         return fxs
-
-    def get_envelope(self, index=None, name=None, chunk_name=None):
-        """
-        Return track envelope for a given index, name or chunk name.
-
-        Parameters
-        ----------
-        index : int, optional
-            Envelope index.
-        name : str, optional
-            Envelope name.
-        chunk_name : str, optional
-            Built-in envelope configuration chunk name, e.g. "<VOLENV".
-
-        Returns
-        -------
-        envelope : Envelope
-            Track envelope.
-        """
-        if index is not None:
-            function, arg = RPR.GetTrackEnvelope, index
-        elif name is not None:
-            function, arg = RPR.GetTrackEnvelopeByName, name
-        else:
-            message = (
-                "One of `index`, `name` or `chunk_name` must be specified"
-            )
-            assert chunk_name is not None, message
-            function, arg = RPR.GetTrackEnvelopeByChunkName, chunk_name
-        envelope = reapy.Envelope(function(self.id, arg))
-        if not envelope._is_defined:
-            raise UndefinedEnvelopeError(index, name, chunk_name)
-        return envelope
 
     @property
     def instrument(self):
@@ -305,6 +307,10 @@ class Track(ReapyObject):
         Make track the only selected track in parent project.
         """
         RPR.SetOnlyTrackSelected(self.id)
+
+    @property
+    def midi_note_names(self):
+        return reapy.MIDINoteNames(self)
 
     @property
     def n_envelopes(self):
@@ -370,6 +376,27 @@ class Track(ReapyObject):
         _, _, name, _ = RPR.GetTrackName(self.id, "", 2048)
         return name
 
+    @property
+    def parent_track(self):
+        """
+        Parent track, or None if track has none.
+
+        :type: Track or NoneType
+        """
+        parent = Track(RPR.GetParentTrack(self.id))
+        if not parent._is_defined:
+            parent = None
+        return parent
+
+    @property
+    def project(self):
+        """
+        Track parent project.
+
+        :type: Project
+        """
+        return self._project
+
     def select(self):
         """
         Select track.
@@ -391,3 +418,13 @@ class Track(ReapyObject):
         Unselect track.
         """
         RPR.SetTrackSelected(self.id, False)
+
+    @property
+    def visible_fx(self):
+        """
+        Visible FX in FX chain if any, else None.
+
+        :type: FX or NoneType
+        """
+        with reapy.inside_reaper():
+            return self.fxs[RPR.TrackFX_GetChainVisible(self.id)]

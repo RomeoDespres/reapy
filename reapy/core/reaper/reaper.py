@@ -1,4 +1,6 @@
-from reapy import reascript_api as RPR
+import reapy
+import reapy.reascript_api as RPR
+from reapy.tools import Program
 
 import io
 import os
@@ -244,6 +246,65 @@ def get_ini_file():
     return path
 
 
+def get_last_color_theme_file():
+    """
+    Return path to last color theme file.
+
+    Returns
+    -------
+    color_theme : str
+        Path to last color theme file.
+    """
+    return RPR.GetLastColorThemeFile()
+
+
+def get_last_touched_track():
+    """
+    Return last touched track, or None if no track has been touched.
+
+    Returns
+    -------
+    track : Track or None if no track has been touched.
+    """
+    track = reapy.Track(RPR.GetLastTouchedTrack())
+    if not track._is_defined:
+        track = None
+    return track
+
+
+def get_main_window():
+    """
+    Return main window.
+
+    Returns
+    -------
+    window : Window
+        Main window.
+    """
+    window = reapy.Window(RPR.GetMainHwnd())
+    return window
+
+
+def get_projects():
+    """
+    Return list of all opened projects.
+
+    Returns
+    -------
+    projects : list of Project
+        List of all projects.
+    """
+    code = """
+    i = 0
+    projects = [reapy.Project(index=i)]
+    while projects[-1]._is_defined:
+        projects.append(reapy.Project(index=i + 1))
+    projects.pop()
+    """
+    projects, = Program(code, "projects").run()
+    return projects
+
+
 def get_reaper_version():
     version = RPR.GetAppVersion()
     return version
@@ -260,6 +321,39 @@ def get_resource_path():
     """
     path = RPR.GetResourcePath()
     return path
+
+
+def has_ext_state(self, section, key):
+    """
+    Return whether extended state exists for given section and key.
+
+    Parameters
+    ----------
+    section : str
+        Extended state section.
+    key : str
+        Extended state key.
+
+    Returns
+    -------
+    has_ext_state : bool
+    """
+    has_ext_state = bool(RPR.HasExtState(section, key))
+    return has_ext_state
+
+
+def open_project(filepath):
+    """
+    Open project and return it.
+
+    Returns
+    -------
+    project : Project
+        Opened project.
+    """
+    RPR.Main_openProject(filepath)
+    project = reapy.Project()
+    return project
 
 
 def perform_action(action_id):
@@ -406,10 +500,6 @@ def show_console_message(*args, sep=" ", end="\n"):
         String inserted between values (default=" ").
     end : str, optional
         String appended after the last value (default="\n").
-
-    See also
-    --------
-    ReaProject.clear_console
     """
     file = io.StringIO()
     _ORIGINAL_PRINT(*args, sep=sep, end=end, file=file)
