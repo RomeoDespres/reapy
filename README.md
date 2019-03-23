@@ -9,7 +9,7 @@
     * [ReaScript API](#reascript-api)
     * [`reapy` API](#reapy-api)
     * [Performance](#performance)
-    * [More](#more)
+    * [Documentation](#documentation)
 3. [Contributing](#contributing)
 4. [Author](#author)
 5. [License](#license)
@@ -96,9 +96,9 @@ When used from inside REAPER, `reapy` has almost identical performance than nati
     
 ```
 
-### More
+### Documentation
 
-Check the [documentation](https://python-reapy.readthedocs.io/ "reapy online documentation") and especially the [API guide](https://python-reapy.readthedocs.io/en/latest/api_guide.html) for more information.
+Check the [documentation](https://python-reapy.readthedocs.io/ "reapy online documentation") and especially the [API guide](https://python-reapy.readthedocs.io/en/latest/api_guide.html) and [Translation Table](https://python-reapy.readthedocs.io/en/latest/api_table.html) for more information.
 
 ## Contributing
 
