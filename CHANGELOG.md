@@ -4,11 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-TODO Take.sort_notes
-
 ### Added
 
-UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_time, time_to_ppq)
+#### API Helper Functions
+
+- [`test_api`]
 
 #### Audio Management
 
@@ -60,8 +60,10 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 - [`Take.is_midi`]
 - [`Take.n_cc`], [`Take.n_notes`], [`Take.n_text_sysex`]
 - [`Take.add_note`]
+- [`Take.notes`]
 - [`Take.time_to_ppq`], [`Take.ppq_to_time`]
 - [`Take.select_all_midi_events`], [`Take.unselect_all_midi_events`]
+- class [`Note`]
 - class [`MIDIEditor`]
 - [`midi.reinit`]
 
@@ -86,8 +88,12 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 
 #### User Interface
 
-- [`get_last_color_theme_file`]
+- [`browse_for_file`]
+- [`ui.get_color_theme`], [`ui.set_color_theme`]
+- [`ui.get_leftmost_track_in_mixer`], [`ui.set_leftmost_track_in_mixer`]
 - [`get_main_window`]
+- [`Window.refresh`]
+- class [`ToolTip`]
 
 ### Removed
 
@@ -95,6 +101,10 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 
 - `Track.get_envelope` (replaced by [`Track.envelopes`])
 
+### Fixed
+
+- Bug when enabling `reapy` for MacOS (issue [here](https://forum.cockos.com/showpost.php?p=2110136&postcount=27))
+- Bug when enabling `reapy` when no Control/OSC/web has ever been enabled in REAPER (issue [here](https://forum.cockos.com/showpost.php?p=2110177&postcount=30))
 
 ## [0.1.0] - 2019-02-28
 
@@ -180,6 +190,7 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 [`Marker.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Marker.delete
 [`Marker`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Marker
 [`NormalizedFXParam.format_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.NormalizedFXParam.format_value
+[`Note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Note
 [`Project.add_marker`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_marker
 [`Project.add_region`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_region
 [`Project.add_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_track
@@ -266,8 +277,10 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 [`Take.n_notes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_notes
 [`Take.n_text_sysex`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_text_sysex
 [`Take.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.name
+[`Take.notes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.notes
 [`Take.ppq_to_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_time
 [`Take.select_all_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.select_all_midi_events
+[`Take.sort_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.sort_events
 [`Take.source`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.source
 [`Take.time_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.time_to_ppq
 [`Take.track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.track
@@ -278,6 +291,7 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 [`TimeSelection.looping`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.looping
 [`TimeSelection.shift`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.shift
 [`TimeSelection.unloop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.unloop
+[`ToolTip`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.ToolTip
 [`Track.add_audio_accessor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_audio_accessor
 [`Track.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_fx
 [`Track.add_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_item
@@ -302,6 +316,7 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 [`Track.select`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.select
 [`Track.unselect`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.unselect
 [`Track.visible_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.visible_fx
+[`Window.refresh`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Window.refresh
 [`add_reascript`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.add_reascript
 [`arm_command`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.arm_command
 [`at_exit`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.defer.at_exit
@@ -315,6 +330,7 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 [`audio.is_prebuffer`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.audio.is_prebuffer
 [`audio.is_running`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.audio.is_running
 [`audio.quit`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.audio.quit
+[`browse_for_file`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.browse_for_file
 [`clear_console`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.clear_console
 [`clear_peak_cache`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.clear_peak_cache
 [`dB_to_slider`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.dB_to_slider
@@ -328,7 +344,6 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 [`get_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_ext_state
 [`get_global_automation_mode`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_global_automation_mode
 [`get_ini_file`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_ini_file
-[`get_last_color_theme_file`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_last_color_theme_file
 [`get_last_touched_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_last_touched_track
 [`get_main_window`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_main_window
 [`get_projects`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_projects
@@ -358,7 +373,12 @@ UNTESTED : Take.add_note (and project.time_to_beats, beats_to_time, take.ppq_to_
 [`show_console_message`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.show_console_message
 [`show_message_box`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.show_message_box
 [`slider_to_dB`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.slider_to_dB
+[`test_api`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.test_api
 [`time.time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.time.time
+[`ui.get_color_theme`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.ui.get_color_theme
+[`ui.get_leftmost_track_in_mixer`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.ui.get_leftmost_track_in_mixer
+[`ui.set_color_theme`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.ui.set_color_theme
+[`ui.set_leftmost_track_in_mixer`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.ui.set_leftmost_track_in_mixer
 [`update_arrange`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.update_arrange
 [`update_timeline`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.update_timeline
 [`view_prefs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.view_prefs

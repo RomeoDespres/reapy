@@ -56,6 +56,27 @@ def arm_command(command_id, section=""):
     RPR.ArmCommand(command_id, section)
 
 
+def browse_for_file(window_title="", extension=""):
+    """
+    Ask the user to select a file.
+
+    Parameters
+    ----------
+    window_title : str, optional
+        Window title (default="")
+    extension : str, optional
+        Extension for file (e.g. "mp3", "txt"...) (default=all types).
+
+    Returns
+    -------
+    path : str or NoneType
+        Path to file, or None if user cancelled.
+    """
+    success, path, *_ = RPR.GetUserFileNameForRead("", window_title, extension)
+    if success:
+        return path
+
+
 def clear_console():
     """
     Clear Reaper console.
@@ -246,18 +267,6 @@ def get_ini_file():
     return path
 
 
-def get_last_color_theme_file():
-    """
-    Return path to last color theme file.
-
-    Returns
-    -------
-    color_theme : str
-        Path to last color theme file.
-    """
-    return RPR.GetLastColorThemeFile()
-
-
 def get_last_touched_track():
     """
     Return last touched track, or None if no track has been touched.
@@ -298,7 +307,8 @@ def get_projects():
     i = 0
     projects = [reapy.Project(index=i)]
     while projects[-1]._is_defined:
-        projects.append(reapy.Project(index=i + 1))
+        i += 1
+        projects.append(reapy.Project(index=i))
     projects.pop()
     """
     projects, = Program(code, "projects").run()
@@ -583,6 +593,11 @@ def slider_to_dB(slider):
     """
     db = RPR.SLIDER2DB(slider)
     return db
+
+
+def test_api():
+    """Display a message window if the API can successfully be called."""
+    RPR.APITest()
 
 
 def update_arrange():

@@ -2,7 +2,7 @@
 
 import reapy
 from reapy import reascript_api as RPR
-from reapy.core import ReapyObject
+from reapy.core import ReapyObject, ReapyObjectList
 from reapy.errors import DistError, UndefinedFXParamError
 from reapy.tools import Program
 
@@ -292,6 +292,10 @@ class FX(ReapyObject):
         FX preset name.
 
         :type: str
+
+        Attribute can be set by passing a str or int. In the first
+        case, the str can either be a preset name or the path to a
+        .vstpreset file. Otherwise, the int is the preset index.
         """
         preset = self.functions["GetPreset"](
             self.parent_id, self.index, "", 2048
@@ -366,7 +370,7 @@ class FX(ReapyObject):
         return window
 
 
-class FXList(ReapyObject):
+class FXList(ReapyObjectList):
 
     """
     Container class for a list of FXs.
@@ -386,13 +390,7 @@ class FXList(ReapyObject):
 
     _class_name = "FXList"
 
-    def __init__(self, parent=None, parent_id=None):
-        if parent is None:
-            if parent_id.startswith("(MediaTrack*)"):
-                parent_class = reapy.Track
-            else:
-                parent_class = reapy.Take
-            parent = parent_class(parent_id)
+    def __init__(self, parent):
         self.parent = parent
 
     def __getitem__(self, i):
@@ -422,5 +420,5 @@ class FXList(ReapyObject):
         return index
 
     @property
-    def _kwargs(self):
-        return {"parent_id": self.parent.id}
+    def _args(self):
+        return self.parent,
