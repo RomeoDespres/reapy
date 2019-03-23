@@ -2,8 +2,6 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
-
 ### Added
 
 #### API Helper Functions
@@ -12,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 #### Audio Management
 
-- class [`AudioAccessor`]
+- class [`AudioAccessor`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor)
 - [`Take.add_audio_accessor`], [`Track.add_audio_accessor`]
 - [`Source.delete`]
 
@@ -74,7 +72,7 @@ All notable changes to this project will be documented in this file.
 #### Project Management
 
 - [`open_project`]
-- [`get_projects`] UNTESTED
+- [`get_projects`]
 
 #### Track Management
 
