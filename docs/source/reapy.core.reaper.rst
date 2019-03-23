@@ -37,6 +37,14 @@ reapy.core.reaper.reaper module
     :undoc-members:
     :show-inheritance:
 
+reapy.core.reaper.ui module
+-------------------------------
+
+.. automodule:: reapy.core.reaper.ui
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
 Module contents
 ---------------

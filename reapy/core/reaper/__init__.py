@@ -1,3 +1,3 @@
-from . import audio, midi
+from . import audio, midi, ui
 from .reaper import *
 from .defer import defer, at_exit

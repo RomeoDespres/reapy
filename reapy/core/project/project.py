@@ -903,14 +903,9 @@ class Project(ReapyObject):
         """
         List of project tracks.
 
-        :type: list of Track
+        :type: TrackList
         """
-        code = """
-        n_tracks = project.n_tracks
-        tracks = [reapy.Track(i, project) for i in range(n_tracks)]
-        """
-        tracks = Program(code, "tracks").run(project=self)[0]
-        return tracks
+        return reapy.TrackList(self)
 
     def undo(self):
         """

@@ -11,3 +11,7 @@ class Window(ReapyObject):
     @property
     def _args(self):
         return (self.id,)
+
+    def refresh(self):
+        """Refresh window."""
+        RPR.DockWindowRefreshForHWND(self.id)

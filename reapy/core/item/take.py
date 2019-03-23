@@ -64,7 +64,7 @@ class Take(ReapyObject):
 
     def add_note(
         self, start, end, pitch, velocity=100, channel=0, selected=False,
-        muted=False, unit="seconds", sort_notes=True
+        muted=False, unit="seconds", sort=True
     ):
         """
         Add MIDI note to take.
@@ -88,17 +88,17 @@ class Take(ReapyObject):
         unit : {"seconds", "ppq", "beats"}, optional
             Time unit for ``start`` and ``end`` (default="seconds").
             ``"ppq"`` refers to MIDI ticks.
-        sort_notes : bool, optional
+        sort : bool, optional
             Whether to resort notes after creating new note
             (default=True). If False, then the new note will be
             ``take.notes[-1]``. Otherwise it will be at its place in
             the time-sorted list ``take.notes``. Set to False for
             improved efficiency when adding several notes, then call
-            ``take.sort_notes`` at the end.
+            ``Take.sort_events`` at the end.
 
         See also
         --------
-        Take.sort_notes
+        Take.sort_events
         """
         code = """
         if unit == "beats":
@@ -112,9 +112,18 @@ class Take(ReapyObject):
         """
         args = (
             self.id, selected, muted, start, end, channel, pitch, velocity,
-            sort_notes
+            sort
         )
         Program(code).run(take=self, unit=unit, args=args)
+
+    @property
+    def cc_events(self):
+        """
+        List of CC events on take.
+
+        :type: CCList
+        """
+        return reapy.CCList(self)
 
     @property
     def envelopes(self):
@@ -226,6 +235,18 @@ class Take(ReapyObject):
             return RPR.GetTakeName(self.id)
         return ""
 
+    @property
+    def notes(self):
+        """
+        List of MIDI notes on take.
+
+        Unless ``Take.add_note`` has been called with ``sort=False``,
+        notes are time-sorted.
+
+        :type: NoteList
+        """
+        return reapy.NoteList(self)
+
     def ppq_to_time(self, ppq):
         """
         Convert time in MIDI ticks to seconds.
@@ -261,6 +282,31 @@ class Take(ReapyObject):
         Take.unselect_all_midi_events
         """
         RPR.MIDI_SelectAll(self.id, select)
+
+    def sort_events(self):
+        """
+        Sort MIDI events on take.
+
+        This is only needed if ``Take.add_note`` was called with
+        ``sort=False``.
+
+        Examples
+        --------
+        The following example creates 100 MIDI notes on take in
+        reversed order, with ``sort=False`` for efficiency. Thus,
+        ``take.notes`` is not time-sorted. ``take.sort_events`` is
+        called afterwards so that ``take.notes`` is time-sorted.
+        
+        >>> for i in range(100):
+        ...     take.add_note(99 - i, 100 - i, pitch=0, sort=False)
+        ...
+        >>> take.notes[0].start, take.notes[1].start
+        99.0, 98.0
+        >>> take.sort_events()
+        >>> take.notes[0].start, take.notes[1].start
+        0.0, 1.0
+        """
+        RPR.MIDI_Sort(self.id)
 
     @property
     def source(self):

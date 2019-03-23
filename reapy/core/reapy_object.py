@@ -1,3 +1,6 @@
+from reapy.tools import Program
+
+
 class ReapyObject:
 
     """Base class for reapy objects."""
@@ -42,3 +45,17 @@ class ReapyObject:
             "args": self._args,
             "kwargs": self._kwargs
         }
+
+
+class ReapyObjectList(ReapyObject):
+
+    """Abstract class for list of ReapyObjects."""
+
+    def __iter__(self):
+        code = """
+        elements = [ro_list[i] for i in range(len(ro_list))]
+        """
+        elements, = Program(code, "elements").run(ro_list=self)
+        for element in elements:
+            yield element
+

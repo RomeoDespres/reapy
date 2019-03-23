@@ -1,6 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
-from reapy.core import ReapyObject
+from reapy.core import ReapyObject, ReapyObjectList
 from reapy.tools import Program
 from reapy.errors import UndefinedEnvelopeError
 
@@ -428,3 +428,46 @@ class Track(ReapyObject):
         """
         with reapy.inside_reaper():
             return self.fxs[RPR.TrackFX_GetChainVisible(self.id)]
+
+
+class TrackList(ReapyObjectList):
+
+    """
+    Container for a project's track list.
+
+    Examples
+    --------
+    >>> tracks = project.tracks
+    >>> len(tracks)
+    4
+    >>> tracks[0].name
+    'Kick'
+    >>> for track in tracks:
+    ...     print(track.name)
+    ...
+    'Kick'
+    'Snare'
+    'Hi-hat'
+    'Cymbal"
+    """
+
+    def __init__(self, parent):
+        """
+        Create track list.
+
+        Parameters
+        ----------
+        parent : Project
+            Parent project.
+        """
+        self.parent = parent
+
+    def __getitem__(self, key):
+        return Track(key, self.parent)
+
+    def __len__(self):
+        return self.parent.n_tracks
+
+    @property
+    def _args(self):
+        return self.parent,

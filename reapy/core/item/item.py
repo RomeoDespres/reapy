@@ -229,8 +229,3 @@ class Item(ReapyObject):
     def update(self):
         """Update item in REAPER interface."""
         RPR.UpdateItemInProject(self.id)
-
-
-class MIDIItem(Item):
-
-    pass

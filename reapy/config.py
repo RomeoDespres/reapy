@@ -3,6 +3,7 @@ from reapy.errors import OutsideREAPERError
 from reapy.reascripts import activate_reapy_server
 
 from configparser import ConfigParser
+from collections import OrderedDict
 import json
 import os
 
@@ -10,12 +11,33 @@ REAPY_SERVER_PORT = 2306
 WEB_INTERFACE_PORT = 2307
 
 
+class CaseInsensitiveDict(OrderedDict):
+
+    """OrderedDict with case-insensitive keys."""
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._dict = OrderedDict(*args, **kwargs)
+        for key, value in self._dict.items():
+            self._dict[key.lower()] = value
+
+    def __contains__(self, key):
+        return key.lower() in self._dict
+
+    def __getitem__(self, key):
+        return self._dict[key.lower()]
+
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        self._dict[key.lower()] = value
+
+
 class Config(ConfigParser):
 
     """Parser for REAPER .ini file."""
 
     def __init__(self):
-        super(Config, self).__init__(strict=False, delimiters="=")
+        super(Config, self).__init__(strict=False, delimiters="=", dict_type=CaseInsensitiveDict)
         self.optionxform = str
         self.read(reapy.get_ini_file())
 
@@ -37,7 +59,7 @@ def create_new_web_interface(port):
         Web interface port.
     """
     config = Config()
-    csurf_count = int(config["reaper"]["csurf_cnt"])
+    csurf_count = int(config["reaper"].get("csurf_cnt", "0"))
     csurf_count += 1
     config["reaper"]["csurf_cnt"] = str(csurf_count)
     key = "csurf_{}".format(csurf_count - 1)

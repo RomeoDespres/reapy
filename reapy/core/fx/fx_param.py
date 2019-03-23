@@ -1,7 +1,8 @@
 import reapy
 import reapy.reascript_api as RPR
-from reapy.core import ReapyObject
+from reapy.core import ReapyObject, ReapyObjectList
 from reapy.errors import DistError
+from reapy.tools import Program
 
 
 class FXParam(float):
@@ -177,7 +178,7 @@ class FXParam(float):
         return min, max
 
 
-class FXParamsList(ReapyObject):
+class FXParamsList(ReapyObjectList):
 
     """
     Container class for a list of FX parameters.
@@ -220,6 +221,16 @@ class FXParamsList(ReapyObject):
         )[0]
         param = FXParam(value, self, i, self.functions)
         return param
+
+    def __iter__(self):
+        code = """
+        values = [param_list.functions["GetParam"](
+            param_list.parent_id, param_list.fx_index, i, 0, 0
+        )[0] for i in range(len(param_list))]
+        """
+        values, = Program(code, "values").run(param_list=self)
+        for i, value in enumerate(values):
+            yield FXParam(value, self, i, self.functions)
 
     def __len__(self):
         length = self.parent_fx.n_params
