@@ -139,7 +139,7 @@ class Take(ReapyObject):
         return reapy.FXList(self)
 
     def get_info_value(self, param_name):
-        return RPR.GettakeInfo_Value(self.id, param_name)
+        return RPR.GetMediaItemTakeInfo_Value(self.id, param_name)
 
     @property
     def is_active(self):
