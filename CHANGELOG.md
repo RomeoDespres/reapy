@@ -12,13 +12,13 @@ All notable changes to this project will be documented in this file.
 
 - Bug when running `from reapy.reascript_api import *` from inside REAPER when extensions such as ReaPack are installed.
 
-## [0.2.1](releases/tag/0.2.1) - 2019-04-30
+## [0.2.1](https://github.com/RomeoDespres/reapy/releases/tag/0.2.1) - 2019-04-30
 
 ### Fixed
 
 - Issue #17 (typo in [`Take.get_info_value`])
 
-## [0.2.0](releases/tag/0.2.0) - 2019-03-23
+## [0.2.0](https://github.com/RomeoDespres/reapy/releases/tag/0.2.0) - 2019-03-23
 
 ### Added
 
@@ -122,7 +122,7 @@ All notable changes to this project will be documented in this file.
 - Bug when enabling `reapy` for MacOS (issue [here](https://forum.cockos.com/showpost.php?p=2110136&postcount=27))
 - Bug when enabling `reapy` when no Control/OSC/web has ever been enabled in REAPER (issue [here](https://forum.cockos.com/showpost.php?p=2110177&postcount=30))
 
-## [0.1.0](releases/tag/0.1.0) - 2019-02-28
+## [0.1.0](https://github.com/RomeoDespres/reapy/releases/tag/0.1.0) - 2019-02-28
 
 ### Added
 
