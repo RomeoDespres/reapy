@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- SWS support (if the SWS extension is installed, then its functions are available in `reapy.reascript_api` from inside and outside REAPER)
+
+### Fixed
+
+- Bug when running `from reapy.reascript_api import *` from inside REAPER when extensions such as ReaPack are installed.
+
+## [0.2.1] - 2019-04-30
+
+### Fixed
+
+- Issue #17 (typo in [`Take.get_info_value`])
+
+## [0.2.0] - 2019-03-23
+
 ### Added
 
 #### API Helper Functions
