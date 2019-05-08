@@ -2,38 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+
+## [0.3.0](https://github.com/RomeoDespres/reapy/releases/tag/0.3.0) - 2019-05-08
 
 ### Added
-
 - SWS support (if the SWS extension is installed, then its functions are available in `reapy.reascript_api` from inside and outside REAPER)
 
 ### Fixed
-
 - Bug when running `from reapy.reascript_api import *` from inside REAPER when extensions such as ReaPack are installed.
+
 
 ## [0.2.1](https://github.com/RomeoDespres/reapy/releases/tag/0.2.1) - 2019-04-30
 
 ### Fixed
-
 - Issue #17 (typo in [`Take.get_info_value`])
+
 
 ## [0.2.0](https://github.com/RomeoDespres/reapy/releases/tag/0.2.0) - 2019-03-23
 
 ### Added
 
 #### API Helper Functions
-
 - [`test_api`]
 
 #### Audio Management
-
 - class [`AudioAccessor`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor)
 - [`Take.add_audio_accessor`], [`Track.add_audio_accessor`]
 - [`Source.delete`]
 
 #### Audio/MIDI Device Management
-
 - [`audio.get_n_inputs`], [`audio.get_n_outputs`]
 - [`audio.get_input_latency`], [`audio.get_output_latency`]
 - [`audio.get_input_names`], [`audio.get_output_names`]
@@ -42,7 +39,6 @@ All notable changes to this project will be documented in this file.
 - [`midi.get_input_names`], [`midi.get_output_names`]
 
 #### Envelope Management
-
 - [`Envelope.parent`]
 - [`Envelope.get_value`]
 - [`Envelope.get_derivatives`]
@@ -51,11 +47,9 @@ All notable changes to this project will be documented in this file.
 - [`Take.envelopes`], [`Track.envelopes`]
 
 #### Extended states
-
 - [`has_ext_state`]
 
 #### FX Management
-
 - [`FX.open_chain`], [`FX.close_chain`], [`FX.open_floating_window`], [`FX.close_floating_window`], [`FX.window`]
 - [`FX.n_inputs`], [`FX.n_outputs`]
 - [`FXParam.normalized`] for getting and setting normalized param values
@@ -65,14 +59,12 @@ All notable changes to this project will be documented in this file.
 - [`Track.fxs`] and [`Take.fxs`] support negative indexing
 
 #### Item Management
-
 - [`Item.delete`]
 - [`Item.update`]
 - [`Project.items`]
 - [`Take.name`]
 
 #### MIDI Management
-
 - [`Take.is_midi`]
 - [`Take.n_cc`], [`Take.n_notes`], [`Take.n_text_sysex`]
 - [`Take.add_note`]
@@ -84,26 +76,21 @@ All notable changes to this project will be documented in this file.
 - [`midi.reinit`]
 
 #### Other
-
 - [`Project.time_to_beats`], [`Project.beats_to_time`]
 
 #### Project Management
-
 - [`open_project`]
 - [`get_projects`]
 
 #### Track Management
-
 - [`Project.solo_all_tracks`], [`Project.unsolo_all_tracks`]
 - [`Track.parent_track`]
 
 #### Transport Management
-
 - [`Project.play_position`], [`Project.buffer_position`]
 - [`Project.get_play_rate`]
 
 #### User Interface
-
 - [`browse_for_file`]
 - [`ui.get_color_theme`], [`ui.set_color_theme`]
 - [`ui.get_leftmost_track_in_mixer`], [`ui.set_leftmost_track_in_mixer`]
@@ -114,22 +101,21 @@ All notable changes to this project will be documented in this file.
 ### Removed
 
 #### Envelope Management
-
 - `Track.get_envelope` (replaced by [`Track.envelopes`])
 
 ### Fixed
-
 - Bug when enabling `reapy` for MacOS (issue [here](https://forum.cockos.com/showpost.php?p=2110136&postcount=27))
 - Bug when enabling `reapy` when no Control/OSC/web has ever been enabled in REAPER (issue [here](https://forum.cockos.com/showpost.php?p=2110177&postcount=30))
+
 
 ## [0.1.0](https://github.com/RomeoDespres/reapy/releases/tag/0.1.0) - 2019-02-28
 
 ### Added
-
 - `reapy.inside_reaper` context manager for efficient calls from outside REAPER and corresponding [documentation](https://python-reapy.readthedocs.io/en/latest/api_guide.html#improve-performance-with-reapy-inside-reaper)
 - `reapy.defer` and `reapy.at_exit` to replace `RPR_defer` and `RPR_atexit` in a more stable way, and corresponding [documentation](https://python-reapy.readthedocs.io/en/latest/api_guide.html#non-blocking-loops-inside-reaper-with-reapy-defer-and-reapy-at-exit)
 - [`Track.add_fx`] and [`Take.add_fx`]
 - [Documentation for uninstalling process](https://python-reapy.readthedocs.io/en/latest/install_guide.html)
+
 
 [//]: # (LINKS)
 [`AudioAccessor.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.AudioAccessor.delete

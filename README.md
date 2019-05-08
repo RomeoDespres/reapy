@@ -64,6 +64,9 @@ All ReaScript API functions are available in `reapy` in the sub-module `reapy.re
 >>> RPR.GetCursorPosition()
 1.0
 ```
+
+Note that if you have the [SWS extension](http://sws-extension.org/) installed, the additional ReaScript functions it provides will be available in `reapy.reascript_api` and usable inside and outside REAPER as well.
+
 ### `reapy` API
 
 The purpose of `reapy` is to provide a more pythonic API as a substitute for ReaScript API. Below is the `reapy` way of executing the example above.
@@ -102,7 +105,7 @@ Check the [documentation](https://python-reapy.readthedocs.io/ "reapy online doc
 
 ## Contributing
 
-For now, about a third of ReaScript API has a `reapy` counterpart, the docs are far from great, and many bugs are waiting to be found. Feel free to improve the project by checking the [contribution guide](CONTRIBUTING.md)!
+For now, about a half of ReaScript API has a `reapy` counterpart, the docs are far from great, and many bugs are waiting to be found. Feel free to improve the project by checking the [contribution guide](CONTRIBUTING.md)!
 
 ## Author
 
