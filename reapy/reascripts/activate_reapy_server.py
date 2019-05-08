@@ -10,8 +10,8 @@ enabled.
 import reapy
 
 import os
+import site
 import sys
-import tempfile
 
 if reapy.is_inside_reaper():
     from reapy import reascript_api as RPR
@@ -31,7 +31,9 @@ def main_loop():
 
 def generate_api_module():
     function_names = RPR.__all__
-    filepath = os.path.join(tempfile.gettempdir(), "reapy_generated_api.py")
+    filepath = os.path.join(
+        site.getusersitepackages(), "reapy_generated_api.py"
+    )
     with open(filepath, "w") as file:
         lines = [
             "from reapy.tools import Program",
