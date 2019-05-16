@@ -310,7 +310,6 @@ class Project(ReapyObject):
         :type: FX or NoneType
         """
         code = """
-        
         def get_focused_fx():
             if not project.is_current_project:
                 return
@@ -327,7 +326,7 @@ class Project(ReapyObject):
             item = track.items[res[2]]
             take = item.takes[res[3] // 2**16]
             return take.fxs[res[3] % 2**16]
-        
+
         fx = get_focused_fx()
         """
         fx, = Program(code, "fx").run(project=self)
@@ -763,6 +762,10 @@ class Project(ReapyObject):
         """
         RPR.SelectAllMediaItems(self.id, selected)
 
+    def select_all_tracks(self):
+        """Select all tracks."""
+        self.perform_action(40296)
+
     @property
     def selected_envelope(self):
         """
@@ -812,6 +815,16 @@ class Project(ReapyObject):
         track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
         tracks = list(map(reapy.Track, track_ids))
         return tracks
+
+    @selected_tracks.setter
+    def selected_tracks(self, tracks):
+        tracks = list(tracks)
+        code = """
+        project.unselect_all_tracks()
+        for track in tracks:
+            track.select()
+        """
+        Program(code).run(project=self, tracks=tracks)
 
     def solo_all_tracks(self):
         """
@@ -925,6 +938,10 @@ class Project(ReapyObject):
         Unmute all tracks.
         """
         self.mute_all_tracks(mute=False)
+
+    def unselect_all_tracks(self):
+        """Unselect all tracks."""
+        self.perform_action(40297)
 
     def unsolo_all_tracks(self):
         """

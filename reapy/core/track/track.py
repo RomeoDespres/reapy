@@ -45,8 +45,10 @@ class Track(ReapyObject):
     """
 
     def __init__(self, id, project=None):
+        self._project = None
         if isinstance(id, int):  # id is a track index
             id = RPR.GetTrack(project.id, id)
+            self._project = project
         elif isinstance(id, str) and not id.startswith("(MediaTrack*)"):
             # id is a track name
             code = """
@@ -57,6 +59,7 @@ class Track(ReapyObject):
                     break
             """
             id, = Program(code, "id").run(project=project, name=id)
+            self._project = project
         # id is now a real ReaScript ID
         self.id = id
 
@@ -297,6 +300,10 @@ class Track(ReapyObject):
         fxs = reapy.FXList(self)
         return fxs
 
+    def get_info_value(self, param_name):
+        value = RPR.GetMediaTrackInfo_Value(self.id, param_name)
+        return value
+
     @property
     def instrument(self):
         """
@@ -326,6 +333,22 @@ class Track(ReapyObject):
         return items
 
     @property
+    def is_muted(self):
+        """
+        Whether track is muted.
+
+        Can be manually set to change track state.
+        """
+        return bool(self.get_info_value("B_MUTE"))
+
+    @is_muted.setter
+    def is_muted(self, muted):
+        if muted:
+            self.mute()
+        else:
+            self.unmute()
+
+    @property
     def is_selected(self):
         """
         Whether track is selected.
@@ -350,6 +373,22 @@ class Track(ReapyObject):
         else:
             self.unselect()
 
+    @property
+    def is_solo(self):
+        """
+        Whether track is solo.
+
+        Can be manually set to change track state.
+        """
+        return bool(self.get_info_value("I_SOLO"))
+
+    @is_solo.setter
+    def is_solo(self, solo):
+        if solo:
+            self.solo()
+        else:
+            self.unsolo()
+
     def make_only_selected_track(self):
         """
         Make track the only selected track in parent project.
@@ -359,6 +398,14 @@ class Track(ReapyObject):
     @property
     def midi_note_names(self):
         return reapy.MIDINoteNames(self)
+
+    def mute(self):
+        """Mute track (do nothing if track is already muted)."""
+        code = """
+        if not track.is_muted:
+            track.toggle_mute()
+        """
+        Program(code).run(track=self)
 
     @property
     def n_envelopes(self):
@@ -443,6 +490,13 @@ class Track(ReapyObject):
 
         :type: Project
         """
+        if self._project is None:
+            code = """
+            for project in reapy.get_projects():
+                if track.id in [t.id for t in project.tracks]:
+                    break
+            """
+            self._project, = Program(code, "project").run(track=self)
         return self._project
 
     def select(self):
@@ -461,11 +515,57 @@ class Track(ReapyObject):
         sends = Program(code, "sends").run(track=self)[0]
         return sends
 
+    def solo(self):
+        """Solo track (do nothing if track is already solo)."""
+        code = """
+        if not track.is_solo:
+            track.toggle_solo()
+        """
+        Program(code).run(track=self)
+
+    def toggle_mute(self):
+        """Toggle mute on track."""
+        code = """
+        project = track.project
+        selected_tracks = project.selected_tracks
+        track.make_only_selected_track()
+        project.perform_action(40280)
+        project.selected_tracks = selected_tracks
+        """
+        Program(code).run(track=self)
+
+    def toggle_solo(self):
+        """Toggle solo on track."""
+        code = """
+        project = track.project
+        selected_tracks = project.selected_tracks
+        track.make_only_selected_track()
+        project.perform_action(7)
+        project.selected_tracks = selected_tracks
+        """
+        Program(code).run(track=self)
+
+    def unmute(self):
+        """Unmute track (do nothing if track is not muted)."""
+        code = """
+        if track.is_muted:
+            track.toggle_mute()
+        """
+        Program(code).run(track=self)
+
     def unselect(self):
         """
         Unselect track.
         """
         RPR.SetTrackSelected(self.id, False)
+
+    def unsolo(self):
+        """Unsolo track (do nothing if track is not solo)."""
+        code = """
+        if track.is_solo:
+            track.toggle_solo()
+        """
+        Program(code).run(track=self)
 
     @property
     def visible_fx(self):
