@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Added
+
+- Access to tracks by name (example: `project.tracks["PIANO"]`)
+
+
 ## [0.3.0](https://github.com/RomeoDespres/reapy/releases/tag/0.3.0) - 2019-05-08
 
 ### Added
