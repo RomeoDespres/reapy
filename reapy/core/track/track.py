@@ -7,9 +7,57 @@ from reapy.errors import UndefinedEnvelopeError
 
 class Track(ReapyObject):
 
+    """
+    REAPER Track.
+
+    Parameters
+    ----------
+    id : str or int
+        If str, can either be a ReaScript ID (usually looking like
+        ``"(MediaTrack*)0x00000000110A1AD0"``), or a track name. In
+        that case, ``project`` must be specified.
+        If int, the index of the track. In that case, ``project`` must
+        be specified.
+    project : Project
+        Parent project of the track. Only necessary to retrieve a
+        track from its name or index.
+
+    Examples
+    --------
+    In most cases, accessing tracks is better done directly from
+    the parent Project:
+
+    >>> project = reapy.Project()
+    >>> project.tracks[0]
+    Track("(MediaTrack*)0x00000000110A1AD0")
+    >>> project.tracks["PIANO"]  # This is actually the same track
+    Track("(MediaTrack*)0x00000000110A1AD0")
+
+    But the same track can also directly be instantiated with:
+
+    >>> reapy.Track(0, project)
+    Track("(MediaTrack*)0x00000000110A1AD0")
+
+    or
+
+    >>> reapy.Track("PIANO")
+    Track("(MediaTrack*)0x00000000110A1AD0")
+    """
+
     def __init__(self, id, project=None):
-        if isinstance(id, int):
+        if isinstance(id, int):  # id is a track index
             id = RPR.GetTrack(project.id, id)
+        elif isinstance(id, str) and not id.startswith("(MediaTrack*)"):
+            # id is a track name
+            code = """
+            id = project.tracks[-1].id
+            for track in project.tracks:
+                if track.name == name:
+                    id = track.id
+                    break
+            """
+            id, = Program(code, "id").run(project=project, name=id)
+        # id is now a real ReaScript ID
         self.id = id
 
     @property
