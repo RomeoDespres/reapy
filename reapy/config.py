@@ -36,21 +36,35 @@ class Config(ConfigParser):
 
     """Parser for REAPER .ini file."""
 
-    encoding = None
-
     def __init__(self):
         super(Config, self).__init__(strict=False, delimiters="=", dict_type=CaseInsensitiveDict)
         self.optionxform = str
         ini_filename = reapy.get_ini_file()
-        try:
-            self.read(ini_filename)
-        except UnicodeDecodeError as exc:
-            self.encoding = 'utf8'
-            self.read(ini_filename, encoding=self.encoding)
+        self.read(ini_filename, encoding='utf8')
 
     def write(self):
-        with open(reapy.get_ini_file(), "w", encoding=self.encoding) as f:
+        ini_filename = reapy.get_ini_file()
+        with open(ini_filename, encoding='utf8') as f_old:
+            old_config_content = f_old.read()
+
+        # this is to save first config which user had before trying reapy
+        ini_before_reapy_filename = ini_filename + '.before-reapy.bak'
+        if not os.path.exists(ini_before_reapy_filename):
+            with open(ini_before_reapy_filename, 'w', encoding='utf8') as f:
+                f.write(old_config_content)
+
+        # this is current ini file backup copy
+        ini_bak_filename = ini_filename + '.bak'
+        with open(ini_bak_filename, 'w', encoding='utf8') as f:
+            f.write(old_config_content)
+
+        # write to tmp file first
+        tmp_filename = ini_filename + '.tmp'
+        with open(tmp_filename, "w", encoding='utf8') as f:
             super(Config, self).write(f, False)
+
+        # then rename tmp to ini file
+        os.replace(tmp_filename, ini_filename)
 
 
 def create_new_web_interface(port):
