@@ -36,13 +36,20 @@ class Config(ConfigParser):
 
     """Parser for REAPER .ini file."""
 
+    encoding = None
+
     def __init__(self):
         super(Config, self).__init__(strict=False, delimiters="=", dict_type=CaseInsensitiveDict)
         self.optionxform = str
-        self.read(reapy.get_ini_file())
+        ini_filename = reapy.get_ini_file()
+        try:
+            self.read(ini_filename)
+        except UnicodeDecodeError as exc:
+            self.encoding = 'utf8'
+            self.read(ini_filename, encoding=self.encoding)
 
     def write(self):
-        with open(reapy.get_ini_file(), "w") as f:
+        with open(reapy.get_ini_file(), "w", encoding=self.encoding) as f:
             super(Config, self).write(f, False)
 
 
