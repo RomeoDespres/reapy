@@ -28,6 +28,6 @@ class Program(program.Program):
 
     def run(self, **input):
         if reapy.is_inside_reaper():
-            return super(DistProgram, self).run(**input)
+            return super(Program, self).run(**input)
         else:
             return CLIENT.run_program(self, input)

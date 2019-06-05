@@ -1,3 +1,4 @@
+import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.tools import Program

@@ -1,3 +1,4 @@
+import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.tools import Program
@@ -130,8 +131,7 @@ class Envelope(ReapyObject):
 
         :type: list of reapy.AutomationItem
         """
-        n_items = self.n_items
-        items = [reapy.AutomationItem(self, i) for i in range(n_items)]
+        items = [reapy.AutomationItem(self, i) for i in range(self.n_items)]
         return items
 
     @property

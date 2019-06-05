@@ -67,7 +67,7 @@ class Item(ReapyObject):
         take : Take
             index-th take of media item.
         """
-        take_id = RPR.GetItemTake(self.id, i)
+        take_id = RPR.GetItemTake(self.id, index)
         take = reapy.Take(take_id)
         return take
 
@@ -222,7 +222,7 @@ class Item(ReapyObject):
 
     @track.setter
     def track(self, track):
-        if isisintance(track, int):
+        if isinstance(track, int):
             track = reapy.Track(track, project=self.project)
         RPR.MoveMediaItemToTrack(self.id, track.id)
 
