@@ -33,5 +33,7 @@ There are two ways of adding features:
 1. wrapping ReaScript API (*i.e.* pick a ReaScript API function and include it in `reapy`),
 2. extending the API beyond ReaScript (*i.e.* building new features that you find the ReaScript API misses).
     
-In both cases, the code should follow PEP style conventions as much as possible. You can check your code is PEP-compliant with the Python package [pycodestyle](https://pypi.org/project/pycodestyle/).
+In both cases, the code should:
+- follow PEP style conventions as much as possible. You can check your code is PEP-compliant with the Python package [pycodestyle](https://pypi.org/project/pycodestyle/).
+- follow the change log convention [here](https://keepachangelog.com/en/1.0.0/). Basically, all changes to the API (addition, removal, or bug fixes) must be reported in the `Unreleased` section of [CHANGELOG.md](CHANGELOG.md) under the corresponding subsections (`Added`, `Removed`, `Fixed`, etc.).
 
