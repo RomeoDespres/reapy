@@ -62,7 +62,7 @@ class Project(ReapyObject):
         be returned.
         """
         if isinstance(color, tuple):
-            color = reapy.get_native_color(*color)
+            color = reapy.rgb_to_native(color) | 0x1000000
         marker_id = RPR.AddProjectMarker2(
             self.id, False, position, 0, name, -1, color
         )
@@ -91,7 +91,7 @@ class Project(ReapyObject):
             New region.
         """
         if isinstance(color, tuple):
-            color = reapy.rgb_to_native(color)
+            color = reapy.rgb_to_native(color) | 0x1000000
         region_id = RPR.AddProjectMarker2(
             self.id, True, start, end, name, -1, color
         )
