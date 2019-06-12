@@ -7,7 +7,6 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Fix setting color in [`Project.add_marker`] and [`Project.add_region`] methods
 - Access to tracks by name (example: `project.tracks["PIANO"]`)
 - Track selection helpers at the project level:
   * Methods [`Project.select_all_tracks`], [`Project.unselect_all_tracks`]
@@ -15,6 +14,9 @@ All notable changes to this project will be documented in this file.
 - Mute and solo helpers on `Track`:
   * Methods [`Track.solo`], [`Track.mute`], [`Track.unsolo`], [`Track.unmute`],
   * Properties [`Track.is_solo`] and [`Track.is_muted`]. Manually setting them is equivalent to calling the methods above.
+
+### Fixed
+- Fix setting color in [`Project.add_marker`] and [`Project.add_region`] methods
 
 ## [0.3.0](https://github.com/RomeoDespres/reapy/releases/tag/0.3.0) - 2019-05-08
 
