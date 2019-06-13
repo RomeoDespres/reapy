@@ -113,7 +113,7 @@ def dB_to_slider(db):
     --------
     slider_to_dB
     """
-    sider = RPR.DB2SLIDER(db)
+    slider = RPR.DB2SLIDER(db)
     return slider
 
 
