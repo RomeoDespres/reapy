@@ -75,7 +75,7 @@ class Track(ReapyObject):
         Track.project instead of calling this method.
         """
         code = """
-        for project in reapy.projects():
+        for project in reapy.get_projects():
             if track.id in [t.id for t in project.tracks]:
                 break
         """
