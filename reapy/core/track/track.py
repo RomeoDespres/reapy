@@ -176,7 +176,7 @@ class Track(ReapyObject):
             Whether to count time in beats (True) or seconds (False,
             default).
         """
-        item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)
+        item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)[0]
         item = reapy.Item(item_id)
         return item
 
