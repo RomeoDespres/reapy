@@ -75,7 +75,7 @@ class Track(ReapyObject):
         Track.project instead of calling this method.
         """
         code = """
-        for project in reapy.projects():
+        for project in reapy.get_projects():
             if track.id in [t.id for t in project.tracks]:
                 break
         """
@@ -176,7 +176,7 @@ class Track(ReapyObject):
             Whether to count time in beats (True) or seconds (False,
             default).
         """
-        item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)
+        item_id = RPR.CreateNewMIDIItemInProj(self.id, start, end, quantize)[0]
         item = reapy.Item(item_id)
         return item
 
