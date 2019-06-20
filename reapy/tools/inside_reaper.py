@@ -1,12 +1,16 @@
+import contextlib
+
 import reapy
 if not reapy.is_inside_reaper():
     from . import dist_program
 
 
-class InsideReaper:
+class InsideReaper(contextlib.ContextDecorator):
 
     """
     Context manager for efficient calls from outside REAPER.
+
+    It can also be used as a function decorator.
 
     Examples
     --------
@@ -23,6 +27,14 @@ class InsideReaper:
     ...
 
     which takes 0.1 seconds!
+
+    Example usage as decorator:
+
+    >>> @reapy.inside_reaper()
+    ... def add_n_tracks(n):
+    ...     for x in range(n):
+    ...         reapy.Project().add_track()
+
     """
 
     def __enter__(self):
