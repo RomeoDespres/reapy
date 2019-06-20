@@ -6,6 +6,7 @@ from configparser import ConfigParser
 from collections import OrderedDict
 import json
 import os
+import shutil
 
 REAPY_SERVER_PORT = 2306
 WEB_INTERFACE_PORT = 2307
@@ -39,32 +40,19 @@ class Config(ConfigParser):
     def __init__(self):
         super(Config, self).__init__(strict=False, delimiters="=", dict_type=CaseInsensitiveDict)
         self.optionxform = str
-        ini_filename = reapy.get_ini_file()
-        self.read(ini_filename, encoding='utf8')
+        self.ini_file = reapy.get_ini_file()
+        self.read(self.ini_file, encoding='utf8')
 
     def write(self):
-        ini_filename = reapy.get_ini_file()
-        with open(ini_filename, encoding='utf8') as f_old:
-            old_config_content = f_old.read()
-
-        # this is to save first config which user had before trying reapy
-        ini_before_reapy_filename = ini_filename + '.before-reapy.bak'
-        if not os.path.exists(ini_before_reapy_filename):
-            with open(ini_before_reapy_filename, 'w', encoding='utf8') as f:
-                f.write(old_config_content)
-
-        # this is current ini file backup copy
-        ini_bak_filename = ini_filename + '.bak'
-        with open(ini_bak_filename, 'w', encoding='utf8') as f:
-            f.write(old_config_content)
-
-        # write to tmp file first
-        tmp_filename = ini_filename + '.tmp'
-        with open(tmp_filename, "w", encoding='utf8') as f:
+        # Backup config state before user has ever tried reapy
+        before_reapy_file = self.ini_file + '.before-reapy.bak'
+        if not os.path.exists(before_reapy_file):
+            shutil.copy(self.ini_file, before_reapy_file)
+        # Backup current config
+        shutil.copy(self.ini_file, ini_file + '.bak')
+        # Write config
+        with open(self.ini_file, "w", encoding='utf8') as f:
             super(Config, self).write(f, False)
-
-        # then rename tmp to ini file
-        os.replace(tmp_filename, ini_filename)
 
 
 def create_new_web_interface(port):
