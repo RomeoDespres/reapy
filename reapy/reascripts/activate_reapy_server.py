@@ -11,7 +11,6 @@ import reapy
 
 import os
 import site
-import sys
 
 if reapy.is_inside_reaper():
     from reapy import reascript_api as RPR
@@ -31,8 +30,11 @@ def main_loop():
 
 def generate_api_module():
     function_names = RPR.__all__
+    sitepackages_dir = site.getusersitepackages()
+    if not os.path.exists(sitepackages_dir):
+        os.makedirs(sitepackages_dir, 0o770, False)
     filepath = os.path.join(
-        site.getusersitepackages(), "reapy_generated_api.py"
+        sitepackages_dir, "reapy_generated_api.py"
     )
     with open(filepath, "w") as file:
         lines = [

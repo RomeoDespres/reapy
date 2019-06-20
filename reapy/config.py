@@ -6,6 +6,7 @@ from configparser import ConfigParser
 from collections import OrderedDict
 import json
 import os
+import shutil
 
 REAPY_SERVER_PORT = 2306
 WEB_INTERFACE_PORT = 2307
@@ -39,10 +40,18 @@ class Config(ConfigParser):
     def __init__(self):
         super(Config, self).__init__(strict=False, delimiters="=", dict_type=CaseInsensitiveDict)
         self.optionxform = str
-        self.read(reapy.get_ini_file())
+        self.ini_file = reapy.get_ini_file()
+        self.read(self.ini_file, encoding='utf8')
 
     def write(self):
-        with open(reapy.get_ini_file(), "w") as f:
+        # Backup config state before user has ever tried reapy
+        before_reapy_file = self.ini_file + '.before-reapy.bak'
+        if not os.path.exists(before_reapy_file):
+            shutil.copy(self.ini_file, before_reapy_file)
+        # Backup current config
+        shutil.copy(self.ini_file, ini_file + '.bak')
+        # Write config
+        with open(self.ini_file, "w", encoding='utf8') as f:
             super(Config, self).write(f, False)
 
 
