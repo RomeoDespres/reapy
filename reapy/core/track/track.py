@@ -300,9 +300,43 @@ class Track(ReapyObject):
         fxs = reapy.FXList(self)
         return fxs
 
+    def get_info_string(self, param_name):
+        return RPR.GetSetMediaTrackInfo_String(self.id, param_name, "", False)[3]
+
     def get_info_value(self, param_name):
         value = RPR.GetMediaTrackInfo_Value(self.id, param_name)
         return value
+
+    @property
+    def GUID(self):
+        """
+        Track's GUID.
+
+        16-byte GUID, can query or update.
+        If using a _String() function, GUID is a string {xyz-...}.
+
+        :type: str
+        """
+        return RPR.GetTrackGUID(self.id)
+
+    @GUID.setter
+    def GUID(self, guid_string):
+        self.set_info_string("GUID", guid_string)
+
+    @property
+    def icon(self):
+        """
+        Track icon.
+
+        Full filename, or relative to resource_path/data/track_icons.
+
+        :type: str
+        """
+        return self.get_info_string("P_ICON")
+
+    @icon.setter
+    def icon(self, filename):
+        self.set_info_string("P_ICON", filename)
 
     @property
     def instrument(self):
@@ -471,6 +505,10 @@ class Track(ReapyObject):
         _, _, name, _ = RPR.GetTrackName(self.id, "", 2048)
         return name
 
+    @name.setter
+    def name(self, track_name):
+        self.set_info_string("P_NAME", track_name)
+
     @property
     def parent_track(self):
         """
@@ -514,6 +552,9 @@ class Track(ReapyObject):
         """
         sends = Program(code, "sends").run(track=self)[0]
         return sends
+
+    def set_info_string(self, param_name, param_string):
+        RPR.GetSetMediaTrackInfo_String(self.id, param_name, param_string, True)
 
     def solo(self):
         """Solo track (do nothing if track is already solo)."""
