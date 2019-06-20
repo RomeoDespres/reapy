@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Methods and properties on `Track`:
+  * Methods [`Track.get_info_string`], [`Track.set_info_string`]
+  * Properties [`Track.GUID`] and [`Track.icon`].
+  * Property setter for [`Track.name`].
 - Access to tracks by name (example: `project.tracks["PIANO"]`)
 - Track selection helpers at the project level:
   * Methods [`Project.select_all_tracks`], [`Project.unselect_all_tracks`]
