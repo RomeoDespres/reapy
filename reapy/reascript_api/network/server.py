@@ -113,7 +113,7 @@ class Server(Socket):
             try:
                 connection = self.connections[address]
                 self._send_result(connection, result)
-            except KeyError:
+            except (KeyError, BrokenPipeError):
                 # Happens when the client requested to disconnect.
                 # Nothing must be returned in that case.
                 pass
