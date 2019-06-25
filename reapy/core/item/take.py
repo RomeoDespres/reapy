@@ -100,21 +100,44 @@ class Take(ReapyObject):
         --------
         Take.sort_events
         """
-        code = """
         if unit == "beats":
-            args[3] = take.track._get_project().beats_to_time(args[3])
-            args[4] = take.track._get_project().beats_to_time(args[4])
-            unit = "seconds"
-        if unit == "seconds":
-            args[3] = take.time_to_ppq(args[3])
-            args[4] = take.time_to_ppq(args[4])
-        RPR.MIDI_InsertNote(*args)
-        """
+            item_start_seconds = self.item.position
+            take_start_beat = self.track.project.time_to_beats(item_start_seconds)
+            start = self.beat_to_ppq(take_start_beat + start)
+            end = self.beat_to_ppq(take_start_beat + end)
+        elif unit == "seconds":
+            item_start_seconds = self.item.position
+            start = self.time_to_ppq(item_start_seconds + start)
+            end = self.time_to_ppq(item_start_seconds + end)
+        elif unit != 'ppq':
+            raise ValueError('unit param should be one of seconds|beats|ppq')
         args = (
             self.id, selected, muted, start, end, channel, pitch, velocity,
             sort
         )
-        Program(code).run(take=self, unit=unit, args=args)
+        RPR.MIDI_InsertNote(*args)
+
+    def beat_to_ppq(self, beat):
+        """
+        Convert beat number (from project start) to MIDI ticks (of the take).
+
+        Parameters
+        ----------
+        beat : float
+            Beat time to convert in beats.
+
+        Returns
+        -------
+        ppq : float
+            Converted time in MIDI ticks of current take.
+
+        See also
+        --------
+        Take.ppq_to_beat
+        Take.time_to_ppq
+        """
+        ppq = RPR.MIDI_GetPPQPosFromProjQN(self.id, beat)
+        return ppq
 
     @property
     def cc_events(self):
@@ -246,6 +269,28 @@ class Take(ReapyObject):
         :type: NoteList
         """
         return reapy.NoteList(self)
+
+    def ppq_to_beat(self, ppq):
+        """
+        Convert time in MIDI ticks (from take's start) to beats (from project's start).
+
+        Parameters
+        ----------
+        ppq : float
+            Time to convert in MIDI ticks.
+
+        Returns
+        -------
+        beat : float
+            Converted time in beats.
+
+        See also
+        --------
+        Take.beat_to_ppq
+        Take.ppq_to_time
+        """
+        beat = RPR.MIDI_GetProjQNFromPPQPos(self.id, ppq)
+        return beat
 
     def ppq_to_time(self, ppq):
         """
