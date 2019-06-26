@@ -152,4 +152,7 @@ def enable_dist_api():
 
 def get_activate_reapy_server_path():
     """Return path to the ``activate_reapy_server`` ReaScript."""
-    return os.path.abspath(activate_reapy_server.__file__)
+    script_path = os.path.abspath(activate_reapy_server.__file__)
+    if script_path.endswith(('.pyc', '.pyw')):
+        script_path = script_path[:-1]
+    return script_path
