@@ -62,6 +62,7 @@ class Take(ReapyObject):
         fx = reapy.FX(self, index)
         return fx
 
+    @Program.run_inside
     def add_note(
         self, start, end, pitch, velocity=100, channel=0, selected=False,
         muted=False, unit="seconds", sort=True

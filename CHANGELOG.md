@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Decorator [`Program.run_inside`] to use Program with whole functions and methods.
 - Methods on `Take`:
   * Methods [`Take.beat_to_ppq`], [`Take.ppq_to_beat`]
 - Context managers + decorators [`reapy.prevent_ui_refresh`], [`reapy.reaprint`], [`reapy.undo_block`]
