@@ -20,6 +20,7 @@ All notable changes to this project will be documented in this file.
   * Properties [`Track.is_solo`] and [`Track.is_muted`]. Manually setting them is equivalent to calling the methods above.
 
 ### Fixed
+- Fix `BrokenPipeError` when an external app disconnects silently
 - Fix setting color in [`Project.add_marker`] and [`Project.add_region`] methods
 
 ## [0.3.0](https://github.com/RomeoDespres/reapy/releases/tag/0.3.0) - 2019-05-08
