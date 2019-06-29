@@ -6,14 +6,14 @@ import json
 
 class ClassCache(dict):
 
-    __core__ = None
+    _core = None
 
     def __missing__(self, key):
-        if self.__core__ is None:
+        if self._core is None:
             # The import is here because otherwise there is an import loop
             # and to perform import just once.
-            self.__core__ = importlib.import_module("reapy.core")
-        self[key] = getattr(self.__core__, key)
+            self._core = importlib.import_module("reapy.core")
+        self[key] = getattr(self._core, key)
         return self[key]
 
 
