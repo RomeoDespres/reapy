@@ -382,16 +382,15 @@ def perform_action(action_id):
     RPR.Main_OnCommand(action_id, 0)
 
 
-class _PreventUIRefresh(contextlib.ContextDecorator):
+class prevent_ui_refresh(contextlib.ContextDecorator):
     """Class to prevent UI refresh on certain pieces of code.
 
     Its instance can be used both as decorator and as context manager:
 
-    >>> prevent_ui_refresh = _PreventUIRefresh()
-    >>> with prevent_ui_refresh:
+    >>> with reapy.prevent_ui_refresh():
     ...     reapy.Project.add_track()
 
-    >>> @prevent_ui_refresh
+    >>> @prevent_ui_refresh()
     >>> def some_function(*args, **kwargs):
     ...     reapy.Project.add_track()
 
@@ -404,10 +403,6 @@ class _PreventUIRefresh(contextlib.ContextDecorator):
         RPR.PreventUIRefresh(-1)
 
 
-# define ready instance to use as reapy.prevent_ui_refresh
-prevent_ui_refresh = _PreventUIRefresh()
-
-
 def print(*args, **kwargs):
     """
     Alias to ReaProject.show_console_message.
@@ -415,17 +410,16 @@ def print(*args, **kwargs):
     show_console_message(*args, **kwargs)
 
 
-class _Print2ReaperConsole(contextlib.ContextDecorator):
+class reaprint(contextlib.ContextDecorator):
     """Class to send all prints to ReaperConsole.
 
     Its instance can be used both as decorator and context manager:
 
-    >>> reaprint = _Print2ReaperConsole()
-    >>> with reaprint:
+    >>> with reapy.reaprint():
     ...     print('This will go to the console!')
     ...     print('All these contexted will go to the console!')
 
-    >>> @reaprint
+    >>> @reapy.reaprint()
     >>> def some_function(*args, **kwargs):
     ...     print('This will go to the console!')
     ...     print('All these decorated prints will go to the console!')
@@ -439,10 +433,6 @@ class _Print2ReaperConsole(contextlib.ContextDecorator):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         sys.stdout = self._original_stdouts.pop()
-
-
-# define ready instance to use as reapy.reaprint
-reaprint = _Print2ReaperConsole()
 
 
 def remove_reascript(path, section_id=0, commit=True):
@@ -660,16 +650,15 @@ def test_api():
     RPR.APITest()
 
 
-class _UndoBlock(contextlib.ContextDecorator):
+class undo_block(contextlib.ContextDecorator):
     """Class to register undo block.
 
     Its instance can be used both as decorator and context manager:
 
-    >>> undo_block = _UndoBlock
-    >>> with undo_block('add track'):
+    >>> with reapy.undo_block('add track'):
     ...     reapy.Project.add_track()
 
-    >>> @undo_block('add track')
+    >>> @reapy.undo_block('add track')
     >>> def some_function(*args, **kwargs):
     ...     reapy.Project.add_track()
 
@@ -687,10 +676,6 @@ class _UndoBlock(contextlib.ContextDecorator):
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         RPR.Undo_EndBlock(self.undo_name, self.flags)
-
-
-# define function-like name to use as reapy.undo_block(name, flags)
-undo_block = _UndoBlock
 
 
 def update_arrange():
