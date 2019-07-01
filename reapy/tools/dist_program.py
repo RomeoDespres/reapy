@@ -15,6 +15,33 @@ if not reapy.is_inside_reaper():
         warnings.warn(DisabledDistAPIWarning())
 
 
+class Property(property):
+
+    def __init__(self, func, *args, **kwargs):
+        super().__init__(self._wrapper(func, 'fget'), *args, **kwargs)
+
+    def getter(self, func):
+        super().__init__(self._wrapper(func, 'fget'))
+        return self
+
+    def setter(self, func):
+        super().__init__(self.fget, self._wrapper(func, 'fset'))
+        return self
+
+    def deleter(self, func):
+        super().__init__(self.fget, self.fset, self._wrapper(func, 'fdel'))
+        return self
+
+    def _wrapper(self, func, method_name):
+        @functools.wraps(func)
+        def _wrap(*args, **kwargs):
+            program = Program(func, None)
+            return program.run(
+                args=args, kwargs=kwargs, property_method=method_name
+            )
+        return _wrap
+
+
 class Program(program.Program):
 
     @staticmethod
@@ -41,7 +68,7 @@ class Program(program.Program):
             Should only be able to be called from outside Reaper.
             Parent class' method does not actually decorate `func`.
 
-            TODO: support wrapping property getters/setters if possible.
+            NOTE: to optimize a property use @Program.property instead.
         """
         # check if the decorated function is inside reapy
         func_module = func.__module__
@@ -54,3 +81,18 @@ class Program(program.Program):
             program = Program(func, None)
             return program.run(args=args, kwargs=kwargs)
         return _wrap
+
+    @staticmethod
+    def property(func):
+        """Decorator to make property getter/setter/deleter executable
+            inside Reaper when called from an external app.
+
+            Should only be able to be called from outside Reaper.
+            Parent class' method does not actually decorate `func`.
+        """
+        # check if the decorated property is inside reapy
+        func_module = func.__module__
+        if func_module != 'reapy' and not func_module.startswith('reapy.'):
+            raise RuntimeError('Cannot decorate non-reapy class property!')
+
+        return Property(func)

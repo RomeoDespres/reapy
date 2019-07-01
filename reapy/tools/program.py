@@ -136,8 +136,14 @@ class Program:
             Output values.
         """
         if self._func is not None:
-            # func wrapped with Program.run_inside and called from external code
-            return self._func(*input['args'], **input['kwargs'])
+            # func wrapped with Program.run_inside or Program.property
+            # and called from external code
+            if 'property_method' in input:
+                # self._func is a property, methods may be fget|fset|fdel
+                _func = getattr(self._func, input['property_method'])
+            else:
+                _func = self._func
+            return _func(*input['args'], **input['kwargs'])
 
         input.update({"RPR": RPR, "reapy": reapy})
         exec(self._code, input)
@@ -147,3 +153,7 @@ class Program:
     @staticmethod
     def run_inside(func):
         return func
+
+    @staticmethod
+    def property(func):
+        return __builtins__['property'](func)

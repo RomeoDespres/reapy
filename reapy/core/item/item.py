@@ -180,7 +180,7 @@ class Item(ReapyObject):
         left, right = self, Item(right_id)
         return left, right
 
-    @property
+    @Program.property
     def takes(self):
         """
         Return list of all takes of media item.
@@ -190,15 +190,12 @@ class Item(ReapyObject):
         takes : list of Take
             List of all takes of media item.
         """
-        code = """
-        n_takes = RPR.GetMediaItemNumTakes(item_id)
-        take_ids = [RPR.GetMediaItemTake(item_id, i) for i in range(n_takes)]
-        """
-        take_ids = Program(code, "take_ids").run(item_id=self.id)[0]
+        n_takes = RPR.GetMediaItemNumTakes(self.id)
+        take_ids = [RPR.GetMediaItemTake(self.id, i) for i in range(n_takes)]
         takes = [reapy.Take(take_id) for take_id in take_ids]
         return takes
 
-    @property
+    @Program.property
     def track(self):
         """
         Parent track of item.
