@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Context managers + decorators [`reapy.prevent_ui_refresh`], [`reapy.reaprint`], [`reapy.undo_block`]
+- [`reapy.inside_reaper`] can now be used as a function decorator, too
 - Methods and properties on `Track`:
   * Methods [`Track.get_info_string`], [`Track.set_info_string`]
   * Properties [`Track.GUID`] and [`Track.icon`].
