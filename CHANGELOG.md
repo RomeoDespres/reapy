@@ -19,6 +19,9 @@ All notable changes to this project will be documented in this file.
   * Methods [`Track.solo`], [`Track.mute`], [`Track.unsolo`], [`Track.unmute`],
   * Properties [`Track.is_solo`] and [`Track.is_muted`]. Manually setting them is equivalent to calling the methods above.
 
+### Improved
+- External code can work about 10% faster due to refactoring `tools.json` encoding and decoding.
+
 ### Fixed
 - Fix `BrokenPipeError` when an external app disconnects silently
 - Fix setting color in [`Project.add_marker`] and [`Project.add_region`] methods

@@ -4,12 +4,26 @@ import importlib
 import json
 
 
+class ClassCache(dict):
+
+    _core = None
+
+    def __missing__(self, key):
+        if self._core is None:
+            # The import is here because otherwise there is an import loop
+            # and to perform import just once.
+            self._core = importlib.import_module("reapy.core")
+        self[key] = getattr(self._core, key)
+        return self[key]
+
+
+_CLASS_CACHE = ClassCache()
+
+
 class ReapyEncoder(json.JSONEncoder):
 
     def default(self, x):
-        # The import is here because otherwise there is an import loop
-        core = importlib.import_module("reapy.core")
-        if any(isinstance(x, getattr(core, c)) for c in core.__all__):
+        if hasattr(x, '_to_dict'):
             return x._to_dict()
         return json.JSONEncoder.default(self, x)
 
@@ -25,7 +39,5 @@ def dumps(x):
 def object_hook(x):
     if "__reapy__" not in x:
         return x
-    # The import is here because otherwise there is an import loop
-    core = importlib.import_module("reapy.core")
-    reapy_class = getattr(core, x["class"])
+    reapy_class = _CLASS_CACHE[x["class"]]
     return reapy_class(*x["args"], **x["kwargs"])
