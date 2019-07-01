@@ -848,7 +848,7 @@ class Project(ReapyObject):
         """
         RPR.OnStopButtonEx(self.id)
 
-    @property
+    @Program.property
     def time_selection(self):
         """
         Project time selection.
@@ -868,11 +868,14 @@ class Project(ReapyObject):
         selection : (float, float)
             Start and end of new time selection in seconds.
         """
-        code = """
-        project.time_selection.start = selection[0]
-        project.time_selection.end = selection[1]
+        self.time_selection._set_start_end(*selection)
+
+    @time_selection.deleter
+    def time_selection(self):
         """
-        Program(code).run(project=self, selection=selection)
+        Delete current time selection.
+        """
+        self.time_selection._set_start_end(0, 0)
 
     @property
     def time_signature(self):
