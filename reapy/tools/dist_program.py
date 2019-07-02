@@ -5,14 +5,14 @@ import reapy
 from reapy.errors import DisabledDistAPIError, DisabledDistAPIWarning
 from . import program
 
-if not reapy.is_inside_reaper():
-    try:
-        from reapy.reascript_api.network import Client, WebInterface
-        WEB_INTERFACE = WebInterface(reapy.config.WEB_INTERFACE_PORT)
-        CLIENT = Client(WEB_INTERFACE.get_reapy_server_port())
-    except DisabledDistAPIError:
-        import warnings
-        warnings.warn(DisabledDistAPIWarning())
+# this module is always imported outside Reaper
+try:
+    from reapy.reascript_api.network import Client, WebInterface
+    WEB_INTERFACE = WebInterface(reapy.config.WEB_INTERFACE_PORT)
+    CLIENT = Client(WEB_INTERFACE.get_reapy_server_port())
+except DisabledDistAPIError:
+    import warnings
+    warnings.warn(DisabledDistAPIWarning())
 
 
 class Property(property):
@@ -61,10 +61,7 @@ class Program(program.Program):
         return func_obj.__module__, func_obj.__qualname__
 
     def run(self, **input):
-        if reapy.is_inside_reaper():
-            return super(Program, self).run(**input)
-        else:
-            return CLIENT.run_program(self, input)
+        return CLIENT.run_program(self, input)
 
     @staticmethod
     def run_inside(func):
