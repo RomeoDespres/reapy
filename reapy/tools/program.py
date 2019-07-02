@@ -130,6 +130,9 @@ class Program:
             If program was created within Program.run_inside decorator
             then input is {'args': args_tuple, 'kwargs': kwargs_dict}
 
+            If program was created within Program.property decorator then it is
+            {'args': args_tuple, 'kwargs': kwargs_dict, 'property_method: str}
+
         Returns
         -------
         output : tuple

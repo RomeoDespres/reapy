@@ -854,6 +854,12 @@ class Project(ReapyObject):
         Project time selection.
 
         time_selection : reapy.TimeSelection
+
+        Can be set and deleted as follows:
+
+        >>> project = reapy.Project()
+        >>> project.time_selection = 3, 8  # seconds
+        >>> del project.time_selection
         """
         time_selection = reapy.TimeSelection(self)
         return time_selection

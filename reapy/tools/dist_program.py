@@ -16,6 +16,8 @@ if not reapy.is_inside_reaper():
 
 
 class Property(property):
+    """Custom property class which executes property methods inside Reaper.
+    """
 
     def __init__(self, func, *args, **kwargs):
         super().__init__(self._wrapper(func, 'fget'), *args, **kwargs)
