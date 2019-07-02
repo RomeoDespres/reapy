@@ -34,7 +34,8 @@ class Property(property):
         super().__init__(self.fget, self.fset, self._wrapper(func, 'fdel'))
         return self
 
-    def _wrapper(self, func, method_name):
+    @staticmethod
+    def _wrapper(func, method_name):
         @functools.wraps(func)
         def _wrap(*args, **kwargs):
             program = Program(func, None)
