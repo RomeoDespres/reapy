@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Decorator [`Program.run_inside`] to use Program with whole functions and methods.
+- Decorators [`Program.run_inside`], [`Program.property`] to use Program with whole functions, methods and properties.
 - Methods on `Take`:
   * Methods [`Take.beat_to_ppq`], [`Take.ppq_to_beat`]
 - Context managers + decorators [`reapy.prevent_ui_refresh`], [`reapy.reaprint`], [`reapy.undo_block`]
@@ -28,6 +28,7 @@ All notable changes to this project will be documented in this file.
 - External code can work about 10% faster due to refactoring `tools.json` encoding and decoding.
 
 ### Fixed
+- Fix `Project.time_selection` setter (wouldn't set initial non-zero start values properly)
 - Fix `Take.add_note` when adding notes with `unit='beats'`
 - Fix `BrokenPipeError` when an external app disconnects silently
 - Fix setting color in [`Project.add_marker`] and [`Project.add_region`] methods
