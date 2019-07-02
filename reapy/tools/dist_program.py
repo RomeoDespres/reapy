@@ -49,12 +49,16 @@ class Program(program.Program):
 
     @staticmethod
     def from_function(function_name):
-        program = Program((None, function_name), None)
+        program = RPRProgram((None, function_name), None)
 
         def g(*args, **kwargs):
             return program.run(args=args, kwargs=kwargs)
 
         return g
+
+    def parse_func(self, func_obj):
+        # got func in external code, need to encode it to send to Reaper
+        return func_obj.__module__, func_obj.__qualname__
 
     def run(self, **input):
         if reapy.is_inside_reaper():
@@ -98,3 +102,10 @@ class Program(program.Program):
             raise RuntimeError('Cannot decorate non-reapy class property!')
 
         return Property(func)
+
+
+class RPRProgram(Program):
+
+    def parse_func(self, func_obj):
+        # it is Program.from_function call
+        return func_obj[1].rsplit('.', 1)

@@ -90,15 +90,9 @@ class Program:
         return (self._code,) + self._output
 
     def parse_func(self, func_obj):
-        if type(func_obj) in (list, tuple):
-            module_name, func_qualname = func_obj
-            if module_name is None:
-                return func_qualname.rsplit('.', 1)
-            # got link to reapy function from outside, let's find it to use
-            self._func = _FUNCTIONS_CACHE[module_name][func_qualname]
-        else:
-            # got func in external code, need to encode it to send to Reaper
-            return func_obj.__module__, func_obj.__qualname__
+        # got link to reapy function from outside, let's find it to use
+        module_name, func_qualname = func_obj
+        self._func = _FUNCTIONS_CACHE[module_name][func_qualname]
 
     def parse_code(self, code):
         """
