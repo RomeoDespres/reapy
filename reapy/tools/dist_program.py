@@ -49,11 +49,10 @@ class Program(program.Program):
 
     @staticmethod
     def from_function(function_name):
-        code = "result = {}(*args, **kwargs)".format(function_name)
-        program = Program(code, "result")
+        program = Program((None, function_name), None)
 
         def g(*args, **kwargs):
-            return program.run(args=args, kwargs=kwargs)[0]
+            return program.run(args=args, kwargs=kwargs)
 
         return g
 

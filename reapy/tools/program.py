@@ -34,7 +34,10 @@ class FunctionsCache(dict):
     """
 
     def __missing__(self, module_name):
-        module = importlib.import_module(module_name)
+        if module_name == 'RPR':
+            module = RPR
+        else:
+            module = importlib.import_module(module_name)
         self[module_name] = ModuleFunctionsCache(module)
         return self[module_name]
 
@@ -67,6 +70,7 @@ class Program:
         """
         if output and output[-1] is None:
             # it is a Program instance created in Program.run_inside decorator
+            # or in Program.from_function
             # otherwise output would be empty or first name would be not None
             self._code = self.parse_func(code)
         else:
@@ -87,8 +91,10 @@ class Program:
 
     def parse_func(self, func_obj):
         if type(func_obj) in (list, tuple):
-            # got link to reapy function from outside, let's find it to use
             module_name, func_qualname = func_obj
+            if module_name is None:
+                return func_qualname.rsplit('.', 1)
+            # got link to reapy function from outside, let's find it to use
             self._func = _FUNCTIONS_CACHE[module_name][func_qualname]
         else:
             # got func in external code, need to encode it to send to Reaper
