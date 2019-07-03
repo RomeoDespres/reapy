@@ -7,6 +7,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Methods on `Take`:
+  * Methods [`Take.beat_to_ppq`], [`Take.ppq_to_beat`]
 - Context managers + decorators [`reapy.prevent_ui_refresh`], [`reapy.reaprint`], [`reapy.undo_block`]
 - [`reapy.inside_reaper`] can now be used as a function decorator, too
 - Methods and properties on `Track`:
@@ -25,6 +27,7 @@ All notable changes to this project will be documented in this file.
 - External code can work about 10% faster due to refactoring `tools.json` encoding and decoding.
 
 ### Fixed
+- Fix `Take.add_note` when adding notes with `unit='beats'`
 - Fix `BrokenPipeError` when an external app disconnects silently
 - Fix setting color in [`Project.add_marker`] and [`Project.add_region`] methods
 
