@@ -41,7 +41,7 @@ class TimeSelection(ReapyObject):
     def _kwargs(self):
         return {"parent_project_id": self.project_id}
 
-    @property
+    @Program.property
     def end(self):
         """
         Return time selection end in seconds.
@@ -95,7 +95,7 @@ class TimeSelection(ReapyObject):
         else:
             self.unloop()
 
-    @property
+    @Program.property
     def length(self):
         """
         Return time selection length in seconds.
@@ -120,14 +120,11 @@ class TimeSelection(ReapyObject):
         length : float
             Time selection length in seconds.
         """
-        code = """
         infos = list(RPR.GetSet_LoopTimeRange2(
-            project_id, False, False, 0, 0, False
+            self.project_id, False, False, 0, 0, False
         ))
         infos[1], infos[4] = True, infos[3] + length
         RPR.GetSet_LoopTimeRange2(*infos)
-        """
-        Program(code).run(project_id=self.project_id, length=length)
 
     def loop(self):
         """
@@ -140,7 +137,7 @@ class TimeSelection(ReapyObject):
         """
         RPR.GetSetRepeatEx(self.project_id, 1)
 
-    @property
+    @Program.property
     def start(self):
         """
         Return time selection start in seconds.
