@@ -26,11 +26,22 @@ class TimeSelection(ReapyObject):
         )
         return infos
 
+    def _set_start_end(self, start=None, end=None):
+        infos = list(RPR.GetSet_LoopTimeRange2(
+            self.project_id, False, False, 0, 0, False
+        ))
+        if start is None:
+            start = infos[3]
+        if end is None:
+            end = infos[4]
+        infos[1], infos[3], infos[4] = True, start, end
+        RPR.GetSet_LoopTimeRange2(*infos)
+
     @property
     def _kwargs(self):
         return {"parent_project_id": self.project_id}
 
-    @property
+    @Program.property
     def end(self):
         """
         Return time selection end in seconds.
@@ -54,14 +65,7 @@ class TimeSelection(ReapyObject):
         end : float
             Time selection end in seconds.
         """
-        code = """
-        infos = list(RPR.GetSet_LoopTimeRange2(
-            project_id, False, False, 0, 0, False
-        ))
-        infos[1], infos[4] = True, end
-        RPR.GetSet_LoopTimeRange2(*infos)
-        """
-        Program(code).run(project_id=self.project_id, end=end)
+        self._set_start_end(end=end)
 
     @property
     def is_looping(self):
@@ -91,7 +95,7 @@ class TimeSelection(ReapyObject):
         else:
             self.unloop()
 
-    @property
+    @Program.property
     def length(self):
         """
         Return time selection length in seconds.
@@ -116,14 +120,11 @@ class TimeSelection(ReapyObject):
         length : float
             Time selection length in seconds.
         """
-        code = """
         infos = list(RPR.GetSet_LoopTimeRange2(
-            project_id, False, False, 0, 0, False
+            self.project_id, False, False, 0, 0, False
         ))
         infos[1], infos[4] = True, infos[3] + length
         RPR.GetSet_LoopTimeRange2(*infos)
-        """
-        Program(code).run(project_id=self.project_id, length=length)
 
     def loop(self):
         """
@@ -136,7 +137,7 @@ class TimeSelection(ReapyObject):
         """
         RPR.GetSetRepeatEx(self.project_id, 1)
 
-    @property
+    @Program.property
     def start(self):
         """
         Return time selection start in seconds.
@@ -160,14 +161,7 @@ class TimeSelection(ReapyObject):
         start : float
             New time selection start.
         """
-        code = """
-        infos = list(RPR.GetSet_LoopTimeRange2(
-            project_id, False, False, 0, 0, False
-        ))
-        infos[1], infos[3] = True, start
-        RPR.GetSet_LoopTimeRange2(*infos)
-        """
-        Program(code).run(project_id=self.project_id, start=start)
+        self._set_start_end(start)
 
     def shift(self, direction=""):
         """

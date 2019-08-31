@@ -114,21 +114,16 @@ class Project(ReapyObject):
         track : Track
             New track.
         """
-        code = """
         current_project = reapy.Project()
-        project.make_current_project()
-        n_tracks = project.n_tracks
+        self.make_current_project()
+        n_tracks = self.n_tracks  # Handle out-of-range index like list.insert
         index = max(-n_tracks, min(index, n_tracks))
         if index < 0:
             index = index % n_tracks
         RPR.InsertTrackAtIndex(index, True)
         current_project.make_current_project()
-        track = reapy.Track(RPR.GetTrack(project.id, index))
+        track = self.tracks[index]
         track.name = name
-        """
-        track, = Program(code, "track").run(
-            project=self, index=index, name=name
-        )
         return track
 
     @property
@@ -854,12 +849,18 @@ class Project(ReapyObject):
         """
         RPR.OnStopButtonEx(self.id)
 
-    @property
+    @Program.property
     def time_selection(self):
         """
         Project time selection.
 
         time_selection : reapy.TimeSelection
+
+        Can be set and deleted as follows:
+
+        >>> project = reapy.Project()
+        >>> project.time_selection = 3, 8  # seconds
+        >>> del project.time_selection
         """
         time_selection = reapy.TimeSelection(self)
         return time_selection
@@ -874,11 +875,14 @@ class Project(ReapyObject):
         selection : (float, float)
             Start and end of new time selection in seconds.
         """
-        code = """
-        project.time_selection.start = selection[0]
-        project.time_selection.end = selection[1]
+        self.time_selection._set_start_end(*selection)
+
+    @time_selection.deleter
+    def time_selection(self):
         """
-        Program(code).run(project=self, selection=selection)
+        Delete current time selection.
+        """
+        self.time_selection._set_start_end(0, 0)
 
     @property
     def time_signature(self):

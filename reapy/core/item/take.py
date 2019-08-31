@@ -62,6 +62,7 @@ class Take(ReapyObject):
         fx = reapy.FX(self, index)
         return fx
 
+    @Program.run_inside
     def add_note(
         self, start, end, pitch, velocity=100, channel=0, selected=False,
         muted=False, unit="seconds", sort=True
@@ -100,25 +101,22 @@ class Take(ReapyObject):
         --------
         Take.sort_events
         """
-        args = [
-            self.id, selected, muted, start, end, channel, pitch, velocity,
-            sort
-        ]
-        code = """
         if unit == "beats":
-            item_start_seconds = take.item.position
-            take_start_beat = take.track.project.time_to_beats(item_start_seconds)
-            args[3] = take.beat_to_ppq(take_start_beat + args[3])
-            args[4] = take.beat_to_ppq(take_start_beat + args[4])
+            item_start_seconds = self.item.position
+            take_start_beat = self.track.project.time_to_beats(item_start_seconds)
+            start = self.beat_to_ppq(take_start_beat + start)
+            end = self.beat_to_ppq(take_start_beat + end)
         elif unit == "seconds":
-            item_start_seconds = take.item.position
-            args[3] = take.time_to_ppq(item_start_seconds + args[3])
-            args[4] = take.time_to_ppq(item_start_seconds + args[4])
+            item_start_seconds = self.item.position
+            start = self.time_to_ppq(item_start_seconds + start)
+            end = self.time_to_ppq(item_start_seconds + end)
         elif unit != 'ppq':
             raise ValueError('unit param should be one of seconds|beats|ppq')
+        args = (
+            self.id, selected, muted, start, end, channel, pitch, velocity,
+            sort
+        )
         RPR.MIDI_InsertNote(*args)
-        """
-        Program(code).run(take=self, unit=unit, args=args)
 
     def beat_to_ppq(self, beat):
         """
