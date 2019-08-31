@@ -99,7 +99,7 @@ class Project(ReapyObject):
         return region
 
     @Program.run_inside
-    def add_track(self, index=0):
+    def add_track(self, index=0, name=""):
         """
         Add track at a specified index.
 
@@ -107,6 +107,8 @@ class Project(ReapyObject):
         ----------
         index : int
             Index at which to insert track.
+        name : str, optional
+            Name of created track.
 
         Returns
         -------
@@ -115,10 +117,15 @@ class Project(ReapyObject):
         """
         current_project = reapy.Project()
         self.make_current_project()
+        n_tracks = self.n_tracks
+        # Handle out-of-range index like list.insert
+        index = max(-n_tracks, min(index, n_tracks))
+        if index < 0:
+            index = index % n_tracks
         RPR.InsertTrackAtIndex(index, True)
         current_project.make_current_project()
-        track_id = RPR.GetTrack(self.id, index)
-        track = reapy.Track(track_id)
+        track = self.tracks[index]
+        track.name = name
         return track
 
     @property
