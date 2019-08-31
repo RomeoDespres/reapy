@@ -25,6 +25,7 @@ All notable changes to this project will be documented in this file.
 
 ### Improved
 - External code can work about 10% faster due to refactoring `tools.json` encoding and decoding.
+- [`Project.add_track`] supports `name` keyword argument and negative indices.
 
 ### Fixed
 - Fix `Take.add_note` when adding notes with `unit='beats'`
