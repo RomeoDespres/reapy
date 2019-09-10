@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- [`Project.make_current_project`] can be used as a context manager to temporarily set a project as current project.
 - Decorators [`Program.run_inside`], [`Program.property`] to use Program with whole functions, methods and properties.
 - Methods on `Take`:
   * Methods [`Take.beat_to_ppq`], [`Take.ppq_to_beat`]
@@ -29,6 +30,7 @@ All notable changes to this project will be documented in this file.
 - [`Project.add_track`] supports `name` keyword argument and negative indices.
 
 ### Fixed
+- No more lost data when transferring too long lists over the local network (issue [12](#12))
 - Fix `Project.time_selection` setter (wouldn't set initial non-zero start values properly)
 - Fix `Take.add_note` when adding notes with `unit='beats'`
 - Fix `BrokenPipeError` when an external app disconnects silently

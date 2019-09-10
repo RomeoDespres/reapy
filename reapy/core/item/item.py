@@ -1,7 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.tools import Program
 
 
 class Item(ReapyObject):
@@ -47,7 +46,7 @@ class Item(ReapyObject):
     def delete(self):
         """Delete item."""
         code = "RPR.DeleteTrackMediaItem(item.track.id, item.id)"
-        Program(code).run(item=self)        
+        Program(code).run(item=self)
 
     def get_info_value(self, param_name):
         value = RPR.GetMediaItemInfo_Value(self.id, param_name)
@@ -180,7 +179,8 @@ class Item(ReapyObject):
         left, right = self, Item(right_id)
         return left, right
 
-    @Program.property
+    @reapy.inside_reaper()
+    @property
     def takes(self):
         """
         Return list of all takes of media item.
@@ -195,7 +195,8 @@ class Item(ReapyObject):
         takes = [reapy.Take(take_id) for take_id in take_ids]
         return takes
 
-    @Program.property
+    @reapy.inside_reaper()
+    @property
     def track(self):
         """
         Parent track of item.

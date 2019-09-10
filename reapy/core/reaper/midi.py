@@ -1,6 +1,5 @@
 import reapy
 import reapy.reascript_api as RPR
-from reapy.tools import Program
 
 
 def get_active_editor():
@@ -18,6 +17,7 @@ def get_active_editor():
     return editor
 
 
+@reapy.inside_reaper()
 def get_input_names():
     """
     Return names of all input channels.
@@ -27,12 +27,8 @@ def get_input_names():
     names : list of str
         Names of input channels.
     """
-    code = """
     n_channels = reapy.midi.get_n_inputs()
-    names = [RPR.GetMIDIInputName(i, "", 2048)[2] for i in range(n_channels)]
-    """
-    names, = Program(code, "names").run()
-    return names
+    return [RPR.GetMIDIInputName(i, "", 2048)[2] for i in range(n_channels)]
 
 
 def get_max_inputs():
@@ -87,6 +83,7 @@ def get_n_outputs():
     return n_outputs
 
 
+@reapy.inside_reaper()
 def get_output_names():
     """
     Return names of all output channels.
@@ -96,12 +93,8 @@ def get_output_names():
     names : list of str
         Names of output channels.
     """
-    code = """
     n_channels = reapy.midi.get_n_outputs()
-    names = [RPR.GetMIDIOutputName(i, "", 2048)[2] for i in range(n_channels)]
-    """
-    names, = Program(code, "names").run()
-    return names
+    return [RPR.GetMIDIOutputName(i, "", 2048)[2] for i in range(n_channels)]
 
 
 def reinit():

@@ -1,7 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.tools import Program
 
 
 class Region(ReapyObject):
@@ -21,20 +20,15 @@ class Region(ReapyObject):
         self.project_id = parent_project_id
         self.index = index
 
+    @reapy.inside_reaper()
     def _get_enum_index(self):
         """
         Return region index as needed by RPR.EnumProjectMarkers2.
         """
-        code = """
-        index = [
-            i for i, r in enumerate(project.regions)
+        return next(
+            i for i, r in enumerate(reapy.Project(self.project_id).regions)
             if r.index == region.index
-        ][0]
-        """
-        index = Program(code, "index").run(
-            region=self, project=reapy.Project(self.project_id)
-        )[0]
-        return index
+        )
 
     @property
     def _kwargs(self):
@@ -60,6 +54,7 @@ class Region(ReapyObject):
         """
         RPR.SetRegionRenderMatrix(self.project_id, self.index, track.id, 1)
 
+    @reapy.inside_reaper()
     def add_rendered_tracks(self, tracks):
         """
         Efficiently add  several tracks to region render matrix.
@@ -73,12 +68,10 @@ class Region(ReapyObject):
         --------
         Region.remove_rendered_tracks
         """
-        code = """
         for track in tracks:
-            region.add_rendered_track(track)
-        """
-        Program(code).run(region=self, tracks=tracks)
+            self.add_rendered_track(track)
 
+    @reapy.inside_reaper()
     @property
     def end(self):
         """
@@ -87,14 +80,9 @@ class Region(ReapyObject):
         :type: float
             Region end in seconds.
         """
-        code = """
-        index = region._get_enum_index()
-        end = RPR.EnumProjectMarkers2(
-            region.project_id, index, 0, 0, 0, 0, 0
-        )[5]
-        """
-        end = Program(code, "end").run(region=self)[0]
-        return end
+        index = self._get_enum_index()
+        args = self.project_id, index, 0, 0, 0, 0, 0
+        return RPR.EnumProjectMarkers2(*args)[5]
 
     @end.setter
     def end(self, end):
@@ -106,12 +94,8 @@ class Region(ReapyObject):
         end : float
             region end in seconds.
         """
-        code = """
-        RPR.SetProjectMarker2(
-            region.project_id, region.index, True, region.start, end, ""
-        )
-        """
-        Program(code).run(region=self, end=end)
+        args = self.project_id, self.index, True, self.start, end, ""
+        RPR.SetProjectMarker2(*args)
 
     def delete(self):
         """
@@ -137,6 +121,7 @@ class Region(ReapyObject):
         """
         RPR.SetRegionRenderMatrix(self.project_id, self.index, track.id, -1)
 
+    @reapy.inside_reaper()
     def remove_rendered_tracks(self, tracks):
         """
         Efficiently remove  several tracks from region render matrix.
@@ -150,12 +135,10 @@ class Region(ReapyObject):
         --------
         Region.add_rendered_tracks
         """
-        code = """
         for track in tracks:
-            region.remove_rendered_track(track)
-        """
-        Program(code).run(region=self, tracks=tracks)
+            self.remove_rendered_track(track)
 
+    @reapy.inside_reaper()
     @property
     def rendered_tracks(self):
         """
@@ -163,20 +146,17 @@ class Region(ReapyObject):
 
         :type: list of Track
         """
-        code = """
         i = 0
         tracks = []
         while i == 0 or tracks[-1]._is_defined:
             track_id = RPR.EnumRegionRenderMatrix(
-                region.project_id, region.index, i
+                self.project_id, self.index, i
             )
             tracks.append(reapy.Track(track_id))
             i += 1
-        tracks = tracks[:-1]
-        """
-        rendered_tracks = Program(code, "tracks").run(region=self)[0]
-        return rendered_tracks
+        return tracks[:-1]
 
+    @reapy.inside_reaper()
     @property
     def start(self):
         """
@@ -184,14 +164,8 @@ class Region(ReapyObject):
 
         :type: float
         """
-        code = """
-        index = region._get_enum_index()
-        start = RPR.EnumProjectMarkers2(
-            region.project_id, index, 0, 0, 0, 0, 0
-        )[4]
-        """
-        start = Program(code, "start").run(region=self)[0]
-        return start
+        args = self.project_id, self._get_enum_index(), 0, 0, 0, 0, 0
+        return RPR.EnumProjectMarkers2(*args)[4]
 
     @start.setter
     def start(self, start):
@@ -203,9 +177,6 @@ class Region(ReapyObject):
         start : float
             region start in seconds.
         """
-        code = """
         RPR.SetProjectMarker2(
-            region.project_id, region.index, 1, start, region.end, ""
+            self.project_id, self.index, 1, start, self.end, ""
         )
-        """
-        Program(code).run(region=self, start=start)

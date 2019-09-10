@@ -1,7 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
-from reapy.tools import Program
 from reapy.errors import UndefinedEnvelopeError
 
 
@@ -51,14 +50,7 @@ class Track(ReapyObject):
             self._project = project
         elif isinstance(id, str) and not id.startswith("(MediaTrack*)"):
             # id is a track name
-            code = """
-            id = project.tracks[-1].id
-            for track in project.tracks:
-                if track.name == name:
-                    id = track.id
-                    break
-            """
-            id, = Program(code, "id").run(project=project, name=id)
+            id = project._get_track_by_name(id).id
             self._project = project
         # id is now a real ReaScript ID
         self.id = id
@@ -67,6 +59,7 @@ class Track(ReapyObject):
     def _args(self):
         return self.id,
 
+    @reapy.inside_reaper()
     def _get_project(self):
         """
         Return parent project of track.
@@ -74,13 +67,9 @@ class Track(ReapyObject):
         Should only be used internally; one should directly access
         Track.project instead of calling this method.
         """
-        code = """
         for project in reapy.get_projects():
-            if track.id in [t.id for t in project.tracks]:
-                break
-        """
-        project, = Program(code, "project").run(track=self)
-        return project
+            if self.id in [t.id for t in project.tracks]:
+                return project
 
     def add_audio_accessor(self):
         """
@@ -130,6 +119,7 @@ class Track(ReapyObject):
         fx = reapy.FX(self, index)
         return fx
 
+    @reapy.inside_reaper()
     def add_item(self, start=0, end=None, length=0):
         """
         Create new item on track and return it.
@@ -151,15 +141,9 @@ class Track(ReapyObject):
         """
         if end is None:
             end = start + length
-        code = """
-        item_id = RPR.AddMediaItemToTrack(track_id)
-        item = reapy.Item(item_id)
+        item = reapy.Item(RPR.AddMediaItemToTrack(self.id))
         item.position = start
         item.length = end - start
-        """
-        item = Program(code, "item").run(
-            track_id=self.id, start=start, end=end
-        )[0]
         return item
 
     def add_midi_item(self, start=0, end=1, quantize=False):

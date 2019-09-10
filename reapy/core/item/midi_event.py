@@ -1,7 +1,6 @@
 import reapy
 import reapy.reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
-from reapy.tools import Program
 
 
 class MIDIEvent(ReapyObject):

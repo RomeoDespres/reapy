@@ -34,7 +34,7 @@ class DistError(Exception):
 
     def __init__(self, tb_string):
         message = (
-            "\n\nAn error occurred while running a Program in REAPER. "
+            "\n\nAn error occurred while running a function inside REAPER. "
             "Traceback was :\n\n{}"
         ).format(tb_string)
         super(DistError, self).__init__(message)

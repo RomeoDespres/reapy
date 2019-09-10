@@ -2,7 +2,6 @@ import reapy
 import reapy.reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
 from reapy.errors import DistError
-from reapy.tools import Program
 
 
 class FXParam(float):
@@ -128,7 +127,7 @@ class FXParam(float):
         Examples
         --------
         Say the parameter range is (0.0, 20.0).
-        
+
         >>> param = fx.params[0]
         >>> param
         10.0
@@ -138,14 +137,14 @@ class FXParam(float):
         If you set the parameter like below, the parameter moves in
         REPAER, but the FXParam object you are using is not valid
         anymore.
-        
+
         >>> param.normalized = 1
         >>> param, param.normalized
         10.0, 0.5
-        
+
         You thus have to grab the updated FXParam from the FX like
         below.
-        
+
         >>> param = fx.params[0]
         >>> param, param.normalized
         20.0, 1.0

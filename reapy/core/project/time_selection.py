@@ -1,6 +1,6 @@
+import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.tools import Program
 
 
 class TimeSelection(ReapyObject):
@@ -41,7 +41,8 @@ class TimeSelection(ReapyObject):
     def _kwargs(self):
         return {"parent_project_id": self.project_id}
 
-    @Program.property
+    @reapy.inside_reaper()
+    @property
     def end(self):
         """
         Return time selection end in seconds.
@@ -95,7 +96,8 @@ class TimeSelection(ReapyObject):
         else:
             self.unloop()
 
-    @Program.property
+    @reapy.inside_reaper()
+    @property
     def length(self):
         """
         Return time selection length in seconds.
@@ -137,7 +139,8 @@ class TimeSelection(ReapyObject):
         """
         RPR.GetSetRepeatEx(self.project_id, 1)
 
-    @Program.property
+    @reapy.inside_reaper()
+    @property
     def start(self):
         """
         Return time selection start in seconds.

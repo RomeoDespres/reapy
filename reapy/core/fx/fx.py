@@ -4,7 +4,6 @@ import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
 from reapy.errors import DistError, UndefinedFXParamError
-from reapy.tools import Program
 
 
 class FX(ReapyObject):

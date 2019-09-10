@@ -1,7 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.tools import Program
 
 
 class Envelope(ReapyObject):
@@ -51,6 +50,7 @@ class Envelope(ReapyObject):
         """
         RPR.DeleteEnvelopePointRange(self.id, start, end)
 
+    @reapy.inside_reaper()
     def get_derivatives(self, time, raw=False):
         """
         Return envelope derivatives of order 1, 2, 3 at a given time.
@@ -76,18 +76,14 @@ class Envelope(ReapyObject):
         >>> envelope.get_value(10)  # human-readable
         ('10%L', '21%L', '21%L')
         """
-        code = """
-        d, d2, d3 = RPR.Envelope_Evaluate(env_id, time, 1, 1, 0, 0, 0, 0)[6:]
+        d, d2, d3 = RPR.Envelope_Evaluate(self.id, time, 1, 1, 0, 0, 0, 0)[6:]
         if not raw:
-            d = RPR.Envelope_FormatValue(env_id, d, "", 2048)[2]
-            d2 = RPR.Envelope_FormatValue(env_id, d2, "", 2048)[2]
-            d3 = RPR.Envelope_FormatValue(env_id, d3, "", 2048)[2]
-        """
-        d, d2, d3 = Program(code, "d", "d2", "d3").run(
-            env_id=self.id, time=time, raw=raw
-        )
+            d = RPR.Envelope_FormatValue(self.id, d, "", 2048)[2]
+            d2 = RPR.Envelope_FormatValue(self.id, d2, "", 2048)[2]
+            d3 = RPR.Envelope_FormatValue(self.id, d3, "", 2048)[2]
         return d, d2, d3
 
+    @reapy.inside_reaper()
     def get_value(self, time, raw=False):
         """
         Return envelope value at a given time.
@@ -114,14 +110,9 @@ class Envelope(ReapyObject):
         >>> envelope.get_value(10)  # human-readable
         '51%R'
         """
-        code = """
-        value = RPR.Envelope_Evaluate(env_id, time, 0, 0, 0, 0, 0, 0)[5]
+        value = RPR.Envelope_Evaluate(self.id, time, 0, 0, 0, 0, 0, 0)[5]
         if not raw:
-            value = RPR.Envelope_FormatValue(env_id, value, "", 2048)[2]
-        """
-        value = Program(code, "value").run(
-            env_id=self.id, time=time, raw=raw
-        )[0]
+            value = RPR.Envelope_FormatValue(self.id, value, "", 2048)[2]
         return value
 
     @property

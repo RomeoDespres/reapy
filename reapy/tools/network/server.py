@@ -1,15 +1,11 @@
 """Define Server class."""
 
 import reapy
-from reapy import reascript_api as RPR
 from reapy.tools import json
 from .socket import Socket
 
 import socket
 import traceback
-
-if reapy.is_inside_reaper():
-    from reapy.tools.program import Program
 
 
 class Server(Socket):
@@ -22,7 +18,7 @@ class Server(Socket):
     """
 
     def __init__(self, port):
-        super(Server, self).__init__()
+        super().__init__()
         self.bind(("", port))
         self.listen()
         self.connections = {}
@@ -36,10 +32,11 @@ class Server(Socket):
         except (ConnectionAbortedError, ConnectionResetError):
             # Client has disconnected
             # Pretend client has nicely requested to disconnect
-            code = "server.disconnect(address)"
-            program = Program(code).to_dict()
-            input = {"address": address, "server": self}
-            request = {"program": program, "input": input}
+            input = {"args": (address,), "kwargs":{}}
+            request = {
+                "function": self.disconnect,
+                "input": input
+            }
         return request
 
     def _hold_connection(self, address):
@@ -47,7 +44,7 @@ class Server(Socket):
         result = {"type": "result", "value": None}
         self._send_result(connection, result)
         request = self._get_request(connection, address)
-        while request is None or request["program"][0] != "RELEASE":
+        while request is None or request["function"] != "RELEASE":
             if request is None:
                 request = self._get_request(connection, address)
                 continue
@@ -57,18 +54,17 @@ class Server(Socket):
                 request = self._get_request(connection, address)
             except (ConnectionAbortedError, ConnectionResetError):
                 # request was to disconnect
-                request = {"program": ["RELEASE"]}
+                request = {"function": "RELEASE"}
         result = {"type": "result", "value": None}
         return result
 
     def _process_request(self, request, address):
-        if request["program"][0] == "HOLD":
+        if request["function"] == "HOLD":
             return self._hold_connection(address)
-        program = Program(*request["program"])
+        args, kwargs = request["input"]["args"], request["input"]["kwargs"]
         result = {}
-        request["input"].update({"RPR": RPR, "reapy": reapy})
         try:
-            result["value"] = program.run(**request["input"])
+            result["value"] = request["function"](*args, **kwargs)
             result["type"] = "result"
         except Exception:
             # Errors are sent back to the client instead of raised in REAPER
@@ -83,7 +79,7 @@ class Server(Socket):
 
     @Socket._non_blocking
     def accept(self):
-        connection, address = super(Server, self).accept()
+        connection, address = super().accept()
         self.connections[address] = connection
         connection.send("{}".format(address).encode("ascii"))
 

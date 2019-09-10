@@ -1,7 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.tools import Program
 
 
 class Take(ReapyObject):
@@ -62,7 +61,7 @@ class Take(ReapyObject):
         fx = reapy.FX(self, index)
         return fx
 
-    @Program.run_inside
+    @reapy.inside_reaper()
     def add_note(
         self, start, end, pitch, velocity=100, channel=0, selected=False,
         muted=False, unit="seconds", sort=True
@@ -342,7 +341,7 @@ class Take(ReapyObject):
         reversed order, with ``sort=False`` for efficiency. Thus,
         ``take.notes`` is not time-sorted. ``take.sort_events`` is
         called afterwards so that ``take.notes`` is time-sorted.
-        
+
         >>> for i in range(100):
         ...     take.add_note(99 - i, 100 - i, pitch=0, sort=False)
         ...
