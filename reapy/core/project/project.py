@@ -736,7 +736,7 @@ class Project(ReapyObject):
         ]
         """
         ids = Program(code, "ids").run(project=self)[0]
-        regions = [Region(self, i) for i in ids]
+        regions = [reapy.Region(self, i) for i in ids]
         return regions
 
     def save(self, force_save_as=False):
