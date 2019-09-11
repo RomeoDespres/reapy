@@ -164,6 +164,7 @@ class Take(ReapyObject):
     def get_info_value(self, param_name):
         return RPR.GetMediaItemTakeInfo_Value(self.id, param_name)
 
+    @reapy.inside_reaper()
     @property
     def is_active(self):
         """
@@ -171,12 +172,7 @@ class Take(ReapyObject):
 
         :type: bool
         """
-        code = """
-        from reapy.core.item.take import Take
-        take = Take(take_id)
-        is_active = take == take.item.active_take
-        """
-        return Program(code, "is_active").run(take_id=self.id)[0]
+        return self == self.item.active_take
 
     @property
     def is_midi(self):

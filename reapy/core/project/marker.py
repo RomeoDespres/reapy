@@ -17,23 +17,18 @@ class Marker(ReapyObject):
             )
             assert parent_project is not None, message
             parent_project_id = parent_project.id
+        self.project = reapy.Project(parent_project_id)
         self.project_id = parent_project_id
         self.index = index
 
+    @reapy.inside_reaper()
     def _get_enum_index(self):
         """
         Return marker index as needed by RPR.EnumProjectMarkers2.
         """
-        code = """
-        index = [
-            i for i, m in enumerate(project.markers)
-            if m.index == marker.index
-        ][0]
-        """
-        index = Program(code, "index").run(
-            marker=self, project=reapy.Project(self.project_id)
-        )[0]
-        return index
+        for index, marker in enumerate(self.project.markers):
+            if marker.index == self.index:
+                return index
 
     @property
     def _kwargs(self):
@@ -47,6 +42,7 @@ class Marker(ReapyObject):
         """
         RPR.DeleteProjectMarker(self.project_id, self.index, False)
 
+    @reapy.inside_reaper()
     @property
     def position(self):
         """
@@ -57,14 +53,8 @@ class Marker(ReapyObject):
         position : float
             Marker position in seconds.
         """
-        code = """
-        index = marker._get_enum_index()
-        position = RPR.EnumProjectMarkers2(
-            marker.project_id, index, 0, 0, 0, 0, 0
-        )[4]
-        """
-        position = Program(code, "position").run(marker=self)[0]
-        return position
+        index = self._get_enum_index()
+        return RPR.EnumProjectMarkers2(self.project_id, index, 0, 0, 0, 0, 0)[4]
 
     @position.setter
     def position(self, position):

@@ -43,10 +43,10 @@ class Item(ReapyObject):
         take = reapy.Take(take_id)
         return take
 
+    @reapy.inside_reaper()
     def delete(self):
         """Delete item."""
-        code = "RPR.DeleteTrackMediaItem(item.track.id, item.id)"
-        Program(code).run(item=self)
+        RPR.DeleteTrackMediaItem(self.track.id, self.id)
 
     def get_info_value(self, param_name):
         value = RPR.GetMediaItemInfo_Value(self.id, param_name)

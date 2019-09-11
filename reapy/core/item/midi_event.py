@@ -100,6 +100,7 @@ class CC(MIDIEvent):
             self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         )[6]
 
+    @reapy.inside_reaper()
     @property
     def infos(self):
         """
@@ -110,25 +111,19 @@ class CC(MIDIEvent):
 
         :type: dict
         """
-        code = """
         res = list(RPR.MIDI_GetCC(
-            take.id, index, 0, 0, 0, 0, 0, 0, 0
+            self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         ))[3:]
         res[0] = bool(res[0])
         res[1] = bool(res[1])
-        res[2] = take.ppq_to_time(res[2])
+        res[2] = self.parent.ppq_to_time(res[2])
         res[-2] = res[-2], res[-1]
         res.pop()
         keys = (
             "selected", "muted", "position", "channel_message", "channel",
             "messages"
         )
-        infos = {k: r for k, r in zip(keys, res)}
-        """
-        infos, = Program(code, "infos").run(
-            take=self.parent, index=self.index
-        )
-        return infos
+        return {k: r for k, r in zip(keys, res)}
 
     @property
     def messages(self):
@@ -249,24 +244,18 @@ class Note(MIDIEvent):
 
         :type: dict
         """
-        code = """
         res = list(RPR.MIDI_GetNote(
-            take.id, index, 0, 0, 0, 0, 0, 0, 0
+            self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         ))[3:]
         res[0] = bool(res[0])
         res[1] = bool(res[1])
-        res[2] = take.ppq_to_time(res[2])
-        res[3] = take.ppq_to_time(res[3])
+        res[2] = self.parent.ppq_to_time(res[2])
+        res[3] = self.parent.ppq_to_time(res[3])
         keys = (
             "selected", "muted", "start", "end", "channel", "pitch",
             "velocity"
         )
-        infos = {k: r for k, r in zip(keys, res)}
-        """
-        infos, = Program(code, "infos").run(
-            take=self.parent, index=self.index
-        )
-        return infos
+        return {k: r for k, r in zip(keys, res)}
 
     @property
     def muted(self):

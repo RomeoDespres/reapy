@@ -333,6 +333,7 @@ class Track(ReapyObject):
         instrument = None if fx_index == -1 else reapy.FX(self, fx_index)
         return instrument
 
+    @reapy.inside_reaper()
     @property
     def items(self):
         """
@@ -340,15 +341,11 @@ class Track(ReapyObject):
 
         :type: list of Item
         """
-        code = """
-        n_items = RPR.CountTrackMediaItems(track_id)
+        n_items = RPR.CountTrackMediaItems(self.id)
         item_ids = [
-            RPR.GetTrackMediaItem(track_id, i) for i in range(n_items)
+            RPR.GetTrackMediaItem(self.id, i) for i in range(n_items)
         ]
-        """
-        item_ids = Program(code, "item_ids").run(track_id=self.id)[0]
-        items = [reapy.Item(item_id) for item_id in item_ids]
-        return items
+        return list(map(reapy.Item, item_ids))
 
     @property
     def is_muted(self):
@@ -417,13 +414,11 @@ class Track(ReapyObject):
     def midi_note_names(self):
         return reapy.MIDINoteNames(self)
 
+    @reapy.inside_reaper()
     def mute(self):
         """Mute track (do nothing if track is already muted)."""
-        code = """
-        if not track.is_muted:
-            track.toggle_mute()
-        """
-        Program(code).run(track=self)
+        if not self.is_muted:
+            self.toggle_mute()
 
     @property
     def n_envelopes(self):
@@ -513,12 +508,7 @@ class Track(ReapyObject):
         :type: Project
         """
         if self._project is None:
-            code = """
-            for project in reapy.get_projects():
-                if track.id in [t.id for t in project.tracks]:
-                    break
-            """
-            self._project, = Program(code, "project").run(track=self)
+            self._project = self._get_project()
         return self._project
 
     def select(self):
@@ -527,56 +517,43 @@ class Track(ReapyObject):
         """
         RPR.SetTrackSelected(self.id, True)
 
+    @reapy.inside_reaper()
     @property
     def sends(self):
-        code = """
-        sends = [
-            reapy.Send(track, i, type="send") for i in range(track.n_sends)
+        return [
+            reapy.Send(self, i, type="send") for i in range(self.n_sends)
         ]
-        """
-        sends = Program(code, "sends").run(track=self)[0]
-        return sends
 
     def set_info_string(self, param_name, param_string):
         RPR.GetSetMediaTrackInfo_String(self.id, param_name, param_string, True)
 
+    @reapy.inside_reaper()
     def solo(self):
         """Solo track (do nothing if track is already solo)."""
-        code = """
-        if not track.is_solo:
-            track.toggle_solo()
-        """
-        Program(code).run(track=self)
+        if not self.is_solo:
+            self.toggle_solo()
 
+    @reapy.inside_reaper()
     def toggle_mute(self):
         """Toggle mute on track."""
-        code = """
-        project = track.project
-        selected_tracks = project.selected_tracks
-        track.make_only_selected_track()
-        project.perform_action(40280)
-        project.selected_tracks = selected_tracks
-        """
-        Program(code).run(track=self)
+        selected_tracks = self.project.selected_tracks
+        self.make_only_selected_track()
+        self.project.perform_action(40280)
+        self.project.selected_tracks = selected_tracks
 
+    @reapy.inside_reaper()
     def toggle_solo(self):
         """Toggle solo on track."""
-        code = """
-        project = track.project
-        selected_tracks = project.selected_tracks
-        track.make_only_selected_track()
-        project.perform_action(7)
-        project.selected_tracks = selected_tracks
-        """
-        Program(code).run(track=self)
+        selected_tracks = self.project.selected_tracks
+        self.make_only_selected_track()
+        self.project.perform_action(7)
+        self.project.selected_tracks = selected_tracks
 
+    @reapy.inside_reaper()
     def unmute(self):
         """Unmute track (do nothing if track is not muted)."""
-        code = """
-        if track.is_muted:
-            track.toggle_mute()
-        """
-        Program(code).run(track=self)
+        if self.is_muted:
+            self.toggle_mute()
 
     def unselect(self):
         """
@@ -584,13 +561,11 @@ class Track(ReapyObject):
         """
         RPR.SetTrackSelected(self.id, False)
 
+    @reapy.inside_reaper()
     def unsolo(self):
         """Unsolo track (do nothing if track is not solo)."""
-        code = """
-        if track.is_solo:
-            track.toggle_solo()
-        """
-        Program(code).run(track=self)
+        if self.is_solo:
+            self.toggle_solo()
 
     @property
     def visible_fx(self):

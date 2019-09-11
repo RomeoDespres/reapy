@@ -222,13 +222,7 @@ class FXParamsList(ReapyObjectList):
         return param
 
     def __iter__(self):
-        code = """
-        values = [param_list.functions["GetParam"](
-            param_list.parent_id, param_list.fx_index, i, 0, 0
-        )[0] for i in range(len(param_list))]
-        """
-        values, = Program(code, "values").run(param_list=self)
-        for i, value in enumerate(values):
+        for i, value in enumerate(self._get_values()):
             yield FXParam(value, self, i, self.functions)
 
     def __len__(self):
@@ -249,20 +243,23 @@ class FXParamsList(ReapyObjectList):
             self.parent_id, self.fx_index, i, value
         )
 
+    @reapy.inside_reaper()
     def _get_param_index(self, name):
-        code = """
-        names = [param_list[i].name for i in range(len(param_list))]
-        index = names.index(name)
-        """
         try:
-            index = Program(code, "index").run(
-                name=name, param_list=self
-            )[0]
-            return index
-        except DistError:
+            return [fx.name for fx in self].index(name)
+        except ValueError:
             raise IndexError(
                 "{} has no param named {}".format(self.parent_fx, name)
             )
+
+    @reapy.inside_reaper()
+    def _get_values(self):
+        """Return values of all parameters in self."""
+        return [
+            self.functions["GetParam"](
+                self.parent_id, self.fx_index, i, 0, 0
+            )[0] for i in range(len(self))
+        ]
 
     @property
     def _kwargs(self):
