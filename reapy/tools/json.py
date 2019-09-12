@@ -33,6 +33,8 @@ class ReapyEncoder(json.JSONEncoder):
                 "module_name": x.__module__,
                 "name": x.__qualname__
             }
+        elif isinstance(x, slice):
+            return {"__slice__": True, "args": (x.start, x.stop, x.step)}
         return json.JSONEncoder.default(self, x)
 
 
@@ -55,5 +57,7 @@ def object_hook(x):
         except KeyError:
             module = importlib.import_module(module_name)
         return operator.attrgetter(name)(sys.modules[module_name])
+    elif "__slice__" in x:
+        return slice(*x["args"])
     else:
         return x
