@@ -62,10 +62,12 @@ class inside_reaper(contextlib.ContextDecorator):
         return super().__call__(func)
 
     def __enter__(self):
-        _CLIENT.request("HOLD")
+        if not reapy.is_inside_reaper():
+            _CLIENT.request("HOLD")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        _CLIENT.request("RELEASE")
+        if not reapy.is_inside_reaper():
+            _CLIENT.request("RELEASE")
         return False
 
 

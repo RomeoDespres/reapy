@@ -11,6 +11,14 @@ class FX(ReapyObject):
     """FX on a Track or a Take."""
 
     _class_name = "FX"
+    functions = {
+        prefix: {
+            name.replace(prefix, ""): function
+            for name, function in RPR.__dict__.items()
+            if name.startswith(prefix)
+        }
+        for prefix in ("TrackFX_", "TakeFX_")
+    }
 
     def __init__(self, parent=None, index=None, parent_id=None):
         if parent_id is None:
@@ -25,15 +33,10 @@ class FX(ReapyObject):
 
     def _get_functions(self):
         if isinstance(self.parent, reapy.Track):
-            prefix = "TrackFX_"
+            type = "TrackFX_"
         else:
-            prefix = "TakeFX_"
-        functions = {
-            name.replace(prefix, ""): function
-            for name, function in RPR.__dict__.items()
-            if name.startswith(prefix)
-        }
-        return functions
+            type = "TakeFX_"
+        return self.functions[type]
 
     @property
     def _kwargs(self):
@@ -392,7 +395,15 @@ class FXList(ReapyObjectList):
     def __init__(self, parent):
         self.parent = parent
 
+    @reapy.inside_reaper()
+    def __delitem__(self, key):
+        fxs = self[key] if isinstance(key, slice) else [self[key]]
+        for fx in fxs:
+            fx.delete()
+
     def __getitem__(self, i):
+        if isinstance(i, slice):
+            return self._get_items_from_slice(i)
         with reapy.inside_reaper():
             if isinstance(i, str):
                 i = self._get_fx_index(name=i)
@@ -405,6 +416,11 @@ class FXList(ReapyObjectList):
 
     def __len__(self):
         return self.parent.n_fxs
+
+    @reapy.inside_reaper()
+    def _get_items_from_slice(self, slice):
+        indices = range(*slice.indices(len(self)))
+        return [self[i] for i in indices]
 
     def _get_fx_index(self, name):
         if isinstance(self.parent, reapy.Track):

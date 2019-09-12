@@ -18,6 +18,8 @@ All notable changes to this project will be documented in this file.
   * Properties [`Track.GUID`] and [`Track.icon`].
   * Property setter for [`Track.name`].
 - Access to tracks by name (example: `project.tracks["PIANO"]`)
+- Access to tracks and FXs with slices (example: `project.tracks[3:6]`)
+- Ability to delete tracks and FXs with the `del` keyword (example: `del project.tracks[2]`)
 - Track selection helpers at the project level:
   * Methods [`Project.select_all_tracks`], [`Project.unselect_all_tracks`]
   * [`Project.selected_tracks`] property can now be manually set to any iterable of tracks.
@@ -30,6 +32,7 @@ All notable changes to this project will be documented in this file.
 - [`Project.add_track`] supports `name` keyword argument and negative indices.
 
 ### Fixed
+- Bug when using `with reapy.inside_reaper():` from inside REAPER
 - No more lost data when transferring too long lists over the local network (issue [12](#12))
 - Fix `Project.time_selection` setter (wouldn't set initial non-zero start values properly)
 - Fix `Take.add_note` when adding notes with `unit='beats'`
