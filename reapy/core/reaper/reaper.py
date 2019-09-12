@@ -1,6 +1,5 @@
 import reapy
 import reapy.reascript_api as RPR
-from reapy.tools import Program
 import contextlib
 from .defer import ReaperConsole
 
@@ -298,6 +297,7 @@ def get_main_window():
     return window
 
 
+@reapy.inside_reaper()
 def get_projects():
     """
     Return list of all opened projects.
@@ -307,15 +307,11 @@ def get_projects():
     projects : list of Project
         List of all projects.
     """
-    code = """
-    i = 0
-    projects = [reapy.Project(index=i)]
+    i, projects = 0, [reapy.Project(index=0)]
     while projects[-1]._is_defined:
         i += 1
         projects.append(reapy.Project(index=i))
     projects.pop()
-    """
-    projects, = Program(code, "projects").run()
     return projects
 
 

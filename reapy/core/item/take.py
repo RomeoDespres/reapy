@@ -1,7 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.tools import Program
 
 
 class Take(ReapyObject):
@@ -62,6 +61,7 @@ class Take(ReapyObject):
         fx = reapy.FX(self, index)
         return fx
 
+    @reapy.inside_reaper()
     def add_note(
         self, start, end, pitch, velocity=100, channel=0, selected=False,
         muted=False, unit="seconds", sort=True
@@ -100,25 +100,22 @@ class Take(ReapyObject):
         --------
         Take.sort_events
         """
-        args = [
-            self.id, selected, muted, start, end, channel, pitch, velocity,
-            sort
-        ]
-        code = """
         if unit == "beats":
-            item_start_seconds = take.item.position
-            take_start_beat = take.track.project.time_to_beats(item_start_seconds)
-            args[3] = take.beat_to_ppq(take_start_beat + args[3])
-            args[4] = take.beat_to_ppq(take_start_beat + args[4])
+            item_start_seconds = self.item.position
+            take_start_beat = self.track.project.time_to_beats(item_start_seconds)
+            start = self.beat_to_ppq(take_start_beat + start)
+            end = self.beat_to_ppq(take_start_beat + end)
         elif unit == "seconds":
-            item_start_seconds = take.item.position
-            args[3] = take.time_to_ppq(item_start_seconds + args[3])
-            args[4] = take.time_to_ppq(item_start_seconds + args[4])
+            item_start_seconds = self.item.position
+            start = self.time_to_ppq(item_start_seconds + start)
+            end = self.time_to_ppq(item_start_seconds + end)
         elif unit != 'ppq':
             raise ValueError('unit param should be one of seconds|beats|ppq')
+        args = (
+            self.id, selected, muted, start, end, channel, pitch, velocity,
+            sort
+        )
         RPR.MIDI_InsertNote(*args)
-        """
-        Program(code).run(take=self, unit=unit, args=args)
 
     def beat_to_ppq(self, beat):
         """
@@ -167,6 +164,7 @@ class Take(ReapyObject):
     def get_info_value(self, param_name):
         return RPR.GetMediaItemTakeInfo_Value(self.id, param_name)
 
+    @reapy.inside_reaper()
     @property
     def is_active(self):
         """
@@ -174,12 +172,7 @@ class Take(ReapyObject):
 
         :type: bool
         """
-        code = """
-        from reapy.core.item.take import Take
-        take = Take(take_id)
-        is_active = take == take.item.active_take
-        """
-        return Program(code, "is_active").run(take_id=self.id)[0]
+        return self == self.item.active_take
 
     @property
     def is_midi(self):
@@ -344,7 +337,7 @@ class Take(ReapyObject):
         reversed order, with ``sort=False`` for efficiency. Thus,
         ``take.notes`` is not time-sorted. ``take.sort_events`` is
         called afterwards so that ``take.notes`` is time-sorted.
-        
+
         >>> for i in range(100):
         ...     take.add_note(99 - i, 100 - i, pitch=0, sort=False)
         ...

@@ -1,4 +1,4 @@
-from reapy.tools import Program
+import reapy
 
 
 class ReapyObject:
@@ -51,11 +51,4 @@ class ReapyObjectList(ReapyObject):
 
     """Abstract class for list of ReapyObjects."""
 
-    def __iter__(self):
-        code = """
-        elements = [ro_list[i] for i in range(len(ro_list))]
-        """
-        elements, = Program(code, "elements").run(ro_list=self)
-        for element in elements:
-            yield element
-
+    pass

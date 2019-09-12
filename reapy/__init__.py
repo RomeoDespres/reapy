@@ -9,7 +9,7 @@ def is_inside_reaper():
     return inside
 
 
-from . import config, reascript_api
+from .tools import inside_reaper
+from . import reascript_api
 from .core import *
 from .core.reaper import *
-from .tools import InsideReaper as inside_reaper

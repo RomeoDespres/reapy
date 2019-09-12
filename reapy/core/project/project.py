@@ -3,15 +3,12 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.tools import Program
 from reapy.errors import RedoError, UndoError
 
 
 class Project(ReapyObject):
 
     """REAPER project."""
-
-    _class_name = "Project"
 
     def __init__(self, id=None, index=-1):
         """
@@ -35,6 +32,13 @@ class Project(ReapyObject):
     @property
     def _args(self):
         return self.id,
+
+    @reapy.inside_reaper()
+    def _get_track_by_name(self, name):
+        """Return first track with matching name."""
+        for track in self.tracks:
+            if track.name == name:
+                return track
 
     def add_marker(self, position, name="", color=0):
         """
@@ -98,6 +102,7 @@ class Project(ReapyObject):
         region = reapy.Region(self, region_id)
         return region
 
+    @reapy.inside_reaper()
     def add_track(self, index=0, name=""):
         """
         Add track at a specified index.
@@ -114,21 +119,14 @@ class Project(ReapyObject):
         track : Track
             New track.
         """
-        code = """
-        current_project = reapy.Project()
-        project.make_current_project()
-        n_tracks = project.n_tracks
+        n_tracks = self.n_tracks
         index = max(-n_tracks, min(index, n_tracks))
         if index < 0:
             index = index % n_tracks
-        RPR.InsertTrackAtIndex(index, True)
-        current_project.make_current_project()
-        track = reapy.Track(RPR.GetTrack(project.id, index))
+        with self.make_current_project():
+            RPR.InsertTrackAtIndex(index, True)
+        track = self.tracks[index]
         track.name = name
-        """
-        track, = Program(code, "track").run(
-            project=self, index=index, name=name
-        )
         return track
 
     @property
@@ -183,6 +181,7 @@ class Project(ReapyObject):
         """
         return self.time_signature[1]
 
+    @reapy.inside_reaper()
     @property
     def bpm(self):
         """
@@ -218,6 +217,7 @@ class Project(ReapyObject):
         """
         return RPR.GetPlayPosition2Ex(self.id)
 
+    @reapy.inside_reaper()
     def bypass_fx_on_all_tracks(self, bypass=True):
         """
         Bypass or un-bypass FX on all tracks.
@@ -227,13 +227,8 @@ class Project(ReapyObject):
         bypass : bool
             Whether to bypass or un-bypass FX.
         """
-        code = """
-        current_project = reapy.Project()
-        project.make_current_project()
-        RPR.BypassFxAllTracks(bypass)
-        current_project.make_current_project()
-        """
-        Program(code).run(project=self, bypass=bypass)
+        with self.make_current_project():
+            RPR.BypassFxAllTracks(bypass)
 
     @property
     def can_redo(self):
@@ -285,17 +280,13 @@ class Project(ReapyObject):
         """
         RPR.SetEditCurPos(position, True, True)
 
+    @reapy.inside_reaper()
     def disarm_rec_on_all_tracks(self):
         """
         Disarm record on all tracks.
         """
-        code = """
-        current_project = reapy.Project()
-        project.make_current_project()
-        RPR.ClearAllRecArmed()
-        current_project.make_current_project()
-        """
-        Program(code).run(project=self)
+        with self.make_current_project():
+            RPR.ClearAllRecArmed()
 
     def end_undo_block(self, description=""):
         """
@@ -308,6 +299,7 @@ class Project(ReapyObject):
         """
         RPR.Undo_EndBlock2(self.id, description, 0)
 
+    @reapy.inside_reaper()
     @property
     def focused_fx(self):
         """
@@ -315,28 +307,21 @@ class Project(ReapyObject):
 
         :type: FX or NoneType
         """
-        code = """
-        def get_focused_fx():
-            if not project.is_current_project:
-                return
-            res = RPR.GetFocusedFX(0, 0, 0)
-            if not res[0]:
-                return
-            if res[1] == 0:
-                track = project.master_track
-            else:
-                track = project.tracks[res[1] - 1]
-            if res[0] == 1:  # Track FX
-                return track.fxs[res[3]]
-            # Take FX
-            item = track.items[res[2]]
-            take = item.takes[res[3] // 2**16]
-            return take.fxs[res[3] % 2**16]
-
-        fx = get_focused_fx()
-        """
-        fx, = Program(code, "fx").run(project=self)
-        return fx
+        if not self.is_current_project:
+            return
+        res = RPR.GetFocusedFX(0, 0, 0)
+        if not res[0]:
+            return
+        if res[1] == 0:
+            track = self.master_track
+        else:
+            track = self.tracks[res[1] - 1]
+        if res[0] == 1:  # Track FX
+            return track.fxs[res[3]]
+        # Take FX
+        item = track.items[res[2]]
+        take = item.takes[res[3] // 2**16]
+        return take.fxs[res[3] % 2**16]
 
     def get_play_rate(self, position):
         """
@@ -428,6 +413,7 @@ class Project(ReapyObject):
         is_current = self == Project()
         return is_current
 
+    @reapy.inside_reaper()
     @property
     def items(self):
         """
@@ -435,11 +421,8 @@ class Project(ReapyObject):
 
         :type: list of Item
         """
-        code = """
-        n_items = project.n_items
-        item_ids = [RPR.GetMediaItem(project.id, i) for i in range(n_items)]
-        """
-        item_ids, = Program(code, "item_ids").run(project=self)
+        n_items = self.n_items
+        item_ids = [RPR.GetMediaItem(self.id, i) for i in range(n_items)]
         return list(map(reapy.Item, item_ids))
 
     @property
@@ -452,6 +435,7 @@ class Project(ReapyObject):
         length = RPR.GetProjectLength(self.id)
         return length
 
+    @reapy.inside_reaper()
     @property
     def last_touched_fx(self):
         """
@@ -472,8 +456,7 @@ class Project(ReapyObject):
         >>> fx.params[index].name
         "Volume"
         """
-        code = """
-        if not project.is_current_project:
+        if not self.is_current_project:
             fx, index = None, None
         else:
             res = RPR.GetLastTouchedFX(0, 0, 0)
@@ -481,18 +464,31 @@ class Project(ReapyObject):
                 fx, index = None, None
             else:
                 if res[1]:
-                    track = project.tracks[res[1] - 1]
+                    track = self.tracks[res[1] - 1]
                 else:
-                    track = project.master_track
+                    track = self.master_track
                 fx, index = track.fxs[res[2]], res[3]
-        """
-        return tuple(Program(code, "fx", "index").run(project=self))
+        return fx, index
 
+    @reapy.inside_reaper()
     def make_current_project(self):
         """
         Set project as current project.
+
+        Can also be used as a context manager to temporarily set
+        the project as current project and then go back to the original
+        situation.
+
+        Examples
+        --------
+        >>> p1 = reapy.Project()  # current project
+        >>> p2 = reapy.Project(1)  # other project
+        >>> p2.make_current_project()  # now p2 is current project
+        >>> with p1.make_current_project():
+        ...     do_something()  # current project is temporarily p1
+        >>> # and p2 is current project again
         """
-        RPR.SelectProjectInstance(self.id)
+        return _MakeCurrentProject(self)
 
     def mark_dirty(self):
         """
@@ -500,6 +496,7 @@ class Project(ReapyObject):
         """
         RPR.MarkProjectDirty(self.id)
 
+    @reapy.inside_reaper()
     @property
     def markers(self):
         """
@@ -507,19 +504,11 @@ class Project(ReapyObject):
 
         :type: list of reapy.Marker
         """
-        code = """
-        n_markers = project.n_markers
         ids = [
-            RPR.EnumProjectMarkers2(project.id, i, 0, 0, 0, 0, 0)
-            for i in range(project.n_regions + project.n_markers)
+            RPR.EnumProjectMarkers2(self.id, i, 0, 0, 0, 0, 0)
+            for i in range(self.n_regions + self.n_markers)
         ]
-        ids = [
-            i[0] for i in ids if not i[3]
-        ]
-        """
-        ids = Program(code, "ids").run(project=self)[0]
-        markers = [reapy.Marker(self, i) for i in ids]
-        return markers
+        return [reapy.Marker(self, i[0]) for i in ids if not i[3]]
 
     @property
     def master_track(self):
@@ -532,6 +521,7 @@ class Project(ReapyObject):
         master_track = reapy.Track(track_id)
         return master_track
 
+    @reapy.inside_reaper()
     def mute_all_tracks(self, mute=True):
         """
         Mute or unmute all tracks.
@@ -545,13 +535,8 @@ class Project(ReapyObject):
         --------
         Project.unmute_all_tracks
         """
-        code = """
-        current_project = reapy.Project()
-        project.make_current_project()
-        RPR.MuteAllTracks(mute)
-        current_project.make_current_project()
-        """
-        Program(code).run(project=self, mute=mute)
+        with self.make_current_project():
+            RPR.MuteAllTracks(mute)
 
     @property
     def n_items(self):
@@ -719,6 +704,7 @@ class Project(ReapyObject):
         if not success:
             raise RedoError
 
+    @reapy.inside_reaper()
     @property
     def regions(self):
         """
@@ -726,18 +712,11 @@ class Project(ReapyObject):
 
         :type: list of reapy.Region
         """
-        code = """
         ids = [
-            RPR.EnumProjectMarkers2(project.id, i, 0, 0, 0, 0, 0)
-            for i in range(project.n_regions + project.n_markers)
+            RPR.EnumProjectMarkers2(self.id, i, 0, 0, 0, 0, 0)
+            for i in range(self.n_regions + self.n_markers)
         ]
-        ids = [
-            i[0] for i in ids if i[3]
-        ]
-        """
-        ids = Program(code, "ids").run(project=self)[0]
-        regions = [reapy.Region(self, i) for i in ids]
-        return regions
+        return [reapy.Region(self, i[0]) for i in ids if i[3]]
 
     def save(self, force_save_as=False):
         """
@@ -783,6 +762,7 @@ class Project(ReapyObject):
         envelope = None if envelope_id == 0 else reapy.Envelope(envelope_id)
         return envelope
 
+    @reapy.inside_reaper()
     @property
     def selected_items(self):
         """
@@ -795,16 +775,12 @@ class Project(ReapyObject):
         Project.get_selected_item
             Return a specific selected item.
         """
-        code = """
-        n_items = RPR.CountSelectedMediaItems(project_id)
-        item_ids = [
-            RPR.GetSelectedMediaItem(project_id, i) for i in range(n_items)
+        return [
+            reapy.Item(RPR.GetSelectedMediaItem(self.id, i))
+            for i in range(self.n_items)
         ]
-        """
-        item_ids = Program(code, "item_ids").run(project_id=self.id)[0]
-        items = list(map(reapy.Item, item_ids))
-        return items
 
+    @reapy.inside_reaper()
     @property
     def selected_tracks(self):
         """
@@ -812,26 +788,18 @@ class Project(ReapyObject):
 
         :type: list of Track
         """
-        code = """
-        track_ids = [
-            RPR.GetSelectedTrack(project_id, i)
-            for i in range(reapy.Project(project_id).n_selected_tracks)
+        return [
+            reapy.Track(RPR.GetSelectedTrack(self.id, i))
+            for i in range(self.n_selected_tracks)
         ]
-        """
-        track_ids = Program(code, "track_ids").run(project_id=self.id)[0]
-        tracks = list(map(reapy.Track, track_ids))
-        return tracks
 
     @selected_tracks.setter
     def selected_tracks(self, tracks):
-        tracks = list(tracks)
-        code = """
-        project.unselect_all_tracks()
+        self.unselect_all_tracks()
         for track in tracks:
             track.select()
-        """
-        Program(code).run(project=self, tracks=tracks)
 
+    @reapy.inside_reaper()
     def solo_all_tracks(self):
         """
         Solo all tracks in project.
@@ -840,13 +808,8 @@ class Project(ReapyObject):
         --------
         Project.unsolo_all_tracks
         """
-        code = """
-        current_project = reapy.Project()
-        project.make_current_project()
-        RPR.SoloAllTracks(1)
-        current_project.make_current_project()
-        """
-        Program(code).run(project=self)
+        with self.make_current_project():
+            RPR.SoloAllTracks(1)
 
     def stop(self):
         """
@@ -854,12 +817,19 @@ class Project(ReapyObject):
         """
         RPR.OnStopButtonEx(self.id)
 
+    @reapy.inside_reaper()
     @property
     def time_selection(self):
         """
         Project time selection.
 
         time_selection : reapy.TimeSelection
+
+        Can be set and deleted as follows:
+
+        >>> project = reapy.Project()
+        >>> project.time_selection = 3, 8  # seconds
+        >>> del project.time_selection
         """
         time_selection = reapy.TimeSelection(self)
         return time_selection
@@ -874,11 +844,14 @@ class Project(ReapyObject):
         selection : (float, float)
             Start and end of new time selection in seconds.
         """
-        code = """
-        project.time_selection.start = selection[0]
-        project.time_selection.end = selection[1]
+        self.time_selection._set_start_end(*selection)
+
+    @time_selection.deleter
+    def time_selection(self):
         """
-        Program(code).run(project=self, selection=selection)
+        Delete current time selection.
+        """
+        self.time_selection._set_start_end(0, 0)
 
     @property
     def time_signature(self):
@@ -949,6 +922,7 @@ class Project(ReapyObject):
         """Unselect all tracks."""
         self.perform_action(40297)
 
+    @reapy.inside_reaper()
     def unsolo_all_tracks(self):
         """
         Unsolo all tracks in project.
@@ -957,10 +931,20 @@ class Project(ReapyObject):
         --------
         Project.solo_all_tracks
         """
-        code = """
-        current_project = reapy.Project()
-        project.make_current_project()
-        RPR.SoloAllTracks(0)
-        current_project.make_current_project()
-        """
-        Program(code).run(project=self)
+        with self.make_current_project():
+            RPR.SoloAllTracks(0)
+
+
+class _MakeCurrentProject:
+
+    """Context manager used by Project.make_current_project."""
+
+    def __init__(self, project):
+        self.current_project = reapy.Project()
+        RPR.SelectProjectInstance(project.id)
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.current_project.make_current_project()

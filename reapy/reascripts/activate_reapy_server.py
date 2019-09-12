@@ -12,12 +12,10 @@ import reapy
 import os
 import site
 
-if reapy.is_inside_reaper():
-    from reapy import reascript_api as RPR
-    from reapy.reascript_api.network import Server
+from reapy.tools.network import Server
 
 
-def main_loop():
+def run_main_loop():
     # Get new connections
     SERVER.accept()
     # Process API call requests
@@ -25,32 +23,7 @@ def main_loop():
     results = SERVER.process_requests(requests)
     SERVER.send_results(results)
     # Run main_loop again
-    RPR_defer("main_loop()")
-
-
-def generate_api_module():
-    function_names = RPR.__all__
-    sitepackages_dir = site.getusersitepackages()
-    if not os.path.exists(sitepackages_dir):
-        os.makedirs(sitepackages_dir, 0o770, False)
-    filepath = os.path.join(
-        sitepackages_dir, "reapy_generated_api.py"
-    )
-    with open(filepath, "w") as file:
-        lines = [
-            "from reapy.tools import Program",
-            "",
-            "__all__ = ["
-        ]
-        lines += ["    \"{}\",".format(name) for name in function_names]
-        lines.append("]\n\n")
-        file.write("\n".join(lines))
-        for name in function_names:
-            file.write(
-                "{name} = Program.from_function(\"RPR.{name}\")\n".format(
-                    name=name
-                )
-            )
+    reapy.defer(run_main_loop)
 
 
 def get_new_reapy_server():
@@ -62,6 +35,5 @@ def get_new_reapy_server():
 
 if __name__ == "__main__":
     SERVER = get_new_reapy_server()
-    generate_api_module()
-    main_loop()
-    RPR_atexit("reapy.delete_ext_state('reapy', 'server_port')")
+    run_main_loop()
+    reapy.at_exit(reapy.delete_ext_state, "reapy", "server_port")

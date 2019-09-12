@@ -1,7 +1,6 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-from reapy.tools import Program
 
 
 class Send(ReapyObject):
@@ -39,14 +38,12 @@ class Send(ReapyObject):
         """
         RPR.RemoveTrackSend(self.track_id, self._get_int_type(), self.index)
 
+    @reapy.inside_reaper()
     def flip_phase(self):
         """
         Toggle whether phase is flipped.
         """
-        code = """
-        send.is_phase_flipped = not send.is_phase_flipped
-        """
-        Program(code).run(send=self)
+        self.is_phase_flipped = not self.is_phase_flipped
 
     def get_info(self, param_name):
         value = RPR.GetTrackSendInfo_Value(
