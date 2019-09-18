@@ -4,6 +4,9 @@ from reapy.tools import json
 import sys
 
 
+__all__ = []
+
+
 @reapy.inside_reaper()
 def _get_api_names():
     return __all__

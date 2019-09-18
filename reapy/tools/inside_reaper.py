@@ -12,6 +12,8 @@ if not reapy.is_inside_reaper():
     except DisabledDistAPIError:
         import warnings
         warnings.warn(DisabledDistAPIWarning())
+        _CLIENT = None
+
 
 class inside_reaper(contextlib.ContextDecorator):
 
@@ -46,7 +48,7 @@ class inside_reaper(contextlib.ContextDecorator):
     """
 
     def __call__(self, func, encoded_func=None):
-        if reapy.is_inside_reaper():
+        if reapy.is_inside_reaper() or _CLIENT is None:
             return func
         if isinstance(func, property):
             return DistProperty.from_property(func)
