@@ -3,12 +3,12 @@
 All notable changes to this project will be documented in this file.
 
 
-## Unreleased
+## [0.4.0](https://github.com/RomeoDespres/reapy/releases/tag/0.4.0) - 2019-09-18
 
 ### Added
 
 - [`Project.make_current_project`] can be used as a context manager to temporarily set a project as current project.
-- Decorators [`Program.run_inside`], [`Program.property`] to use Program with whole functions, methods and properties.
+- Decorator [`reapy.inside_reaper`], that can be used with functions and properties.
 - Methods on `Take`:
   * Methods [`Take.beat_to_ppq`], [`Take.ppq_to_beat`]
 - Context managers + decorators [`reapy.prevent_ui_refresh`], [`reapy.reaprint`], [`reapy.undo_block`]
@@ -38,6 +38,9 @@ All notable changes to this project will be documented in this file.
 - Fix `Take.add_note` when adding notes with `unit='beats'`
 - Fix `BrokenPipeError` when an external app disconnects silently
 - Fix setting color in [`Project.add_marker`] and [`Project.add_region`] methods
+
+### Removed
+- `reapy.Program` is replaced by `reapy.inside_reaper`.
 
 ## [0.3.0](https://github.com/RomeoDespres/reapy/releases/tag/0.3.0) - 2019-05-08
 
