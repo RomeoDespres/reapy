@@ -333,6 +333,7 @@ All notable changes to this project will be documented in this file.
 [`TimeSelection.shift`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.shift
 [`TimeSelection.unloop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.TimeSelection.unloop
 [`ToolTip`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.ToolTip
+[`Track.GUID`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.GUID
 [`Track.add_audio_accessor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_audio_accessor
 [`Track.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_fx
 [`Track.add_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.add_item
@@ -343,6 +344,9 @@ All notable changes to this project will be documented in this file.
 [`Track.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.delete
 [`Track.depth`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.depth
 [`Track.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.envelopes
+[`Track.get_info_string`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.get_info_string
+[`Track.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.get_info_value
+[`Track.icon`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.icon
 [`Track.instrument`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.instrument
 [`Track.is_selected`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.is_selected
 [`Track.items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.items
@@ -355,6 +359,7 @@ All notable changes to this project will be documented in this file.
 [`Track.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.name
 [`Track.parent_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.parent_track
 [`Track.select`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.select
+[`Track.set_info_string`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.set_info_string
 [`Track.unselect`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.unselect
 [`Track.visible_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.visible_fx
 [`Window.refresh`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Window.refresh
@@ -404,6 +409,7 @@ All notable changes to this project will be documented in this file.
 [`os.makedirs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.os.makedirs
 [`os.path.isfile`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.os.path.isfile
 [`perform_action`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.perform_action
+[`prevent_ui_refresh`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.prevent_ui_refresh
 [`print`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.print
 [`reapy.show_message_box`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reapy.show_message_box
 [`remove_reascript`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.remove_reascript
@@ -420,6 +426,7 @@ All notable changes to this project will be documented in this file.
 [`ui.get_leftmost_track_in_mixer`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.ui.get_leftmost_track_in_mixer
 [`ui.set_color_theme`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.ui.set_color_theme
 [`ui.set_leftmost_track_in_mixer`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.ui.set_leftmost_track_in_mixer
+[`undo_block`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.undo_block
 [`update_arrange`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.update_arrange
 [`update_timeline`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.update_timeline
 [`view_prefs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.view_prefs

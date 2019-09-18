@@ -47,7 +47,6 @@ When used from inside REAPER, ``reapy`` has almost identical performance than na
     ...
     >>> # Takes only 0.1 second!
 
-Although this method should be sufficient in most cases, note that optimality is only reached by making use of ``reapy.tools.Program`` (see documentation `here <reapy.tools.html#reapy.tools.program.Program>`_).
 
 
 Non-blocking loops inside REAPER with reapy.defer and reapy.at_exit
