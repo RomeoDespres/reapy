@@ -55,6 +55,10 @@ def get_changelog_links():
         n for info in api.values() for n in info["reapy"] if n != "DEPRECATED"
     )
     links = sorted([reapy_link(n, type="md") + "\n" for n in names])
+    links.append(
+        "[`inside_reaper`]: (https://python-reapy.readthedocs.io/en/"
+        "latest/reapy.tools.html#reapy.tools.inside_reaper.inside_reaper)"
+    )
     return links
 
 

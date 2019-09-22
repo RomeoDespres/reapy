@@ -15,11 +15,11 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - [`Project.make_current_project`] can be used as a context manager to temporarily set a project as current project.
-- Decorator [`reapy.inside_reaper`], that can be used with functions and properties.
+- Decorator [`inside_reaper`], that can be used with functions and properties.
 - Methods on `Take`:
   * Methods [`Take.beat_to_ppq`], [`Take.ppq_to_beat`]
-- Context managers + decorators [`reapy.prevent_ui_refresh`], [`reapy.reaprint`], [`reapy.undo_block`]
-- [`reapy.inside_reaper`] can now be used as a function decorator, too
+- Context managers + decorators [`prevent_ui_refresh`], [`reaprint`], [`undo_block`]
+- [`inside_reaper`] can now be used as a function decorator, too
 - Methods and properties on `Track`:
   * Methods [`Track.get_info_string`], [`Track.set_info_string`]
   * Properties [`Track.GUID`] and [`Track.icon`].
@@ -314,6 +314,7 @@ All notable changes to this project will be documented in this file.
 [`Take.add_audio_accessor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_audio_accessor
 [`Take.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_fx
 [`Take.add_note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_note
+[`Take.beat_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.beat_to_ppq
 [`Take.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.envelopes
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value
 [`Take.is_midi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.is_midi
@@ -326,6 +327,7 @@ All notable changes to this project will be documented in this file.
 [`Take.n_text_sysex`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_text_sysex
 [`Take.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.name
 [`Take.notes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.notes
+[`Take.ppq_to_beat`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_beat
 [`Take.ppq_to_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_time
 [`Take.select_all_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.select_all_midi_events
 [`Take.sort_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.sort_events
@@ -418,6 +420,7 @@ All notable changes to this project will be documented in this file.
 [`perform_action`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.perform_action
 [`prevent_ui_refresh`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.prevent_ui_refresh
 [`print`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.print
+[`reaprint`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.reaprint
 [`reapy.show_message_box`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reapy.show_message_box
 [`remove_reascript`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.remove_reascript
 [`rgb_from_native`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.rgb_from_native
@@ -437,3 +440,4 @@ All notable changes to this project will be documented in this file.
 [`update_arrange`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.update_arrange
 [`update_timeline`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.update_timeline
 [`view_prefs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.view_prefs
+[`inside_reaper`]: (https://python-reapy.readthedocs.io/en/latest/reapy.tools.html#reapy.tools.inside_reaper.inside_reaper)
