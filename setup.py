@@ -9,7 +9,7 @@ with open(path.join(here, "README.md")) as f:
 
 setup(
     name="python-reapy",
-    version="0.4.0",
+    version="0.4.1",
     description="A pythonic wrapper for REAPER's ReaScript Python API",
     long_description=long_description,
     long_description_content_type="text/markdown",

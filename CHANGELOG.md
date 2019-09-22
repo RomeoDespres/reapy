@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.4.1](https://github.com/RomeoDespres/reapy/releases/tag/0.4.1) - 2019-09-22
+
+### Fixed
+
+- Bug when enabling distant API.
+
+
 ## [0.4.0](https://github.com/RomeoDespres/reapy/releases/tag/0.4.0) - 2019-09-18
 
 ### Added
