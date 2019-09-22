@@ -49,7 +49,7 @@ class Config(ConfigParser):
         if not os.path.exists(before_reapy_file):
             shutil.copy(self.ini_file, before_reapy_file)
         # Backup current config
-        shutil.copy(self.ini_file, ini_file + '.bak')
+        shutil.copy(self.ini_file, self.ini_file + '.bak')
         # Write config
         with open(self.ini_file, "w", encoding='utf8') as f:
             super(Config, self).write(f, False)
