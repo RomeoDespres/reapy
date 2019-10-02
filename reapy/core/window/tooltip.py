@@ -3,104 +3,102 @@ from .window import Window
 
 
 class ToolTip(Window):
+    """Tooltip window."""
+    def __init__(self, message=" ", x=0, y=0, topmost=True, show=True):
+        """Initialize tooltip.
 
-"""Tooltip window."""
+        Parameters
+        ----------
+        message : str, optional
+            ToolTip message (default=" "). Note that tooltips with
+            empty messages are always hidden.
+        x : int, optional
+            x position (default=0).
+        y : int, optional
+            y position (default=0).
+        topmost : bool, optional
+            Whether tooltip should be displayed on top of all other
+            windows (default=True).
+        show : bool, optional
+            Whether to show tooltip on initialization (default=True).
+        """
+        self._message = message
+        self._x = x
+        self._y = y
+        self._topmost = topmost
+        if show:
+            self.show()
+        self.id = RPR.GetTooltipWindow
 
-def __init__(self, message=" ", x=0, y=0, topmost=True, show=True):
-    """Initialize tooltip.
+    def hide(self):
+        """Hide tooltip."""
+        RPR.TrackCtl_SetToolTip("", self.x, self.y, self.topmost)
+        self._is_shown = False
 
-    Parameters
-    ----------
-    message : str, optional
-        ToolTip message (default=" "). Note that tooltips with
-        empty messages are always hidden.
-    x : int, optional
-        x position (default=0).
-    y : int, optional
-        y position (default=0).
-    topmost : bool, optional
-        Whether tooltip should be displayed on top of all other
-        windows (default=True).
-    show : bool, optional
-        Whether to show tooltip on initialization (default=True).
-    """
-    self._message = message
-    self._x = x
-    self._y = y
-    self._topmost = topmost
-    if show:
-        self.show()
-    self.id = RPR.GetTooltipWindow
+    @property
+    def message(self):
+        """
+        Tooltip message.
 
-def hide(self):
-    """Hide tooltip."""
-    RPR.TrackCtl_SetToolTip("", self.x, self.y, self.topmost)
-    self._is_shown = False
+        Note that tooltips with empty messages are always hidden.
 
-@property
-def message(self):
-    """
-    Tooltip message.
+        :type: str
+        """
+        return self._message
 
-    Note that tooltips with empty messages are always hidden.
+    @message.setter
+    def message(self, message):
+        self._message = message
+        if self._is_shown:
+            self.show()
 
-    :type: str
-    """
-    return self._message
+    def refresh(self):
+        raise NotImplementedError
 
-@message.setter
-def message(self, message):
-    self._message = message
-    if self._is_shown:
-        self.show()
+    def show(self):
+        """Show tooltip."""
+        RPR.TrackCtl_SetToolTip(self.message, self.x, self.y, self.topmost)
+        self._is_shown = True
 
-def refresh(self):
-    raise NotImplementedError
+    @property
+    def topmost(self):
+        """
+        Whether tooltip is displayed on top of all other windows.
 
-def show(self):
-    """Show tooltip."""
-    RPR.TrackCtl_SetToolTip(self.message, self.x, self.y, self.topmost)
-    self._is_shown = True
+        :type: bool
+        """
+        return self._topmost
 
-@property
-def topmost(self):
-    """
-    Whether tooltip is displayed on top of all other windows.
+    @topmost.setter
+    def topmost(self, topmost):
+        self._topmost = topmost
+        if self._is_shown:
+            self.show()
 
-    :type: bool
-    """
-    return self._topmost
+    @property
+    def x(self):
+        """
+        x position.
 
-@topmost.setter
-def topmost(self, topmost):
-    self._topmost = topmost
-    if self._is_shown:
-        self.show()
+        :type: int"""
+        return self._x
 
-@property
-def x(self):
-    """
-    x position.
+    @x.setter
+    def x(self, x):
+        self._x = x
+        if self._is_shown:
+            self.show()
 
-    :type: int"""
-    return self._x
+    @property
+    def y(self):
+        """y position.
 
-@x.setter
-def x(self, x):
-    self._x = x
-    if self._is_shown:
-        self.show()
+        :type: int
+        """
+        return self._y
 
-@property
-def y(self):
-    """y position.
-
-    :type: int
-    """
-    return self._y
-
-@y.setter
-def y(self, y):
-    self._y = y
-    if self._is_shown:
-        self.show()
+    @y.setter
+    def y(self, y):
+        self._y = y
+        if self._is_shown:
+            self.show()

@@ -21,6 +21,9 @@ setup(name="python-reapy",
       keywords="REAPER DAW ReaScript API wrapper music audio",
       packages=find_packages(exclude=["docs"]),
       package_data={
-          'foopkg': ['py.typed'],
+          'reapy': ['py.typed'],
       },
+      install_requires=[
+          'typing_extensions',
+      ],
       python_requires=">=3.0")
