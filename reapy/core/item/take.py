@@ -11,7 +11,7 @@ class Take(ReapyObject):
         self.id = id
 
     def __eq__(self, other):
-        return self.id == other.id
+        return isinstance(other, Take) and self.id == other.id
 
     @property
     def _args(self):

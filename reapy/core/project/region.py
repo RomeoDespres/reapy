@@ -7,14 +7,12 @@ class Region(ReapyObject):
 
     _class_name = "Region"
 
-    def __init__(
-        self, parent_project=None, index=None, parent_project_id=None
-    ):
+    def __init__(self, parent_project=None, index=None,
+                 parent_project_id=None):
         if parent_project_id is None:
             message = (
                 "One of `parent_project` or `parent_project_id` must be "
-                "specified."
-            )
+                "specified.")
             assert parent_project is not None, message
             parent_project_id = parent_project.id
         self.project_id = parent_project_id
@@ -27,14 +25,11 @@ class Region(ReapyObject):
         """
         return next(
             i for i, r in enumerate(reapy.Project(self.project_id).regions)
-            if r.index == region.index
-        )
+            if r.index == region.index)
 
     @property
     def _kwargs(self):
-        return {
-            "index": self.index, "parent_project_id": self.project_id
-        }
+        return {"index": self.index, "parent_project_id": self.project_id}
 
     def add_rendered_track(self, track):
         """
@@ -149,9 +144,8 @@ class Region(ReapyObject):
         i = 0
         tracks = []
         while i == 0 or tracks[-1]._is_defined:
-            track_id = RPR.EnumRegionRenderMatrix(
-                self.project_id, self.index, i
-            )
+            track_id = RPR.EnumRegionRenderMatrix(self.project_id, self.index,
+                                                  i)
             tracks.append(reapy.Track(track_id))
             i += 1
         return tracks[:-1]
@@ -177,6 +171,5 @@ class Region(ReapyObject):
         start : float
             region start in seconds.
         """
-        RPR.SetProjectMarker2(
-            self.project_id, self.index, 1, start, self.end, ""
-        )
+        RPR.SetProjectMarker2(self.project_id, self.index, 1, start, self.end,
+                              "")

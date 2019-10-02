@@ -8,7 +8,12 @@ class TimeSelection(ReapyObject):
     _class_name = "TimeSelection"
 
     def __init__(self, parent_project=None, parent_project_id=None):
-        if parent_project is not None:
+        if parent_project_id is None:
+            message = (
+                "One of `parent_project` or `parent_project_id` must be "
+                "specified."
+            )
+            assert parent_project is not None, message
             parent_project_id = parent_project.id
         self.project_id = parent_project_id
 

@@ -7,18 +7,18 @@ class Marker(ReapyObject):
 
     _class_name = "Marker"
 
-    def __init__(
-        self, parent_project=None, index=None, parent_project_id=None
-    ):
+    def __init__(self, parent_project=None, index=None,
+                 parent_project_id=None):
         if parent_project_id is None:
             message = (
                 "One of `parent_project` or `parent_project_id` must be "
-                "specified."
-            )
+                "specified.")
             assert parent_project is not None, message
             parent_project_id = parent_project.id
         self.project = reapy.Project(parent_project_id)
         self.project_id = parent_project_id
+        if index is None:
+            index = len(self.project.markers)
         self.index = index
 
     @reapy.inside_reaper()
@@ -32,9 +32,7 @@ class Marker(ReapyObject):
 
     @property
     def _kwargs(self):
-        return {
-            "index": self.index, "parent_project_id": self.project_id
-        }
+        return {"index": self.index, "parent_project_id": self.project_id}
 
     def delete(self):
         """
@@ -54,7 +52,8 @@ class Marker(ReapyObject):
             Marker position in seconds.
         """
         index = self._get_enum_index()
-        return RPR.EnumProjectMarkers2(self.project_id, index, 0, 0, 0, 0, 0)[4]
+        return RPR.EnumProjectMarkers2(self.project_id, index, 0, 0, 0, 0,
+                                       0)[4]
 
     @position.setter
     def position(self, position):
@@ -66,6 +65,5 @@ class Marker(ReapyObject):
         position : float
             Marker position in seconds.
         """
-        RPR.SetProjectMarker2(
-            self.project_id, self.index, False, position, 0, ""
-        )
+        RPR.SetProjectMarker2(self.project_id, self.index, False, position, 0,
+                              "")
