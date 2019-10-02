@@ -3,7 +3,6 @@ from reapy.tools import json
 
 import sys
 
-
 __all__ = []
 
 

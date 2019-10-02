@@ -9,14 +9,12 @@ import traceback
 
 
 class Server(Socket):
-
     """
     Server part of the ``reapy`` dist API.
 
     It is instantiated inside REAPER. It receives and processes API
     call requests coming from the outside.
     """
-
     def __init__(self, port):
         super().__init__()
         self.bind(("", port))
@@ -32,11 +30,8 @@ class Server(Socket):
         except (ConnectionAbortedError, ConnectionResetError):
             # Client has disconnected
             # Pretend client has nicely requested to disconnect
-            input = {"args": (address,), "kwargs":{}}
-            request = {
-                "function": self.disconnect,
-                "input": input
-            }
+            input = {"args": (address, ), "kwargs": {}}
+            request = {"function": self.disconnect, "input": input}
         return request
 
     def _hold_connection(self, address):
@@ -78,10 +73,11 @@ class Server(Socket):
         connection.send(result)
 
     @Socket._non_blocking
-    def accept(self):
+    def accept(self, *args, **kwargs):
         connection, address = super().accept()
         self.connections[address] = connection
         connection.send("{}".format(address).encode("ascii"))
+        return connection, address
 
     def disconnect(self, address):
         connection = self.connections[address]

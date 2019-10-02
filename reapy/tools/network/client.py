@@ -4,7 +4,6 @@ from .socket import Socket
 
 
 class Client(Socket):
-
     def __init__(self, port):
         super().__init__()
         self._connect(port)
