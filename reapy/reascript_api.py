@@ -3,8 +3,6 @@ from reapy.tools import json
 
 import sys
 
-__all__ = []
-
 
 @reapy.inside_reaper()
 def _get_api_names():
@@ -27,7 +25,11 @@ if reapy.is_inside_reaper():
     except ModuleNotFoundError:  # SWS is not installed
         pass
 else:
-    __all__ = _get_api_names()
-    func_def = "@reapy.inside_reaper()\ndef {name}(*args): return (name)(*args)"
-    exec("\n".join(func_def.format(name=name) for name in __all__))
-    del func_def
+    if reapy.dist_api_is_enabled():
+        __all__ = _get_api_names()
+        func_def = (
+            "@reapy.inside_reaper()\n"
+            "def {name}(*args): return (name)(*args)"
+        )
+        exec("\n".join(func_def.format(name=name) for name in __all__))
+        del func_def

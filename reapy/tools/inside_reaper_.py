@@ -15,6 +15,11 @@ if not reapy.is_inside_reaper():
         _CLIENT = None
 
 
+def dist_api_is_enabled():
+    """Return whether reapy can reach REAPER from the outside."""
+    return _CLIENT is not None
+
+
 class inside_reaper(contextlib.ContextDecorator):
 
     """
@@ -48,7 +53,7 @@ class inside_reaper(contextlib.ContextDecorator):
     """
 
     def __call__(self, func, encoded_func=None):
-        if reapy.is_inside_reaper() or _CLIENT is None:
+        if reapy.is_inside_reaper():
             return func
         if isinstance(func, property):
             return DistProperty.from_property(func)

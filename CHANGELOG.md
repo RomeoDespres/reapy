@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Fixed
+
+- Error when importing `reapy` from outside REAPER while the distant API is disabled.
+
+
 ## [0.4.1](https://github.com/RomeoDespres/reapy/releases/tag/0.4.1) - 2019-09-22
 
 ### Fixed
