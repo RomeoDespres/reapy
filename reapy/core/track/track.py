@@ -38,7 +38,7 @@ class Track(ReapyObject):
 
     or
 
-    >>> reapy.Track("PIANO")
+    >>> reapy.Track("PIANO", project)
     Track("(MediaTrack*)0x00000000110A1AD0")
     """
     def __init__(self, id, project=None):
