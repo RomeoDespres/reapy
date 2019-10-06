@@ -468,7 +468,6 @@ class Project(ReapyObject):
                 fx, index = track.fxs[res[2]], res[3]
         return fx, index
 
-    @reapy.inside_reaper()
     def make_current_project(self):
         """
         Set project as current project.
@@ -936,8 +935,15 @@ class Project(ReapyObject):
 class _MakeCurrentProject:
     """Context manager used by Project.make_current_project."""
     def __init__(self, project):
-        self.current_project = reapy.Project()
+        self.current_project = self._make_current_project(project)
+
+    @staticmethod
+    @reapy.inside_reaper()
+    def _make_current_project(project):
+        """Set current project and return the previous current project."""
+        current_project = reapy.Project()
         RPR.SelectProjectInstance(project.id)
+        return current_project
 
     def __enter__(self):
         pass
