@@ -623,6 +623,11 @@ class TrackList(ReapyObjectList):
             return self._get_items_from_slice(key)
         return Track(key, self.parent)
 
+    def __iter__(self):
+        tracks = self[:]  # Only cost one distant call
+        for track in tracks:
+            yield track
+
     def __len__(self):
         return self.parent.n_tracks
 
