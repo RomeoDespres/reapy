@@ -3,12 +3,23 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Fixed
+
+- Endless loop when using `Project.tracks` (issue [#40](https://github.com/RomeoDespres/reapy/issues/40)).
+
+### Improved
+
+- Iterating over `Project.tracks` takes only one distant API call, instead of one per track.
+
+
 ## [0.4.2](https://github.com/RomeoDespres/reapy/releases/tag/0.4.2) - 2019-10-06
 
 ### Fixed
 
 - Error when importing `reapy` from outside REAPER while the distant API is disabled.
-- Error when using `Project.make_current_project()` (issue #35).
+- Error when using `Project.make_current_project()` (issue [#35](https://github.com/RomeoDespres/reapy/issues/35)).
 
 
 ## [0.4.1](https://github.com/RomeoDespres/reapy/releases/tag/0.4.1) - 2019-09-22
