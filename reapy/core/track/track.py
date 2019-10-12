@@ -612,16 +612,16 @@ class TrackList(ReapyObjectList):
         """
         self.parent = parent
 
-    def __getitem__(self, key):
-        if isinstance(key, slice):
-            return self._get_items_from_slice(key)
-        return Track(key, self.parent)
-
     @reapy.inside_reaper()
     def __delitem__(self, key):
         tracks = self[key] if isinstance(key, slice) else [self[key]]
         for track in tracks:
             track.delete()
+
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            return self._get_items_from_slice(key)
+        return Track(key, self.parent)
 
     def __len__(self):
         return self.parent.n_tracks
