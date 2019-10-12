@@ -47,10 +47,15 @@ class Track(ReapyObject):
         self._project = None
         if isinstance(id, int):  # id is a track index
             id = RPR.GetTrack(project.id, id)
+            if id.endswith("0x0000000000000000"):
+                raise IndexError('Track index out of range')
             self._project = project
         elif isinstance(id, str) and not id.startswith("(MediaTrack*)"):
             # id is a track name
-            id = project._get_track_by_name(id).id
+            name = id
+            id = project._get_track_by_name(name).id
+            if id.endswith("0x0000000000000000"):
+                raise KeyError(name)
             self._project = project
         # id is now a real ReaScript ID
         self.id = id
