@@ -8,7 +8,7 @@ class Marker(ReapyObject):
     _class_name = "Marker"
 
     def __init__(
-            self, parent_project=None, index=None, parent_project_id=None
+        self, parent_project=None, index=None, parent_project_id=None
     ):
         if parent_project_id is None:
             message = (
