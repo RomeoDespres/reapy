@@ -5,6 +5,7 @@ from reapy.errors import UndefinedEnvelopeError
 
 
 class Track(ReapyObject):
+
     """
     REAPER Track.
 
@@ -41,6 +42,7 @@ class Track(ReapyObject):
     >>> reapy.Track("PIANO", project)
     Track("(MediaTrack*)0x00000000110A1AD0")
     """
+
     def __init__(self, id, project=None):
         self._project = None
         if isinstance(id, int):  # id is a track index
@@ -109,8 +111,9 @@ class Track(ReapyObject):
         ValueError
             If there is no FX with the specified name.
         """
-        index = RPR.TrackFX_AddByName(self.id, name, input_fx,
-                                      1 - 2 * even_if_exists)
+        index = RPR.TrackFX_AddByName(
+            self.id, name, input_fx, 1 - 2 * even_if_exists
+        )
         if index == -1:
             raise ValueError("Can't find FX named {}".format(name))
         fx = reapy.FX(self, index)
@@ -282,8 +285,7 @@ class Track(ReapyObject):
         return fxs
 
     def get_info_string(self, param_name):
-        return RPR.GetSetMediaTrackInfo_String(self.id, param_name, "",
-                                               False)[3]
+        return RPR.GetSetMediaTrackInfo_String(self.id, param_name, "", False)[3]
 
     def get_info_value(self, param_name):
         value = RPR.GetMediaTrackInfo_Value(self.id, param_name)
@@ -340,7 +342,9 @@ class Track(ReapyObject):
         :type: list of Item
         """
         n_items = RPR.CountTrackMediaItems(self.id)
-        item_ids = [RPR.GetTrackMediaItem(self.id, i) for i in range(n_items)]
+        item_ids = [
+            RPR.GetTrackMediaItem(self.id, i) for i in range(n_items)
+        ]
         return list(map(reapy.Item, item_ids))
 
     @property
@@ -520,11 +524,12 @@ class Track(ReapyObject):
     @reapy.inside_reaper()
     @property
     def sends(self):
-        return [reapy.Send(self, i, type="send") for i in range(self.n_sends)]
+        return [
+            reapy.Send(self, i, type="send") for i in range(self.n_sends)
+        ]
 
     def set_info_string(self, param_name, param_string):
-        RPR.GetSetMediaTrackInfo_String(self.id, param_name, param_string,
-                                        True)
+        RPR.GetSetMediaTrackInfo_String(self.id, param_name, param_string, True)
 
     @reapy.inside_reaper()
     def solo(self):
@@ -578,6 +583,7 @@ class Track(ReapyObject):
 
 
 class TrackList(ReapyObjectList):
+
     """
     Container for a project's track list.
 
@@ -596,6 +602,7 @@ class TrackList(ReapyObjectList):
     'Hi-hat'
     'Cymbal"
     """
+
     def __init__(self, parent):
         """
         Create track list.
