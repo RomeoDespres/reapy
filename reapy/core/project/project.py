@@ -7,7 +7,9 @@ from reapy.errors import RedoError, UndoError
 
 
 class Project(ReapyObject):
+
     """REAPER project."""
+
     def __init__(self, id=None, index=-1):
         """
         Build project either by ID or index.
@@ -67,8 +69,9 @@ class Project(ReapyObject):
         """
         if isinstance(color, tuple):
             color = reapy.rgb_to_native(color) | 0x1000000
-        marker_id = RPR.AddProjectMarker2(self.id, False, position, 0, name,
-                                          -1, color)
+        marker_id = RPR.AddProjectMarker2(
+            self.id, False, position, 0, name, -1, color
+        )
         marker = reapy.Marker(self, marker_id)
         return marker
 
@@ -95,8 +98,9 @@ class Project(ReapyObject):
         """
         if isinstance(color, tuple):
             color = reapy.rgb_to_native(color) | 0x1000000
-        region_id = RPR.AddProjectMarker2(self.id, True, start, end, name, -1,
-                                          color)
+        region_id = RPR.AddProjectMarker2(
+            self.id, True, start, end, name, -1, color
+        )
         region = reapy.Region(self, region_id)
         return region
 
@@ -933,7 +937,9 @@ class Project(ReapyObject):
 
 
 class _MakeCurrentProject:
+
     """Context manager used by Project.make_current_project."""
+
     def __init__(self, project):
         self.current_project = self._make_current_project(project)
 

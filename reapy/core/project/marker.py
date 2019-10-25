@@ -12,7 +12,8 @@ class Marker(ReapyObject):
         if parent_project_id is None:
             message = (
                 "One of `parent_project` or `parent_project_id` must be "
-                "specified.")
+                "specified."
+            )
             assert parent_project is not None, message
             parent_project_id = parent_project.id
         self.project = reapy.Project(parent_project_id)
@@ -52,8 +53,7 @@ class Marker(ReapyObject):
             Marker position in seconds.
         """
         index = self._get_enum_index()
-        return RPR.EnumProjectMarkers2(self.project_id, index, 0, 0, 0, 0,
-                                       0)[4]
+        return RPR.EnumProjectMarkers2(self.project_id, index, 0, 0, 0, 0, 0)[4]
 
     @position.setter
     def position(self, position):
@@ -65,5 +65,4 @@ class Marker(ReapyObject):
         position : float
             Marker position in seconds.
         """
-        RPR.SetProjectMarker2(self.project_id, self.index, False, position, 0,
-                              "")
+        RPR.SetProjectMarker2(self.project_id, self.index, False, position, 0, "")

@@ -3,7 +3,9 @@ from .window import Window
 
 
 class ToolTip(Window):
+
     """Tooltip window."""
+
     def __init__(self, message=" ", x=0, y=0, topmost=True, show=True):
         """Initialize tooltip.
 
