@@ -7,8 +7,9 @@ class Marker(ReapyObject):
 
     _class_name = "Marker"
 
-    def __init__(self, parent_project=None, index=None,
-                 parent_project_id=None):
+    def __init__(
+            self, parent_project=None, index=None, parent_project_id=None
+    ):
         if parent_project_id is None:
             message = (
                 "One of `parent_project` or `parent_project_id` must be "
@@ -33,7 +34,9 @@ class Marker(ReapyObject):
 
     @property
     def _kwargs(self):
-        return {"index": self.index, "parent_project_id": self.project_id}
+        return {
+            "index": self.index, "parent_project_id": self.project_id
+        }
 
     def delete(self):
         """
@@ -65,4 +68,6 @@ class Marker(ReapyObject):
         position : float
             Marker position in seconds.
         """
-        RPR.SetProjectMarker2(self.project_id, self.index, False, position, 0, "")
+        RPR.SetProjectMarker2(
+            self.project_id, self.index, False, position, 0, ""
+        )
