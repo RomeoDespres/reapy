@@ -55,7 +55,7 @@ class ToolTip(Window):
             self.show()
 
     def refresh(self):
-        pass
+        raise NotImplementedError
 
     def show(self):
         """Show tooltip."""

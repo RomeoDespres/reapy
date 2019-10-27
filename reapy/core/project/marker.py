@@ -19,6 +19,8 @@ class Marker(ReapyObject):
             parent_project_id = parent_project.id
         self.project = reapy.Project(parent_project_id)
         self.project_id = parent_project_id
+        if index is None:
+            index = len(self.project.markers)
         self.index = index
 
     @reapy.inside_reaper()

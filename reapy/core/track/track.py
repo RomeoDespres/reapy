@@ -117,7 +117,7 @@ class Track(ReapyObject):
             If there is no FX with the specified name.
         """
         index = RPR.TrackFX_AddByName(
-            self.id, name, input_fx, 1 - 2*even_if_exists
+            self.id, name, input_fx, 1 - 2 * even_if_exists
         )
         if index == -1:
             raise ValueError("Can't find FX named {}".format(name))
@@ -161,7 +161,7 @@ class Track(ReapyObject):
             New item start in seconds (or beats if `quantize`=True).
         end : float, optional
             New item end in seconds (or beats if `quantize`=True).
-        quantize : boo, optional
+        quantize : bool, optional
             Whether to count time in beats (True) or seconds (False,
             default).
         """
@@ -417,7 +417,11 @@ class Track(ReapyObject):
 
     @property
     def midi_note_names(self):
-        return reapy.MIDINoteNames(self)
+        with reapy.inside_reaper():
+            names = [
+                RPR.GetTrackMIDINoteName(self.id, i, 0) for i in range(128)
+            ]
+        return names
 
     @reapy.inside_reaper()
     def mute(self):

@@ -32,7 +32,7 @@ class Server(Socket):
         except (ConnectionAbortedError, ConnectionResetError):
             # Client has disconnected
             # Pretend client has nicely requested to disconnect
-            input = {"args": (address,), "kwargs":{}}
+            input = {"args": (address, ), "kwargs": {}}
             request = {
                 "function": self.disconnect,
                 "input": input
@@ -78,10 +78,11 @@ class Server(Socket):
         connection.send(result)
 
     @Socket._non_blocking
-    def accept(self):
+    def accept(self, *args, **kwargs):
         connection, address = super().accept()
         self.connections[address] = connection
         connection.send("{}".format(address).encode("ascii"))
+        return connection, address
 
     def disconnect(self, address):
         connection = self.connections[address]
