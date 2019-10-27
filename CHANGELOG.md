@@ -3,7 +3,11 @@
 All notable changes to this project will be documented in this file.
 
 
-## Unreleased
+## [0.4.3](https://github.com/RomeoDespres/reapy/releases/tag/0.4.3) - 2019-10-27
+
+### Added
+
+- Stubs to use `reapy` with `mypy`.
 
 ### Fixed
 
