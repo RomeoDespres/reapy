@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 
 - `reapy.reconnect` to retry connecting to REAPER from the outside.
 
+### Fixed
+
+- Fix error when terminating ReaScripts (issue [#35](https://github.com/RomeoDespres/reapy/issues/35))
+
 
 ## [0.4.3](https://github.com/RomeoDespres/reapy/releases/tag/0.4.3) - 2019-10-27
 
