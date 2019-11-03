@@ -3,15 +3,26 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Added
+
+- `reapy.reconnect` to retry connecting to REAPER from the outside.
+
+
 ## [0.4.3](https://github.com/RomeoDespres/reapy/releases/tag/0.4.3) - 2019-10-27
 
 ### Added
 
 - Stubs to use `reapy` with `mypy`.
 
-### Added
+### Fixed
 
-- `reapy.reconnect` to retry connecting to REAPER from the outside.
+- Endless loop when using `Project.tracks` (issue [#40](https://github.com/RomeoDespres/reapy/issues/40)).
+
+### Improved
+
+- Iterating over `Project.tracks` takes only one distant API call, instead of one per track.
 
 
 ## [0.4.2](https://github.com/RomeoDespres/reapy/releases/tag/0.4.2) - 2019-10-06
