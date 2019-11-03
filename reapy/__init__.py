@@ -9,7 +9,7 @@ def is_inside_reaper():
     return inside
 
 
-from .tools import inside_reaper, dist_api_is_enabled
+from .tools import inside_reaper, dist_api_is_enabled, reconnect
 from . import reascript_api
 from .core import *
 from .core.reaper import *
