@@ -9,8 +9,8 @@ class Client(Socket):
         super().__init__()
         self._connect(port)
 
-    def _connect(self, port):
-        super().connect(("localhost", port))
+    def _connect(self, port, host="localhost"):
+        super().connect((host, port))
         self.address = self.recv(timeout=None).decode("ascii")
 
     def _get_result(self):
