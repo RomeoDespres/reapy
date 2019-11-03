@@ -5,13 +5,9 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-### Fixed
+### Added
 
-- Endless loop when using `Project.tracks` (issue [#40](https://github.com/RomeoDespres/reapy/issues/40)).
-
-### Improved
-
-- Iterating over `Project.tracks` takes only one distant API call, instead of one per track.
+- `reapy.reconnect` to retry connecting to REAPER from the outside.
 
 
 ## [0.4.2](https://github.com/RomeoDespres/reapy/releases/tag/0.4.2) - 2019-10-06
