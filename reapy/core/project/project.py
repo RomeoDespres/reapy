@@ -415,6 +415,43 @@ class Project(ReapyObject):
         is_current = self == Project()
         return is_current
 
+    @property
+    def is_paused(self):
+        """
+        Return whether project is paused.
+
+        :type: bool
+        """
+        return bool(RPR.GetPlayStateEx(self.id) & 2)
+
+    @property
+    def is_playing(self):
+        """
+        Return whether project is playing.
+
+        :type: bool
+        """
+        return bool(RPR.GetPlayStateEx(self.id) & 1)
+
+    @property
+    def is_recording(self):
+        """
+        Return whether project is recording.
+
+        :type: bool
+        """
+        return bool(RPR.GetPlayStateEx(self.id) & 4)
+
+    @reapy.inside_reaper()
+    @property
+    def is_stopped(self):
+        """
+        Return whether project is stopped.
+
+        :type: bool
+        """
+        return not self.is_playing and not self.is_paused
+
     @reapy.inside_reaper()
     @property
     def items(self):
@@ -680,17 +717,6 @@ class Project(ReapyObject):
         """
         play_rate = RPR.Master_GetPlayRate(self.id)
         return play_rate
-
-    @property
-    def play_state(self):
-        """
-        Project play state ("play", "pause" or "record").
-
-        :type: str
-        """
-        states = {1: "play", 2: "pause", 4: "record"}
-        state = states[RPR.GetPlayStateEx(self.id)]
-        return state
 
     def redo(self):
         """
