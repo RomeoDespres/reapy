@@ -9,10 +9,10 @@ All notable changes to this project will be documented in this file.
 
 - `reapy.reconnect` to retry connecting to REAPER from the outside.
 - Four play states properties on `Project`:
-    * `Project.is_playing`
-    * `Project.is_paused`
-    * `Project.is_recording`
-    * `Project.is_stopped`
+    * [`Project.is_playing`]
+    * [`Project.is_paused`]
+    * [`Project.is_recording`]
+    * [`Project.is_stopped`]
 
 Project.play_state was buggy and has been removed.
 
@@ -304,6 +304,10 @@ Project.play_state was buggy and has been removed.
 [`Project.get_selected_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_item
 [`Project.get_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_track
 [`Project.is_dirty`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_dirty
+[`Project.is_paused`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_paused
+[`Project.is_playing`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_playing
+[`Project.is_recording`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_recording
+[`Project.is_stopped`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_stopped
 [`Project.items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.items
 [`Project.last_touched_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.last_touched_fx
 [`Project.length`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.length
