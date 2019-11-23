@@ -8,10 +8,21 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - `reapy.reconnect` to retry connecting to REAPER from the outside.
+- Four play states properties on `Project`:
+    * `Project.is_playing`
+    * `Project.is_paused`
+    * `Project.is_recording`
+    * `Project.is_stopped`
+
+Project.play_state was buggy and has been removed.
 
 ### Fixed
 
 - Fix error when terminating ReaScripts (issue [#35](https://github.com/RomeoDespres/reapy/issues/35))
+
+### Removed
+
+- `Project.play_state` property. It was buggy and has been replaced by the four play states properties mentioned above.
 
 
 ## [0.4.3](https://github.com/RomeoDespres/reapy/releases/tag/0.4.3) - 2019-10-27
