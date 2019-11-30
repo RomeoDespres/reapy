@@ -1,0 +1,132 @@
+import sys
+import warnings
+
+import reapy
+import reapy.config
+from reapy.errors import DisabledDistAPIError, DisabledDistAPIWarning
+from . import client, web_interface
+
+
+CLIENT = None
+CLIENTS = {None: None}
+
+
+def get_selected_client():
+    return CLIENT
+
+
+def get_selected_machine_host():
+    """Return host of the currently selected machine.
+
+    Returns
+    -------
+    host : str or None
+        None is returned when running from inside REAPER and
+        no slave machine is selected.
+    """
+    return None if CLIENT is None else CLIENT.host
+
+
+def reconnect():
+    """
+    Reconnect to REAPER ReaScript API.
+
+    Examples
+    --------
+    Assume no REAPER instance is active.
+    >>> import reapy
+    DisabledDistAPIWarning: Can't reach distant API. Please start REAPER, or
+    call reapy.config.enable_dist_api() from inside REAPER to enable distant
+    API.
+      warnings.warn(DisabledDistAPIWarning())
+    >>> p = reapy.Project()  # Results in error
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+      File "reapy\\core\\project\\project.py", line 26, in __init__
+        id = RPR.EnumProjects(index, None, 0)[0]
+    AttributeError: module 'reapy.reascript_api' has no attribute 'EnumProjects'
+    >>> # Now start REAPER
+    ...
+    >>> reapy.reconnect()
+    >>> p = reapy.Project()  # No error!
+    """
+    if not reapy.is_inside_reaper():
+        host = get_selected_machine_host()
+        if host is None:
+            host = "localhost"
+        try:
+            del CLIENTS[host]
+        except KeyError:
+            pass
+        select_machine(host)
+
+
+
+class select_machine:
+
+    """Select slave machine.
+
+    reapy instructions will now be run on the selected machine.
+    If used as a context manager, the slave machine will only be
+    selected in the corresponding context.
+
+    Parameters
+    ----------
+    host : str, optional
+        Slave machine host. If None, selects default ``reapy``
+        behavior (i.e. local REAPER instance).
+
+    See also
+    --------
+    ``select_default_machine``
+        Select default slave machine (i.e. local REAPER instance).
+    """
+
+    def __init__(self, host=None):
+        global CLIENT
+        self.previous_client = CLIENT
+        if host not in CLIENTS:
+            register_machine(host)
+        CLIENT = CLIENTS[host]
+        importlib.reload(reapy.reascript_api)
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        global CLIENT
+        CLIENT = self.previous_client
+        importlib.reload(reapy.reascript_api)
+
+
+class select_default_machine(select_machine):
+
+    """Select default slave machine (i.e. local REAPER instance)."""
+
+    def __init__(self):
+        super().__init__()
+
+
+def register_machine(host):
+    """Register a slave machine.
+
+    Parameters
+    ----------
+    host : str
+        Slave machine host (e.g. ``"localhost"``).
+
+    See also
+    --------
+    ``reapy.select_machine``
+    """
+    try:
+        interface_port = reapy.config.WEB_INTERFACE_PORT
+        interface = web_interface.WebInterface(interface_port, host)
+        CLIENTS[host] = Client(interface.get_reapy_server_port(), host)
+    except DisabledDistAPIError:
+        warnings.warn(DisabledDistAPIWarning())
+
+
+if not reapy.is_inside_reaper():
+    select_machine("localhost")
+    CLIENTS[None] = CLIENT

@@ -8,8 +8,8 @@ import reapy
 
 class WebInterface:
 
-    def __init__(self, port):
-        self._url = "http://localhost:{}/_/".format(port)
+    def __init__(self, port, host="localhost"):
+        self._url = "http://{}:{}/_/".format(host, port)
         self.ext_state = ExtState(self)
 
     def activate_reapy_server(self):
