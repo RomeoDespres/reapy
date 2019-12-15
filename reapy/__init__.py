@@ -22,7 +22,7 @@ def is_inside_reaper():
 
 
 
-from .tools import inside_reaper, dist_api_is_enabled, machines, reconnect
+from .tools import connect, dist_api_is_enabled, inside_reaper, reconnect
 from . import reascript_api
 from .core import *
 from .core.reaper import *

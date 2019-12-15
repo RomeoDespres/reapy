@@ -1,9 +1,10 @@
+import importlib
 import sys
 import warnings
 
 import reapy
 import reapy.config
-from reapy.errors import DisabledDistAPIError, DisabledDistAPIWarning
+from reapy import errors
 from . import client, web_interface
 
 
@@ -35,10 +36,10 @@ def reconnect():
     --------
     Assume no REAPER instance is active.
     >>> import reapy
-    DisabledDistAPIWarning: Can't reach distant API. Please start REAPER, or
+    errors.DisabledDistAPIWarning: Can't reach distant API. Please start REAPER, or
     call reapy.config.enable_dist_api() from inside REAPER to enable distant
     API.
-      warnings.warn(DisabledDistAPIWarning())
+      warnings.warn(errors.DisabledDistAPIWarning())
     >>> p = reapy.Project()  # Results in error
     Traceback (most recent call last):
       File "<string>", line 1, in <module>
@@ -53,18 +54,20 @@ def reconnect():
     if not reapy.is_inside_reaper():
         host = get_selected_machine_host()
         if host is None:
+            # We are outside REAPER, so this means initial import failed to
+            # connect and we want to retry with default host (i.e. localhost)
             host = "localhost"
         try:
             del CLIENTS[host]
         except KeyError:
             pass
-        select_machine(host)
+        connect(host)
 
 
 
-class select_machine:
+class connect:
 
-    """Select slave machine.
+    """Connect to slave machine.
 
     reapy instructions will now be run on the selected machine.
     If used as a context manager, the slave machine will only be
@@ -78,8 +81,8 @@ class select_machine:
 
     See also
     --------
-    ``select_default_machine``
-        Select default slave machine (i.e. local REAPER instance).
+    ``connect_to_default_machine``
+        Connect to default slave machine (i.e. local REAPER instance).
     """
 
     def __init__(self, host=None):
@@ -88,7 +91,8 @@ class select_machine:
         if host not in CLIENTS:
             register_machine(host)
         CLIENT = CLIENTS[host]
-        importlib.reload(reapy.reascript_api)
+        if hasattr(reapy, 'reascript_api'):  # False during initial import
+            importlib.reload(reapy.reascript_api)
 
     def __enter__(self):
         pass
@@ -99,7 +103,7 @@ class select_machine:
         importlib.reload(reapy.reascript_api)
 
 
-class select_default_machine(select_machine):
+class connect_to_default_machine(connect):
 
     """Select default slave machine (i.e. local REAPER instance)."""
 
@@ -117,16 +121,19 @@ def register_machine(host):
 
     See also
     --------
-    ``reapy.select_machine``
+    ``reapy.connect``
     """
+    if reapy.is_inside_reaper() and host == "localhost":
+        msg = "A REAPER instance can not connect to istelf."
+        raise errors.InsideREAPERError(msg)
     try:
         interface_port = reapy.config.WEB_INTERFACE_PORT
         interface = web_interface.WebInterface(interface_port, host)
-        CLIENTS[host] = Client(interface.get_reapy_server_port(), host)
-    except DisabledDistAPIError:
-        warnings.warn(DisabledDistAPIWarning())
+        CLIENTS[host] = client.Client(interface.get_reapy_server_port(), host)
+    except errors.DisabledDistAPIError:
+        warnings.warn(errors.DisabledDistAPIWarning())
 
 
 if not reapy.is_inside_reaper():
-    select_machine("localhost")
+    connect("localhost")
     CLIENTS[None] = CLIENT
