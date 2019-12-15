@@ -88,11 +88,15 @@ class connect:
     def __init__(self, host=None):
         global CLIENT
         self.previous_client = CLIENT
-        if host not in CLIENTS:
-            register_machine(host)
-        CLIENT = CLIENTS[host]
-        if hasattr(reapy, 'reascript_api'):  # False during initial import
-            importlib.reload(reapy.reascript_api)
+        try:
+            if host not in CLIENTS:
+                register_machine(host)
+            CLIENT = CLIENTS[host]
+            if hasattr(reapy, 'reascript_api'):  # False during initial import
+                importlib.reload(reapy.reascript_api)
+        except errors.DisabledDistAPIError:
+            warnings.warn(errors.DisabledDistAPIWarning())
+
 
     def __enter__(self):
         pass
@@ -126,12 +130,9 @@ def register_machine(host):
     if reapy.is_inside_reaper() and host == "localhost":
         msg = "A REAPER instance can not connect to istelf."
         raise errors.InsideREAPERError(msg)
-    try:
-        interface_port = reapy.config.WEB_INTERFACE_PORT
-        interface = web_interface.WebInterface(interface_port, host)
-        CLIENTS[host] = client.Client(interface.get_reapy_server_port(), host)
-    except errors.DisabledDistAPIError:
-        warnings.warn(errors.DisabledDistAPIWarning())
+    interface_port = reapy.config.WEB_INTERFACE_PORT
+    interface = web_interface.WebInterface(interface_port, host)
+    CLIENTS[host] = client.Client(interface.get_reapy_server_port(), host)
 
 
 if not reapy.is_inside_reaper():
