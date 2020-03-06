@@ -455,6 +455,9 @@ class Track(ReapyObject):
         """
         ...
 
+    @property
+    def receives(self) -> ty.List[reapy.Send]:...
+
     def select(self) -> None:
         """
         Select track.

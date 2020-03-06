@@ -520,6 +520,13 @@ class Track(ReapyObject):
             self._project = self._get_project()
         return self._project
 
+    @reapy.inside_reaper()
+    @property
+    def receives(self):
+        return [
+            reapy.Send(self, i, type="receive") for i in range(self.n_receives)
+        ]
+
     def select(self):
         """
         Select track.

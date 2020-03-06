@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- `midi_source`, `midi_dest` `(bus: int, channel: int)` properties in `reapy.Send`. Also added `set_info_br(param: str, value: float)` and `get_info_br(param: str) -> float`. Every function requires `sws_python.py`.
+- `receives` property in Track
+
 ### Fixed
 
 - Typo in `reapy.has_ext_state` (issue [#46](https://github.com/RomeoDespres/reapy/issues/46))

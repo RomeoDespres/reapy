@@ -695,7 +695,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def selected_items(self) -> ty.List[reapy.Item]:
         """
@@ -710,7 +709,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def selected_tracks(self) -> ty.List[reapy.Track]:
         """
