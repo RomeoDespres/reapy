@@ -6,6 +6,19 @@ import typing as ty
 
 class Send(ReapyObject):
 
+    """Track send.
+
+    Attributes
+    ----------
+    index : int
+        position on the track
+    is_muted : bool
+    is_phase_flipped : bool
+    track_id : str
+    type : str
+        can be 'send', 'hardware' or 'receive'
+    """
+
     _class_name = "Send"
     index: int
     track_id: ty.Union[str, int]
