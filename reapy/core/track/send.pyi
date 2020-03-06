@@ -6,6 +6,19 @@ import typing as ty
 
 class Send(ReapyObject):
 
+    """Track send.
+
+    Attributes
+    ----------
+    index : int
+        position on the track
+    is_muted : bool
+    is_phase_flipped : bool
+    track_id : str
+    type : str
+        can be 'send', 'hardware' or 'receive'
+    """
+
     _class_name = "Send"
     index: int
     track_id: ty.Union[str, int]
@@ -39,6 +52,44 @@ class Send(ReapyObject):
         ...
 
     def get_info(self, param_name: str) -> float:
+        """Get raw info from GetTrackSendInfo_Value.
+
+        Parameters
+        ----------
+        param_name : str
+            B_MUTE : bool *
+            B_PHASE : bool *, true to flip phase
+            B_MONO : bool *
+            D_VOL : double *, 1.0 = +0dB etc
+            D_PAN : double *, -1..+1
+            D_PANLAW : double *,1.0=+0.0db, 0.5=-6dB, -1.0 = projdef etc
+            I_SENDMODE : int *, 0=post-fader, 1=pre-fx, 2=post-fx (deprecated),
+                                3=post-fx
+            I_AUTOMODE : int * : automation mode (-1=use track automode,
+                                0=trim/off, 1=read, 2=touch, 3=write, 4=latch)
+            I_SRCCHAN : int *, index,&1024=mono, -1 for none
+            I_DSTCHAN : int *, index, &1024=mono, otherwise stereo pair,
+                                hwout:&512=rearoute
+            I_MIDIFLAGS : int *, low 5 bits=source channel 0=all, 1-16,
+                                next 5 bits=dest channel, 0=orig,
+                                1-16=chanP_DESTTRACK : read only, 
+                                returns MediaTrack *,
+                                destination track,
+                                only applies for sends/recvs
+            P_SRCTRACK : read only, returns MediaTrack *,
+                                source track, only applies for sends/recvs
+            P_ENV:<envchunkname : read only, returns TrackEnvelope *.
+                                Call with :<VOLENV, :<PANENV, etc appended.
+
+
+        Returns
+        -------
+        Union[bool, track id(str)]
+        """
+        ...
+
+    def get_info_br(self, param_name: str) -> float:
+
         ...
 
     @property
@@ -95,6 +146,34 @@ class Send(ReapyObject):
         ...
 
     @property
+    def midi_source(self) -> ty.Tuple[int, int]:
+        """
+        Send MIDI properties on the send track.
+
+        Returns
+        -------
+        List[int bus, int channel]
+        """
+        ...
+
+    @midi_source.setter
+    def midi_source(self, value: ty.Tuple[int, int]) -> None: ...
+
+    @property
+    def midi_dest(self) -> ty.Tuple[int, int]:
+        """
+        Send MIDI properties on the send track.
+
+        Returns
+        -------
+        List[int bus, int channel]
+        """
+        ...
+
+    @midi_dest.setter
+    def midi_dest(self, value: ty.Tuple[int, int]) -> None: ...
+
+    @property
     def pan(self) -> float:
         """
         Send pan (from -1=left to 1=right).
@@ -116,6 +195,9 @@ class Send(ReapyObject):
         ...
 
     def set_info(self, param_name: str, value: float) -> None:
+        ...
+
+    def set_info_br(self, param_name: str, value: float) -> None:
         ...
 
     @property

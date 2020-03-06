@@ -455,6 +455,9 @@ class Track(ReapyObject):
         """
         ...
 
+    @property
+    def receives(self) -> ty.List[reapy.Send]:...
+
     def select(self) -> None:
         """
         Select track.
@@ -556,6 +559,8 @@ class TrackList(ReapyObjectList):
 
     def __len__(self) -> int:
         ...
+
+    def __iter__(self) -> ty.Iterator[reapy.Track]: ...
 
     @property
     def _args(self) -> ty.Tuple[reapy.Project]:
