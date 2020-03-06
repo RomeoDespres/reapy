@@ -19,7 +19,9 @@ FuncType = ty.Callable[..., ty.Any]
 F = ty.TypeVar('F', bound=FuncType)
 
 
-def dist_api_is_enabled()->bool: ...
+def dist_api_is_enabled() -> bool:
+    """Return whether reapy can reach REAPER from the outside."""
+    ...
 
 
 class inside_reaper(contextlib.ContextDecorator):
@@ -87,3 +89,31 @@ class DistProperty(property):
 
     def deleter(self, fdel: F) -> property:
         ...
+
+
+def reconnect() -> None:
+    """
+    Reconnect to REAPER ReaScript API.
+
+    This function has no effect from inside REAPER.
+
+    Examples
+    --------
+    Assume no REAPER instance is active.
+    >>> import reapy
+    DisabledDistAPIWarning: Can't reach distant API. Please start REAPER, or
+    call reapy.config.enable_dist_api() from inside REAPER to enable distant
+    API.
+      warnings.warn(DisabledDistAPIWarning())
+    >>> p = reapy.Project()  # Results in error
+    Traceback (most recent call last):
+      File "<string>", line 1, in <module>
+      File "C:\\Users\\despres\\Desktop\\reaper\\scripts\\reapy\\reapy\\core\\project\\project.py", line 26, in __init__
+        id = RPR.EnumProjects(index, None, 0)[0]
+    AttributeError: module 'reapy.reascript_api' has no attribute 'EnumProjects'
+    >>> # Now start REAPER
+    ...
+    >>> reapy.reconnect()
+    >>> p = reapy.Project()  # No error!
+    """
+    ...

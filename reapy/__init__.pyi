@@ -1,3 +1,7 @@
+from .core.reaper import *
+from .core import *
+from . import reascript_api as reascript_api
+from .tools import inside_reaper, dist_api_is_enabled, reconnect
 import sys
 
 
@@ -20,7 +24,7 @@ __all__ = [
     # core.reapy_object
     "ReapyObject",
     "ReapyObjectList",
-    #core.audio_accessor
+    # core.audio_accessor
     "AudioAccessor",
     # core.envelope
     "Envelope",

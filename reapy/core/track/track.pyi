@@ -42,11 +42,11 @@ class Track(ReapyObject):
     >>> reapy.Track("PIANO")
     Track("(MediaTrack*)0x00000000110A1AD0")
     """
-    id: ty.Union[str, int]
+    id: str
     _project: reapy.Project
 
-    def __init__(self, id: ty.Union[str, int],
-                 project: reapy.Project = None) -> None:
+    def __init__(self, id: str,
+                 project: ty.Optional[reapy.Project] = None) -> None:
         ...
 
     @property
@@ -556,6 +556,8 @@ class TrackList(ReapyObjectList):
 
     def __len__(self) -> int:
         ...
+
+    def __iter__(self) -> ty.Iterator[reapy.Track]: ...
 
     @property
     def _args(self) -> ty.Tuple[reapy.Project]:
