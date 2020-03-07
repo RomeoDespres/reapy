@@ -1,5 +1,8 @@
 """Defines class Project."""
 
+import pickle
+import codecs
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
@@ -382,6 +385,47 @@ class Project(ReapyObject):
         track_id = RPR.GetSelectedTrack(self.id, index)
         track = reapy.Track(track_id)
         return track
+
+    def get_ext_state(self, section, key, pickled=False):
+        """
+        Return external state of project.
+
+        Note
+        ----
+        size will be used from the previous call to the set_ext_state()
+        if it was made the different way — emty string is returned
+
+        Parameters
+        ----------
+        section : str
+        key : str
+        pickled: bool
+            Wheter data was pickled or not
+
+        Returns
+        -------
+        str
+            if key or section does not exsist empty string is returned
+        """
+        size_str: str
+        (_, _, _, _, size_str, _) = RPR.GetProjExtState(
+            self.id,
+            section,
+            key+'_size',
+            'valOutNeedBig',
+            101
+        )
+        if not size_str:
+            return ''
+        size = int(size_str)
+        (_, _, _, _, dump, _) = RPR.GetProjExtState(
+            self.id, section, key, 'valOutNeedBig', size+1
+        )
+        if dump == '':
+            return ''
+        if pickled:
+            dump = pickle.loads(codecs.decode(dump.encode(), "base64"))
+        return dump
 
     def glue_items(self, within_time_selection=False):
         """
@@ -825,6 +869,55 @@ class Project(ReapyObject):
         self.unselect_all_tracks()
         for track in tracks:
             track.select()
+
+    def set_ext_state(self, section, key, value, pickle_=False):
+        """
+        Set external state of project.
+
+        Note
+        ----
+        The maximum size of stored data is limited to 100-bit representation
+        because big portions of data are cannot be saved within project.
+
+        Parameters
+        ----------
+        section : str
+        key : str
+        value : Union[Any, str]
+            if pickle is True any picklelable data can be passed, else only str
+        pickle : bool, optional
+            data will be pickled with the last version if True
+            If you using mypy as type checker, typing_extensions.Literal[True]
+            has to be used as piackle_ value.
+
+        Returns
+        -------
+        int
+            size of saved state
+        """
+        state = value
+        if pickle_:
+            dump = pickle.dumps(value)
+            state = codecs.encode(dump, 'base64').decode()
+        else:
+            msg = 'value should be of type str, passed %s. Or use pickle_ param.'
+            assert isinstance(value, str), msg % type(value)
+        size = len(state)
+        with reapy.inside_reaper():
+            RPR.SetProjExtState(
+                self.id,
+                section,
+                key,
+                state
+            )
+            size_str = str(str(size).encode().zfill(100), 'utf-8')
+            RPR.SetProjExtState(
+                self.id,
+                section,
+                key+'_size',
+                size_str
+            )
+        return size
 
     @reapy.inside_reaper()
     def solo_all_tracks(self):

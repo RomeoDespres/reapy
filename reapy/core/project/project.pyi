@@ -5,6 +5,7 @@ from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.errors import RedoError, UndoError
 import typing as ty
+import typing_extensions as te
 
 
 class Project(ReapyObject):
@@ -278,6 +279,59 @@ class Project(ReapyObject):
         """
         ...
 
+    def get_selected_track(self, index: int) -> reapy.Track:
+        """
+        Return index-th selected track.
+
+        Parameters
+        ----------
+        index : int
+            Track index.
+
+        Returns
+        -------
+        track : Track
+            index-th selected track.
+        """
+        ...
+
+    @ty.overload
+    def get_ext_state(self, section: str, key: str,
+                      pickled: te.Literal[True]) -> object:
+        """
+        Return external state of project.
+
+        Note
+        ----
+        size will be used from the previous call to the set_ext_state()
+        if it was made the different way — emty string is returned
+
+        Parameters
+        ----------
+        section : str
+        key : str
+        pickled: bool
+            Wheter data was pickled or not
+
+        Returns
+        -------
+        str
+            if key or section does not exsist empty string is returned
+        """
+        ...
+
+    @ty.overload
+    def get_ext_state(self, section: str, key: str,
+                      pickled: te.Literal[False]) -> str:
+
+        ...
+
+    @ty.overload
+    def get_ext_state(self, section: str, key: str,
+                      pickled: bool = False) -> str:
+
+        ...
+
     def get_play_rate(self, position: float) -> float:
         """
         Return project play rate at a given position.
@@ -312,22 +366,6 @@ class Project(ReapyObject):
         -------
         item : Item
             index-th selected item.
-        """
-        ...
-
-    def get_selected_track(self, index: int) -> reapy.Track:
-        """
-        Return index-th selected track.
-
-        Parameters
-        ----------
-        index : int
-            Track index.
-
-        Returns
-        -------
-        track : Track
-            index-th selected track.
         """
         ...
 
@@ -695,6 +733,36 @@ class Project(ReapyObject):
     @selected_tracks.setter
     def selected_tracks(self, tracks: ty.List[reapy.Track]) -> None:
         ...
+
+    @ty.overload
+    def set_ext_state(self, section: str, key: str, value: str,
+                      pickle_: te.Literal[False]) -> int:
+        """
+        Set external state of project.
+
+        Parameters
+        ----------
+        section : str
+        key : str
+        value : Union[Any, str]
+            if pickle is True any picklelable data can be passed, else only str
+        pickle : bool, optional
+            data will be pickled with the last version if True
+
+        Returns
+        -------
+        int
+            size of saved state
+        """
+        ...
+
+    @ty.overload
+    def set_ext_state(self, section: str, key: str, value: ty.Any,
+                      pickle_: te.Literal[True]) -> int: ...
+
+    @ty.overload
+    def set_ext_state(self, section: str, key: str, value: str,
+                      pickle_: bool = False) -> int: ...
 
     @reapy.inside_reaper()
     def solo_all_tracks(self) -> None:

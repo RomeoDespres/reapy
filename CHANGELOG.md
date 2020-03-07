@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- new api in reapy.Project, types of value infered by the pickle_ (pickled) value:
+    * [`set_ext_state(section: str, key: str, value: Union[Any, str], pickle_: bool) -> int size`]
+    * [`get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str]`]
+
 ### Fixed
 
 - Typo in `reapy.has_ext_state` (issue [#46](https://github.com/RomeoDespres/reapy/issues/46))
