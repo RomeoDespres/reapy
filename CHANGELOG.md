@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- New api in`reapy.Send`:
+    * read-obly property `Send.dest_track -> Track`
+    * properties `Send.midi_source`, `Send.midi_dest`
+- `Track.received` read-only property
+
 ### Fixed
 
 - Typo in `reapy.has_ext_state` (issue [#46](https://github.com/RomeoDespres/reapy/issues/46))

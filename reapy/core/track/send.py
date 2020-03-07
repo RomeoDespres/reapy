@@ -52,6 +52,17 @@ class Send(ReapyObject):
         """
         RPR.RemoveTrackSend(self.track_id, self._get_int_type(), self.index)
 
+    @property
+    def dest_track(self):
+        """
+        Destination track.
+
+        :type: Track
+        """
+        id_ = RPR.BR_GetMediaTrackSendInfo_Track(
+            self.track_id, self._get_int_type(), self.index, 1)
+        return reapy.Track(id_)
+
     @reapy.inside_reaper()
     def flip_phase(self):
         """
@@ -280,8 +291,9 @@ class Send(ReapyObject):
 
         :type: Track
         """
-        track = reapy.Track(self.track_id)
-        return track
+        id_ = RPR.BR_GetMediaTrackSendInfo_Track(
+            self.track_id, self._get_int_type(), self.index, 0)
+        return reapy.Track(id_)
 
     def unmute(self):
         """

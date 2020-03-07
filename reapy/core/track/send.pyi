@@ -44,6 +44,15 @@ class Send(ReapyObject):
         """
         ...
 
+    @property
+    def dest_track(self) -> reapy.Track:
+        """
+        Destination track.
+
+        :type: Track
+        """
+        ...
+
     @reapy.inside_reaper()
     def flip_phase(self) -> None:
         """
