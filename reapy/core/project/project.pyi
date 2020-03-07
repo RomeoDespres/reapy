@@ -279,22 +279,6 @@ class Project(ReapyObject):
         """
         ...
 
-    def get_selected_track(self, index: int) -> reapy.Track:
-        """
-        Return index-th selected track.
-
-        Parameters
-        ----------
-        index : int
-            Track index.
-
-        Returns
-        -------
-        track : Track
-            index-th selected track.
-        """
-        ...
-
     @ty.overload
     def get_ext_state(self, section: str, key: str,
                       pickled: te.Literal[True]) -> object:
@@ -366,6 +350,22 @@ class Project(ReapyObject):
         -------
         item : Item
             index-th selected item.
+        """
+        ...
+
+    def get_selected_track(self, index: int) -> reapy.Track:
+        """
+        Return index-th selected track.
+
+        Parameters
+        ----------
+        index : int
+            Track index.
+
+        Returns
+        -------
+        track : Track
+            index-th selected track.
         """
         ...
 
