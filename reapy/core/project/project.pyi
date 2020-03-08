@@ -360,6 +360,43 @@ class Project(ReapyObject):
         """
         ...
 
+    @property
+    def is_paused(self) -> bool:
+        """
+        Return whether project is paused.
+
+        :type: bool
+        """
+        ...
+
+    @property
+    def is_playing(self) -> bool:
+        """
+        Return whether project is playing.
+
+        :type: bool
+        """
+        ...
+
+    @property
+    def is_recording(self) -> bool:
+        """
+        Return whether project is recording.
+
+        :type: bool
+        """
+        ...
+
+    @reapy.inside_reaper()
+    @property
+    def is_stopped(self) -> bool:
+        """
+        Return whether project is stopped.
+
+        :type: bool
+        """
+        ...
+
     @reapy.inside_reaper()
     @property
     def items(self) -> ty.List[reapy.Item]:
@@ -593,15 +630,6 @@ class Project(ReapyObject):
         --------
         Project.get_play_rate
             Return project play rate at a specified time.
-        """
-        ...
-
-    @property
-    def play_state(self) -> str:
-        """
-        Project play state ("play", "pause" or "record").
-
-        :type: str
         """
         ...
 
