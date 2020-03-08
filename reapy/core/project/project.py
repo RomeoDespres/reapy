@@ -875,7 +875,7 @@ class Project(ReapyObject):
         if pickled:
             value = pickle.dumps(value)
             value = codecs.encode(value, "base64").decode()
-        if len(value) < 2**31 - 1:
+        if len(value) > 2**31 - 2:
             message = (
                 "Dumped value length is {:,d}. It must not be over "
                 "2**31 - 2."
