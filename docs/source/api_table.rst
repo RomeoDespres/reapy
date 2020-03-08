@@ -602,12 +602,12 @@ Project Management
 	"`GetProjectPath <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetProjectPath>`_","`Project.path <reapy.core.html#reapy.core.Project.path>`_"
 	"`GetFreeDiskSpaceForRecordPath <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetFreeDiskSpaceForRecordPath>`_",""
 	"`Undo_OnStateChange <https://www.reaper.fm/sdk/reascript/reascripthelp.html#Undo_OnStateChange>`_",""
-	"`GetProjExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetProjExtState>`_",""
+	"`GetProjExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetProjExtState>`_","`Project.get_ext_state <reapy.core.html#reapy.core.Project.get_ext_state>`_"
 	"`IsProjectDirty <https://www.reaper.fm/sdk/reascript/reascripthelp.html#IsProjectDirty>`_","`Project.is_dirty <reapy.core.html#reapy.core.Project.is_dirty>`_"
 	"`Undo_OnStateChangeEx2 <https://www.reaper.fm/sdk/reascript/reascripthelp.html#Undo_OnStateChangeEx2>`_",""
 	"`GetSetProjectGrid <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetSetProjectGrid>`_",""
 	"`SnapToGrid <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SnapToGrid>`_",""
-	"`SetProjExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SetProjExtState>`_",""
+	"`SetProjExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SetProjExtState>`_","`Project.set_ext_state <reapy.core.html#reapy.core.Project.set_ext_state>`_"
 	"`EnumProjects <https://www.reaper.fm/sdk/reascript/reascripthelp.html#EnumProjects>`_","`Project <reapy.core.html#reapy.core.Project>`_"
 
 

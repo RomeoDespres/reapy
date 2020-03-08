@@ -1,5 +1,8 @@
 """Defines class Project."""
 
+import pickle
+import codecs
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
@@ -382,6 +385,27 @@ class Project(ReapyObject):
         track_id = RPR.GetSelectedTrack(self.id, index)
         track = reapy.Track(track_id)
         return track
+
+    def get_ext_state(self, section, key, pickled=False):
+        """
+        Return external state of project.
+
+        Parameters
+        ----------
+        section : str
+        key : str
+        pickled: bool
+            Whether data was pickled or not.
+
+        Returns
+        -------
+        value : str
+            If key or section does not exist an empty string is returned.
+        """
+        value = RPR.GetProjExtState(self.id, section, key, "", 2**31 - 1)[4]
+        if value and pickled:
+            value = pickle.loads(codecs.decode(value.encode(), "base64"))
+        return value
 
     def glue_items(self, within_time_selection=False):
         """
@@ -825,6 +849,39 @@ class Project(ReapyObject):
         self.unselect_all_tracks()
         for track in tracks:
             track.select()
+
+    def set_ext_state(self, section, key, value, pickled=False):
+        """
+        Set external state of project.
+
+        Parameters
+        ----------
+        section : str
+        key : str
+        value : Union[Any, str]
+            State value. Will be dumped to str using either `pickle` if
+            `pickled` is `True` or `json`. Length of the dumped value
+            must not be over 2**31 - 2.
+        pickled : bool, optional
+            Data will be pickled with the last version if True.
+            If you using mypy as type checker, typing_extensions.Literal[True]
+            has to be used for `pickled`.
+
+        Raises
+        ------
+        ValueError
+            If dumped `value` has length over 2**31 - 2.
+        """
+        if pickled:
+            value = pickle.dumps(value)
+            value = codecs.encode(value, "base64").decode()
+        if len(value) > 2**31 - 2:
+            message = (
+                "Dumped value length is {:,d}. It must not be over "
+                "2**31 - 2."
+            )
+            raise ValueError(message.format(len(value)))
+        RPR.SetProjExtState(self.id, section, key, value)
 
     @reapy.inside_reaper()
     def solo_all_tracks(self):

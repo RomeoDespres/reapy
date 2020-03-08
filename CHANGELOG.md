@@ -11,6 +11,9 @@ All notable changes to this project will be documented in this file.
     * read-obly property `Send.dest_track -> Track`
     * properties `Send.midi_source`, `Send.midi_dest`
 - `Track.received` read-only property
+- Support for `Project` external state:
+    * `Project.set_ext_state(section: str, key: str, value: Union[Any, str], pickled: bool) -> int size`
+    * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
 
 ### Fixed
 
@@ -314,6 +317,7 @@ Project.play_state was buggy and has been removed.
 [`Project.disarm_rec_on_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.disarm_rec_on_all_tracks
 [`Project.end_undo_block`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.end_undo_block
 [`Project.focused_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.focused_fx
+[`Project.get_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_ext_state
 [`Project.get_play_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_play_rate
 [`Project.get_selected_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_item
 [`Project.get_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_track
@@ -352,6 +356,7 @@ Project.play_state was buggy and has been removed.
 [`Project.selected_envelope`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_envelope
 [`Project.selected_items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_items
 [`Project.selected_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_tracks
+[`Project.set_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.set_ext_state
 [`Project.solo_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.solo_all_tracks
 [`Project.stop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.stop
 [`Project.time_selection`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.time_selection

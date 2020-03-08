@@ -5,6 +5,7 @@ from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.errors import RedoError, UndoError
 import typing as ty
+import typing_extensions as te
 
 
 class Project(ReapyObject):
@@ -278,6 +279,38 @@ class Project(ReapyObject):
         """
         ...
 
+    @ty.overload
+    def get_ext_state(self, section: str, key: str,
+                      pickled: te.Literal[True]) -> object:
+        """
+        Return external state of project.
+
+        Parameters
+        ----------
+        section : str
+        key : str
+        pickled: bool
+            Whether data was pickled or not.
+
+        Returns
+        -------
+        value : str
+            If key or section does not exist an empty string is returned.
+        """
+        ...
+
+    @ty.overload
+    def get_ext_state(self, section: str, key: str,
+                      pickled: te.Literal[False]) -> str:
+
+        ...
+
+    @ty.overload
+    def get_ext_state(self, section: str, key: str,
+                      pickled: bool = False) -> str:
+
+        ...
+
     def get_play_rate(self, position: float) -> float:
         """
         Return project play rate at a given position.
@@ -355,6 +388,43 @@ class Project(ReapyObject):
     def is_current_project(self) -> bool:
         """
         Whether project is current project.
+
+        :type: bool
+        """
+        ...
+
+    @property
+    def is_paused(self) -> bool:
+        """
+        Return whether project is paused.
+
+        :type: bool
+        """
+        ...
+
+    @property
+    def is_playing(self) -> bool:
+        """
+        Return whether project is playing.
+
+        :type: bool
+        """
+        ...
+
+    @property
+    def is_recording(self) -> bool:
+        """
+        Return whether project is recording.
+
+        :type: bool
+        """
+        ...
+
+    @reapy.inside_reaper()
+    @property
+    def is_stopped(self) -> bool:
+        """
+        Return whether project is stopped.
 
         :type: bool
         """
@@ -596,15 +666,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @property
-    def play_state(self) -> str:
-        """
-        Project play state ("play", "pause" or "record").
-
-        :type: str
-        """
-        ...
-
     def redo(self) -> None:
         """
         Redo last action.
@@ -695,6 +756,40 @@ class Project(ReapyObject):
     @selected_tracks.setter
     def selected_tracks(self, tracks: ty.List[reapy.Track]) -> None:
         ...
+
+    @ty.overload
+    def set_ext_state(self, section: str, key: str, value: str,
+                      pickled: te.Literal[False]) -> int:
+        """
+        Set external state of project.
+
+        Parameters
+        ----------
+        section : str
+        key : str
+        value : Union[Any, str]
+            State value. Will be dumped to str using either `pickle` if
+            `pickled` is `True` or `json`. Length of the dumped value
+            must not be over 2**31 - 2.
+        pickled : bool, optional
+            Data will be pickled with the last version if True.
+            If you using mypy as type checker, typing_extensions.Literal[True]
+            has to be used for `pickled`.
+
+        Raises
+        ------
+        ValueError
+            If dumped `value` has length over 2**31 - 2.
+        """
+        ...
+
+    @ty.overload
+    def set_ext_state(self, section: str, key: str, value: ty.Any,
+                      pickle_: te.Literal[True]) -> int: ...
+
+    @ty.overload
+    def set_ext_state(self, section: str, key: str, value: str,
+                      pickle_: bool = False) -> int: ...
 
     @reapy.inside_reaper()
     def solo_all_tracks(self) -> None:
