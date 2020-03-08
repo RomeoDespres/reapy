@@ -285,22 +285,17 @@ class Project(ReapyObject):
         """
         Return external state of project.
 
-        Note
-        ----
-        size will be used from the previous call to the set_ext_state()
-        if it was made the different way — emty string is returned
-
         Parameters
         ----------
         section : str
         key : str
         pickled: bool
-            Wheter data was pickled or not
+            Whether data was pickled or not.
 
         Returns
         -------
-        str
-            if key or section does not exsist empty string is returned
+        value : str
+            If key or section does not exist an empty string is returned.
         """
         ...
 
@@ -736,7 +731,7 @@ class Project(ReapyObject):
 
     @ty.overload
     def set_ext_state(self, section: str, key: str, value: str,
-                      pickle_: te.Literal[False]) -> int:
+                      pickled: te.Literal[False]) -> int:
         """
         Set external state of project.
 
@@ -745,14 +740,18 @@ class Project(ReapyObject):
         section : str
         key : str
         value : Union[Any, str]
-            if pickle is True any picklelable data can be passed, else only str
-        pickle : bool, optional
-            data will be pickled with the last version if True
+            State value. Will be dumped to str using either `pickle` if
+            `pickled` is `True` or `json`. Length of the dumped value
+            must not be over 2**31 - 2.
+        pickled : bool, optional
+            Data will be pickled with the last version if True.
+            If you using mypy as type checker, typing_extensions.Literal[True]
+            has to be used for `pickled`.
 
-        Returns
-        -------
-        int
-            size of saved state
+        Raises
+        ------
+        ValueError
+            If dumped `value` has length over 2**31 - 2.
         """
         ...
 

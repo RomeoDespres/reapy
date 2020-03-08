@@ -390,42 +390,22 @@ class Project(ReapyObject):
         """
         Return external state of project.
 
-        Note
-        ----
-        size will be used from the previous call to the set_ext_state()
-        if it was made the different way — emty string is returned
-
         Parameters
         ----------
         section : str
         key : str
         pickled: bool
-            Wheter data was pickled or not
+            Whether data was pickled or not.
 
         Returns
         -------
-        str
-            if key or section does not exsist empty string is returned
+        value : str
+            If key or section does not exist an empty string is returned.
         """
-        size_str: str
-        (_, _, _, _, size_str, _) = RPR.GetProjExtState(
-            self.id,
-            section,
-            key+'_size',
-            'valOutNeedBig',
-            101
-        )
-        if not size_str:
-            return ''
-        size = int(size_str)
-        (_, _, _, _, dump, _) = RPR.GetProjExtState(
-            self.id, section, key, 'valOutNeedBig', size+1
-        )
-        if dump == '':
-            return ''
-        if pickled:
-            dump = pickle.loads(codecs.decode(dump.encode(), "base64"))
-        return dump
+        value = RPR.GetProjExtState(self.id, section, key, "", 2**31 - 1)[4]
+        if value and pickled:
+            value = pickle.loads(codecs.decode(value.encode(), "base64"))
+        return value
 
     def glue_items(self, within_time_selection=False):
         """
@@ -870,54 +850,38 @@ class Project(ReapyObject):
         for track in tracks:
             track.select()
 
-    def set_ext_state(self, section, key, value, pickle_=False):
+    def set_ext_state(self, section, key, value, pickled=False):
         """
         Set external state of project.
-
-        Note
-        ----
-        The maximum size of stored data is limited to 100-bit representation
-        because big portions of data are cannot be saved within project.
 
         Parameters
         ----------
         section : str
         key : str
         value : Union[Any, str]
-            if pickle is True any picklelable data can be passed, else only str
-        pickle : bool, optional
-            data will be pickled with the last version if True
+            State value. Will be dumped to str using either `pickle` if
+            `pickled` is `True` or `json`. Length of the dumped value
+            must not be over 2**31 - 2.
+        pickled : bool, optional
+            Data will be pickled with the last version if True.
             If you using mypy as type checker, typing_extensions.Literal[True]
-            has to be used as piackle_ value.
+            has to be used for `pickled`.
 
-        Returns
-        -------
-        int
-            size of saved state
+        Raises
+        ------
+        ValueError
+            If dumped `value` has length over 2**31 - 2.
         """
-        state = value
-        if pickle_:
-            dump = pickle.dumps(value)
-            state = codecs.encode(dump, 'base64').decode()
-        else:
-            msg = 'value should be of type str, passed %s. Or use pickle_ param.'
-            assert isinstance(value, str), msg % type(value)
-        size = len(state)
-        with reapy.inside_reaper():
-            RPR.SetProjExtState(
-                self.id,
-                section,
-                key,
-                state
+        if pickled:
+            value = pickle.dumps(value)
+            value = codecs.encode(value, "base64").decode()
+        if len(value) < 2**31 - 1:
+            message = (
+                "Dumped value length is {:,d}. It must not be over "
+                "2**31 - 2."
             )
-            size_str = str(str(size).encode().zfill(100), 'utf-8')
-            RPR.SetProjExtState(
-                self.id,
-                section,
-                key+'_size',
-                size_str
-            )
-        return size
+            raise ValueError(message.format(len(value)))
+        RPR.SetProjExtState(self.id, section, key, value)
 
     @reapy.inside_reaper()
     def solo_all_tracks(self):
