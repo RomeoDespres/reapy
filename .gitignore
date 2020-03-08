@@ -4,3 +4,7 @@ docs/build/*
 docs/make.bat
 docs/Makefile
 python_reapy.egg-info/
+
+*.sublime-workspace
+
+*.sublime-project

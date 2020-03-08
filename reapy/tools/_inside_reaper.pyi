@@ -19,6 +19,9 @@ FuncType = ty.Callable[..., ty.Any]
 F = ty.TypeVar('F', bound=FuncType)
 
 
+def dist_api_is_enabled()->bool: ...
+
+
 class inside_reaper(contextlib.ContextDecorator):
     """
     Context manager for efficient calls from outside REAPER.
@@ -49,6 +52,7 @@ class inside_reaper(contextlib.ContextDecorator):
     ...         reapy.Project().add_track()
 
     """
+
     def __call__(self,
                  func: F,
                  encoded_func: ty.Optional[ty.Dict[str, object]] = None

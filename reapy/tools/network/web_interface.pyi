@@ -11,7 +11,7 @@ class WebInterface:
     _url: str
     ext_state: ExtState
 
-    def __init__(self, port: int) -> None:
+    def __init__(self, port: int, host: str = 'localhost') -> None:
         ...
 
     def activate_reapy_server(self) -> None:

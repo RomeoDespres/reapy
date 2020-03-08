@@ -1,6 +1,9 @@
 import importlib
 import sys
 import warnings
+import typing as ty
+from builtins import BaseException
+from types import TracebackType
 
 import reapy
 import reapy.config
@@ -8,15 +11,15 @@ from reapy import errors
 from . import client, web_interface
 
 
-CLIENT = None
-CLIENTS = {None: None}
+CLIENT: ty.Optional[client.Client]
+CLIENTS: ty.Dict[ty.Optional[str], ty.Optional[client.Client]]
 
 
-def get_selected_client():
-    return CLIENT
+def get_selected_client() -> ty.Optional[client.Client]:
+    ...
 
 
-def get_selected_machine_host():
+def get_selected_machine_host() -> ty.Optional[str]:
     """Return host of the currently selected machine.
 
     Returns
@@ -25,10 +28,10 @@ def get_selected_machine_host():
         None is returned when running from inside REAPER and
         no slave machine is selected.
     """
-    return None if CLIENT is None else CLIENT.host
+    ...
 
 
-def reconnect():
+def reconnect() -> None:
     """
     Reconnect to REAPER ReaScript API.
 
@@ -51,17 +54,7 @@ def reconnect():
     >>> reapy.reconnect()
     >>> p = reapy.Project()  # No error!
     """
-    if not reapy.is_inside_reaper():
-        host = get_selected_machine_host()
-        if host is None:
-            # We are outside REAPER, so this means initial import failed to
-            # connect and we want to retry with default host (i.e. localhost)
-            host = "localhost"
-        try:
-            del CLIENTS[host]
-        except KeyError:
-            pass
-        connect(host)
+    ...
 
 
 class connect:
@@ -84,38 +77,30 @@ class connect:
         Connect to default slave machine (i.e. local REAPER instance).
     """
 
-    def __init__(self, host=None):
-        global CLIENT
-        self.previous_client = CLIENT
-        try:
-            if host not in CLIENTS:
-                register_machine(host)
-            CLIENT = CLIENTS[host]
-            if hasattr(reapy, 'reascript_api'):  # False during initial import
-                importlib.reload(reapy.reascript_api)
-        except errors.DisabledDistAPIError as e:
-            if host and host != 'localhost':
-                raise e
-            warnings.warn(errors.DisabledDistAPIWarning())
+    previous_client: ty.Optional[client.Client]
 
-    def __enter__(self):
-        pass
+    def __init__(self, host: ty.Optional[str] = None) -> None:
+        ...
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        global CLIENT
-        CLIENT = self.previous_client
-        importlib.reload(reapy.reascript_api)
+    def __enter__(self) -> 'connect':
+        ...
+
+    def __exit__(self,
+                 type: ty.Optional[ty.Type[BaseException]],
+                 value: ty.Optional[BaseException],
+                 traceback: ty.Optional[TracebackType]) -> None:
+        ...
 
 
 class connect_to_default_machine(connect):
 
     """Select default slave machine (i.e. local REAPER instance)."""
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self) -> None:
+        ...
 
 
-def register_machine(host):
+def register_machine(host: str) -> None:
     """Register a slave machine.
 
     Parameters
@@ -127,14 +112,4 @@ def register_machine(host):
     --------
     ``reapy.connect``
     """
-    if reapy.is_inside_reaper() and host == "localhost":
-        msg = "A REAPER instance can not connect to istelf."
-        raise errors.InsideREAPERError(msg)
-    interface_port = reapy.config.WEB_INTERFACE_PORT
-    interface = web_interface.WebInterface(interface_port, host)
-    CLIENTS[host] = client.Client(interface.get_reapy_server_port(), host)
-
-
-if not reapy.is_inside_reaper():
-    connect("localhost")
-    CLIENTS[None] = CLIENT
+    ...
