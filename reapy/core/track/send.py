@@ -1,6 +1,7 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
+from reapy.tools import depends_on_sws
 
 
 class Send(ReapyObject):
@@ -53,6 +54,7 @@ class Send(ReapyObject):
         RPR.RemoveTrackSend(self.track_id, self._get_int_type(), self.index)
 
     @property
+    @depends_on_sws
     def dest_track(self):
         """
         Destination track.
@@ -110,7 +112,8 @@ class Send(ReapyObject):
         )
         return value
 
-    def get_info_br(self, param_name):
+    @depends_on_sws
+    def get_sws_info(self, param_name):
         """Raw value from BR_GetSetTrackSendInfo.
 
         Parameters
@@ -204,6 +207,7 @@ class Send(ReapyObject):
         self.set_info("B_PHASE", flipped)
 
     @property
+    @depends_on_sws
     def midi_source(self):
         """
         Send MIDI properties on the send track.
@@ -215,7 +219,7 @@ class Send(ReapyObject):
         retval = []
         with reapy.inside_reaper():
             for par in ('I_MIDI_SRCBUS', 'I_MIDI_SRCCHAN'):
-                retval.append(int(self.get_info_br(par)))
+                retval.append(int(self.get_sws_info(par)))
         return tuple(retval)
 
     @midi_source.setter
@@ -225,6 +229,7 @@ class Send(ReapyObject):
                 self.set_info_br(par, val)
 
     @property
+    @depends_on_sws
     def midi_dest(self):
         """
         Send MIDI properties on the destination track.
@@ -236,7 +241,7 @@ class Send(ReapyObject):
         retval = []
         with reapy.inside_reaper():
             for par in ('I_MIDI_DSTBUS', 'I_MIDI_DSTCHAN'):
-                retval.append(int(self.get_info_br(par)))
+                retval.append(int(self.get_sws_info(par)))
         return tuple(retval)
 
     @midi_dest.setter
@@ -278,13 +283,15 @@ class Send(ReapyObject):
             self.track_id, self._get_int_type(), self.index, param_name, value
         )
 
-    def set_info_br(self, param_name, value):
+    @depends_on_sws
+    def set_sws_info(self, param_name, value):
         RPR.BR_GetSetTrackSendInfo(
             self.track_id, self._get_int_type(), self.index, param_name,
             True, value
         )
 
     @property
+    @depends_on_sws
     def source_track(self):
         """
         Source track.
