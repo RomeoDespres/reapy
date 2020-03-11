@@ -91,7 +91,7 @@ class Send(ReapyObject):
                                 hwout:&512=rearoute
             I_MIDIFLAGS : int *, low 5 bits=source channel 0=all, 1-16,
                                 next 5 bits=dest channel, 0=orig,
-                                1-16=chanP_DESTTRACK : read only, 
+                                1-16=chanP_DESTTRACK : read only,
                                 returns MediaTrack *,
                                 destination track,
                                 only applies for sends/recvs

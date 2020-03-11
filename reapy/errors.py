@@ -9,7 +9,7 @@ class DisabledDistAPIError(Exception):
             "reapy.config.enable_dist_api() from inside REAPER to enable "
             "distant API."
         )
-        super(DisabledDistAPIError, self).__init__(message)
+        super().__init__(message)
 
 
 class DisabledDistAPIWarning(Warning):
@@ -20,14 +20,14 @@ class DisabledDistAPIWarning(Warning):
             "reapy.config.enable_dist_api() from inside REAPER to enable "
             "distant API."
         )
-        super(DisabledDistAPIWarning, self).__init__(message)
+        super().__init__(message)
 
 
 class DisconnectedClientError(Exception):
 
     def __init__(self):
         message = "Client disconnected. Call self.connect to reconnect."
-        super(DisconnectedClientError, self).__init__(message)
+        super().__init__(message)
 
 
 class DistError(Exception):
@@ -37,21 +37,31 @@ class DistError(Exception):
             "\n\nAn error occurred while running a function inside REAPER. "
             "Traceback was :\n\n{}"
         ).format(tb_string)
-        super(DistError, self).__init__(message)
+        super().__init__(message)
+
+
+class ExtensionNotFoundError(Exception):
+
+    def __init__(self, extension, url):
+        message = (
+            "Extension {} is required by this function but is not available. "
+            "Please download it from {}."
+        ).format(extension, url)
+        super().__init__(message)
 
 
 class OutsideREAPERError(Exception):
 
     def __init__(self):
         message = "reapy can not be enabled or disabled from outside REAPER"
-        super(OutsideREAPERError, self).__init__(message)
+        super().__init__(message)
 
 
 class RedoError(Exception):
 
     def __init__(self):
         message = "Can't redo."
-        super(RedoError, self).__init__(message)
+        super().__init__(message)
 
 
 class UndefinedEnvelopeError(Exception):
@@ -63,14 +73,14 @@ class UndefinedEnvelopeError(Exception):
             message = "No envelope with name {}".format(name)
         else:
             message = "No envelope with chunk name {}".format(chunk_name)
-        super(UndefinedEnvelopeError, self).__init__(message)
+        super().__init__(message)
 
 
 class UndefinedExtStateError(Exception):
 
     def __init__(self, key):
         message = "Undefined extended state for key {}.".format(key)
-        super(UndefinedExtStateError, self).__init__(message, key)
+        super().__init__(message, key)
 
 
 class UndefinedFXParamError(Exception):
@@ -79,11 +89,11 @@ class UndefinedFXParamError(Exception):
         message = "No param named \"{}\" for FX \"{}\"".format(
             name, fx_name
         )
-        super(UndefinedFXParamError, self).__init__(message)
+        super().__init__(message)
 
 
 class UndoError(Exception):
 
     def __init__(self):
         message = "Can't undo."
-        super(UndoError, self).__init__(message)
+        super().__init__(message)
