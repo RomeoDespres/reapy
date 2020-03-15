@@ -290,7 +290,7 @@ def get_resource_path() -> str:
     ...
 
 
-def has_ext_state(self, section: str, key: str) -> bool:
+def has_ext_state(section: str, key: str) -> bool:
     """
     Return whether extended state exists for given section and key.
 
