@@ -64,6 +64,22 @@ def reconnect():
         connect(host)
 
 
+def is_connected():
+    """
+    Get connection state of reapy.
+
+    Returns
+    -------
+    Union[str, bool]
+        if connected — returns host as str (localhost also can be returned)
+        if not — returns False
+    """
+    global CLIENT
+    if CLIENT is None:
+        return False
+    return CLIENT.host
+
+
 class connect:
 
     """Connect to slave machine.

@@ -2,7 +2,8 @@
 
 import reapy
 from ._inside_reaper import inside_reaper, dist_api_is_enabled
-from .network.machines import connect, connect_to_default_machine, reconnect
+from .network.machines import (
+    connect, connect_to_default_machine, reconnect, is_connected)
 
 __all__ = [
     'inside_reaper',
@@ -10,4 +11,5 @@ __all__ = [
     'connect',
     'connect_to_default_machine',
     'reconnect',
+    'is_connected',
 ]

@@ -57,6 +57,19 @@ def reconnect() -> None:
     ...
 
 
+def is_connected() -> ty.Union[str, bool]:
+    """
+    Get connection state of reapy.
+
+    Returns
+    -------
+    Union[str, bool]
+        if connected — returns host as str (localhost also can be returned)
+        if not — returns False
+    """
+    ...
+
+
 class connect:
 
     """Connect to slave machine.

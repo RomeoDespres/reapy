@@ -10,7 +10,7 @@ def is_inside_reaper() -> bool:
 
 from .tools import (
     connect, connect_to_default_machine, dist_api_is_enabled, inside_reaper,
-    reconnect
+    reconnect, is_connected
 )
 from . import reascript_api as reascript_api
 from .core import *
@@ -102,4 +102,5 @@ __all__ = [
     'dist_api_is_enabled',
     'inside_reaper',
     'reconnect',
+    'is_connected',
 ]

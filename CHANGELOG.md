@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - `reapy.reconnect` to retry connecting to REAPER from the outside.
+-  `reapy.is_connected` to retrive connection status and REAPER host.
 
 
 ## [0.4.3](https://github.com/RomeoDespres/reapy/releases/tag/0.4.3) - 2019-10-27
