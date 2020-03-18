@@ -19,7 +19,9 @@ FuncType = ty.Callable[..., ty.Any]
 F = ty.TypeVar('F', bound=FuncType)
 
 
-def dist_api_is_enabled()->bool: ...
+def dist_api_is_enabled()->bool:
+    """Return whether reapy can reach REAPER from the outside."""
+    ...
 
 
 class inside_reaper(contextlib.ContextDecorator):

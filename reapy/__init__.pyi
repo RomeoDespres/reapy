@@ -1,3 +1,10 @@
+from .core.reaper import *
+from .core import *
+from . import reascript_api as reascript_api
+from .tools import (
+    connect, connect_to_default_machine, dist_api_is_enabled, inside_reaper,
+    reconnect
+)
 import sys
 
 
@@ -8,19 +15,11 @@ def is_inside_reaper() -> bool:
     ...
 
 
-from .tools import (
-    connect, connect_to_default_machine, dist_api_is_enabled, inside_reaper,
-    reconnect
-)
-from . import reascript_api as reascript_api
-from .core import *
-from .core.reaper import *
-
 __all__ = [
     # core.reapy_object
     "ReapyObject",
     "ReapyObjectList",
-    #core.audio_accessor
+    # core.audio_accessor
     "AudioAccessor",
     # core.envelope
     "Envelope",
@@ -96,7 +95,7 @@ __all__ = [
     'ui',
     'defer',
     'at_exit',
-    # reapy.tools
+    # tools
     'connect',
     'connect_to_default_machine',
     'dist_api_is_enabled',

@@ -7,10 +7,37 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Support for `Project` external state:
+    * `Project.set_ext_state(section: str, key: str, value: Union[Any, str], pickled: bool) -> int size`
+    * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
+- REAPER control over the network. `reapy` can be installed on a machine even if it does not have REAPER installed, and then control other instances by using `reapy.connect`.
+
+
+### Fixed
+
+- Typo in `reapy.has_ext_state` (issue [#46](https://github.com/RomeoDespres/reapy/issues/46))
+
+
+## [0.5.0](https://github.com/RomeoDespres/reapy/releases/tag/0.5.0) - 2019-11-23
+
+### Added
+
 - `reapy.reconnect` to retry connecting to REAPER from the outside.
-- REAPER control over the network. `reapy` can be installed on a machine
-even if it does not have REAPER installed, and then control other instances
-by using `reapy.connect`.
+- Four play states properties on `Project`:
+    * [`Project.is_playing`]
+    * [`Project.is_paused`]
+    * [`Project.is_recording`]
+    * [`Project.is_stopped`]
+
+Project.play_state was buggy and has been removed.
+
+### Fixed
+
+- Fix error when terminating ReaScripts (issue [#35](https://github.com/RomeoDespres/reapy/issues/35))
+
+### Removed
+
+- `Project.play_state` property. It was buggy and has been replaced by the four play states properties mentioned above.
 
 
 ## [0.4.3](https://github.com/RomeoDespres/reapy/releases/tag/0.4.3) - 2019-10-27
@@ -288,10 +315,15 @@ by using `reapy.connect`.
 [`Project.disarm_rec_on_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.disarm_rec_on_all_tracks
 [`Project.end_undo_block`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.end_undo_block
 [`Project.focused_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.focused_fx
+[`Project.get_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_ext_state
 [`Project.get_play_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_play_rate
 [`Project.get_selected_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_item
 [`Project.get_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_track
 [`Project.is_dirty`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_dirty
+[`Project.is_paused`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_paused
+[`Project.is_playing`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_playing
+[`Project.is_recording`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_recording
+[`Project.is_stopped`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_stopped
 [`Project.items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.items
 [`Project.last_touched_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.last_touched_fx
 [`Project.length`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.length
@@ -322,6 +354,7 @@ by using `reapy.connect`.
 [`Project.selected_envelope`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_envelope
 [`Project.selected_items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_items
 [`Project.selected_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_tracks
+[`Project.set_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.set_ext_state
 [`Project.solo_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.solo_all_tracks
 [`Project.stop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.stop
 [`Project.time_selection`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.time_selection
