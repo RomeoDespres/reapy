@@ -9,7 +9,7 @@ from reapy.core import ReapyObject
 from reapy.errors import RedoError, UndoError
 
 
-def get_project_by_name(name):
+def _get_project_by_name(name):
     """Get project by its name.
 
     Parameters
@@ -45,17 +45,24 @@ class Project(ReapyObject):
 
         Parameters
         ----------
-        id : str, optional
-            Project ID. If None, `index` must be specified.
-            Also can be name of project in the format 'name' or 'name.RPP'
+        id : None, str or int, optional
+            Project identifier.
+            When None (default), `index is used instead.
+            An integer is interpreted as the project index in GUI.
+            A string starting with '(ReaProject*)0x' is interpreted
+            as a ReaScript identifier.
+            Otherwise, `id` is the project name. In that case, the .rpp
+            extension is optional.
         index : int, optional
             Project index in GUI (default=-1, corresponds to current
             project).
         """
+        if isinstance(id, int):
+            id, index = None, id
         if id is None:
             id = RPR.EnumProjects(index, None, 0)[0]
         if not id.startswith('(ReaProject*)0x'):
-            id = get_project_by_name(id).id
+            id = Project._from_name(id).id
         self.id = id
 
     def __eq__(self, other):
@@ -66,6 +73,34 @@ class Project(ReapyObject):
     @property
     def _args(self):
         return self.id,
+
+    @staticmethod
+    def _from_name(name):
+        """Return project with corresponding name.
+
+        Parameters
+        ----------
+        name : str
+            Project file name. Including the extension ('.rpp')
+            is optional.
+
+        Returns
+        -------
+        Project
+
+        Raises
+        ------
+        NameError
+            If no project with the corresponding name is open.
+        """
+        if not name.lower().endswith('.rpp'):
+            name += '.rpp'
+        with reapy.inside_reaper():
+            for project in reapy.get_projects():
+                project_name = project.name[:-4] + '.rpp'
+                if project_name == name:
+                    return project
+        raise NameError('"{}" is not currently open.'.format(name))
 
     @reapy.inside_reaper()
     def _get_track_by_name(self, name):

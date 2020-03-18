@@ -10,8 +10,13 @@ All notable changes to this project will be documented in this file.
 - Support for `Project` external state:
     * `Project.set_ext_state(section: str, key: str, value: Union[Any, str], pickled: bool) -> int size`
     * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
-- `get_project_by_name` in `reapy.project`. Also, `reapy.Project(id='project_name')` is valid now.
+- First argument `id` of `Project` can now be a project name (with or without extension) or an integer (the GUI index of the project).
 - REAPER control over the network. `reapy` can be installed on a machine even if it does not have REAPER installed, and then control other instances by using `reapy.connect`.
+
+
+### Deprecated
+
+- `index` argument in `reapy.Project` is deprecated in favor of `id`. `reapy.Project(index=3)` becomes `reapy.Project(3)`. 
 
 
 ### Fixed
