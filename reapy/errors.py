@@ -40,6 +40,11 @@ class DistError(Exception):
         super(DistError, self).__init__(message)
 
 
+class InsideREAPERError(Exception):
+
+    pass
+
+
 class OutsideREAPERError(Exception):
 
     def __init__(self):

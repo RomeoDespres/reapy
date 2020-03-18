@@ -8,8 +8,8 @@ import reapy
 
 class WebInterface:
 
-    def __init__(self, port):
-        self._url = "http://localhost:{}/_/".format(port)
+    def __init__(self, port, host="localhost"):
+        self._url = "http://{}:{}/_/".format(host, port)
         self.ext_state = ExtState(self)
 
     def activate_reapy_server(self):
@@ -41,7 +41,7 @@ class ExtState:
 
     def __getitem__(self, key):
         url = self._url.format(method="GET", key=key)
-        string = request.urlopen(url).read().decode("utf-8")
+        string = request.urlopen(url, timeout=.5).read().decode("utf-8")
         value = string.split("\t")[-1][:-1]
         if not value:
             raise UndefinedExtStateError(key)

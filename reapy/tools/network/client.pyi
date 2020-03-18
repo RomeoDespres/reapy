@@ -6,11 +6,13 @@ import typing as ty
 
 class Client(Socket):
     address: str
+    port: int
+    host: str
 
-    def __init__(self, port: int) -> None:
+    def __init__(self, port: int, host: str = 'localhost') -> None:
         ...
 
-    def _connect(self, port: int) -> None:
+    def _connect(self, port: int, host: str) -> None:
         ...
 
     def _get_result(self) -> ty.Any:
