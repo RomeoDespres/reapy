@@ -5,12 +5,13 @@ from .socket import Socket
 
 class Client(Socket):
 
-    def __init__(self, port):
+    def __init__(self, port, host="localhost"):
         super().__init__()
-        self._connect(port)
+        self._connect(port, host)
+        self.port, self.host = port, host
 
-    def _connect(self, port):
-        super().connect(("localhost", port))
+    def _connect(self, port, host):
+        super().connect((host, port))
         self.address = self.recv(timeout=None).decode("ascii")
 
     def _get_result(self):

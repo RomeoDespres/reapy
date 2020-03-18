@@ -10,6 +10,8 @@ All notable changes to this project will be documented in this file.
 - Support for `Project` external state:
     * `Project.set_ext_state(section: str, key: str, value: Union[Any, str], pickled: bool) -> int size`
     * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
+- REAPER control over the network. `reapy` can be installed on a machine even if it does not have REAPER installed, and then control other instances by using `reapy.connect`.
+
 
 ### Fixed
 
