@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - Support for `Project` external state:
     * `Project.set_ext_state(section: str, key: str, value: Union[Any, str], pickled: bool) -> int size`
     * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
+- `get_project_by_name` in `reapy.project`. Also, `reapy.Project(id='project_name')` is valid now.
 
 ### Fixed
 
