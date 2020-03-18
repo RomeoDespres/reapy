@@ -44,6 +44,7 @@ __all__ = [
     "Send",
     "Track",
     "TrackList",
+    "get_project_by_name",
     # core.window
     "MIDIEditor",
     "ToolTip",

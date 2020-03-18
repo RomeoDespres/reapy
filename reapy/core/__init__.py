@@ -4,7 +4,7 @@ from .audio_accessor import AudioAccessor
 from .envelope import Envelope, EnvelopeList
 from .fx import FX, FXList, FXParam, FXParamsList
 from .item import CC, CCList, Item, Note, NoteList, Source, Take
-from .project import Marker, Project, Region, TimeSelection
+from .project import Marker, Project, Region, TimeSelection, get_project_by_name
 from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
 
@@ -13,7 +13,7 @@ __all__ = [
     # core.reapy_object
     "ReapyObject",
     "ReapyObjectList",
-    #core.audio_accessor
+    # core.audio_accessor
     "AudioAccessor",
     # core.envelope
     "Envelope",
@@ -36,6 +36,7 @@ __all__ = [
     "Project",
     "Region",
     "TimeSelection",
+    "get_project_by_name",
     # core.track
     "AutomationItem",
     "Send",

@@ -8,6 +8,26 @@ import typing as ty
 import typing_extensions as te
 
 
+def get_project_by_name(name: str) -> 'Project':
+    """Get project by its name.
+
+    Parameters
+    ----------
+    name : str
+        can be ither 'project' or 'project.RPP'
+
+    Returns
+    -------
+    Project
+
+    Raises
+    ------
+    NameError
+        if project with this name is not found
+    """
+    ...
+
+
 class Project(ReapyObject):
     """REAPER project."""
     id: str
@@ -20,6 +40,7 @@ class Project(ReapyObject):
         ----------
         id : str, optional
             Project ID. If None, `index` must be specified.
+            Also can be name of project in the format 'name' or 'name.RPP'
         index : int, optional
             Project index in GUI (default=-1, corresponds to current
             project).

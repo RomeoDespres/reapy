@@ -9,6 +9,32 @@ from reapy.core import ReapyObject
 from reapy.errors import RedoError, UndoError
 
 
+def get_project_by_name(name):
+    """Get project by its name.
+
+    Parameters
+    ----------
+    name : str
+        can be ither 'project' or 'project.RPP'
+
+    Returns
+    -------
+    Project
+
+    Raises
+    ------
+    NameError
+        if project with this name is not found
+    """
+    if not name.endswith('.RPP'):
+        name += '.RPP'
+    with reapy.inside_reaper():
+        for project in reapy.get_projects():
+            if project.name == name:
+                return project
+    raise NameError(f'project with name "{name}" is not found')
+
+
 class Project(ReapyObject):
 
     """REAPER project."""
@@ -21,12 +47,15 @@ class Project(ReapyObject):
         ----------
         id : str, optional
             Project ID. If None, `index` must be specified.
+            Also can be name of project in the format 'name' or 'name.RPP'
         index : int, optional
             Project index in GUI (default=-1, corresponds to current
             project).
         """
         if id is None:
             id = RPR.EnumProjects(index, None, 0)[0]
+        if not id.startswith('(ReaProject*)0x'):
+            id = get_project_by_name(id).id
         self.id = id
 
     def __eq__(self, other):
