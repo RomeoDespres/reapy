@@ -38,7 +38,7 @@ class Project(ReapyObject):
         ...
 
     @staticmethod
-    def _from_name(name: str) -> 'Project'
+    def _from_name(name: str) -> 'Project':
         """Return project with corresponding name.
 
         Parameters
