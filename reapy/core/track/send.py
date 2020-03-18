@@ -5,6 +5,19 @@ from reapy.core import ReapyObject
 
 class Send(ReapyObject):
 
+    """Track send.
+
+    Attributes
+    ----------
+    index : int
+        position on the track
+    is_muted : bool
+    is_phase_flipped : bool
+    track_id : str
+    type : str
+        can be 'send', 'hardware' or 'receive'
+    """
+
     _class_name = "Send"
 
     def __init__(self, track=None, index=0, track_id=None, type="send"):
@@ -19,7 +32,8 @@ class Send(ReapyObject):
     def _get_int_type(self):
         types = {
             "hardware": 1,
-            "send": 0
+            "send": 0,
+            "receive": -1,
         }
         int_type = types[self.type]
         return int_type
