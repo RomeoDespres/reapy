@@ -9,6 +9,8 @@ import sys
 class ClassCache(dict):
 
     _core = None
+    _modules = {}
+    _classes = {}
 
     def __missing__(self, key):
         if self._core is None:
@@ -17,6 +19,39 @@ class ClassCache(dict):
             self._core = importlib.import_module("reapy.core")
         self[key] = getattr(self._core, key)
         return self[key]
+
+    def with_module(self, module, class_):
+        """Try to reimport subclass from the outer package.
+
+        Parameters
+        ----------
+        module : str
+            cached module name
+        class_ : str
+            cached class name
+
+        Returns
+        -------
+        Type
+            class object
+
+        Raises
+        ------
+        ImportError
+            If outer module can't be accesed from Python PATH
+        """
+        key = '{}.{}'.format(module, class_)
+        if key in self._classes:
+            return self._classes[key]
+        if module not in self._modules:
+            try:
+                self._modules[module] = importlib.import_module(module)
+            except ImportError as e:
+                raise ImportError('Probably, your script is not installed as'
+                                  ' package and/or not in the Python PATH.\n'
+                                  'Original exception:\n%s' % e)
+        self._classes[key] = getattr(self._modules[module], class_)
+        return self._classes[key]
 
 
 _CLASS_CACHE = ClassCache()
@@ -48,7 +83,10 @@ def dumps(x):
 
 def object_hook(x):
     if "__reapy__" in x:
-        reapy_class = _CLASS_CACHE[x["class"]]
+        if not x["module"].startswith("reapy"):
+            reapy_class = _CLASS_CACHE.with_module(x["module"], x["class"])
+        else:
+            reapy_class = _CLASS_CACHE[x["class"]]
         return reapy_class(*x["args"], **x["kwargs"])
     elif "__callable__" in x:
         module_name, name = x["module_name"], x["name"]

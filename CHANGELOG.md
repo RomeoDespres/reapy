@@ -22,6 +22,9 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Typo in `reapy.has_ext_state` (issue [#46](https://github.com/RomeoDespres/reapy/issues/46))
+- `reapy.core` classes able for subclassing, which should be done with caution:
+    * considering this, `reapy.errors.SubclassedWarning` is added
+    * TODO: documantation should mark the subclassing process
 
 
 ## [0.5.0](https://github.com/RomeoDespres/reapy/releases/tag/0.5.0) - 2019-11-23

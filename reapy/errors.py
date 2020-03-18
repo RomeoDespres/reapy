@@ -23,6 +23,20 @@ class DisabledDistAPIWarning(Warning):
         super(DisabledDistAPIWarning, self).__init__(message)
 
 
+class SubclassedWarning(Warning):
+
+    def __init__(self):
+        message = (
+            "\n- By subclassing of reapy.core member You should consider "
+            "that your object has to be able to rebuilt from scratch by"
+            "calling within usage of properties `_args` and `_kwargs`.\n"
+            "- Please, do not forget about super()\n"
+            "- Warning can be disabled for this class by setting `_subclassed`"
+            " attribute to True."
+        )
+        super(SubclassedWarning, self).__init__(message)
+
+
 class DisconnectedClientError(Exception):
 
     def __init__(self):

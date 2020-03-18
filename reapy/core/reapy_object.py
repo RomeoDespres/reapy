@@ -1,9 +1,17 @@
+from warnings import warn
 import reapy
 
 
 class ReapyObject:
 
     """Base class for reapy objects."""
+
+    _subclassed = False
+
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        if not cls.__module__.startswith('reapy') and not cls._subclassed:
+            warn(reapy.errors.SubclassedWarning())
 
     def __eq__(self, other):
         return repr(self) == repr(other)
@@ -41,6 +49,7 @@ class ReapyObject:
     def _to_dict(self):
         return {
             "__reapy__": True,
+            "module": self.__module__,
             "class": self.__class__.__name__,
             "args": self._args,
             "kwargs": self._kwargs

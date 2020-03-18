@@ -4,18 +4,26 @@ import typing as ty
 
 
 class DisabledDistAPIError(Exception):
-    ...
+    def __init__(self): ...
 
 
 class DisabledDistAPIWarning(Warning):
-    ...
+    def __init__(self): ...
+
+
+class SubclassedWarning(Warning):
+    def __init__(self): ...
 
 
 class DisconnectedClientError(Exception):
-    ...
+    def __init__(self): ...
 
 
 class DistError(Exception):
+    def __init__(self, tb_string: str): ...
+
+
+class InsideREAPERError(Exception):
     ...
 
 
@@ -29,8 +37,7 @@ class RedoError(Exception):
 
 class UndefinedEnvelopeError(Exception):
     def __init__(self, index: ty.Optional[int], name: ty.Optional[str],
-                 chunk_name: ty.Optional[str]) -> None:
-        ...
+                 chunk_name: ty.Optional[str]) -> None: ...
 
 
 class UndefinedExtStateError(Exception):

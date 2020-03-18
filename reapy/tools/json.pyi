@@ -13,9 +13,12 @@ T1 = ty.TypeVar('T1')
 class ClassCache(ty.Dict[str, T1]):
 
     _core: ty.Optional[types.ModuleType] = None
+    _modules: ty.Dict[str, types.ModuleType]
+    _classes: ty.Dict[str, ty.Type[T1]]
 
-    def __missing__(self, key: str) -> T1:
-        ...
+    def __missing__(self, key: str) -> T1: ...
+
+    def with_module(self, module: str, class_: str) -> ty.Type[T1]: ...
 
 
 _CLASS_CACHE: ClassCache[object] = ClassCache()
