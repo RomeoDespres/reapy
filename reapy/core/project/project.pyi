@@ -12,14 +12,18 @@ class Project(ReapyObject):
     """REAPER project."""
     id: str
 
-    def __init__(self, id: ty.Optional[str] = None, index: int = -1) -> None:
+    def __init__(self, id: ty.Optional[ty.Union[int, str]] = None, index: int = -1) -> None:
         """
         Build project either by ID or index.
 
-        Parameters
-        ----------
-        id : str, optional
-            Project ID. If None, `index` must be specified.
+        id : None, str or int, optional
+            Project identifier.
+            When None (default), `index is used instead.
+            An integer is interpreted as the project index in GUI.
+            A string starting with '(ReaProject*)0x' is interpreted
+            as a ReaScript identifier.
+            Otherwise, `id` is the project name. In that case, the .rpp
+            extension is optional.
         index : int, optional
             Project index in GUI (default=-1, corresponds to current
             project).
@@ -31,6 +35,27 @@ class Project(ReapyObject):
 
     @property
     def _args(self) -> ty.Tuple[str]:
+        ...
+
+    @staticmethod
+    def _from_name(name: str) -> 'Project'
+        """Return project with corresponding name.
+
+        Parameters
+        ----------
+        name : str
+            Project file name. Including the extension ('.rpp')
+            is optional.
+
+        Returns
+        -------
+        Project
+
+        Raises
+        ------
+        NameError
+            If no project with the corresponding name is open.
+        """
         ...
 
     @reapy.inside_reaper()

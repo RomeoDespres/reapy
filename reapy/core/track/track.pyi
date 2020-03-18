@@ -45,8 +45,9 @@ class Track(ReapyObject):
     id: str
     _project: reapy.Project
 
-    def __init__(self, id: str,
-                 project: ty.Optional[reapy.Project] = None) -> None:
+    def __init__(
+        self, id: str, project: ty.Optional[reapy.Project] = None
+    ) -> None:
         ...
 
     @property
@@ -74,10 +75,9 @@ class Track(ReapyObject):
         """
         ...
 
-    def add_fx(self,
-               name: str,
-               input_fx: bool = False,
-               even_if_exists: bool = True) -> reapy.FX:
+    def add_fx(
+        self, name: str, input_fx: bool = False, even_if_exists: bool = True
+    ) -> reapy.FX:
         """
         Add FX to track and return it.
 
@@ -107,10 +107,12 @@ class Track(ReapyObject):
         ...
 
     @reapy.inside_reaper()
-    def add_item(self,
-                 start: float = 0,
-                 end: ty.Optional[float] = None,
-                 length: float = 0) -> reapy.Item:
+    def add_item(
+        self,
+        start: float = 0,
+        end: ty.Optional[float] = None,
+        length: float = 0
+    ) -> reapy.Item:
         """
         Create new item on track and return it.
 
@@ -131,10 +133,9 @@ class Track(ReapyObject):
         """
         ...
 
-    def add_midi_item(self,
-                      start: float = 0,
-                      end: float = 1,
-                      quantize: bool = False) -> reapy.Item:
+    def add_midi_item(
+        self, start: float = 0, end: float = 1, quantize: bool = False
+    ) -> reapy.Item:
         """
         Add empty MIDI item to track and return it.
 
@@ -150,8 +151,9 @@ class Track(ReapyObject):
         """
         ...
 
-    def add_send(self,
-                 destination: ty.Optional[reapy.Track] = None) -> reapy.Track:
+    def add_send(
+        self, destination: ty.Optional[reapy.Track] = None
+    ) -> reapy.Track:
         """
         Add send to track and return it.
 
@@ -543,6 +545,10 @@ class TrackList(ReapyObjectList):
         ...
 
     @ty.overload
+    def __getitem__(self, key: str) -> Track:
+        ...
+
+    @ty.overload
     def __getitem__(self, key: int) -> Track:
         ...
 
@@ -557,7 +563,8 @@ class TrackList(ReapyObjectList):
     def __len__(self) -> int:
         ...
 
-    def __iter__(self) -> ty.Iterator[reapy.Track]: ...
+    def __iter__(self) -> ty.Iterator[reapy.Track]:
+        ...
 
     @property
     def _args(self) -> ty.Tuple[reapy.Project]:
