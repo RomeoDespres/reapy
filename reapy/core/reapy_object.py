@@ -3,24 +3,24 @@ import reapy
 
 
 class ReapyObject:
-
     """Base class for reapy objects."""
 
-    _subclassed = False
-
-    def __init_subclass__(cls, **kwargs):
+    def __init_subclass__(cls, subclassed=False, **kwargs):
         super().__init_subclass__(**kwargs)
-        if not cls.__module__.startswith('reapy') and not cls._subclassed:
-            warn(reapy.errors.SubclassedWarning())
+        if not cls.__module__.startswith('reapy'):
+            if not subclassed:
+                warn(reapy.errors.SubclassedWarning(str(cls)))
 
     def __eq__(self, other):
         return repr(self) == repr(other)
 
     def __repr__(self):
+
         def to_str(x):
             if isinstance(x, str):
                 return "\"{}\"".format(x)
             return str(x)
+
         args = ", ".join(map(to_str, self._args))
         kwargs = ", ".join(
             ("{}={}".format(k, to_str(v)) for k, v in self._kwargs.items())
@@ -57,7 +57,6 @@ class ReapyObject:
 
 
 class ReapyObjectList(ReapyObject):
-
     """Abstract class for list of ReapyObjects."""
 
     pass
