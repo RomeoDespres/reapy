@@ -29,7 +29,7 @@ class SubclassedWarning(Warning):
         message = (
             "\n- By subclassing of reapy.core member by %s You should consider"
             " that your object has to be able to rebuilt from scratch by"
-            "calling within usage of properties `_args` and `_kwargs`.\n"
+            " calling within usage of properties `_args` and `_kwargs`.\n"
             "- Please, do not forget about super()\n"
             "- Warning can be disabled for this class by subclassing within"
             " Class(Parent, subclassed=True) parameter."

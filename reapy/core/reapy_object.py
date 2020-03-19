@@ -3,6 +3,7 @@ import reapy
 
 
 class ReapyObject:
+
     """Base class for reapy objects."""
 
     def __init_subclass__(cls, subclassed=False, **kwargs):
@@ -57,6 +58,7 @@ class ReapyObject:
 
 
 class ReapyObjectList(ReapyObject):
+
     """Abstract class for list of ReapyObjects."""
 
     pass
