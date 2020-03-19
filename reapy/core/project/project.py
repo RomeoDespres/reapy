@@ -9,32 +9,6 @@ from reapy.core import ReapyObject
 from reapy.errors import RedoError, UndoError
 
 
-def _get_project_by_name(name):
-    """Get project by its name.
-
-    Parameters
-    ----------
-    name : str
-        can be ither 'project' or 'project.RPP'
-
-    Returns
-    -------
-    Project
-
-    Raises
-    ------
-    NameError
-        if project with this name is not found
-    """
-    if not name.endswith('.RPP'):
-        name += '.RPP'
-    with reapy.inside_reaper():
-        for project in reapy.get_projects():
-            if project.name == name:
-                return project
-    raise NameError(f'project with name "{name}" is not found')
-
-
 class Project(ReapyObject):
 
     """REAPER project."""
