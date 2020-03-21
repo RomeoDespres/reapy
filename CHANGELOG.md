@@ -16,12 +16,13 @@ All notable changes to this project will be documented in this file.
 
 ### Deprecated
 
-- `index` argument in `reapy.Project` is deprecated in favor of `id`. `reapy.Project(index=3)` becomes `reapy.Project(3)`. 
+- `index` argument in `reapy.Project` is deprecated in favor of `id`. `reapy.Project(index=3)` becomes `reapy.Project(3)`.
 
 
 ### Fixed
 
 - Typo in `reapy.has_ext_state` (issue [#46](https://github.com/RomeoDespres/reapy/issues/46))
+- Deferred script error in REAPER when subclassing reapy classes (issue [#66](https://github.com/RomeoDespres/reapy/issues/66))
 
 
 ## [0.5.0](https://github.com/RomeoDespres/reapy/releases/tag/0.5.0) - 2019-11-23
