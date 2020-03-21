@@ -151,7 +151,7 @@ class Track(ReapyObject):
 
     def add_send(
         self, destination: ty.Optional[reapy.Track] = None
-    ) -> reapy.Track:
+    ) -> reapy.Send:
         """
         Add send to track and return it.
 
