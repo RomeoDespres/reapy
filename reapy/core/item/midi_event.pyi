@@ -107,7 +107,6 @@ class CC(MIDIEvent):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def infos(self) -> CC_INFOS_T:
         """

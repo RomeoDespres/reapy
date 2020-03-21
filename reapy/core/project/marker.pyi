@@ -34,7 +34,6 @@ class Marker(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def position(self) -> float:
         """

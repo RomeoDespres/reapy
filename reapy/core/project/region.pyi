@@ -16,7 +16,6 @@ class Region(ReapyObject):
                  parent_project_id: ty.Optional[int] = None) -> None:
         ...
 
-    @reapy.inside_reaper()
     def _get_enum_index(self) -> int:
         """
         Return region index as needed by RPR.EnumProjectMarkers2.
@@ -45,7 +44,6 @@ class Region(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def add_rendered_tracks(self, tracks: ty.List[reapy.Track]) -> None:
         """
         Efficiently add  several tracks to region render matrix.
@@ -61,7 +59,6 @@ class Region(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def end(self) -> float:
         """
@@ -108,7 +105,6 @@ class Region(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def remove_rendered_tracks(self, tracks: ty.List[reapy.Track]) -> None:
         """
         Efficiently remove  several tracks from region render matrix.
@@ -124,7 +120,6 @@ class Region(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def rendered_tracks(self) -> ty.List[reapy.Track]:
         """
@@ -134,7 +129,6 @@ class Region(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def start(self) -> float:
         """
