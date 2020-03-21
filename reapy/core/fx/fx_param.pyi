@@ -86,7 +86,7 @@ class FXParam(float):
         ...
 
     @property
-    def normalized(self) -> NormalizedFXParam:
+    def normalized(self) -> 'NormalizedFXParam':
         """
         Normalized FX parameter.
 
@@ -135,6 +135,18 @@ class FXParam(float):
         :type: float, float
         """
         ...
+
+    def __eq__(self, other: object) -> bool: ...
+
+    def __ne__(self, other: object) -> bool: ...
+
+    def __gt__(self, other: object) -> bool: ...
+
+    def __ge__(self, other: object) -> bool: ...
+
+    def __lt__(self, other: object) -> bool: ...
+
+    def __le__(self, other: object) -> bool: ...
 
 
 class FXParamsList(ReapyObjectList):
@@ -216,6 +228,7 @@ class NormalizedFXParam(FXParam):
     >>> fx.params[0].normalized.range
     (0.0, 1.0)
     """
+
     def format_value(self, value: float) -> str:
         """
         Return human readable string for value.
