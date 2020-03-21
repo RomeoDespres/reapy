@@ -33,7 +33,6 @@ class Source:
         """
         ...
 
-    @property
     def length(self, unit: str = "seconds") -> float:
         """
         Return source length in `unit`.

@@ -41,7 +41,7 @@ class Config(ConfigParser):
     def __init__(self) -> None:
         ...
 
-    def write(self) -> None:
+    def write(self) -> None:  # type:ignore
         # Backup config state before user has ever tried reapy
         ...
 

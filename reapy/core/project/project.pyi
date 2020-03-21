@@ -298,9 +298,9 @@ class Project(ReapyObject):
         """
         ...
 
-    @ty.overload
+    # @ty.overload
     def get_ext_state(self, section: str, key: str,
-                      pickled: te.Literal[True]) -> object:
+                      pickled: bool = False) -> ty.Union[object, str]:
         """
         Return external state of project.
 
@@ -318,17 +318,17 @@ class Project(ReapyObject):
         """
         ...
 
-    @ty.overload
-    def get_ext_state(self, section: str, key: str,
-                      pickled: te.Literal[False]) -> str:
+    # @ty.overload
+    # def get_ext_state(self, section: str, key: str,
+    #                   pickled: te.Literal[False]) -> str:
 
-        ...
+    #     ...
 
-    @ty.overload
-    def get_ext_state(self, section: str, key: str,
-                      pickled: bool = False) -> str:
+    # @ty.overload
+    # def get_ext_state(self, section: str, key: str,
+    #                   pickled: bool = False) -> str:
 
-        ...
+    #     ...
 
     def get_play_rate(self, position: float) -> float:
         """
@@ -634,7 +634,7 @@ class Project(ReapyObject):
         """
         ...
 
-    def perform_action(self, action_id: int):
+    def perform_action(self, action_id: int) -> None:
         """
         Perform action with ID `action_id` in the main Actions section.
 

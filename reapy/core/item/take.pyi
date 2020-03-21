@@ -55,7 +55,6 @@ class Take(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def add_note(self,
                  start: float,
                  end: float,
@@ -148,7 +147,6 @@ class Take(ReapyObject):
     def get_info_value(self, param_name: str) -> float:
         ...
 
-    @reapy.inside_reaper()
     @property
     def is_active(self) -> bool:
         """
