@@ -453,6 +453,14 @@ class Track(ReapyObject):
         """
         ...
 
+    @property
+    def recarm(self) -> bool:
+        """Recarm state of the Track."""
+        ...
+
+    @recarm.setter
+    def recarm(self, state: bool) -> None: ...
+
     def select(self) -> None:
         """
         Select track.
@@ -462,6 +470,8 @@ class Track(ReapyObject):
     @property
     def sends(self) -> ty.List[reapy.Send]:
         ...
+
+    def set_info_value(self, param_name: str, value: int) -> None:
 
     def set_info_string(self, param_name: str, param_string: str) -> None:
         ...
