@@ -1,8 +1,144 @@
+from enum import IntEnum, IntFlag
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
 from reapy.errors import UndefinedEnvelopeError
 import typing as ty
+
+
+class RecMode(IntEnum):
+
+    """Record mode of Track enum.
+
+    Attributes
+    ----------
+    input_
+    input_midi_overdub
+    input_midi_replace
+    none
+    out_midi
+    out_mono
+    out_mono_laten_cmp
+    out_stereo
+    out_stereo_laten_cmp
+    """
+
+    input_: int
+    out_stereo: int
+    none: int
+    out_stereo_laten_cmp: int
+    out_midi: int
+    out_mono: int
+    out_mono_laten_cmp: int
+    input_midi_overdub: int
+    input_midi_replace: int
+
+
+class RecMonitor(IntFlag):
+
+    """Bit flags for setting record monitoring.
+
+    Note
+    ----
+    top 3 bits are track option
+    low 2 bits are items option
+    track|item
+    0b000 00
+
+    Attributes
+    ----------
+    items_rec_off
+    items_rec_on
+    normal
+    not_while_play
+    off
+    """
+
+    off: int
+    normal: int
+    not_while_play: int
+    items_rec_off: int
+    items_rec_on: int
+
+    def __or__(self, other: object) -> 'RecMonitor':
+        """Return combined flags.
+
+        Returns
+        -------
+        int
+
+        Raises
+        ------
+        AttributeError
+            if two items or two track flags are combined
+        """
+        ...
+
+    @classmethod
+    def _resolve_flags(cls, flags: 'RecMonitor') -> ty.Tuple[int, int]: ...
+
+    def set_mode(self, track: 'Track', flags: 'RecMonitor') -> None:
+        """Set monitoring mode on track depends on flags.
+
+        Parameters
+        ----------
+        track : reapy.Track
+            to set mode on
+        flags : RecMonitor
+        """
+        ...
+
+    def get_mode(self, track: 'Track') -> ty.Tuple[
+            ty.Optional['RecMonitor'],
+            ty.Optional['RecMonitor']]:
+        """Get track monitor mode as tuple of modes.
+
+        Parameters
+        ----------
+        track : reapy.Track
+
+        Returns
+        -------
+        Tuple[RecMonitor, RecMonitor]
+            first is track, second — item
+        """
+        ...
+
+    def get_mode_flags(self, track: 'Track') -> 'RecMonitor':
+        """Get track monitor mode as combined flags.
+
+        Parameters
+        ----------
+        track : reapy.Track
+
+        Returns
+        -------
+        RecMonitor
+        """
+        ...
+
+
+class SoloState(IntEnum):
+
+    """Solo mode of Track enum.
+
+    Attributes
+    ----------
+    not_soloed
+    safe_soloed
+    safe_soloed_in_place
+    soloed
+    soloed_in_place
+    """
+
+    not_soloed: int
+    soloed: int
+    soloed_in_place: int
+    safe_soloed: int
+    safe_soloed_in_place: int
+
+    def __nonzero__(self) -> bool: ...
 
 
 class Track(ReapyObject):
@@ -258,6 +394,16 @@ class Track(ReapyObject):
         """
         ...
 
+    @property
+    def fxs_enabled(self) -> bool:
+        """Whether fx chain is enabled.
+
+        :type: bool
+        """
+
+    @fxs_enabled.setter
+    def fxs_enabled(self, state: bool) -> None: ...
+
     def get_info_string(self, param_name: str) -> str:
         ...
 
@@ -370,8 +516,55 @@ class Track(ReapyObject):
     def midi_note_names(self) -> ty.List[str]:
         ...
 
+    @property
+    def monitor_state(self) -> RecMonitor:
+        """Track monitoring settings as bit-flags.
+
+        Note
+        ----
+        Flags of track and items monitoring mode can be combined.
+        If not, track or items monitoring mode not assigned.
+
+        :type: RecMonitor
+        """
+        ...
+
+    @monitor_state.setter
+    def monitor_state(self, state: RecMonitor) -> None: ...
+
+    @property
+    def monitor_state_tuple(self) -> ty.Tuple[
+            ty.Optional[RecMonitor],
+            ty.Optional[RecMonitor]]:
+        """Track monitoring settings as tuple.
+
+        :type: Tuple[Optional[RecMonitor], Optional[RecMonitor]]
+        """
+        ...
+
     def mute(self) -> None:
         """Mute track (do nothing if track is already muted)."""
+        ...
+
+    @property
+    def mute_state(self) -> bool:
+        """Track mute state.
+
+        Returns
+        -------
+        bool
+        """
+        ...
+
+    @mute_state.setter
+    def mute_state(self, state: bool) -> None: ...
+
+    @property
+    def n_channels(self) -> int:
+        """Number of track channels.
+
+        :type: int
+        """
         ...
 
     @property
@@ -454,12 +647,36 @@ class Track(ReapyObject):
         ...
 
     @property
-    def recarm(self) -> bool:
+    def phase_state(self) -> bool:
+        """Phase invert state.
+
+        Returns
+        -------
+        bool
+        """
+        ...
+
+    @phase_state.setter
+    def phase_state(self, state: bool) -> None: ...
+
+    @property
+    def recarm_state(self) -> bool:
         """Recarm state of the Track."""
         ...
 
-    @recarm.setter
-    def recarm(self, state: bool) -> None: ...
+    @recarm_state.setter
+    def recarm_state(self, state: bool) -> None: ...
+
+    @property
+    def recmode_state(self) -> RecMode:
+        """Record mode of the Track.
+
+        :type: RecMode
+        """
+        ...
+
+    @recmode_state.setter
+    def recmode_state(self, state: ty.Union[bool, RecMode]) -> None: ...
 
     def select(self) -> None:
         """
@@ -479,6 +696,17 @@ class Track(ReapyObject):
     def solo(self) -> None:
         """Solo track (do nothing if track is already solo)."""
         ...
+
+    @property
+    def solo_state(self):
+        """SummarySolo state of the Track
+
+        :type: SoloState
+        """
+        ...
+
+    @solo_state.setter
+    def solo_state(self, state: SoloState) -> None: ...
 
     def toggle_mute(self) -> None:
         """Toggle mute on track."""

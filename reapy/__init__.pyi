@@ -47,6 +47,9 @@ __all__ = [
     "Send",
     "Track",
     "TrackList",
+    'SoloState',
+    'RecMode',
+    'RecMonitor',
     "get_project_by_name",
     # core.window
     "MIDIEditor",

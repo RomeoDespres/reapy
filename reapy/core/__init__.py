@@ -5,7 +5,8 @@ from .envelope import Envelope, EnvelopeList
 from .fx import FX, FXList, FXParam, FXParamsList
 from .item import CC, CCList, Item, Note, NoteList, Source, Take
 from .project import Marker, Project, Region, TimeSelection
-from .track import AutomationItem, Send, Track, TrackList
+from .track import (AutomationItem, Send, Track, TrackList,
+                    SoloState, RecMode, RecMonitor)
 from .window import MIDIEditor, ToolTip, Window
 
 
@@ -41,6 +42,9 @@ __all__ = [
     "Send",
     "Track",
     "TrackList",
+    'SoloState',
+    'RecMode',
+    'RecMonitor',
     # core.window
     "MIDIEditor",
     "ToolTip",
