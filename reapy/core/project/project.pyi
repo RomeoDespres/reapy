@@ -298,9 +298,9 @@ class Project(ReapyObject):
         """
         ...
 
-    # @ty.overload
+    @ty.overload
     def get_ext_state(self, section: str, key: str,
-                      pickled: bool = False) -> ty.Union[object, str]:
+                      pickled: te.Literal[True]) -> object:
         """
         Return external state of project.
 
@@ -318,17 +318,17 @@ class Project(ReapyObject):
         """
         ...
 
-    # @ty.overload
-    # def get_ext_state(self, section: str, key: str,
-    #                   pickled: te.Literal[False]) -> str:
+    @ty.overload
+    def get_ext_state(self, section: str, key: str,
+                      pickled: te.Literal[False]) -> str:
 
-    #     ...
+        ...
 
-    # @ty.overload
-    # def get_ext_state(self, section: str, key: str,
-    #                   pickled: bool = False) -> str:
+    @ty.overload
+    def get_ext_state(self, section: str, key: str,
+                      pickled: bool = False) -> ty.Union[str, object]:
 
-    #     ...
+        ...
 
     def get_play_rate(self, position: float) -> float:
         """
@@ -795,11 +795,11 @@ class Project(ReapyObject):
 
     @ty.overload
     def set_ext_state(self, section: str, key: str, value: ty.Any,
-                      pickle_: te.Literal[True]) -> int: ...
+                      pickled: te.Literal[True]) -> int: ...
 
     @ty.overload
     def set_ext_state(self, section: str, key: str, value: str,
-                      pickle_: bool = False) -> int: ...
+                      pickled: bool = False) -> int: ...
 
     def solo_all_tracks(self) -> None:
         """
