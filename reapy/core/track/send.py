@@ -239,7 +239,7 @@ class Send(ReapyObject):
         -------
         Tuple[int bus, int channel]
         """
-        return tuple(self._midi_flags_unpacked[1])
+        return tuple(self._midi_flags_unpacked[0])
 
     @midi_source.setter
     @reapy.inside_reaper()
