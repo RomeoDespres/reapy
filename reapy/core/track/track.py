@@ -520,6 +520,15 @@ class Track(ReapyObject):
             self._project = self._get_project()
         return self._project
 
+    @property
+    def recarm(self):
+        """Recarm state of the Track."""
+        return bool(self.get_info_value('I_RECARM'))
+
+    @recarm.setter
+    def recarm(self, state):
+        self.set_info_value('I_RECARM', float(state))
+
     def select(self):
         """
         Select track.
@@ -532,6 +541,9 @@ class Track(ReapyObject):
         return [
             reapy.Send(self, i, type="send") for i in range(self.n_sends)
         ]
+
+    def set_info_value(self, param_name, value):
+        RPR.SetMediaTrackInfo_Value(self.id, param_name, value)
 
     def set_info_string(self, param_name, param_string):
         RPR.GetSetMediaTrackInfo_String(self.id, param_name, param_string, True)
