@@ -46,12 +46,18 @@ class Track(ReapyObject):
     _project: reapy.Project
 
     def __init__(
-        self, id: str, project: ty.Optional[reapy.Project] = None
+        self,
+        id: ty.Union[str, int, float],
+        project: ty.Optional[reapy.Project] = None
     ) -> None:
         ...
 
     @property
     def _args(self) -> ty.Tuple[ty.Union[str, int]]:
+        ...
+
+    @classmethod
+    def _get_id_from_pointer(cls, id_: ty.Union[int, float]) -> str:
         ...
 
     def _get_project(self) -> reapy.Project:
