@@ -866,7 +866,7 @@ class Project(ReapyObject):
         """
         return [
             reapy.Item(RPR.GetSelectedMediaItem(self.id, i))
-            for i in range(self.n_items)
+            for i in range(self.n_selected_items)
         ]
 
     @reapy.inside_reaper()
