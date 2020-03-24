@@ -50,6 +50,11 @@ class ExtensionNotFoundError(Exception):
         super().__init__(message)
 
 
+class InsideREAPERError(Exception):
+
+    pass
+
+
 class OutsideREAPERError(Exception):
 
     def __init__(self):

@@ -204,7 +204,33 @@ class Send(ReapyObject):
         self.set_info("B_PHASE", flipped)
 
     @property
-    @depends_on_sws
+    def _midi_flags_unpacked(self):
+        flags = int(self.get_info('I_MIDIFLAGS'))
+        if flags == 0b1111111100000000011111:
+            return ((-1, -1), (-1, -1))
+        ch_flags = flags % 0b10000000000
+        bus_flags = flags >> 14
+        # bus
+        src_bus = bus_flags % 0b100000
+        dst_bus = bus_flags >> 8
+        # channel
+        src_ch = ch_flags % 0b100000
+        dst_ch = ch_flags >> 5
+
+        return ((src_bus, src_ch), (dst_bus, dst_ch))
+
+    @_midi_flags_unpacked.setter
+    def _midi_flags_unpacked(self, in_tuple):
+        src_bus, src_ch, dst_bus, dst_ch = (*in_tuple[0], *in_tuple[1])
+        dst_ch <<= 5
+        src_bus <<= 14
+        dst_bus <<= 22
+        flags = src_bus | src_ch | dst_bus | dst_ch
+        if flags == -1:
+            flags = 0b1111111100000000011111
+        self.set_info('I_MIDIFLAGS', flags)
+
+    @property
     def midi_source(self):
         """
         Send MIDI properties on the send track.
@@ -213,39 +239,30 @@ class Send(ReapyObject):
         -------
         Tuple[int bus, int channel]
         """
-        retval = []
-        with reapy.inside_reaper():
-            for par in ('I_MIDI_SRCBUS', 'I_MIDI_SRCCHAN'):
-                retval.append(int(self.get_sws_info(par)))
-        return tuple(retval)
+        return tuple(self._midi_flags_unpacked[0])
 
     @midi_source.setter
-    def midi_source(self, value):
-        with reapy.inside_reaper():
-            for par, val in zip(('I_MIDI_SRCBUS', 'I_MIDI_SRCCHAN'), value):
-                self.set_info_br(par, val)
+    @reapy.inside_reaper()
+    def midi_source(self, source):
+        dest = self._midi_flags_unpacked[1]
+        self._midi_flags_unpacked = (source, dest)
 
     @property
-    @depends_on_sws
     def midi_dest(self):
         """
-        Send MIDI properties on the destination track.
+        Send MIDI properties on the receive track.
 
         Returns
         -------
         Tuple[int bus, int channel]
         """
-        retval = []
-        with reapy.inside_reaper():
-            for par in ('I_MIDI_DSTBUS', 'I_MIDI_DSTCHAN'):
-                retval.append(int(self.get_sws_info(par)))
-        return tuple(retval)
+        return tuple(self._midi_flags_unpacked[1])
 
     @midi_dest.setter
-    def midi_dest(self, value):
-        with reapy.inside_reaper():
-            for par, val in zip(('I_MIDI_DSTBUS', 'I_MIDI_DSTCHAN'), value):
-                self.set_info_br(par, val)
+    @reapy.inside_reaper()
+    def midi_dest(self, dest):
+        source = self._midi_flags_unpacked[0]
+        self._midi_flags_unpacked = (source, dest)
 
     def mute(self):
         """
@@ -288,7 +305,6 @@ class Send(ReapyObject):
         )
 
     @property
-    @depends_on_sws
     def source_track(self):
         """
         Source track.
@@ -296,11 +312,6 @@ class Send(ReapyObject):
         :type: Track
         """
         id_ = self.get_info('P_SRCTRACK')
-        print('(MediaTrack*)0x{0:0{1}X}'.format(int(id_), 16), id_)
-        id2 = RPR.BR_GetMediaTrackSendInfo_Track(
-            self.track_id, self._get_int_type(), self.index, 0
-        )
-        print(id2)
         return reapy.Track(id_)
 
     def unmute(self):

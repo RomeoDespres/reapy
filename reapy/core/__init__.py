@@ -13,7 +13,7 @@ __all__ = [
     # core.reapy_object
     "ReapyObject",
     "ReapyObjectList",
-    #core.audio_accessor
+    # core.audio_accessor
     "AudioAccessor",
     # core.envelope
     "Envelope",

@@ -45,15 +45,21 @@ class Track(ReapyObject):
     id: str
     _project: reapy.Project
 
-    def __init__(self, id: str,
-                 project: ty.Optional[reapy.Project] = None) -> None:
+    def __init__(
+        self,
+        id: ty.Union[str, int, float],
+        project: ty.Optional[reapy.Project] = None
+    ) -> None:
         ...
 
     @property
     def _args(self) -> ty.Tuple[ty.Union[str, int]]:
         ...
 
-    @reapy.inside_reaper()
+    @classmethod
+    def _get_id_from_pointer(cls, id_: ty.Union[int, float]) -> str:
+        ...
+
     def _get_project(self) -> reapy.Project:
         """
         Return parent project of track.
@@ -74,10 +80,9 @@ class Track(ReapyObject):
         """
         ...
 
-    def add_fx(self,
-               name: str,
-               input_fx: bool = False,
-               even_if_exists: bool = True) -> reapy.FX:
+    def add_fx(
+        self, name: str, input_fx: bool = False, even_if_exists: bool = True
+    ) -> reapy.FX:
         """
         Add FX to track and return it.
 
@@ -106,11 +111,12 @@ class Track(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
-    def add_item(self,
-                 start: float = 0,
-                 end: ty.Optional[float] = None,
-                 length: float = 0) -> reapy.Item:
+    def add_item(
+        self,
+        start: float = 0,
+        end: ty.Optional[float] = None,
+        length: float = 0
+    ) -> reapy.Item:
         """
         Create new item on track and return it.
 
@@ -131,10 +137,9 @@ class Track(ReapyObject):
         """
         ...
 
-    def add_midi_item(self,
-                      start: float = 0,
-                      end: float = 1,
-                      quantize: bool = False) -> reapy.Item:
+    def add_midi_item(
+        self, start: float = 0, end: float = 1, quantize: bool = False
+    ) -> reapy.Item:
         """
         Add empty MIDI item to track and return it.
 
@@ -150,8 +155,9 @@ class Track(ReapyObject):
         """
         ...
 
-    def add_send(self,
-                 destination: ty.Optional[reapy.Track] = None) -> reapy.Track:
+    def add_send(
+        self, destination: ty.Optional[reapy.Track] = None
+    ) -> reapy.Track:
         """
         Add send to track and return it.
 
@@ -304,7 +310,6 @@ class Track(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def items(self) -> ty.List[reapy.Item]:
         """
@@ -371,7 +376,6 @@ class Track(ReapyObject):
     def midi_note_names(self) -> ty.List[str]:
         ...
 
-    @reapy.inside_reaper()
     def mute(self) -> None:
         """Mute track (do nothing if track is already muted)."""
         ...
@@ -464,7 +468,6 @@ class Track(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def sends(self) -> ty.List[reapy.Send]:
         ...
@@ -472,22 +475,18 @@ class Track(ReapyObject):
     def set_info_string(self, param_name: str, param_string: str) -> None:
         ...
 
-    @reapy.inside_reaper()
     def solo(self) -> None:
         """Solo track (do nothing if track is already solo)."""
         ...
 
-    @reapy.inside_reaper()
     def toggle_mute(self) -> None:
         """Toggle mute on track."""
         ...
 
-    @reapy.inside_reaper()
     def toggle_solo(self) -> None:
         """Toggle solo on track."""
         ...
 
-    @reapy.inside_reaper()
     def unmute(self) -> None:
         """Unmute track (do nothing if track is not muted)."""
         ...
@@ -498,7 +497,6 @@ class Track(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def unsolo(self) -> None:
         """Unsolo track (do nothing if track is not solo)."""
         ...
@@ -546,6 +544,10 @@ class TrackList(ReapyObjectList):
         ...
 
     @ty.overload
+    def __getitem__(self, key: str) -> Track:
+        ...
+
+    @ty.overload
     def __getitem__(self, key: int) -> Track:
         ...
 
@@ -553,19 +555,18 @@ class TrackList(ReapyObjectList):
     def __getitem__(self, key: slice) -> ty.List[Track]:
         ...
 
-    @reapy.inside_reaper()
     def __delitem__(self, key: ty.Union[int, slice]) -> None:
         ...
 
     def __len__(self) -> int:
         ...
 
-    def __iter__(self) -> ty.Iterator[reapy.Track]: ...
+    def __iter__(self) -> ty.Iterator[reapy.Track]:
+        ...
 
     @property
     def _args(self) -> ty.Tuple[reapy.Project]:
         ...
 
-    @reapy.inside_reaper()
     def _get_items_from_slice(self, slice: slice) -> ty.List[Track]:
         ...

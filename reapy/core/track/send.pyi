@@ -155,6 +155,14 @@ class Send(ReapyObject):
         ...
 
     @property
+    def _midi_flags_unpacked(self) -> ty.Tuple[
+        ty.Tuple[int, int], ty.Tuple[int, int]]: ...
+
+    @_midi_flags_unpacked.setter
+    def _midi_flags_unpacked(self, in_tuple: ty.Tuple[
+        ty.Tuple[int, int], ty.Tuple[int, int]]): ...
+
+    @property
     def midi_source(self) -> ty.Tuple[int, int]:
         """
         Send MIDI properties on the send track.
