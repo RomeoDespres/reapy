@@ -5,7 +5,6 @@ from reapy.tools import depends_on_sws
 
 
 class Send(ReapyObject):
-
     """Track send.
 
     Attributes
@@ -54,15 +53,13 @@ class Send(ReapyObject):
         RPR.RemoveTrackSend(self.track_id, self._get_int_type(), self.index)
 
     @property
-    @depends_on_sws
     def dest_track(self):
         """
         Destination track.
 
         :type: Track
         """
-        id_ = RPR.BR_GetMediaTrackSendInfo_Track(
-            self.track_id, self._get_int_type(), self.index, 1)
+        id_ = self.get_info('P_DESTTRACK')
         return reapy.Track(id_)
 
     @reapy.inside_reaper()
@@ -93,8 +90,8 @@ class Send(ReapyObject):
                                 hwout:&512=rearoute
             I_MIDIFLAGS : int *, low 5 bits=source channel 0=all, 1-16,
                                 next 5 bits=dest channel, 0=orig,
-                                1-16=chanP_DESTTRACK : read only,
-                                returns MediaTrack *,
+                                1-16=chan
+            P_DESTTRACK : read only, returns MediaTrack *,
                                 destination track,
                                 only applies for sends/recvs
             P_SRCTRACK : read only, returns MediaTrack *,
@@ -151,8 +148,8 @@ class Send(ReapyObject):
         float
         """
         value = RPR.BR_GetSetTrackSendInfo(
-            self.track_id, self._get_int_type(),
-            self.index, param_name, False, 0.0
+            self.track_id, self._get_int_type(), self.index, param_name, False,
+            0.0
         )
         return value
 
@@ -286,8 +283,8 @@ class Send(ReapyObject):
     @depends_on_sws
     def set_sws_info(self, param_name, value):
         RPR.BR_GetSetTrackSendInfo(
-            self.track_id, self._get_int_type(), self.index, param_name,
-            True, value
+            self.track_id, self._get_int_type(), self.index, param_name, True,
+            value
         )
 
     @property
@@ -298,8 +295,12 @@ class Send(ReapyObject):
 
         :type: Track
         """
-        id_ = RPR.BR_GetMediaTrackSendInfo_Track(
-            self.track_id, self._get_int_type(), self.index, 0)
+        id_ = self.get_info('P_SRCTRACK')
+        print('(MediaTrack*)0x{0:0{1}X}'.format(int(id_), 16), id_)
+        id2 = RPR.BR_GetMediaTrackSendInfo_Track(
+            self.track_id, self._get_int_type(), self.index, 0
+        )
+        print(id2)
         return reapy.Track(id_)
 
     def unmute(self):
