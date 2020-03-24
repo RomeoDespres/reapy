@@ -296,11 +296,6 @@ class Send(ReapyObject):
         :type: Track
         """
         id_ = self.get_info('P_SRCTRACK')
-        print('(MediaTrack*)0x{0:0{1}X}'.format(int(id_), 16), id_)
-        id2 = RPR.BR_GetMediaTrackSendInfo_Track(
-            self.track_id, self._get_int_type(), self.index, 0
-        )
-        print(id2)
         return reapy.Track(id_)
 
     def unmute(self):
