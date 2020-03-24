@@ -12,14 +12,18 @@ class Project(ReapyObject):
     """REAPER project."""
     id: str
 
-    def __init__(self, id: ty.Optional[str] = None, index: int = -1) -> None:
+    def __init__(self, id: ty.Optional[ty.Union[int, str]] = None, index: int = -1) -> None:
         """
         Build project either by ID or index.
 
-        Parameters
-        ----------
-        id : str, optional
-            Project ID. If None, `index` must be specified.
+        id : None, str or int, optional
+            Project identifier.
+            When None (default), `index is used instead.
+            An integer is interpreted as the project index in GUI.
+            A string starting with '(ReaProject*)0x' is interpreted
+            as a ReaScript identifier.
+            Otherwise, `id` is the project name. In that case, the .rpp
+            extension is optional.
         index : int, optional
             Project index in GUI (default=-1, corresponds to current
             project).
@@ -33,7 +37,27 @@ class Project(ReapyObject):
     def _args(self) -> ty.Tuple[str]:
         ...
 
-    @reapy.inside_reaper()
+    @staticmethod
+    def _from_name(name: str) -> 'Project':
+        """Return project with corresponding name.
+
+        Parameters
+        ----------
+        name : str
+            Project file name. Including the extension ('.rpp')
+            is optional.
+
+        Returns
+        -------
+        Project
+
+        Raises
+        ------
+        NameError
+            If no project with the corresponding name is open.
+        """
+        ...
+
     def _get_track_by_name(self, name: str) -> ty.Optional[reapy.Track]:
         """Return first track with matching name."""
         ...
@@ -95,7 +119,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def add_track(self, index: int = 0, name: str = "") -> reapy.Track:
         """
         Add track at a specified index.
@@ -164,7 +187,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def bpm(self) -> float:
         """
@@ -200,7 +222,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def bypass_fx_on_all_tracks(self, bypass: bool = True) -> None:
         """
         Bypass or un-bypass FX on all tracks.
@@ -251,7 +272,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def disarm_rec_on_all_tracks(self) -> None:
         """
         Disarm record on all tracks.
@@ -269,7 +289,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def focused_fx(self) -> ty.Optional[reapy.FX]:
         """
@@ -420,7 +439,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def is_stopped(self) -> bool:
         """
@@ -430,7 +448,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def items(self) -> ty.List[reapy.Item]:
         """
@@ -449,7 +466,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def last_touched_fx(self
                         ) -> ty.Tuple[ty.Optional[reapy.FX], ty.Optional[int]]:
@@ -473,8 +489,7 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
-    def make_current_project(self) -> None:
+    def make_current_project(self) -> ty.ContextManager[None]:
         """
         Set project as current project.
 
@@ -499,7 +514,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def markers(self) -> ty.List[reapy.Marker]:
         """
@@ -518,7 +532,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def mute_all_tracks(self, mute: bool = True) -> None:
         """
         Mute or unmute all tracks.
@@ -677,7 +690,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def regions(self) -> ty.List[reapy.Region]:
         """
@@ -728,7 +740,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def selected_items(self) -> ty.List[reapy.Item]:
         """
@@ -743,7 +754,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def selected_tracks(self) -> ty.List[reapy.Track]:
         """
@@ -791,7 +801,6 @@ class Project(ReapyObject):
     def set_ext_state(self, section: str, key: str, value: str,
                       pickle_: bool = False) -> int: ...
 
-    @reapy.inside_reaper()
     def solo_all_tracks(self) -> None:
         """
         Solo all tracks in project.
@@ -808,7 +817,6 @@ class Project(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def time_selection(self) -> reapy.TimeSelection:
         """
@@ -908,7 +916,6 @@ class Project(ReapyObject):
         """Unselect all tracks."""
         ...
 
-    @reapy.inside_reaper()
     def unsolo_all_tracks(self) -> None:
         """
         Unsolo all tracks in project.

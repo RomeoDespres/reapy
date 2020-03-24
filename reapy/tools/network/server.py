@@ -19,7 +19,7 @@ class Server(Socket):
 
     def __init__(self, port):
         super().__init__()
-        self.bind(("", port))
+        self.bind(("0.0.0.0", port))
         self.listen()
         self.connections = {}
         self.settimeout(.0001)

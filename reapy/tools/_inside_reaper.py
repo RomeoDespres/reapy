@@ -5,20 +5,21 @@ import importlib
 import reapy
 import reapy.config
 from reapy.errors import DisabledDistAPIError, DisabledDistAPIWarning
-if not reapy.is_inside_reaper():
-    try:
-        from .network import Client, WebInterface
-        _WEB_INTERFACE = WebInterface(reapy.config.WEB_INTERFACE_PORT)
-        _CLIENT = Client(_WEB_INTERFACE.get_reapy_server_port())
-    except DisabledDistAPIError:
-        import warnings
-        warnings.warn(DisabledDistAPIWarning())
-        _CLIENT = None
+from .network import machines
+# if not reapy.is_inside_reaper():
+#     try:
+#         from .network import Client, WebInterface
+#         _WEB_INTERFACE = WebInterface(reapy.config.WEB_INTERFACE_PORT)
+#         _CLIENT = Client(_WEB_INTERFACE.get_reapy_server_port())
+#     except DisabledDistAPIError:
+#         import warnings
+#         warnings.warn(DisabledDistAPIWarning())
+#         _CLIENT = None
 
 
 def dist_api_is_enabled():
     """Return whether reapy can reach REAPER from the outside."""
-    return _CLIENT is not None
+    return machines.get_selected_client() is not None
 
 
 class inside_reaper(contextlib.ContextDecorator):
@@ -64,18 +65,19 @@ class inside_reaper(contextlib.ContextDecorator):
             @functools.wraps(func)
             def wrap(*args, **kwargs):
                 f = func if encoded_func is None else encoded_func
-                return _CLIENT.request(f, {"args": args, "kwargs": kwargs})
+                client = machines.get_selected_client()
+                return client.request(f, {"args": args, "kwargs": kwargs})
             return wrap
         # Otherwise, use the context manager
         return super().__call__(func)
 
     def __enter__(self):
         if not reapy.is_inside_reaper():
-            _CLIENT.request("HOLD")
+            machines.get_selected_client().request("HOLD")
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if not reapy.is_inside_reaper():
-            _CLIENT.request("RELEASE")
+            machines.get_selected_client().request("RELEASE")
         return False
 
 
@@ -109,38 +111,3 @@ class DistProperty(property):
         if fdel is not None:
             fdel = self._inside_reaper(fdel, self._encode(fdel, "del"))
         return super().deleter(fdel)
-
-
-def reconnect():
-    """
-    Reconnect to REAPER ReaScript API.
-
-    This function has no effect from inside REAPER.
-
-    Examples
-    --------
-    Assume no REAPER instance is active.
-    >>> import reapy
-    DisabledDistAPIWarning: Can't reach distant API. Please start REAPER, or
-    call reapy.config.enable_dist_api() from inside REAPER to enable distant
-    API.
-      warnings.warn(DisabledDistAPIWarning())
-    >>> p = reapy.Project()  # Results in error
-    Traceback (most recent call last):
-      File "<string>", line 1, in <module>
-      File "C:\\Users\\despres\\Desktop\\reaper\\scripts\\reapy\\reapy\\core\\project\\project.py", line 26, in __init__
-        id = RPR.EnumProjects(index, None, 0)[0]
-    AttributeError: module 'reapy.reascript_api' has no attribute 'EnumProjects'
-    >>> # Now start REAPER
-    ...
-    >>> reapy.reconnect()
-    >>> p = reapy.Project()  # No error!
-    """
-    global _WEB_INTERFACE, _CLIENT
-    if not reapy.is_inside_reaper():
-        try:
-            _WEB_INTERFACE = WebInterface(reapy.config.WEB_INTERFACE_PORT)
-            _CLIENT = Client(_WEB_INTERFACE.get_reapy_server_port())
-            importlib.reload(reapy.reascript_api)
-        except DisabledDistAPIError:
-            pass

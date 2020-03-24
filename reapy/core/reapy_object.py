@@ -1,7 +1,17 @@
 import reapy
 
 
-class ReapyObject:
+class ReapyMetaclass(type):
+
+    @property
+    def _reapy_parent(self):
+        """Return first reapy parent class."""
+        for candidate in self.__mro__:
+            if candidate.__module__.startswith('reapy.'):
+                return candidate
+
+
+class ReapyObject(metaclass=ReapyMetaclass):
 
     """Base class for reapy objects."""
 
@@ -41,7 +51,7 @@ class ReapyObject:
     def _to_dict(self):
         return {
             "__reapy__": True,
-            "class": self.__class__.__name__,
+            "class": self.__class__._reapy_parent.__name__,
             "args": self._args,
             "kwargs": self._kwargs
         }
