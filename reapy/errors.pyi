@@ -19,6 +19,14 @@ class DistError(Exception):
     ...
 
 
+class ExtensionNotFoundError(Exception):
+    def __init__(self, extension: str, url: str): ...
+
+
+class InsideREAPERError(Exception):
+    ...
+
+
 class OutsideREAPERError(Exception):
     ...
 
