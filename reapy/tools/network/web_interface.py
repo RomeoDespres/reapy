@@ -2,6 +2,7 @@ from reapy.errors import DisabledDistAPIError, UndefinedExtStateError
 from reapy.tools import json
 from urllib import request
 from urllib.error import URLError
+from socket import timeout
 
 import reapy
 
@@ -22,7 +23,7 @@ class WebInterface:
     def get_reapy_server_port(self):
         try:
             port = self.ext_state["server_port"]
-        except URLError:
+        except (URLError, timeout):
             raise DisabledDistAPIError
         except UndefinedExtStateError:
             self.activate_reapy_server()
