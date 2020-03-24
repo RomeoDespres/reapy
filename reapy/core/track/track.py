@@ -1,7 +1,185 @@
+from enum import IntEnum, IntFlag
+from warnings import warn
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
 from reapy.errors import UndefinedEnvelopeError
+
+
+class RecMode(IntEnum):
+
+    """Record mode of Track enum.
+
+    Attributes
+    ----------
+    input_
+    input_midi_overdub
+    input_midi_replace
+    none
+    out_midi
+    out_mono
+    out_mono_laten_cmp
+    out_stereo
+    out_stereo_laten_cmp
+    """
+
+    input_ = 0
+    out_stereo = 1
+    none = 2
+    out_stereo_laten_cmp = 3
+    out_midi = 4
+    out_mono = 5
+    out_mono_laten_cmp = 6
+    input_midi_overdub = 7
+    input_midi_replace = 8
+
+
+class RecMonitor(IntFlag):
+
+    """Bit flags for setting record monitoring.
+
+    Note
+    ----
+    top 3 bits are track option
+    low 2 bits are items option
+    track|item
+    0b000 00
+
+    Attributes
+    ----------
+    items_rec_off
+    items_rec_on
+    normal
+    not_while_play
+    off
+    """
+
+    off = 0b00100
+    normal = 0b01000
+    not_while_play = 0b10000
+    items_rec_off = 0b00001
+    items_rec_on = 0b00010
+
+    def __or__(self, other):
+        """Return combined flags.
+
+        Returns
+        -------
+        int
+
+        Raises
+        ------
+        AttributeError
+            if two items or two track flags are combined
+        """
+        if not isinstance(other, RecMonitor):
+            raise TypeError('use flag.value instead')
+        if self >> 2 != 0 and other >> 2 != 0:
+            raise TypeError('cannot combine two track flags')
+        if self % 0b100 != 0 and other % 0b100 != 0:
+            raise TypeError('cannot combine two item flags')
+        return super().__or__(other)
+
+    @classmethod
+    def _resolve_flags(cls, flags):
+        states_track = {cls.off: 0,
+                        cls.normal: 1,
+                        cls.not_while_play: 2, }
+        states_items = {
+            cls.items_rec_off: 0,
+            cls.items_rec_on: 1,
+        }
+        item, track = None, None
+        for state, value in states_track.items():
+            if flags & state:
+                track = value
+                break
+        for state, value in states_items.items():
+            if flags & state:
+                item = value
+                break
+        return (track, item)
+
+    @classmethod
+    def set_mode(self, track, flags):
+        """Set monitoring mode on track depends on flags.
+
+        Parameters
+        ----------
+        track : reapy.Track
+            to set mode on
+        flags : RecMonitor
+        """
+        track_m, item_m = self._resolve_flags(flags)
+        if track_m is not None:
+            track.set_info_value('I_RECMON', track_m)
+        if item_m is not None:
+            track.set_info_value('I_RECMONITEMS', item_m)
+
+    @classmethod
+    def get_mode(self, track):
+        """Get track monitor mode as tuple of modes.
+
+        Parameters
+        ----------
+        track : reapy.Track
+
+        Returns
+        -------
+        Tuple[RecMonitor, RecMonitor]
+            first is track, second — item
+        """
+        states_track = {0: self.off,
+                        1: self.normal,
+                        2: self.not_while_play, }
+        states_items = {
+            0: self.items_rec_off,
+            1: self.items_rec_on,
+        }
+        track_m = track.get_info_value('I_RECMON')
+        item_m = track.get_info_value('I_RECMONITEMS')
+        return (states_track[track_m], states_items[item_m])
+
+    @classmethod
+    def get_mode_flags(self, track):
+        """Get track monitor mode as combined flags.
+
+        Parameters
+        ----------
+        track : reapy.Track
+
+        Returns
+        -------
+        RecMonitor
+        """
+        t_f, i_f = self.get_mode(track)
+        return t_f | i_f
+
+
+class SoloState(IntEnum):
+
+    """Solo mode of Track enum.
+
+    Attributes
+    ----------
+    not_soloed
+    safe_soloed
+    safe_soloed_in_place
+    soloed
+    soloed_in_place
+    """
+
+    not_soloed = 0
+    soloed = 1
+    soloed_in_place = 2
+    safe_soloed = 5
+    safe_soloed_in_place = 6
+
+    def __nonzero__(self):
+        if self is self.not_soloed:
+            return False
+        return True
 
 
 class Track(ReapyObject):
@@ -289,6 +467,18 @@ class Track(ReapyObject):
         fxs = reapy.FXList(self)
         return fxs
 
+    @property
+    def fxs_enabled(self):
+        """Whether fx chain is enabled.
+
+        :type: bool
+        """
+        return bool(self.get_info_value('I_FXEN'))
+
+    @fxs_enabled.setter
+    def fxs_enabled(self, state):
+        self.set_info_value('I_FXEN', int(state))
+
     def get_info_string(self, param_name):
         return RPR.GetSetMediaTrackInfo_String(self.id, param_name, "", False)[3]
 
@@ -359,14 +549,17 @@ class Track(ReapyObject):
 
         Can be manually set to change track state.
         """
+        warn(DeprecationWarning(
+            '{}.{}.is_muted is deprecated, use mute_state instead'
+            .format(self.__module__, self.__class__.__name__)))
         return bool(self.get_info_value("B_MUTE"))
 
     @is_muted.setter
     def is_muted(self, muted):
-        if muted:
-            self.mute()
-        else:
-            self.unmute()
+        warn(DeprecationWarning(
+            '{}.{}.is_muted is deprecated, use mute_state instead'
+            .format(self.__module__, self.__class__.__name__)))
+        self.set_info_value('B_MUTE', muted)
 
     @property
     def is_selected(self):
@@ -400,14 +593,17 @@ class Track(ReapyObject):
 
         Can be manually set to change track state.
         """
+        warn(DeprecationWarning(
+            '{}.{}.is_solo is deprecated, use mute_state instead'
+            .format(self.__module__, self.__class__.__name__)))
         return bool(self.get_info_value("I_SOLO"))
 
     @is_solo.setter
     def is_solo(self, solo):
-        if solo:
-            self.solo()
-        else:
-            self.unsolo()
+        warn(DeprecationWarning(
+            '{}.{}.is_solo is deprecated, use mute_state instead'
+            .format(self.__module__, self.__class__.__name__)))
+        self.set_info_value('I_SOLO', solo)
 
     def make_only_selected_track(self):
         """
@@ -423,11 +619,60 @@ class Track(ReapyObject):
             ]
         return names
 
+    @property
+    def monitor_state(self):
+        """Track monitoring settings as bit-flags.
+
+        Note
+        ----
+        Flags of track and items monitoring mode can be combined.
+        If not, track or items monitoring mode not assigned.
+
+        :type: RecMonitor
+        """
+        return RecMonitor.get_mode_flags(self)
+
+    @monitor_state.setter
+    def monitor_state(self, state):
+        RecMonitor.set_mode(self, state)
+
+    @property
+    def monitor_state_tuple(self):
+        """Track monitoring settings as tuple.
+
+        :type: Tuple[Optional[RecMonitor], Optional[RecMonitor]]
+        """
+        return RecMonitor.get_mode(self)
+
     @reapy.inside_reaper()
     def mute(self):
         """Mute track (do nothing if track is already muted)."""
-        if not self.is_muted:
-            self.toggle_mute()
+        warn(DeprecationWarning(
+            '{}.{}.mute is deprecated, use solo_state property instead'
+            .format(self.__module__, self.__class__.__name__)))
+        self.set_info_value('B_MUTE', True)
+
+    @property
+    def mute_state(self):
+        """Track mute state.
+
+        Returns
+        -------
+        bool
+        """
+        return bool(self.get_info_value('B_MUTE'))
+
+    @mute_state.setter
+    def mute_state(self, state):
+        self.set_info_value('B_MUTE', state)
+
+    @property
+    def n_channels(self):
+        """Number of track channels.
+
+        :type: int
+        """
+        return int(self.get_info_value('I_NCHAN'))
 
     @property
     def n_envelopes(self):
@@ -510,6 +755,20 @@ class Track(ReapyObject):
         return parent
 
     @property
+    def phase_state(self):
+        """Phase invert state.
+
+        Returns
+        -------
+        bool
+        """
+        return bool(self.get_info_value('B_PHASE'))
+
+    @phase_state.setter
+    def phase_state(self, state):
+        self.set_info_value('B_PHASE', state)
+
+    @property
     def project(self):
         """
         Track parent project.
@@ -519,6 +778,27 @@ class Track(ReapyObject):
         if self._project is None:
             self._project = self._get_project()
         return self._project
+
+    @property
+    def recarm_state(self):
+        """Recarm state of the Track."""
+        return bool(self.get_info_value('I_RECARM'))
+
+    @recarm_state.setter
+    def recarm_state(self, state):
+        self.set_info_value('I_RECARM', int(state))
+
+    @property
+    def recmode_state(self):
+        """Record mode of the Track.
+
+        :type: RecMode
+        """
+        return RecMode(self.get_info_value('I_RECMODE'))
+
+    @recmode_state.setter
+    def recmode_state(self, state):
+        self.set_info_value('I_RECMODE', state)
 
     def select(self):
         """
@@ -533,36 +813,52 @@ class Track(ReapyObject):
             reapy.Send(self, i, type="send") for i in range(self.n_sends)
         ]
 
+    def set_info_value(self, param_name, value):
+        RPR.SetMediaTrackInfo_Value(self.id, param_name, value)
+
     def set_info_string(self, param_name, param_string):
-        RPR.GetSetMediaTrackInfo_String(self.id, param_name, param_string, True)
+        RPR.GetSetMediaTrackInfo_String(
+            self.id, param_name, param_string, True)
 
     @reapy.inside_reaper()
     def solo(self):
         """Solo track (do nothing if track is already solo)."""
-        if not self.is_solo:
-            self.toggle_solo()
+        warn(DeprecationWarning(
+            '{}.{}.solo is deprecated, use solo_state property instead'
+            .format(self.__module__, self.__class__.__name__)))
+        self.set_info_value('I_SOLO', SoloState.soloed)
+
+    @property
+    def solo_state(self):
+        """SummarySolo state of the Track
+
+        :type: SoloState
+        """
+        return SoloState(self.get_info_value('I_SOLO'))
+
+    @solo_state.setter
+    def solo_state(self, state):
+        self.set_info_value('I_SOLO', state)
 
     @reapy.inside_reaper()
     def toggle_mute(self):
         """Toggle mute on track."""
-        selected_tracks = self.project.selected_tracks
-        self.make_only_selected_track()
-        self.project.perform_action(40280)
-        self.project.selected_tracks = selected_tracks
+        state = bool(self.get_info_value('B_MUTE'))
+        self.set_info_value('B_MUTE', not state)
 
     @reapy.inside_reaper()
     def toggle_solo(self):
         """Toggle solo on track."""
-        selected_tracks = self.project.selected_tracks
-        self.make_only_selected_track()
-        self.project.perform_action(7)
-        self.project.selected_tracks = selected_tracks
+        state = self.get_info_value('I_SOLO')
+        self.set_info_value('I_SOLO', 0 if state != 0 else 1)
 
     @reapy.inside_reaper()
     def unmute(self):
         """Unmute track (do nothing if track is not muted)."""
-        if self.is_muted:
-            self.toggle_mute()
+        warn(DeprecationWarning(
+            '{}.{}.unmute is deprecated, use mute_state property instead'
+            .format(self.__module__, self.__class__.__name__)))
+        self.set_info_value('B_MUTE', False)
 
     def unselect(self):
         """
@@ -573,8 +869,10 @@ class Track(ReapyObject):
     @reapy.inside_reaper()
     def unsolo(self):
         """Unsolo track (do nothing if track is not solo)."""
-        if self.is_solo:
-            self.toggle_solo()
+        warn(DeprecationWarning(
+            '{}.{}.unsolo is deprecated, use solo_state property instead'
+            .format(self.__module__, self.__class__.__name__)))
+        self.set_info_value('I_SOLO', 0)
 
     @property
     def visible_fx(self):

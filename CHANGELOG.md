@@ -12,6 +12,14 @@ All notable changes to this project will be documented in this file.
     * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
 - First argument `id` of `Project` can now be a project name (with or without extension) or an integer (the GUI index of the project).
 - REAPER control over the network. `reapy` can be installed on a machine even if it does not have REAPER installed, and then control other instances by using `reapy.connect`.
+- `Track` API extended by:
+    * `fxs_enabled` property
+    * `monitor_state` and `monitor_state_tuple` properties which are used along with `reapy.RecMonitor` bitflags
+    * `mute_state` property
+    * `solo_state` property, which is used along with `reapy.SoloState` enum
+    * `recarm_state` property
+    * `phase_state` property
+    * `recmode_state` property, which is used along with `reapy.RecMode` enum
 
 
 ### Deprecated
