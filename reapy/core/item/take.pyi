@@ -294,6 +294,25 @@ class Take(ReapyObject):
         """
         ...
 
+    def _resolve_midi_unit(self,
+                           pos_tuple: ty.Tuple[float, ...],
+                           unit: str = "seconds") -> ty.Tuple[float, ...]:
+        """Get positions as ppq from tuple of positions of any length.
+
+        Parameters
+        ----------
+        pos_tuple : Tuple[float]
+            tuple of position time in bets, ppq or seconds.
+        unit : str, optional
+            type of position inside tuple: seconds|beats|ppq
+
+        Returns
+        -------
+        Tuple[float]
+            the same tuple normalized to ppq
+        """
+        ...
+
     def select_all_midi_events(self, select: bool = True) -> None:
         """
         Select or unselect all MIDI events.
