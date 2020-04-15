@@ -9,6 +9,7 @@ class Socket:
 
     def __init__(self, s=None):
         self._socket = socket.socket() if s is None else s
+        self._socket.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 
     @staticmethod
     def _non_blocking(f):
