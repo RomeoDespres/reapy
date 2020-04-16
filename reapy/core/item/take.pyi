@@ -176,6 +176,14 @@ class Take(ReapyObject):
         """
         ...
 
+    @property
+    def guid(self) -> str:
+        """Used for communication within other scripts.
+
+        :type: str
+        """
+        ...
+
     def make_active_take(self) -> None:
         """
         Make take active.

@@ -183,6 +183,16 @@ class Take(ReapyObject):
         """
         return reapy.Item(RPR.GetMediaItemTake_Item(self.id))
 
+    @property
+    def guid(self):
+        """Used for communication within other scripts.
+
+        :type: str
+        """
+        _, _, _, guid, _ = RPR.GetSetMediaItemTakeInfo_String(
+            self.id, 'GUID', 'stringNeedBig', False)
+        return guid
+
     def make_active_take(self):
         """
         Make take active.
