@@ -326,7 +326,7 @@ class Project(ReapyObject):
 
     @ty.overload
     def get_ext_state(self, section: str, key: str,
-                      pickled: bool = False) -> str:
+                      pickled: bool = False) -> ty.Union[str, object]:
 
         ...
 
@@ -634,7 +634,7 @@ class Project(ReapyObject):
         """
         ...
 
-    def perform_action(self, action_id: int):
+    def perform_action(self, action_id: int) -> None:
         """
         Perform action with ID `action_id` in the main Actions section.
 
@@ -795,11 +795,11 @@ class Project(ReapyObject):
 
     @ty.overload
     def set_ext_state(self, section: str, key: str, value: ty.Any,
-                      pickle_: te.Literal[True]) -> int: ...
+                      pickled: te.Literal[True]) -> int: ...
 
     @ty.overload
     def set_ext_state(self, section: str, key: str, value: str,
-                      pickle_: bool = False) -> int: ...
+                      pickled: bool = False) -> int: ...
 
     def solo_all_tracks(self) -> None:
         """

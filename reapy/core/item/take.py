@@ -100,17 +100,8 @@ class Take(ReapyObject):
         --------
         Take.sort_events
         """
-        if unit == "beats":
-            item_start_seconds = self.item.position
-            take_start_beat = self.track.project.time_to_beats(item_start_seconds)
-            start = self.beat_to_ppq(take_start_beat + start)
-            end = self.beat_to_ppq(take_start_beat + end)
-        elif unit == "seconds":
-            item_start_seconds = self.item.position
-            start = self.time_to_ppq(item_start_seconds + start)
-            end = self.time_to_ppq(item_start_seconds + end)
-        elif unit != 'ppq':
-            raise ValueError('unit param should be one of seconds|beats|ppq')
+        start, end = self._resolve_midi_unit((start, end), unit)
+        sort = bool(not sort)
         args = (
             self.id, selected, muted, start, end, channel, pitch, velocity,
             sort
@@ -308,6 +299,36 @@ class Take(ReapyObject):
         """
         time = RPR.MIDI_GetProjTimeFromPPQPos(self.id, ppq)
         return time
+
+    @reapy.inside_reaper()
+    def _resolve_midi_unit(self, pos_tuple, unit="seconds"):
+        """Get positions as ppq from tuple of positions of any length.
+
+        Parameters
+        ----------
+        pos_tuple : Tuple[float]
+            tuple of position time in bets, ppq or seconds.
+        unit : str, optional
+            type of position inside tuple: seconds|beats|ppq
+
+        Returns
+        -------
+        Tuple[float]
+            the same tuple normalized to ppq
+        """
+        if unit == "ppq":
+            return pos_tuple
+        item_start_seconds = self.item.position
+
+        def resolver(pos):
+            if unit == "beats":
+                take_start_beat = self.track.project.time_to_beats(
+                    item_start_seconds)
+                return self.beat_to_ppq(take_start_beat + pos)
+            if unit == "seconds":
+                return self.time_to_ppq(item_start_seconds + pos)
+            raise ValueError('unit param should be one of seconds|beats|ppq')
+        return [resolver(pos) for pos in pos_tuple]
 
     def select_all_midi_events(self, select=True):
         """

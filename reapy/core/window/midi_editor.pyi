@@ -63,7 +63,7 @@ class MIDIEditor(Window):
 
         :type: int
         """
-        int
+        ...
 
     @property
     def is_scale_enabled(self) -> bool:
@@ -92,7 +92,7 @@ class MIDIEditor(Window):
         """
         ...
 
-    def perform_action(self, action_id: int):
+    def perform_action(self, action_id: int) -> None:
         """
         Perform action (from MIDI Editor section).
 

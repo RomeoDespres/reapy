@@ -439,7 +439,7 @@ def rgb_to_native(rgb: ty.Tuple[int, int, int]) -> int:
     ...
 
 
-def set_ext_state(section: int, key: str, value: str,
+def set_ext_state(section: str, key: str, value: str,
                   persist: bool = False) -> None:
     """
     Set the extended state value for a specific section and key.

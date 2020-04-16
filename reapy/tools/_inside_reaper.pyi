@@ -13,7 +13,7 @@ if not reapy.is_inside_reaper():
     except DisabledDistAPIError:
         import warnings
         warnings.warn(DisabledDistAPIWarning())
-        _CLIENT = None
+        _CLIENT = None  # type:ignore
 
 FuncType = ty.Callable[..., ty.Any]
 F = ty.TypeVar('F', bound=FuncType)
@@ -55,10 +55,10 @@ class inside_reaper(contextlib.ContextDecorator):
 
     """
 
-    def __call__(self,
+    def __call__(self,  # type:ignore
                  func: F,
                  encoded_func: ty.Optional[ty.Dict[str, object]] = None
-                 ) -> ty.Callable[..., contextlib.ContextManager[None]]:
+                 ) -> F:
         ...
 
     def __enter__(self) -> None:
