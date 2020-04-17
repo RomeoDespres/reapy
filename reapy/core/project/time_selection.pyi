@@ -34,7 +34,7 @@ class TimeSelection(ReapyObject):
     def _kwargs(self) -> ty.Dict[str, int]:
         ...
 
-    @reapy.inside_reaper()
+
     @property
     def end(self) -> float:
         """
@@ -83,7 +83,6 @@ class TimeSelection(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def length(self) -> float:
         """
@@ -119,7 +118,6 @@ class TimeSelection(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def start(self) -> float:
         """

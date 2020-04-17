@@ -42,7 +42,6 @@ class Item(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def delete(self) -> None:
         """Delete item."""
         ...
@@ -166,7 +165,6 @@ class Item(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def takes(self) -> ty.List[reapy.Take]:
         """
@@ -179,7 +177,6 @@ class Item(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     @property
     def track(self) -> reapy.Track:
         """

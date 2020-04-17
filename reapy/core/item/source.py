@@ -32,7 +32,6 @@ class Source:
         _, filename, _ = RPR.GetMediaSourceFileName(self.id, "", 10**5)
         return filename
 
-    @property
     def length(self, unit="seconds"):
         """
         Return source length in `unit`.
