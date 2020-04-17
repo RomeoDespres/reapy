@@ -26,6 +26,50 @@ class MIDIEvent(ReapyObject):
     def _args(self):
         return self.parent, self.index
 
+    @property
+    def _del_name(self):
+        return 'MIDI_DeleteEvt'
+
+    def delete(self):
+        """Delete event from the take."""
+        f = getattr(RPR, self._del_name)
+        f(self.parent.id, self.index)
+
+    @reapy.inside_reaper()
+    def set(self, message=None, position=None, selected=None,
+            muted=None, unit="seconds", sort=True):
+        """
+        Set properties of event if needed.
+
+        Parameters
+        ----------
+        message : Iterable[int], optional
+            Can be any message buffer, for example: (0xb0, 64, 127)
+            which is CC64 val127 on channel 1
+        position : float, optional
+            position at take
+        selected : bool, optional
+            Whether to select new note (default=False).
+        muted : bool, optional
+            Whether to mute new note (default=False).
+        unit : str ("seconds as default")
+            "beats"|"ppq"|"seconds" (default are seconds)
+        sort : bool (True as default)
+            Whether to resort notes after creating new note
+            (default=True). If False, then the new note will be
+            ``take.notes[-1]``. Otherwise it will be at its place in
+            the time-sorted list ``take.notes``. Set to False for
+            improved efficiency when adding several notes, then call
+            ``Take.sort_events`` at the end.
+        """
+        take = self.parent
+        if position:
+            position = take._resolve_midi_unit((position,), unit)[0]
+        if message:
+            message = take._midi_to_bytestr(message)
+        RPR.MIDI_SetEvt(take.id, self.index, selected, muted, position,
+                        message, len(message), not sort)
+
 
 class MIDIEventList(ReapyObjectList):
 
@@ -55,11 +99,11 @@ class MIDIEventList(ReapyObjectList):
 
     @property
     def _elements_class(self):
-        raise NotImplementedError
+        return MIDIEvent
 
     @property
     def _n_elements(self):
-        raise NotImplementedError
+        return 'n_midi_events'
 
 
 class CC(MIDIEvent):
@@ -99,6 +143,10 @@ class CC(MIDIEvent):
         return RPR.MIDI_GetCC(
             self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         )[6]
+
+    @property
+    def _del_name(self):
+        return 'MIDI_DeleteCC'
 
     @reapy.inside_reaper()
     @property
@@ -218,6 +266,10 @@ class Note(MIDIEvent):
         return RPR.MIDI_GetNote(
             self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         )[7]
+
+    @property
+    def _del_name(self):
+        return 'MIDI_DeleteNote'
 
     @property
     def end(self):

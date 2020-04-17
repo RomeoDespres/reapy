@@ -12,6 +12,22 @@ All notable changes to this project will be documented in this file.
     * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
 - First argument `id` of `Project` can now be a project name (with or without extension) or an integer (the GUI index of the project).
 - REAPER control over the network. `reapy` can be installed on a machine even if it does not have REAPER installed, and then control other instances by using `reapy.connect`.
+- Inteernal mechanic is enchanced by replacing some core `reaper_python.py` API functions. Currently replaced:
+    * `MIDI_GetHash`
+    * `MIDI_GetTrackHash`
+    * `MIDI_InsertEvt`
+    * `MIDI_InsertTextSysexEvt`
+    * `MIDI_SetEvt`
+- `MIDIEvent` and `MIDIEventList` classes now not only abstract, but can be used directly. `MIDIEvent` extended with:
+    * `delete()` for deleting from the take. Works in every Event class.
+    * `set(self, message=None, position=None, selected=None,muted=None, unit="seconds", sort=True)`, currently works only in generic event.
+- `reapy.Take` extended with:
+    * `add_event(self, message: ty.Iterable[int], position, unit: str = "seconds") -> None`.
+    * `add_sysex(self, message: ty.Iterable[int], position: float, unit: str = "seconds", evt_type: int = -1) -> None`.
+    * `midi_events` property (`MIDIEventList`).
+    * `midi_hash(self, notes_only: bool = False) -> str`.
+    * `n_midi_events` property.
+- `repy.Track` extended with `midi_hash(self, notes_only: bool = False) -> str:`.
 
 
 ### Deprecated

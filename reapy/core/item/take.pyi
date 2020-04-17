@@ -30,6 +30,30 @@ class Take(ReapyObject):
         """
         ...
 
+    def add_event(self,
+                  message: ty.Iterable[int],
+                  position, unit: str = "seconds") -> None:
+        """
+        Add generic event to the take at position.
+
+        Note
+        ----
+        ⋅ No sort events during this call
+        ⋅ For a long time inserting a notes within this function
+        caused problems. Better to use the proper function for that.
+
+        Parameters
+        ----------
+        message : Iterable[int]
+            Can be any message buffer, for example: (0xb0, 64, 127)
+            which is CC64 val127 on channel 1
+        position : float
+            position at take
+        unit : str, optional
+            "beats"|"ppq"|"seconds" (default are seconds)
+        """
+        ...
+
     def add_fx(self, name: str, even_if_exists: bool = True) -> reapy.FX:
         """
         Add FX to track and return it.
@@ -55,7 +79,6 @@ class Take(ReapyObject):
         """
         ...
 
-    @reapy.inside_reaper()
     def add_note(self,
                  start: float,
                  end: float,
@@ -99,6 +122,36 @@ class Take(ReapyObject):
         See also
         --------
         Take.sort_events
+        """
+        ...
+
+    def add_sysex(self,
+                  message: ty.Iterable[int],
+                  position: float,
+                  unit: str = "seconds",
+                  evt_type: int = -1) -> None:
+        """
+        Add SysEx event to take.
+
+        Note
+        ----
+        ⋅ No sort events during this call
+        ⋅ No need to add 0xf0 ... 0xf7 bytes (they will be doubled)
+
+        Parameters
+        ----------
+        message : Iterable[int]
+            Can be any message buffer, for example: (0xb0, 64, 127)
+            which is CC64 val127 on channel 1
+        position : float
+            position at take
+        unit : str, optional
+            "beats"|"ppq"|"seconds" (default are seconds)
+        evt_type: int (default -1)
+            Allowable types are
+            ⋅ -1:sysex (msg should not include bounding F0..F7),
+            ⋅ 1-14:MIDI text event types,
+            ⋅ 15=REAPER notation event.
         """
         ...
 
@@ -148,7 +201,6 @@ class Take(ReapyObject):
     def get_info_value(self, param_name: str) -> float:
         ...
 
-    @reapy.inside_reaper()
     @property
     def is_active(self) -> bool:
         """
@@ -191,6 +243,35 @@ class Take(ReapyObject):
         ...
 
     @property
+    def midi_events(self) -> reapy.core.item.midi_event.MIDIEventList[
+            reapy.core.item.midi_event.MIDIEvent]:
+        """
+        Get all midi events as EventList.
+
+        Returns
+        -------
+        MIDIEventList
+        """
+        ...
+
+    def midi_hash(self, notes_only: bool = False) -> str:
+        """
+        Get hash of MIDI-data to compare with later.
+
+        Parameters
+        ----------
+        notes_only : bool, (False by default)
+            count only notes if True
+
+        Returns
+        -------
+        str
+        """
+        ...
+
+    def _midi_to_bytestr(self, message: ty.Iterable[int]) -> str: ...
+
+    @property
     def n_cc(self) -> int:
         """
         Number of MIDI CC events in take (always 0 for audio takes).
@@ -212,6 +293,15 @@ class Take(ReapyObject):
     def n_fxs(self) -> int:
         """
         Number of FXs on take.
+
+        :type: int
+        """
+        ...
+
+    @property
+    def n_midi_events(self) -> int:
+        """
+        Number of MIDI events in take.
 
         :type: int
         """

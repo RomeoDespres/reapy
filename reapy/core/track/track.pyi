@@ -366,6 +366,20 @@ class Track(ReapyObject):
         """
         ...
 
+    def midi_hash(self, notes_only: bool = False) -> str:
+        """Get hash of MIDI-data to compare with later.
+
+        Parameters
+        ----------
+        notes_only : bool, (False by default)
+            count only notes if True
+
+        Returns
+        -------
+        str
+        """
+        ...
+
     @property
     def midi_note_names(self) -> ty.List[str]:
         ...
