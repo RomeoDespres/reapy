@@ -39,8 +39,9 @@ class Take(ReapyObject):
         Note
         ----
         ⋅ No sort events during this call
-        ⋅ For a long time inserting a notes within this function
-        caused problems. Better to use the proper function for that.
+        ⋅ Inserting a notes within this function causes problems
+            (wrong timing of notes on and offs), this is known REAPER bug.
+            Use `add_note` method instead.
 
         Parameters
         ----------
