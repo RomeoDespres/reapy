@@ -609,6 +609,8 @@ Project Management
 	"`SnapToGrid <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SnapToGrid>`_",""
 	"`SetProjExtState <https://www.reaper.fm/sdk/reascript/reascripthelp.html#SetProjExtState>`_","`Project.set_ext_state <reapy.core.html#reapy.core.Project.set_ext_state>`_"
 	"`EnumProjects <https://www.reaper.fm/sdk/reascript/reascripthelp.html#EnumProjects>`_","`Project <reapy.core.html#reapy.core.Project>`_"
+	"`GetSetProjectInfo_String <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetSetProjectInfo_String>`_","`Project.get_info_string <reapy.core.html#reapy.core.Project.get_info_string>`_; `Project.set_info_string <reapy.core.html#reapy.core.Project.set_info_string>`_"
+	"`GetSetProjectInfo <https://www.reaper.fm/sdk/reascript/reascripthelp.html#GetSetProjectInfo>`_","`Project.get_info_value <reapy.core.html#reapy.core.Project.get_info_value>`_; `Project.set_info_value <reapy.core.html#reapy.core.Project.set_info_value>`_"
 
 
 Track Management
