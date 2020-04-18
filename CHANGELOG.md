@@ -7,6 +7,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- New API in`Send`:
+    * read-only property `Send.dest_track -> Track`
+    * properties `Send.midi_source`, `Send.midi_dest`
+- `Track.received` read-only property
 - Support for `Project` external state:
     * `Project.set_ext_state(section: str, key: str, value: Union[Any, str], pickled: bool) -> int size`
     * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
