@@ -67,8 +67,10 @@ class MIDIEvent(ReapyObject):
             position = take._resolve_midi_unit((position,), unit)[0]
         if message:
             message = take._midi_to_bytestr(message)
-        RPR.MIDI_SetEvt(take.id, self.index, selected, muted, position,
-                        message, len(message), not sort)
+        RPR.MIDI_SetEvt(
+            take.id, self.index, selected, muted, position, message,
+            len(message), not sort
+        )
 
 
 class MIDIEventList(ReapyObjectList):

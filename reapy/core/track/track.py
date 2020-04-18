@@ -427,9 +427,7 @@ class Track(ReapyObject):
         -------
         str
         """
-        _, _, _, hash_, _ = RPR.MIDI_GetTrackHash(
-            self.id, notes_only, 'hash', 1024*1024)
-        return hash_
+        return RPR.MIDI_GetTrackHash(self.id, notes_only, 'hash', 1024**2)[3]
 
     @property
     def midi_note_names(self):

@@ -53,8 +53,9 @@ class Take(ReapyObject):
         """
         ppqpos = self._resolve_midi_unit((position,), unit)[0]
         bytestr = self._midi_to_bytestr(message)
-        RPR.MIDI_InsertEvt(self.id, False, False,
-                           ppqpos, bytestr, len(bytestr))
+        RPR.MIDI_InsertEvt(
+            self.id, False, False, ppqpos, bytestr, len(bytestr)
+        )
 
     def add_fx(self, name, even_if_exists=True):
         """
@@ -139,8 +140,8 @@ class Take(ReapyObject):
         """
         Add SysEx event to take.
 
-        Note
-        ----
+        Notes
+        -----
         ⋅ No sort events during this call
         ⋅ No need to add 0xf0 ... 0xf7 bytes (they will be doubled)
 
@@ -161,8 +162,9 @@ class Take(ReapyObject):
         """
         bytestr = self._midi_to_bytestr(message)
         ppqpos = self._resolve_midi_unit((position,), unit)[0]
-        RPR.MIDI_InsertTextSysexEvt(self.id, False, False, ppqpos,
-                                    evt_type, bytestr, len(bytestr))
+        RPR.MIDI_InsertTextSysexEvt(
+            self.id, False, False, ppqpos, evt_type, bytestr, len(bytestr)
+        )
 
     def beat_to_ppq(self, beat):
         """
@@ -247,7 +249,8 @@ class Take(ReapyObject):
         :type: str
         """
         _, _, _, guid, _ = RPR.GetSetMediaItemTakeInfo_String(
-            self.id, 'GUID', 'stringNeedBig', False)
+            self.id, 'GUID', 'stringNeedBig', False
+        )
         return guid
 
     def make_active_take(self):
@@ -280,9 +283,7 @@ class Take(ReapyObject):
         -------
         str
         """
-        _, _, _, hash_, _ = RPR.MIDI_GetHash(
-            self.id, notes_only, 'hash', 1024*1024)
-        return hash_
+        return RPR.MIDI_GetHash(self.id, notes_only, 'hash', 1024**2)[3]
 
     def _midi_to_bytestr(self, message):
         return bytes(message).decode('latin-1')
@@ -430,7 +431,8 @@ class Take(ReapyObject):
         def resolver(pos):
             if unit == "beats":
                 take_start_beat = self.track.project.time_to_beats(
-                    item_start_seconds)
+                    item_start_seconds
+                )
                 return self.beat_to_ppq(take_start_beat + pos)
             if unit == "seconds":
                 return self.time_to_ppq(item_start_seconds + pos)
