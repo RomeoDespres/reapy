@@ -24,9 +24,9 @@ copyright = '2019, Roméo Després'
 author = 'Roméo Després'
 
 # The short X.Y version
-version = ''
+version = '0.6.0'
 # The full version, including alpha/beta/rc tags
-release = '0.4.0'
+release = '0.6.0'
 
 
 # -- General configuration ---------------------------------------------------
