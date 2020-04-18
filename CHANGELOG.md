@@ -37,8 +37,10 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
-- Typo in `reapy.has_ext_state` (issue [#46](https://github.com/RomeoDespres/reapy/issues/46))
-- Deferred script error in REAPER when subclassing reapy classes (issue [#66](https://github.com/RomeoDespres/reapy/issues/66))
+- Typo in `reapy.has_ext_state` (issue [#46](https://github.com/RomeoDespres/reapy/issues/46)).
+- Deferred script error in REAPER when subclassing reapy classes (issue [#66](https://github.com/RomeoDespres/reapy/issues/66)).
+- `Project.selected_items` returning invalid items (issue [#72](https://github.com/RomeoDespres/reapy/issues/72)).
+- `sort` boolean argument in `Take.add_note` behaving oppositely to expected.
 
 
 ## [0.5.0](https://github.com/RomeoDespres/reapy/releases/tag/0.5.0) - 2019-11-23
