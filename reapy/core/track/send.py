@@ -311,8 +311,9 @@ class Send(ReapyObject):
 
         :type: Track
         """
-        id_ = self.get_info('P_SRCTRACK')
-        return reapy.Track(id_)
+        pointer = self.get_info('P_SRCTRACK')
+        track_id = reapy.Track._get_id_from_pointer(pointer)
+        return reapy.Track(track_id)
 
     def unmute(self):
         """

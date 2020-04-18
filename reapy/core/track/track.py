@@ -45,8 +45,6 @@ class Track(ReapyObject):
 
     def __init__(self, id, project=None):
         self._project = None
-        if isinstance(id, (int, float)) and id > 10000:  # id is pointer
-            id = self._get_id_from_pointer(id)
         if isinstance(id, int):  # id is a track index
             id = RPR.GetTrack(project.id, id)
             if id.endswith("0x0000000000000000"):
