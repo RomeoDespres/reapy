@@ -15,6 +15,11 @@ All notable changes to this project will be documented in this file.
     * `Project.set_ext_state(section: str, key: str, value: Union[Any, str], pickled: bool) -> int size`
     * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
 - First argument `id` of `Project` can now be a project name (with or without extension) or an integer (the GUI index of the project).
+- `Project` extended with methods:
+    * `get_info_string(param_name: str) -> str`
+    * `get_info_value(param_name: str) -> float`
+    * `set_info_string(param_name: str, param_string: str)`
+    * `set_info_value(param_name: str, param_value: float)`
 - REAPER control over the network. `reapy` can be installed on a machine even if it does not have REAPER installed, and then control other instances by using `reapy.connect`.
 - Several ReaScript API bugs of `reaper_python.py` are fixed in `reapy.reascript_api`. Currently replaced:
     * `MIDI_GetHash`
