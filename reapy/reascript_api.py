@@ -15,6 +15,11 @@ if reapy.is_inside_reaper():
     __all__ = [s[4:] for s in _RPR.__dict__ if s.startswith("RPR_")]
     for s in __all__:
         exec("{} = _RPR.__dict__['{}']".format(s, "RPR_" + s))
+
+    from reapy import additional_api as _A_API
+    for s in _A_API.__dict__:
+            exec("from reapy.additional_api import {}".format(s))
+
     # Import SWS functions.
     try:
         import sws_python as _SWS

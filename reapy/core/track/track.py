@@ -419,6 +419,20 @@ class Track(ReapyObject):
         """
         RPR.SetOnlyTrackSelected(self.id)
 
+    def midi_hash(self, notes_only=False):
+        """Get hash of MIDI-data to compare with later.
+
+        Parameters
+        ----------
+        notes_only : bool, (False by default)
+            count only notes if True
+
+        Returns
+        -------
+        str
+        """
+        return RPR.MIDI_GetTrackHash(self.id, notes_only, 'hash', 1024**2)[3]
+
     @property
     def midi_note_names(self):
         with reapy.inside_reaper():

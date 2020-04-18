@@ -30,6 +30,38 @@ class Take(ReapyObject):
         audio_accessor = reapy.AudioAccessor(audio_accessor_id)
         return audio_accessor
 
+    @reapy.inside_reaper()
+    def add_event(self, message, position, unit="seconds"):
+        """
+        Add generic event to the take at position.
+
+        Note
+        ----
+        ⋅ No sort events during this call
+        ⋅ Inserting notes within this function causes problems
+            (wrong note on and off timing), this is known REAPER bug.
+            Use `Take.add_note` instead.
+
+        Parameters
+        ----------
+        message : Iterable[int]
+            Can be any message buffer, for example: (0xb0, 64, 127)
+            which is CC64 val127 on channel 1
+        position : float
+            position at take
+        unit : str, optional
+            "beats"|"ppq"|"seconds" (default are seconds)
+
+        See also
+        --------
+        Take.add_note
+        """
+        ppqpos = self._resolve_midi_unit((position,), unit)[0]
+        bytestr = self._midi_to_bytestr(message)
+        RPR.MIDI_InsertEvt(
+            self.id, False, False, ppqpos, bytestr, len(bytestr)
+        )
+
     def add_fx(self, name, even_if_exists=True):
         """
         Add FX to track and return it.
@@ -108,6 +140,37 @@ class Take(ReapyObject):
         )
         RPR.MIDI_InsertNote(*args)
 
+    @reapy.inside_reaper()
+    def add_sysex(self, message, position, unit="seconds", evt_type=-1):
+        """
+        Add SysEx event to take.
+
+        Notes
+        -----
+        ⋅ No sort events during this call
+        ⋅ No need to add 0xf0 ... 0xf7 bytes (they will be doubled)
+
+        Parameters
+        ----------
+        message : Iterable[int]
+            Can be any message buffer, for example: (0xb0, 64, 127)
+            which is CC64 val127 on channel 1
+        position : float
+            position at take
+        unit : str, optional
+            "beats"|"ppq"|"seconds" (default are seconds)
+        evt_type: int (default -1)
+            Allowable types are
+            ⋅ -1:sysex (msg should not include bounding F0..F7),
+            ⋅ 1-14:MIDI text event types,
+            ⋅ 15=REAPER notation event.
+        """
+        bytestr = self._midi_to_bytestr(message)
+        ppqpos = self._resolve_midi_unit((position,), unit)[0]
+        RPR.MIDI_InsertTextSysexEvt(
+            self.id, False, False, ppqpos, evt_type, bytestr, len(bytestr)
+        )
+
     def beat_to_ppq(self, beat):
         """
         Convert beat number (from project start) to MIDI ticks (of the take).
@@ -183,11 +246,52 @@ class Take(ReapyObject):
         """
         return reapy.Item(RPR.GetMediaItemTake_Item(self.id))
 
+    @property
+    def guid(self):
+        """
+        Used for communication within other scripts.
+
+        :type: str
+        """
+        _, _, _, guid, _ = RPR.GetSetMediaItemTakeInfo_String(
+            self.id, 'GUID', 'stringNeedBig', False
+        )
+        return guid
+
     def make_active_take(self):
         """
         Make take active.
         """
         RPR.SetActiveTake(self.id)
+
+    @property
+    def midi_events(self):
+        """
+        Get all midi events as EventList.
+
+        Returns
+        -------
+        MIDIEventList
+        """
+        return reapy.core.item.midi_event.MIDIEventList(self)
+
+    def midi_hash(self, notes_only=False):
+        """
+        Get hash of MIDI-data to compare with later.
+
+        Parameters
+        ----------
+        notes_only : bool, (False by default)
+            count only notes if True
+
+        Returns
+        -------
+        str
+        """
+        return RPR.MIDI_GetHash(self.id, notes_only, 'hash', 1024**2)[3]
+
+    def _midi_to_bytestr(self, message):
+        return bytes(message).decode('latin-1')
 
     @property
     def n_cc(self):
@@ -215,6 +319,15 @@ class Take(ReapyObject):
         :type: int
         """
         return RPR.TakeFX_GetCount(self.id)
+
+    @property
+    def n_midi_events(self):
+        """
+        Number of MIDI events in take.
+
+        :type: int
+        """
+        return RPR.MIDI_CountEvts(self.id, 1, 1, 1)[0]
 
     @property
     def n_notes(self):
@@ -323,7 +436,8 @@ class Take(ReapyObject):
         def resolver(pos):
             if unit == "beats":
                 take_start_beat = self.track.project.time_to_beats(
-                    item_start_seconds)
+                    item_start_seconds
+                )
                 return self.beat_to_ppq(take_start_beat + pos)
             if unit == "seconds":
                 return self.time_to_ppq(item_start_seconds + pos)
