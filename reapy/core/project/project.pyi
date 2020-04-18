@@ -12,7 +12,9 @@ class Project(ReapyObject):
     """REAPER project."""
     id: str
 
-    def __init__(self, id: ty.Optional[ty.Union[int, str]] = None, index: int = -1) -> None:
+    def __init__(self,
+                 id: ty.Optional[ty.Union[int, str]] = None,
+                 index: int = -1) -> None:
         """
         Build project either by ID or index.
 
@@ -296,6 +298,12 @@ class Project(ReapyObject):
 
         :type: FX or NoneType
         """
+        ...
+
+    def get_info_string(self, param_name: str) -> str:
+        ...
+
+    def get_info_value(self, param_name: str) -> float:
         ...
 
     @ty.overload
@@ -765,6 +773,67 @@ class Project(ReapyObject):
 
     @selected_tracks.setter
     def selected_tracks(self, tracks: ty.List[reapy.Track]) -> None:
+        ...
+
+    def set_info_string(self, param_name: str, param_string: str) -> None:
+        """
+        Parameters
+        ----------
+        param_name : str
+            MARKER_GUID:X : get the GUID (unique ID) of the marker or region
+                with index X, where X is the index passed to
+                EnumProjectMarkers, not necessarily the displayed number
+            RECORD_PATH :
+                recording directory -- may be blank or a relative path,
+                to get the effective path see GetProjectPathEx()
+            RENDER_FILE : render directory
+            RENDER_PATTERN : render file name (may contain wildcards)
+            RENDER_FORMAT : base64-encoded sink configuration
+                (see project files, etc). Callers can also pass a simple
+                4-byte string (non-base64-encoded), e.g. "evaw" or "l3pm",
+                to use default settings for that sink type.
+            RENDER_FORMAT2 : base64-encoded secondary sink configuration.
+                Callers can also pass a simple 4-byte string (non-base64-encoded),
+                e.g. "evaw" or "l3pm", to use default settings for
+                that sink type, or "" to disable secondary render.
+                Formats available on this machine:
+                "wave" "aiff" "iso " "ddp " "flac" "mp3l" "oggv" "OggS"
+                "FFMP" "GIF " "LCF " "wvpk"
+        param_string : str
+        """
+        ...
+
+    def set_info_value(self, param_name: str, param_value: float) -> None:
+        """
+        Parameters
+        ----------
+        param_name : str
+            RENDER_SETTINGS : &(1|2)=0:master mix, &1=stems+master mix,
+                &2=stems only, &4=multichannel tracks to multichannel files,
+                &8=use render matrix, &16=tracks with only mono media
+                to mono files, &32=selected media items,
+                &64=selected media items via master
+            RENDER_BOUNDSFLAG : 0=custom time bounds, 1=entire project,
+                2=time selection, 3=all project regions,
+                4=selected media items, 5=selected project regions
+            RENDER_CHANNELS : number of channels in rendered file
+            RENDER_SRATE : sample rate of rendered file
+                (or 0 for project sample rate)
+            RENDER_STARTPOS : render start time when RENDER_BOUNDSFLAG=0
+            RENDER_ENDPOS : render end time when RENDER_BOUNDSFLAG=0
+            RENDER_TAILFLAG : apply render tail setting when rendering:
+                &1=custom time bounds, &2=entire project, &4=time selection,
+                &8=all project regions, &16=selected media items,
+                &32=selected project regions
+            RENDER_TAILMS : tail length in ms to render
+                (only used if RENDER_BOUNDSFLAG and RENDER_TAILFLAG are set)
+            RENDER_ADDTOPROJ : 1=add rendered files to project
+            RENDER_DITHER : &1=dither, &2=noise shaping, &4=dither stems,
+                &8=noise shaping on stems
+            PROJECT_SRATE : samplerate (ignored unless PROJECT_SRATE_USE set)
+            PROJECT_SRATE_USE : set to 1 if project samplerate is used
+        param_value : float
+        """
         ...
 
     @ty.overload
