@@ -38,9 +38,9 @@ class Take(ReapyObject):
         Note
         ----
         ⋅ No sort events during this call
-        ⋅ Inserting a notes within this function causes problems
-            (wrong timing of notes on and offs), this is known REAPER bug.
-            Use `add_note` method instead.
+        ⋅ Inserting notes within this function causes problems
+            (wrong note on and off timing), this is known REAPER bug.
+            Use `Take.add_note` instead.
 
         Parameters
         ----------
@@ -51,6 +51,10 @@ class Take(ReapyObject):
             position at take
         unit : str, optional
             "beats"|"ppq"|"seconds" (default are seconds)
+
+        See also
+        --------
+        Take.add_note
         """
         ppqpos = self._resolve_midi_unit((position,), unit)[0]
         bytestr = self._midi_to_bytestr(message)
