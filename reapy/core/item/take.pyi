@@ -88,7 +88,7 @@ class Take(ReapyObject):
                  selected: bool = False,
                  muted: bool = False,
                  unit: str = "seconds",
-                 sor: bool = True) -> None:
+                 sort: bool = True) -> None:
         """
         Add MIDI note to take.
 
