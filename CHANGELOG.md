@@ -7,8 +7,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- New api in`reapy.Send`:
-    * read-obly property `Send.dest_track -> Track`
+- New API in`Send`:
+    * read-only property `Send.dest_track -> Track`
     * properties `Send.midi_source`, `Send.midi_dest`
 - `Track.received` read-only property
 - Support for `Project` external state:
