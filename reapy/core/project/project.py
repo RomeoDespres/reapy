@@ -392,7 +392,8 @@ class Project(ReapyObject):
                 "FFMP" "GIF " "LCF " "wvpk"
         """
         _, _, _, result, _ = RPR.GetSetProjectInfo_String(
-            self.id, param_name, 'valuestrNeedBig', False)
+            self.id, param_name, 'valuestrNeedBig', False
+        )
         return result
 
     def get_info_value(self, param_name: str) -> float:
@@ -976,7 +977,8 @@ class Project(ReapyObject):
         param_string : str
         """
         RPR.GetSetProjectInfo_String(
-            self.id, param_name, param_string, True)
+            self.id, param_name, param_string, True
+        )
 
     def set_info_value(self, param_name, param_value):
         """
