@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 
-## Unreleased
+## [0.6.0](https://github.com/RomeoDespres/reapy/releases/tag/0.6.0) - 2020-04-18
 
 ### Added
 
@@ -15,6 +15,11 @@ All notable changes to this project will be documented in this file.
     * `Project.set_ext_state(section: str, key: str, value: Union[Any, str], pickled: bool) -> int size`
     * `Project.get_ext_state(section: str, key: str, pickled: bool) -> Union[Any, str`
 - First argument `id` of `Project` can now be a project name (with or without extension) or an integer (the GUI index of the project).
+- `Project` extended with methods:
+    * `get_info_string(param_name: str) -> str`
+    * `get_info_value(param_name: str) -> float`
+    * `set_info_string(param_name: str, param_string: str)`
+    * `set_info_value(param_name: str, param_value: float)`
 - REAPER control over the network. `reapy` can be installed on a machine even if it does not have REAPER installed, and then control other instances by using `reapy.connect`.
 - Several ReaScript API bugs of `reaper_python.py` are fixed in `reapy.reascript_api`. Currently replaced:
     * `MIDI_GetHash`
@@ -345,6 +350,8 @@ Project.play_state was buggy and has been removed.
 [`Project.end_undo_block`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.end_undo_block
 [`Project.focused_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.focused_fx
 [`Project.get_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_ext_state
+[`Project.get_info_string`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_info_string
+[`Project.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_info_value
 [`Project.get_play_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_play_rate
 [`Project.get_selected_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_item
 [`Project.get_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_track
@@ -384,6 +391,8 @@ Project.play_state was buggy and has been removed.
 [`Project.selected_items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_items
 [`Project.selected_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.selected_tracks
 [`Project.set_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.set_ext_state
+[`Project.set_info_string`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.set_info_string
+[`Project.set_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.set_info_value
 [`Project.solo_all_tracks`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.solo_all_tracks
 [`Project.stop`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.stop
 [`Project.time_selection`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.time_selection
