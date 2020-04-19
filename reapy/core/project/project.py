@@ -426,7 +426,7 @@ class Project(ReapyObject):
             PROJECT_SRATE : samplerate (ignored unless PROJECT_SRATE_USE set)
             PROJECT_SRATE_USE : set to 1 if project samplerate is used
         """
-        return RPR.GetSetProjectInfo(self.id, param_name, None, False)
+        return RPR.GetSetProjectInfo(self.id, param_name, 0, False)
 
     def get_play_rate(self, position):
         """
