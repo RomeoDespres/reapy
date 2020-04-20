@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Added
+
+- New API: now every method of `core` classes cad be used within `object.map(method_name, iterables, default)`, which allows to significanlty increase performance on similar calls from outside. See method doc for details.
 
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
 
