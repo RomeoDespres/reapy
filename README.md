@@ -99,6 +99,24 @@ When used from inside REAPER, `reapy` has almost identical performance than nati
     
 ```
 
+While `reapt.inside_reaper` saves time on defered calls, performance outside REAPER can be increased within method `map` which exsists on every notable `reapy` object. Within `object.map("method_name", iterables={"arg_name":[<list of values>]}, defaults{"def_arg_name":value})` performance can be insreased with saving on socket connections between outside and inside scripts.
+
+```python
+import reapy
+take = reapy.Project().selected_items[0].active_take
+
+@reapy.inside_reaper()
+def test():
+    for i in [6.0] * 1000000:
+        take.time_to_ppq(6.0)
+
+def test_map():
+    take.map('time_to_ppq', iterables={'time': [6.0] * 1000000})
+
+test()      # runs 140s
+test_map()  # runs 12s as from outside as from inside
+```
+
 ### Documentation
 
 Check the [documentation](https://python-reapy.readthedocs.io/ "reapy online documentation") and especially the [API guide](https://python-reapy.readthedocs.io/en/latest/api_guide.html) and [Translation Table](https://python-reapy.readthedocs.io/en/latest/api_table.html) for more information.
