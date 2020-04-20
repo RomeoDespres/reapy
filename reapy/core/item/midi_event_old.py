@@ -1,25 +1,6 @@
 import reapy
 import reapy.reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
-from enum import IntFlag, IntEnum
-
-
-class CCShapeFlag(IntFlag):
-    no_shape = 0
-    linear = 16
-    slow_start_end = 32
-    fast_start = 16 | 32
-    fast_end = 64
-    beizer = 16 | 64
-
-
-class CCShape(IntEnum):
-    square = 0
-    linear = 1
-    soft_start_end = 2
-    fast_start = 3
-    fast_end = 4
-    beizer = 5
 
 
 class MIDIEvent(ReapyObject):
@@ -55,8 +36,8 @@ class MIDIEvent(ReapyObject):
         f(self.parent.id, self.index)
 
     @reapy.inside_reaper()
-    def set(self, position=None, selected=None,
-            muted=None, unit="seconds", sort=True, raw_message=None):
+    def set(self, message=None, position=None, selected=None,
+            muted=None, unit="seconds", sort=True):
         """
         Set properties of event if needed.
 
@@ -84,8 +65,8 @@ class MIDIEvent(ReapyObject):
         take = self.parent
         if position:
             position = take._resolve_midi_unit((position,), unit)[0]
-        if raw_message:
-            message = take._midi_to_bytestr(raw_message)
+        if message:
+            message = take._midi_to_bytestr(message)
         RPR.MIDI_SetEvt(
             take.id, self.index, selected, muted, position, message,
             len(message), not sort
@@ -259,24 +240,6 @@ class CC(MIDIEvent):
         return bool(RPR.MIDI_GetCC(
             self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         )[3])
-
-    @property
-    def shape(self):
-        """
-        Shape type and beizer tension.
-
-        :type: Tuple[CCShape, float]
-            shape can be passed as enum instance or as int
-        """
-        _, _, _, shape_i, tension = RPR.MIDI_GetCCShape(
-            self.parent.id, self.index, 1, 0.1)
-        return CCShape(shape_i), tension
-
-    @shape.setter
-    def shape(self, shape):
-        shape_i = CCShape(shape[0]).value
-        tension = shape[1]
-        RPR.MIDI_SetCCShape(self.parent.id, self.index, shape_i, tension, None)
 
 
 class CCList(MIDIEventList):
