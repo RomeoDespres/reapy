@@ -268,7 +268,7 @@ class Take(ReapyObject):
     @reapy.inside_reaper()
     def get_midi(self, size=2*1024*1024):
         """
-        Get all midi dataof take in one call.
+        Get all midi data of take in one call.
 
         Parameters
         ----------
@@ -524,9 +524,6 @@ class Take(ReapyObject):
 
         def resolver(pos):
             if unit == "beats":
-                # take_start_beat = self.track.project.time_to_beats(
-                #     item_start_seconds
-                # )
                 return self.beat_to_ppq(pos)
             if unit == "seconds":
                 return self.time_to_ppq(pos)
@@ -561,7 +558,7 @@ class Take(ReapyObject):
         midi : List[MIDIEventDict]
             can be taken with `Take.get_midi()` or build from scratch.
         start : float, optional
-            if offset needed (for example, start from a particulat time)
+            if offset needed (for example, start from a particular time)
         unit : str, optional
             time unit: "seconds"|"beats"|"ppq"
         sort : bool, optional

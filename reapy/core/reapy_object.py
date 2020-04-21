@@ -70,7 +70,7 @@ class ReapyObject(metaclass=ReapyMetaclass):
 
         Note
         ----
-        Opposite to `inside_reaper`, which saves on defered executions,
+        Opposite to `inside_reaper`, which saves on deferred executions,
         map saves on socket connections, so, basically, if you have complex
         code needs to be performed at one deferred call — use `inside_reaper`,
         if large amount of data has to be proceed within particular method —

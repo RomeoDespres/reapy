@@ -6,26 +6,26 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- New API: now every method of `core` classes cad be used within `object.map(method_name, iterables, default)`, which allows to significanlty increase performance on similar calls from outside. See method doc for details.
-- API extended with folowing classes:
+- New API: now every method of `core` classes can be used within `object.map(method_name, iterables, default)`, which allows to significantly increase performance on similar calls from outside. See method doc for details.
+- API extended with following classes:
     * `CCShape` and `CCShapeFlag` enums
     * `TextSysex`, `TextSysexList` classes
     * `EventInfo`, `CCInfo`, `NoteInfo`, `TextSysexInfo` Typed Dicts
-    * `MidiEventDict` representing unpacked event from event buffer exported by `Take.get_midi` method. Also can be vuild from scratch.
+    * `MidiEventDict` representing unpacked event from event buffer exported by `Take.get_midi` method. Also can be build from scratch.
 - `Take` extended with:
-    * `get_midi(size) -> List[MIDIEventDict]`, returning all midi data in one call
+    * `get_midi(size: Optional[int]) -> List[MIDIEventDict]`, returning all midi data in one call
     * `set_midi(midi: List[MIDIEventDict], start: Optional[float], unit:str, sort: bool) -> None`, replacing take midi in one call.
     * `text_sysex_events -> TextSysexList` property.
-- `MIDIEvent` and childs extended with:
-    * `as_dict -> List[MIDIEventDict]`
+- `MIDIEvent` and subclasses extended with:
+    * `as_dict -> List[MIDIEventDict]` property
 - `CC` class extended with `shape -> CCShape` property
 
 ### Improved
 
 - `MIDIEvent` and subclasses:
     * all properties now read-write
-    * `MIDIEent.set` method now works in every subclass
-    * signture of `MIDIEvent.set` slightly changed for not breaking Libskov-substitution principle. Take our apologize for that.
+    * `MIDIEvent.set` method now works in every subclass
+    * signature of `MIDIEvent.set` slightly changed for not breaking Libskov-substitution principle. Take our apologize for that.
     * `MIDIEvent.set` now has True-optional args.
 
 ### Fixed
@@ -39,7 +39,7 @@ All notable changes to this project will be documented in this file.
     * `MIDI_SetTextSysexEvt`
     * `MIDI_SetCC`
     * `MIDI_SetEvt` improved
-    * note, that all `MIDI_Set*` functions now return only bolean, as it reduced and cleaned the bindings code. Advantage that now they are trully optional.
+    * note, that all `MIDI_Set*` functions now return only boolean, as it reduced and cleaned the bindings code. Advantage that now they are truly optional.
 
 
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
