@@ -79,15 +79,25 @@ class CCShape(IntEnum):
             return cls.beizer
 
 
-MIDIEventDict = te.TypedDict(
-    'MIDIEventDict', {
-        'ppq': int,
-        'selected': bool,
-        'muted': bool,
-        'cc_shape': CCShapeFlag,
-        'buf': ty.List[int],
-    }
-)
+class MIDIEventDict(te.TypedDict):
+
+    """
+    Dict, represents trsferable midi event.
+
+    Members
+    -------
+    ppq: float
+    selected: bool
+    muted: bool
+    cc_shape: CCShapeFlag
+    buf: ty.List[int]
+    """
+
+    ppq: float
+    selected: bool
+    muted: bool
+    cc_shape: CCShapeFlag
+    buf: ty.List[int]
 
 
 class MIDIEventInfo(te.TypedDict):
@@ -95,7 +105,7 @@ class MIDIEventInfo(te.TypedDict):
     muted: bool
     position: float
     raw_message: ty.List[int]
-    ppq_position: int
+    ppq_position: float
 
 
 class MIDIEvent(ReapyObject):
