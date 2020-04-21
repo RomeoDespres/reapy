@@ -152,7 +152,7 @@ class MIDIEvent(ReapyObject):
 
         Note
         ----
-        Optional arguments can be None, thereforce will not be applied at all.
+        Optional arguments can be None, therefore will not be applied at all.
 
         Parameters
         ----------
@@ -387,7 +387,7 @@ class CC(MIDIEvent):
 
         Note
         ----
-        Optional arguments can be None, thereforce will not be applied at all.
+        Optional arguments can be None, therefore will not be applied at all.
 
         Parameters
         ----------
@@ -474,7 +474,7 @@ class Note(MIDIEvent):
         :type: NoteInfo
             selected: bool
             muted: bool
-            position: tfloat
+            position: float
             ppq_position: float
             raw_message: [0x9+ch, note, vel]
             end: float
@@ -522,7 +522,7 @@ class Note(MIDIEvent):
 
         Note
         ----
-        Optional arguments can be None, thereforce will not be applied at all.
+        Optional arguments can be None, therefore will not be applied at all.
 
         Parameters
         ----------
@@ -633,7 +633,7 @@ class TextSysex(MIDIEvent):
 
         Notes
         -----
-        ⋅ Optional arguments can be None, thereforce will not be applied at all
+        ⋅ Optional arguments can be None, therefore will not be applied at all
         ⋅ type_ is NOT optional when new raw_message is assigned
 
         Parameters

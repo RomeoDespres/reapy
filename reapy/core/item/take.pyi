@@ -232,7 +232,7 @@ class Take(ReapyObject):
     def get_midi(self,
                  size: int = 2*1024*1024) -> ty.List[reapy.MIDIEventDict]:
         """
-        Get all midi dataof take in one call.
+        Get all midi data of take in one call.
 
         Parameters
         ----------
@@ -468,7 +468,7 @@ class Take(ReapyObject):
         midi : List[MIDIEventDict]
             can be taken with `Take.get_midi()` or build from scratch.
         start : float, optional
-            if offset needed (for example, start from a particulat time)
+            if offset needed (for example, start from a particular time)
         unit : str, optional
             time unit: "seconds"|"beats"|"ppq"
         sort : bool, optional
