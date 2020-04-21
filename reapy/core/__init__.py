@@ -3,7 +3,10 @@ from .reapy_object import ReapyObject, ReapyObjectList
 from .audio_accessor import AudioAccessor
 from .envelope import Envelope, EnvelopeList
 from .fx import FX, FXList, FXParam, FXParamsList
-from .item import CC, CCList, Item, Note, NoteList, Source, Take
+from .item import (Item, MIDIEvent, MIDIEventList, CC, CCList, Note, NoteList,
+                   TextSysex, TextSysexInfo, TextSysexList,
+                   CCShapeFlag, CCShape, MIDIEventDict,
+                   MIDIEventInfo, CCInfo, NoteInfo, Source, Take)
 from .project import Marker, Project, Region, TimeSelection
 from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
@@ -24,11 +27,22 @@ __all__ = [
     "FXParam",
     "FXParamsList",
     # core.item
+    "Item",
+    "MIDIEvent",
+    "MIDIEventList",
     "CC",
     "CCList",
-    "Item",
     "Note",
     "NoteList",
+    "TextSysex",
+    "TextSysexInfo",
+    "TextSysexList",
+    "CCShapeFlag",
+    "CCShape",
+    "MIDIEventDict",
+    "MIDIEventInfo",
+    "CCInfo",
+    'NoteInfo',
     "Source",
     "Take",
     # core.project
