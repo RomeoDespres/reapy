@@ -310,7 +310,7 @@ class Track(ReapyObject):
 
         :type: str
         """
-        return RPR.GetTrackGUID(self.id)
+        return self.get_info_string("GUID")
 
     @GUID.setter
     def GUID(self, guid_string):
