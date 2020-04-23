@@ -303,10 +303,7 @@ class Track(ReapyObject):
     @property
     def GUID(self):
         """
-        Track's GUID.
-
-        16-byte GUID, can query or update.
-        If using a _String() function, GUID is a string {xyz-...}.
+        Track's GUID string {xyz-...}.
 
         :type: str
         """
