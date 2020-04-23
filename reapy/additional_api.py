@@ -8,7 +8,23 @@ and should not be directly used by end-users.
 import ctypes as ct
 from reapy import reascript_api as RPR
 from reapy.reascript_api import _RPR
+import re
 
+
+def packp(t, v):
+    m = re.match('^\((\w+\*|HWND)\)0x([0-9A-F]+)$', str(v))
+    if (m != None):
+        (_t, _v) = m.groups()
+        if (_t == t or t == 'void*'):
+            a = int(_v[:8], 16)
+            b = int(_v[8:], 16);
+            p = ct.c_uint64((a << 32) | b).value
+            # if (RPR_ValidatePtr(p,t)):
+            #   return p
+            return p
+    return 0
+
+_RPR.rpr_packp = packp
 
 def packs_l(v: str, encoding="latin-1") -> ct.c_char_p:
     MAX_STRBUF = 4 * 1024 * 1024
