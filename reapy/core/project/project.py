@@ -495,6 +495,29 @@ class Project(ReapyObject):
         track = reapy.Track(track_id)
         return track
 
+    @reapy.inside_reaper()
+    def get_track_by_guid(self, guid_string):
+        """
+        Get track with giver GUID string {xyz-...}.
+
+        Parameters
+        ----------
+        guid_string : str
+
+        Returns
+        -------
+        Track
+
+        Raises
+        ------
+        KeyError
+            If no track with the guid string found in project
+        """
+        for tr in self.tracks:
+            if guid_string == tr.GUID:
+                return tr
+        raise KeyError(guid_string)
+
     def get_ext_state(self, section, key, pickled=False):
         """
         Return external state of project.

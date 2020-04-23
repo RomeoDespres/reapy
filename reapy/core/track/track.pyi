@@ -264,6 +264,36 @@ class Track(ReapyObject):
         """
         ...
 
+    @classmethod
+    def from_GUID(cls,
+                  guid_string: str,
+                  project: ty.Optional[ty.Union[reapy.Project, str]] = None
+                  ) -> 'Track':
+        """
+        Get track from project by GUID string {xyz-...}.
+
+        Parameters
+        ----------
+        guid_string : str
+            can be taken by Track.GUID
+        project : Union[Project, str], optional
+            if None — current project is used
+            if "all" — iterates through all projects (use with care)
+
+        Returns
+        -------
+        Track
+
+        Raises
+        ------
+        KeyError
+            If no track with the guid string found in project
+        """
+        ...
+
+    @classmethod
+    def _from_GUID_all_projects(cls, guid_string: str) -> 'Track': ...
+
     def get_info_string(self, param_name: str) -> str:
         ...
 

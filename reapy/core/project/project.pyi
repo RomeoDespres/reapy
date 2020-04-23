@@ -396,6 +396,25 @@ class Project(ReapyObject):
         """
         ...
 
+    def get_track_by_guid(self, guid_string: str) -> reapy.Track:
+        """
+        Get track with giver GUID string {xyz-...}.
+
+        Parameters
+        ----------
+        guid_string : str
+
+        Returns
+        -------
+        Track
+
+        Raises
+        ------
+        KeyError
+            If no track with the guid string found in project
+        """
+        ...
+
     def glue_items(self, within_time_selection: bool = False) -> None:
         """
         Glue items (action shortcut).
