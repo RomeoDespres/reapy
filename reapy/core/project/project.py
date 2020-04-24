@@ -82,6 +82,7 @@ class Project(ReapyObject):
         for track in self.tracks:
             if track.name == name:
                 return track
+        raise KeyError(name)
 
     def add_marker(self, position, name="", color=0):
         """
