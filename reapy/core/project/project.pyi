@@ -253,6 +253,10 @@ class Project(ReapyObject):
         """
         ...
 
+    def close(self) -> None:
+        """Colse project and its correspondig tab."""
+        ...
+
     @property
     def cursor_position(self) -> float:
         """

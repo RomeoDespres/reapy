@@ -98,6 +98,21 @@ def clear_peak_cache():
     RPR.ClearPeakCache()
 
 
+def close_project_tab(index=None):
+    """
+    Close project tab.
+
+    Parameters
+    ----------
+    index : Union[int, str], optional
+        index, id or project name,
+        if None — current will be closed.
+    """
+    if index is not None:
+        reapy.Project(index).make_current_project()
+    perform_action(40860)
+
+
 def dB_to_slider(db):
     """
     Convert decibel value to slider.
@@ -245,13 +260,13 @@ def get_global_automation_mode():
             "write"
     """
     modes = {
-         -1: "none",
-         0: "trim/read",
-         1: "read",
-         2: "touch",
-         3: "write",
-         4: "latch",
-         5: "bypass"
+        -1: "none",
+        0: "trim/read",
+        1: "read",
+        2: "touch",
+        3: "write",
+        4: "latch",
+        5: "bypass"
     }
     override_mode = modes[RPR.GetGlobalAutomationOverride()]
     return override_mode
@@ -352,15 +367,28 @@ def has_ext_state(section, key):
     return has_ext_state
 
 
-def open_project(filepath):
+def new_project_tab():
+    """Open new project tab."""
+    perform_action(40859)
+
+
+def open_project(filepath, in_new_tab=False):
     """
     Open project and return it.
+
+    Parameters
+    ----------
+    filepath : str
+    in_new_tab : bool, optional
+        Focus will be on new tab.
 
     Returns
     -------
     project : Project
         Opened project.
     """
+    if in_new_tab:
+        new_project_tab()
     RPR.Main_openProject(filepath)
     project = reapy.Project()
     return project
@@ -533,13 +561,13 @@ def set_global_automation_mode(mode):
             "write"
     """
     modes = {
-         "none": -1,
-         "trim/read": 0,
-         "read": 1,
-         "touch": 2,
-         "write": 3,
-         "latch": 4,
-         "bypass": 5
+        "none": -1,
+        "trim/read": 0,
+        "read": 1,
+        "touch": 2,
+        "write": 3,
+        "latch": 4,
+        "bypass": 5
     }
     RPR.SetGlobalAutomationOverride(modes[mode])
 

@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Added
+
+- New API
+    * `close_project_tab(index: ty.Union[str, int] = None) -> None`
+    * `new_project_tab() -> None:`
+- `Project.close` method
+
+
+### Changed
+
+- signture of `open_project` extended: `open_project(filepath: str, in_new_tab: bool = False) -> reapy.Project`
+
+
 ## [0.6.0](https://github.com/RomeoDespres/reapy/releases/tag/0.6.0) - 2020-04-18
 
 ### Added

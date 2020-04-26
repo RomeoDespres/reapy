@@ -302,6 +302,12 @@ class Project(ReapyObject):
             can_undo = False
         return can_undo
 
+    @reapy.inside_reaper()
+    def close(self):
+        """Colse project and its correspondig tab."""
+        with self.make_current_project():
+            reapy.perform_action(40860)
+
     @property
     def cursor_position(self):
         """

@@ -88,6 +88,19 @@ def clear_peak_cache() -> None:
     ...
 
 
+def close_project_tab(index: ty.Union[str, int] = None) -> None:
+    """
+    Close project tab.
+
+    Parameters
+    ----------
+    index : Union[int, str], optional
+        index, id or project name,
+        if None — current will be closed.
+    """
+    ...
+
+
 def dB_to_slider(db: float) -> float:
     """
     Convert decibel value to slider.
@@ -308,9 +321,20 @@ def has_ext_state(section: str, key: str) -> bool:
     ...
 
 
-def open_project(filepath: str) -> reapy.Project:
+def new_project_tab() -> None:
+    """Open new project tab."""
+    ...
+
+
+def open_project(filepath: str, in_new_tab: bool = False) -> reapy.Project:
     """
     Open project and return it.
+
+    Parameters
+    ----------
+    filepath : str
+    in_new_tab : bool, optional
+        Focus will be on new tab.
 
     Returns
     -------
@@ -345,6 +369,7 @@ class prevent_ui_refresh(contextlib.ContextDecorator):
     ...     reapy.Project.add_track()
 
     """
+
     def __enter__(self) -> None:
         ...
 
