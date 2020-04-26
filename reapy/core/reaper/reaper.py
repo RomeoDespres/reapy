@@ -721,3 +721,12 @@ def view_prefs():
     Open Preferences.
     """
     RPR.ViewPrefs(0, "")
+
+
+def validate_id(id, project=None):
+    name, ptr = id.split(')')
+    ptr = int(ptr, base=16)
+    name = name[1:]
+    if project is None:
+        return RPR.ValidatePtr(ptr, name)
+    return RPR.ValidatePtr2(project.id, ptr, name)
