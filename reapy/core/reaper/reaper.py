@@ -724,6 +724,19 @@ def view_prefs():
 
 
 def validate_id(id, project=None):
+    """
+    Check whether id is present or not (object removed).
+
+    Parameters
+    ----------
+    id: str
+        reapy object id (Project().id)
+    project: Project
+
+    Returns
+    -------
+    bool
+    """
     name, ptr = id.split(')')
     ptr = int(ptr, base=16)
     name = name[1:]

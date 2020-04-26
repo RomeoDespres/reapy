@@ -91,6 +91,7 @@ __all__ = [
     'update_arrange',
     'update_timeline',
     'view_prefs',
+    'validate_id',
     'audio',
     'midi',
     'ui',

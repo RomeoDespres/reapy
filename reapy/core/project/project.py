@@ -1208,4 +1208,5 @@ class _MakeCurrentProject:
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.current_project.make_current_project()
+        if reapy.validate_id(self.current_project):
+            self.current_project.make_current_project()
