@@ -638,7 +638,7 @@ def view_prefs() -> None:
     ...
 
 
-def validate_id(id: str, project: ty.Optional[reapy.Project] = None) -> None:
+def validate_id(id: str, project: ty.Optional[reapy.Project] = None) -> bool:
     """
     Check whether id is present or not (object removed).
 
