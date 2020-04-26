@@ -2,6 +2,7 @@
 
 import pickle
 import codecs
+import os
 
 import reapy
 from reapy import reascript_api as RPR
@@ -38,6 +39,7 @@ class Project(ReapyObject):
         if not id.startswith('(ReaProject*)0x'):
             id = Project._from_name(id).id
         self.id = id
+        self._filename = None
 
     def __eq__(self, other):
         if hasattr(other, 'id'):
@@ -302,9 +304,9 @@ class Project(ReapyObject):
             can_undo = False
         return can_undo
 
-    @reapy.inside_reaper()
     def close(self):
         """Colse project and its correspondig tab."""
+        self._filename = "{}{}{}".format(self.path, os.sep, self.name)
         with self.make_current_project():
             reapy.perform_action(40860)
 
@@ -787,6 +789,24 @@ class Project(ReapyObject):
         _, name, _ = RPR.GetProjectName(self.id, "", 2048)
         return name
 
+    def open(self, in_new_tab=False):
+        """
+        Open project, if it was closed by Project.close.
+        
+        Parameters
+        ----------
+        in_new_tab : bool, optional
+            whether should be opened in new tab
+        
+        Raises
+        ------
+        RuntimeError
+            If hasn't been closed by Project.close yet
+        """
+        if self._filename is None:
+            raise RuntimeError("project hasn't been closed")
+        self.id = reapy.open_project(self._filename, in_new_tab).id
+
     def pause(self):
         """
         Hit pause button.
@@ -1208,5 +1228,5 @@ class _MakeCurrentProject:
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if reapy.validate_id(self.current_project):
+        if reapy.validate_id(self.current_project.id):
             self.current_project.make_current_project()

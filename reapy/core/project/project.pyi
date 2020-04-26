@@ -11,6 +11,7 @@ import typing_extensions as te
 class Project(ReapyObject):
     """REAPER project."""
     id: str
+    _filename: str
 
     def __init__(self,
                  id: ty.Optional[ty.Union[int, str]] = None,
@@ -628,6 +629,22 @@ class Project(ReapyObject):
         Project name.
 
         :type: str
+        """
+        ...
+
+    def open(self, in_new_tab:bool=False) -> None:
+        """
+        Open project, if it was closed by Project.close.
+        
+        Parameters
+        ----------
+        in_new_tab : bool, optional
+            whether should be opened in new tab
+        
+        Raises
+        ------
+        RuntimeError
+            If hasn't been closed by Project.close yet
         """
         ...
 
