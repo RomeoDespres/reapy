@@ -10,7 +10,9 @@ All notable changes to this project will be documented in this file.
 - New API
     * `close_project_tab(index: ty.Union[str, int] = None) -> None`
     * `new_project_tab() -> None:`
-- `Project.close` method
+- `Project` extended with:
+    * `close() -> None`
+    * `open(in_new_tab=False)`
 
 
 ### Changed
