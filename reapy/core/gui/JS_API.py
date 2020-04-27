@@ -16,12 +16,6 @@ __all__: ty.List[str] = [
 def Byte(pointer: str, offset: int) -> int:
     """Returns the unsigned byte at address[offset].
 
-    Note
-    ----
-    Still, cannot understand is it poor wrap, or something else.
-    My REAPER crashes.
-
-
     Parameters
     ----------
     pointer : str
@@ -33,7 +27,7 @@ def Byte(pointer: str, offset: int) -> int:
     -------
     int
     """
-    a = _ft['JS_Dialog_BrowseForFolder']
+    a = _ft['JS_Byte']
     f = ct.CFUNCTYPE(ct.c_int, ct.c_uint64, ct.c_int)(a)
     out_byte = ct.c_byte(0)
     f(packp('void*', pointer), ct.c_int(offset), ct.byref(out_byte))
