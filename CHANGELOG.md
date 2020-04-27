@@ -13,6 +13,9 @@ All notable changes to this project will be documented in this file.
 - `Project` extended with:
     * `close() -> None`
     * `open(in_new_tab=False)`
+- `Track` extended with:
+    * `set_info_value(param_name: str, param_value: float) -> None`
+    * `index -> int` property
 
 
 ### Changed
