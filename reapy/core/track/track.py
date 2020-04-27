@@ -331,6 +331,18 @@ class Track(ReapyObject):
     def icon(self, filename):
         self.set_info_string("P_ICON", filename)
 
+    @reapy.inside_reaper()
+    @property
+    def index(self):
+        """
+        Track number 1-based.
+
+        :type: int
+            0=not found
+            -1=master track
+        """
+        return int(self.get_info_value('IP_TRACKNUMBER'))
+
     @property
     def instrument(self):
         """
@@ -559,7 +571,11 @@ class Track(ReapyObject):
         ]
 
     def set_info_string(self, param_name, param_string):
-        RPR.GetSetMediaTrackInfo_String(self.id, param_name, param_string, True)
+        RPR.GetSetMediaTrackInfo_String(
+            self.id, param_name, param_string, True)
+
+    def set_info_value(self, param_name, param_value):
+        RPR.SetMediaTrackInfo_Value(self.id, param_name, param_value)
 
     @reapy.inside_reaper()
     def solo(self):

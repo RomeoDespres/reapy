@@ -302,6 +302,17 @@ class Track(ReapyObject):
         ...
 
     @property
+    def index(self) -> int:
+        """
+        Track number 1-based.
+
+        :type: int
+            0=not found
+            -1=master track
+        """
+        ...
+
+    @property
     def instrument(self) -> ty.Optional[reapy.FX]:
         """
         First instrument FX on track if it exists, else None.
@@ -474,7 +485,7 @@ class Track(ReapyObject):
         ...
 
     @property
-    def receives(self) -> ty.List[reapy.Send]:...
+    def receives(self) -> ty.List[reapy.Send]: ...
 
     def select(self) -> None:
         """
@@ -488,6 +499,8 @@ class Track(ReapyObject):
 
     def set_info_string(self, param_name: str, param_string: str) -> None:
         ...
+
+    def set_info_value(self, param_name: str, param_value: float) -> None: ...
 
     def solo(self) -> None:
         """Solo track (do nothing if track is already solo)."""
