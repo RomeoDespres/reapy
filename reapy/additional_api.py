@@ -8,30 +8,38 @@ and should not be directly used by end-users.
 import ctypes as ct
 from reapy import reascript_api as RPR
 from reapy.reascript_api import _RPR
+# import typing as ty
 import re
 
 MAX_STRBUF = 4 * 1024 * 1024
 
-def packp(t, v):
+
+def packp(t: str, v: str) -> int:
     m = re.match('^\((\w+\*|HWND)\)0x([0-9A-F]+)$', str(v))
     if (m != None):
         (_t, _v) = m.groups()
-            a = int(_v[:8], 16)
+        a = int(_v[:8], 16)
         if (_t == t or t == 'void*'):
-            b = int(_v[8:], 16);
+            b = int(_v[8:], 16)
             p = ct.c_uint64((a << 32) | b).value
             # if (RPR_ValidatePtr(p,t)):
             #   return p
             return p
     return 0
 
+
 _RPR.rpr_packp = packp
 
-def packs_l(v: str, encoding="latin-1", size=MAX_STRBUF):
+
+def packs_l(
+    v: str, encoding: str = "latin-1", size: int = MAX_STRBUF
+) -> ct.c_char_p:
     return ct.create_string_buffer(str(v).encode(encoding), size)
 
 
-def unpacks_l(v,  encoding='latin-1', want_raw=False):
+def unpacks_l(
+    v: ct.c_char_p,  encoding: str = 'latin-1', want_raw: bool = False
+) -> str:
     s = v.value if not want_raw else v.raw
     return str(s.decode(encoding))
 
