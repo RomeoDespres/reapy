@@ -1,15 +1,37 @@
 import typing as ty
 import reapy
 if reapy.is_inside_reaper():
-    from reapy.additional_api import packp, MAX_STRBUF, packs_l, unpacks_l
+    from reapy.additional_api import packp, packs_l, unpacks_l
     from reaper_python import _ft
     import ctypes as ct
+
+MAX_STRBUF = 4 * 1024 * 1024
 
 __all__: ty.List[str] = [
     'Byte',
     'Dialog_BrowseForFolder',
     'Composite',
+    'Composite_Delay',
 ]
+
+
+@reapy.inside_reaper()
+def contents(filter_by: str = '') -> ty.Dict[str, int]:
+    """
+    Get contents of ReaScript API
+
+    Returns
+    -------
+    ty.Dict[str, int]
+        Description
+    """
+    if filter_by == '':
+        return _ft  # type:ignore
+    new = {}
+    for k, v in _ft.items():
+        if k.startswith(filter_by):
+            new[k] = v
+    return new
 
 
 @reapy.inside_reaper()
@@ -34,15 +56,6 @@ def Byte(pointer: str, offset: int) -> int:
     return int(out_byte.value)
 
 
-# (
-#     retval, windowHWND, srcx, srcy, srcw, srch, sysBitmap, dstx, dsty, dstw,
-#     dsth, autoUpdateOptional
-# ) = JS_Composite(
-#     windowHWND, srcx, srcy, srcw, srch, sysBitmap, dstx, dsty, dstw, dsth,
-#     autoUpdateOptional
-# )
-
-
 class HWND(str):
     ...
 
@@ -51,7 +64,7 @@ class WindowHWND(HWND):
     ...
 
 
-class sysBitmap(str):
+class SysBitmap(str):
     ...
 
 
@@ -62,7 +75,7 @@ def Composite(
     srcy: int,
     srcw: int,
     srch: int,
-    sys_bitmap: sysBitmap,
+    sys_bitmap: SysBitmap,
     dstx: int,
     dsty: int,
     dstw: int,
@@ -105,7 +118,7 @@ def Composite(
     srcy : int
     srcw : int
     srch : int
-    sys_bitmap : sysBitmap
+    sys_bitmap : SysBitmap
     dstx : int
     dsty : int
     dstw : int
@@ -126,8 +139,8 @@ def Composite(
         1 if successful, otherwise:
         -1 = windowHWND is not a window,
         -3 = Could not obtain the original window process,
-        -4 = sysBitmap is not a LICE bitmap,
-        -5 = sysBitmap is not a system bitmap,
+        -4 = SysBitmap is not a LICE bitmap,
+        -5 = SysBitmap is not a system bitmap,
         -6 = Could not obtain the window HDC.
     """
     a = _ft['JS_Composite']
@@ -145,9 +158,106 @@ def Composite(
 
 
 @reapy.inside_reaper()
-def Dialog_BrowseForFolder(
-    caption: str, initialFolder: str, size: int = 1000
-) -> ty.Tuple[int, str]:
+def Composite_Delay(
+    window_hwnd: WindowHWND, minTime: float, maxTime: float,
+    numBitmapsWhenMax: int
+) -> ty.Tuple[int, float, float, int]:
+    """
+    Set refresh rate of window.
+
+    Bug
+    ---
+    Not present at least in linux
+
+    Note
+    ----
+    On WindowsOS, flickering of composited images can be improved
+    considerably by slowing the refresh rate of the window.
+    The optimal refresh rate may depend on the number of composited bitmaps.
+
+    Parameters
+    ----------
+    window_hwnd : WindowHWND
+        Future investigation: is it Win32HWND(native) or JS HDC
+    minTime : float
+        is the minimum refresh delay, in seconds,
+        when only one bitmap is composited onto the window
+    maxTime : float
+        if delay time is bigger than max_time, bitmaps reduced.
+    numBitmapsWhenMax : int
+    """
+    a = _ft['JS_Composite_Delay']
+    f = ct.CFUNCTYPE(
+        ct.c_int, ct.c_uint64, ct.c_double, ct.c_double, ct.c_int, ct.c_double,
+        ct.c_double, ct.c_int
+    )(a)
+    out_prev_min, out_prev_max, out_prev_num_bitmaps = (
+        ct.c_double(), ct.c_double(), ct.c_int()
+    )
+    r = f(
+        packp('HWND', window_hwnd),
+        ct.c_double(minTime),
+        ct.c_double(maxTime),
+        ct.c_int(numBitmapsWhenMax),
+        out_prev_min,
+        out_prev_max,
+        out_prev_num_bitmaps,
+    )
+    return (
+        int(r), out_prev_min.value, out_prev_max.value,
+        out_prev_num_bitmaps.value
+    )
+
+
+@reapy.inside_reaper()
+def Composite_ListBitmaps(
+    window_hwnd: WindowHWND, size: int = MAX_STRBUF, want_raw: bool = False
+) -> ty.Tuple[int, str, int]:
+    """
+    Get all bitmaps composited to the given window.
+
+    Parameters
+    ----------
+    window_hwnd : WindowHWND
+    size : int, optional
+        size of string buffer
+    want_raw : bool, optional
+        Return full-sized string buffer if True.
+
+    Returns
+    -------
+    Tuple[
+        retval : int
+            retval is the number of linked bitmaps found,
+            or negative if an error occured.
+        buffer : str
+            The list is formatted as a comma-separated string of hexadecimal
+            values, each representing a LICE_IBitmap* pointer.
+        size : int
+            currently is not useful, keep track on
+            https://github.com/juliansader/ReaExtensions/issues/15
+        ]
+    """
+    a = _ft['JS_Composite_ListBitmaps']
+    f = ct.CFUNCTYPE(ct.c_int, ct.c_uint64, ct.c_char_p, ct.c_int)(a)
+    list_out = packs_l('', size=size)
+    size_out = ct.c_int(size)
+    r = f(packp('HWND', window_hwnd), list_out, size_out)
+    return (int(r), unpacks_l(list_out, want_raw=want_raw), size_out.value)
+
+
+# def Composite_Unlink(
+#     window_hwnd: WindowHWND,
+#     bitmap: ty.Optional[SysBitmap],
+#     auto_update: bool = False
+# ) -> None:
+#     a = _ft['JS_Composite_Unlink']
+#     f = ct.CFUNCTYPE(ct.c_int, ct.c_uint64, ct.c_char_p, ct.c_int)(a)
+
+
+@reapy.inside_reaper()
+def Dialog_BrowseForFolder(caption: str, initialFolder: str,
+                           size: int = 1000) -> ty.Tuple[int, str]:
     a = _ft['JS_Dialog_BrowseForFolder']
     f = ct.CFUNCTYPE(
         ct.c_int, ct.c_char_p, ct.c_char_p, ct.c_char_p, ct.c_int
