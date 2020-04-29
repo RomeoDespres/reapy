@@ -16,6 +16,11 @@ All notable changes to this project will be documented in this file.
     * `index -> int` property
 - Parameters `in_new_tab: bool` and `make_current_project: bool` in `open_project`.
 
+### Fixed
+
+- Several `Track` properties (e.g. `Track.name` or `Track.items`) only worked if their parent project was currently selected (see issues [#62](https://github.com/RomeoDespres/reapy/issues/62) and [#80](https://github.com/RomeoDespres/reapy/issues/80)). Now they can be retrieved regardless of the current project.
+
+
 
 ## [0.6.0](https://github.com/RomeoDespres/reapy/releases/tag/0.6.0) - 2020-04-18
 
