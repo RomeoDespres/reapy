@@ -305,8 +305,8 @@ class Project(ReapyObject):
         return can_undo
 
     def close(self):
-        """Colse project and its correspondig tab."""
-        self._filename = "{}{}{}".format(self.path, os.sep, self.name)
+        """Close project and its correspondig tab."""
+        self._filename = os.path.join(self.path, self.name)
         with self.make_current_project():
             reapy.perform_action(40860)
 
@@ -792,12 +792,12 @@ class Project(ReapyObject):
     def open(self, in_new_tab=False):
         """
         Open project, if it was closed by Project.close.
-        
+
         Parameters
         ----------
         in_new_tab : bool, optional
             whether should be opened in new tab
-        
+
         Raises
         ------
         RuntimeError

@@ -12,6 +12,29 @@ import sys
 _ORIGINAL_PRINT = print
 
 
+def add_project_tab(make_current_project=True):
+    """Open new project tab and return it.
+
+    Parameters
+    ----------
+    make_current_project : bool
+        Whether to select new project as current project
+        (default=`True`).
+
+    Returns
+    -------
+    project : Project
+        New project.
+    """
+    if not make_current_project:
+        current_project = reapy.Project()
+        project = add_project_tab(make_current_project=True)
+        current_project.make_current_project()
+        return project
+    perform_action(40859)
+    return reapy.Project()
+
+
 def add_reascript(path, section_id=0, commit=True):
     """
     Add a ReaScript and return the new action ID.
@@ -96,21 +119,6 @@ def clear_peak_cache():
     Reset global peak cache.
     """
     RPR.ClearPeakCache()
-
-
-def close_project_tab(index=None):
-    """
-    Close project tab.
-
-    Parameters
-    ----------
-    index : Union[int, str], optional
-        index, id or project name,
-        if None — current will be closed.
-    """
-    if index is not None:
-        reapy.Project(index).make_current_project()
-    perform_action(40860)
 
 
 def dB_to_slider(db):
@@ -367,12 +375,8 @@ def has_ext_state(section, key):
     return has_ext_state
 
 
-def new_project_tab():
-    """Open new project tab."""
-    perform_action(40859)
-
-
-def open_project(filepath, in_new_tab=False):
+@reapy.inside_reaper()
+def open_project(filepath, in_new_tab=False, make_current_project=True):
     """
     Open project and return it.
 
@@ -380,17 +384,24 @@ def open_project(filepath, in_new_tab=False):
     ----------
     filepath : str
     in_new_tab : bool, optional
-        Focus will be on new tab.
+        Whether to open project in new tab (default=`False`).
+    make_current_project : bool, optional
+        Whether to make opened project current project (has no effect
+        if `in_new_tab` is `False`).
 
     Returns
     -------
     project : Project
         Opened project.
     """
+    if not make_current_project:
+        current_project = reapy.Project()
     if in_new_tab:
-        new_project_tab()
+        add_project_tab(make_current_project=True)
     RPR.Main_openProject(filepath)
     project = reapy.Project()
+    if not make_current_project:
+        current_project.make_current_project()
     return project
 
 

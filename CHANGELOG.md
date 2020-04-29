@@ -7,20 +7,14 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- New API
-    * `close_project_tab(index: ty.Union[str, int] = None) -> None`
-    * `new_project_tab() -> None:`
+- `add_project_tab(make_current_project=True) -> Project:`
 - `Project` extended with:
     * `close() -> None`
     * `open(in_new_tab=False)`
 - `Track` extended with:
     * `set_info_value(param_name: str, param_value: float) -> None`
     * `index -> int` property
-
-
-### Changed
-
-- signture of `open_project` extended: `open_project(filepath: str, in_new_tab: bool = False) -> reapy.Project`
+- Parameters `in_new_tab: bool` and `make_current_project: bool` in `open_project`.
 
 
 ## [0.6.0](https://github.com/RomeoDespres/reapy/releases/tag/0.6.0) - 2020-04-18
