@@ -18,8 +18,10 @@ def get_header_contents() -> str:
     str
     """
     root_raw = 'https://raw.githubusercontent.com/'
-    header = ('juliansader/ReaExtensions/master/js_ReaScriptAPI/' +
-              'Source%20code/js_ReaScriptAPI_def.h')
+    header = (
+        'juliansader/ReaExtensions/master/js_ReaScriptAPI/' +
+        'Source%20code/js_ReaScriptAPI_def.h'
+    )
     r = requests.get("{}{}".format(root_raw, header))
     return r.content.decode()
 
@@ -82,7 +84,6 @@ FuncdefT = te.TypedDict(
 
 
 class Parcer:
-
     """Parces cpp header of js_ReaScriptExtensions.
 
     Attributes
@@ -165,7 +166,8 @@ _types_to_match: ty.Dict[str, TypeDefT] = {
     'void*':
         {
             'def': 'VoidPtr',
-            'ref': 'ct.c_uint64',
+            # 'ref': 'ct.c_uint64',
+            'ref': 'ct.c_void_p',
             'prot': '',
             'call': 'packp("void*", {arg})',
             'ret': 'unpackp("void*", ret)',
@@ -183,7 +185,7 @@ _types_to_match: ty.Dict[str, TypeDefT] = {
     'double*':
         {
             'def': 'float',
-            'ref': 'ct.c_double',
+            'ref': 'ct.c_void_p',
             'prot': 'prot_{arg} = ct.c_double({val})',
             'call': 'ct.byref(prot_{arg})',
             'ret': 'float(prot_{arg}.value)',
@@ -192,7 +194,7 @@ _types_to_match: ty.Dict[str, TypeDefT] = {
     'int*':
         {
             'def': 'int',
-            'ref': 'ct.c_int',
+            'ref': 'ct.c_void_p',
             'prot': 'prot_{arg} = ct.c_int({val})',
             'call': 'ct.byref(prot_{arg})',
             'ret': 'prot_{arg}.value',
@@ -201,7 +203,7 @@ _types_to_match: ty.Dict[str, TypeDefT] = {
     'bool*':
         {
             'def': 'bool',
-            'ref': 'ct.c_byte',
+            'ref': 'ct.c_void_p',
             'prot': 'prot_{arg} = ct.c_byte({val})',
             'call': 'ct.byref(prot_{arg})',
             'ret': 'bool(prot_{arg}.value)',
@@ -210,7 +212,7 @@ _types_to_match: ty.Dict[str, TypeDefT] = {
     'char*':
         {
             'def': 'str',
-            'ref': 'ct.c_byte',
+            'ref': 'ct.c_char_p',
             'prot':
                 'prot_{arg} = packs_l({arg}, size=len({arg}), encoding=encoding)',
             'call': 'prot_{arg}',
@@ -312,7 +314,6 @@ class VoidPtr(Pointer):
 
 
 class FuncBuilder:
-
     """Builds API as python code.
 
     Attributes
@@ -516,9 +517,7 @@ class FuncBuilder:
         (out_names, out_prots, out_calls, out_rets,
          out_docs) = self._match_out_args(item['args'])
         def_ret = self._match_def_ret(
-            ret=item['return'],
-            args=item['args'],
-            out_names=out_names
+            ret=item['return'], args=item['args'], out_names=out_names
         )
         doc = textwrap.fill(
             item['doc'],
@@ -614,12 +613,15 @@ def generate_js_api(bin_dir: str, api_filepath: str) -> None:
     with open(api_filepath, 'w') as f:
         f.write(module_str)
 
+
 if __name__ == '__main__':
     import reapy
     api_filepath = "{root}{s}JS_API.py".format(
-        root=os.path.dirname(__file__), s=os.sep)
+        root=os.path.dirname(__file__), s=os.sep
+    )
     bin_dir = "{root}{s}UserPlugins{s}".format(
-        root=reapy.get_resource_path(), s=os.sep)
+        root=reapy.get_resource_path(), s=os.sep
+    )
     # print(api_filepath)
     # print(bin_dir)
     generate_js_api(bin_dir, api_filepath)
