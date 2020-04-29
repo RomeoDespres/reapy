@@ -625,20 +625,3 @@ def view_prefs() -> None:
     Open Preferences.
     """
     ...
-
-
-def validate_id(id: str, project: ty.Optional[reapy.Project] = None) -> bool:
-    """
-    Check whether id is present or not (object removed).
-
-    Parameters
-    ----------
-    id: str
-        reapy object id (Project().id)
-    project: Project
-
-    Returns
-    -------
-    bool
-    """
-    ...

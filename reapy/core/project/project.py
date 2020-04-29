@@ -1228,5 +1228,6 @@ class _MakeCurrentProject:
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if reapy.validate_id(self.current_project.id):
+        # Test for valid ID in case project has been closed since __enter__
+        if self.current_project._has_valid_id:
             self.current_project.make_current_project()
