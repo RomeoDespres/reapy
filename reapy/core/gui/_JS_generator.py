@@ -508,7 +508,7 @@ class FuncBuilder:
         str
             multiline python definition
         """
-        def_name = item['name'].strip('JS_')
+        def_name = item['name'].replace('JS_', '')
         self.all.append(def_name)
 
         (opt_names, opt_defs, opt_prots,
@@ -613,3 +613,13 @@ def generate_js_api(bin_dir: str, api_filepath: str) -> None:
     module_str = builder.build_module()
     with open(api_filepath, 'w') as f:
         f.write(module_str)
+
+if __name__ == '__main__':
+    import reapy
+    api_filepath = "{root}{s}JS_API.py".format(
+        root=os.path.dirname(__file__), s=os.sep)
+    bin_dir = "{root}{s}UserPlugins{s}".format(
+        root=reapy.get_resource_path(), s=os.sep)
+    # print(api_filepath)
+    # print(bin_dir)
+    generate_js_api(bin_dir, api_filepath)
