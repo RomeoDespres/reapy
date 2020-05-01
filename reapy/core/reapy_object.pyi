@@ -24,10 +24,6 @@ class ReapyObject:
         ...
 
     @property
-    def _has_valid_id(self) -> bool:
-        ...
-
-    @property
     def _is_defined(self) -> bool:
         ...
 

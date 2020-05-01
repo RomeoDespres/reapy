@@ -39,22 +39,6 @@ class ReapyObject(metaclass=ReapyMetaclass):
     def _args(self):
         return ()
 
-    @reapy.inside_reaper()
-    @property
-    def _has_valid_id(self):
-        def test_all_cases():
-            name, ptr = self.id.split(')')
-            name, ptr = name[1:], int(ptr, base=16)
-            yield RPR.ValidatePtr(ptr, name)
-            projects = reapy.get_projects()
-            for project in projects:
-                yield RPR.ValidatePtr2(project.id, ptr, name)
-            with reapy.Project().make_current_project():
-                for project in projects:
-                    project.make_current_project()
-                    yield RPR.ValidatePtr(ptr, name)
-        return hasattr(self, "id") and any(test_all_cases())
-
     @property
     def _is_defined(self):
         if hasattr(self, "id"):
