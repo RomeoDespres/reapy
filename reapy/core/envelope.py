@@ -1,3 +1,5 @@
+import warnings
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
@@ -196,12 +198,14 @@ class EnvelopeList(ReapyObject):
         return (self.parent,)
 
     def __getitem__(self, key):
-        if isinstance(key, int):
-            callback = RPR.GetTrackEnvelope
-        elif isinstance(key, str) and not key.startswith("<"):
-            callback = RPR.GetTrackEnvelopeByName
-        else:
-            callback = RPR.GetTrackEnvelopeByChunkName
+        parent_type = self.parent.__class__._reapy_parent.__name__
+        attr = "Get{}Envelope".format(parent_type)
+        if isinstance(key, str):
+            if key.startswith("<") and parent_type == 'Track':
+                attr += "ByChunkName"
+            else:
+                attr += "ByName"
+        callback = getattr(RPR, attr)
         envelope = Envelope(self, callback(self.parent.id, key))
         if not envelope._is_defined:
             raise KeyError("No envelope for key {}".format(repr(key)))
