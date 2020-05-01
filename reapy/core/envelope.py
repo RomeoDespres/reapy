@@ -206,7 +206,7 @@ class EnvelopeList(ReapyObject):
             else:
                 attr += "ByName"
         callback = getattr(RPR, attr)
-        envelope = Envelope(self, callback(self.parent.id, key))
+        envelope = Envelope(self.parent, callback(self.parent.id, key))
         if not envelope._is_defined:
             raise KeyError("No envelope for key {}".format(repr(key)))
         return envelope
