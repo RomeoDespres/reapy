@@ -23,6 +23,9 @@ class ReapyObject:
     def _args(self) -> ty.Tuple[ty.Any, ...]:
         ...
 
+    def _get_pointer_and_name(self) -> ty.Tuple[int, str]:
+        ...
+
     @property
     def _is_defined(self) -> bool:
         ...

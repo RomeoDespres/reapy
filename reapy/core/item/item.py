@@ -70,6 +70,24 @@ class Item(ReapyObject):
         take = reapy.Take(take_id)
         return take
 
+    @reapy.inside_reaper()
+    @property
+    def has_valid_id(self):
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if item has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+        try:
+            project_id = self.project.id
+        except OSError:
+            return False
+        pointer, name = self._get_pointer_and_name()
+        return bool(RPR.ValidatePtr2(project_id, pointer, name))
+
     @property
     def is_selected(self):
         """
@@ -150,16 +168,11 @@ class Item(ReapyObject):
     @property
     def project(self):
         """
-        Return item parent project.
+        Item parent project.
 
-        Returns
-        -------
-        project : Project
-            Item parent project.
+        :type: reapy.Project
         """
-        project_id = RPR.GetItemProjectContext(self.id)
-        project = reapy.Project(project_id)
-        return project
+        return reapy.Project(RPR.GetItemProjectContext(self.id))
 
     def split(self, position):
         """

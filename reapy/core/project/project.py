@@ -529,6 +529,18 @@ class Project(ReapyObject):
         self.perform_action(action_id)
 
     @property
+    def has_valid_id(self):
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if project has been closed, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+        return bool(RPR.ValidatePtr(*self._get_pointer_and_name()))
+
+    @property
     def is_dirty(self):
         """
         Whether project is dirty (i.e. needing save).
@@ -1229,5 +1241,5 @@ class _MakeCurrentProject:
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         # Test for valid ID in case project has been closed since __enter__
-        if self.current_project._has_valid_id:
+        if self.current_project.has_valid_id:
             self.current_project.make_current_project()

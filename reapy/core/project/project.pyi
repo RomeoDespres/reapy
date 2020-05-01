@@ -408,6 +408,16 @@ class Project(ReapyObject):
         ...
 
     @property
+    def has_valid_id(self) -> bool:
+        """Whether ReaScript ID is still valid.
+
+        For instance, if project has been manually closed, ID will not
+        be valid anymore.
+
+        :type: bool
+        """
+
+    @property
     def is_dirty(self) -> bool:
         """
         Whether project is dirty (i.e. needing save).
@@ -635,12 +645,12 @@ class Project(ReapyObject):
     def open(self, in_new_tab:bool=False) -> None:
         """
         Open project, if it was closed by Project.close.
-        
+
         Parameters
         ----------
         in_new_tab : bool, optional
             whether should be opened in new tab
-        
+
         Raises
         ------
         RuntimeError

@@ -316,6 +316,25 @@ class Track(ReapyObject):
     def GUID(self, guid_string):
         self.set_info_string("GUID", guid_string)
 
+    @reapy.inside_reaper()
+    @property
+    def has_valid_id(self):
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if track has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+        pointer, name = self._get_pointer_and_name()
+        if self._project is None:
+            return any(
+                RPR.ValidatePtr2(p.id, pointer, name)
+                for p in reapy.get_projects()
+            )
+        return bool(RPR.ValidatePtr2(self.project.id, pointer, name))
+
     @property
     def icon(self):
         """

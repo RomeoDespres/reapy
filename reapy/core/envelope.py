@@ -117,6 +117,24 @@ class Envelope(ReapyObject):
             value = RPR.Envelope_FormatValue(self.id, value, "", 2048)[2]
         return value
 
+    @reapy.inside_reaper()
+    @property
+    def has_valid_id(self):
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if envelope has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+        try:
+            project_id = self.parent.project.id
+        except (OSError, AttributeError):
+            return False
+        pointer, name = self._get_pointer_and_name()
+        return bool(RPR.ValidatePtr2(project_id, pointer, name))
+
     @property
     def items(self):
         """

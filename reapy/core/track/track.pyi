@@ -287,6 +287,17 @@ class Track(ReapyObject):
         ...
 
     @property
+    def has_valid_id(self) -> bool:
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if track has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+
+    @property
     def icon(self) -> str:
         """
         Track icon.

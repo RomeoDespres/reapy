@@ -220,6 +220,24 @@ class Take(ReapyObject):
 
     @reapy.inside_reaper()
     @property
+    def has_valid_id(self):
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if take has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+        try:
+            project_id = self.track.project.id
+        except (OSError, AttributeError):
+            return False
+        pointer, name = self._get_pointer_and_name()
+        return bool(RPR.ValidatePtr2(project_id, pointer, name))
+
+    @reapy.inside_reaper()
+    @property
     def is_active(self):
         """
         Whether take is active.
@@ -412,6 +430,16 @@ class Take(ReapyObject):
         """
         time = RPR.MIDI_GetProjTimeFromPPQPos(self.id, ppq)
         return time
+
+    @reapy.inside_reaper()
+    @property
+    def project(self):
+        """
+        Take parent project.
+
+        :type: reapy.Project
+        """
+        return self.item.project
 
     @reapy.inside_reaper()
     def _resolve_midi_unit(self, pos_tuple, unit="seconds"):

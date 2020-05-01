@@ -39,6 +39,10 @@ class ReapyObject(metaclass=ReapyMetaclass):
     def _args(self):
         return ()
 
+    def _get_pointer_and_name(self):
+        name, pointer = self.id.split(')')
+        return int(pointer, base=16), name[1:]
+
     @property
     def _is_defined(self):
         if hasattr(self, "id"):
