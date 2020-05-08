@@ -1,7 +1,7 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
-from reapy.errors import UndefinedEnvelopeError
+from reapy.errors import InvalidObjectError, UndefinedEnvelopeError
 
 
 class Track(ReapyObject):
@@ -350,17 +350,24 @@ class Track(ReapyObject):
     def icon(self, filename):
         self.set_info_string("P_ICON", filename)
 
-    @reapy.inside_reaper()
     @property
     def index(self):
-        """
-        Track number 1-based.
+        """Track index in GUI (0-based).
 
-        :type: int
-            0=not found
-            -1=master track
+        Will be ``None`` for master track.
+
+        :type: int or None
+
+        Raises
+        ------
+        InvalidObjectError
+            When track does not exist in REAPER.
         """
-        return int(self.get_info_value('IP_TRACKNUMBER'))
+        index = int(self.get_info_value('IP_TRACKNUMBER')) - 1
+        if index >= 0:
+            return index
+        if index == -1:
+            raise InvalidObjectError(self)
 
     @property
     def instrument(self):

@@ -313,13 +313,18 @@ class Track(ReapyObject):
         ...
 
     @property
-    def index(self) -> int:
+    def index(self) -> ty.Optional[int]:
         """
-        Track number 1-based.
+        Track index in GUI (0-based).
 
-        :type: int
-            0=not found
-            -1=master track
+        Will be ``None`` for master track.
+
+        :type: int or None
+
+        Raises
+        ------
+        InvalidObjectError
+            When track does not exist in REAPER.
         """
         ...
 

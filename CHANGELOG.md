@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 - Parameters `in_new_tab: bool` and `make_current_project: bool` in `open_project`.
 - `has_valid_id` property on `Project`, `Track`, `Item`, `Take`, `Envelope`, and `Source`. Example use case is checking whether an object has been deleted.
 - `Take.project` property (parent project of a take).
+- `errors.InvalidObjectError` that may be raised when trying to use an object that has invalid ID.
 
 ### Fixed
 
