@@ -32,8 +32,13 @@ There are two ways of adding features:
 
 1. wrapping ReaScript API (*i.e.* pick a ReaScript API function and include it in `reapy`),
 2. extending the API beyond ReaScript (*i.e.* building new features that you find the ReaScript API misses).
-    
+
 In both cases, the code should:
 - follow PEP style conventions as much as possible. You can check your code is PEP-compliant with the Python package [pycodestyle](https://pypi.org/project/pycodestyle/).
 - follow the change log convention [here](https://keepachangelog.com/en/1.0.0/). Basically, all changes to the API (addition, removal, or bug fixes) must be reported in the `Unreleased` section of [CHANGELOG.md](CHANGELOG.md) under the corresponding subsections (`Added`, `Removed`, `Fixed`, etc.).
 
+#### A note about type hints (`.pyi` files)
+
+We try to make the use of type checkers (such as [mypy](http://mypy-lang.org/)) compatible with reapy. Each reapy module `module.py` thus has a corresponding `module.pyi` file that contains type hints.
+
+However, support for type hinting is not our top priority. Thus, if you don't master type hinting, but still want to contribute, feel free to only change the `.py` files. We will take care of making the corresponding `.pyi` changes afterwards.
