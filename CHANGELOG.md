@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Changed
+
+- Getting FX by name (e.g. `track.fxs[name]`) used to work with unprefixed FX name (e.g. `'ReaComp (Cockos)'` instead of `'VST: ReaComp (Cockos)'`). Now it is the opposite, which is consistent with the prefixed value returned by `FX.name`.
+
+
 ## [0.6.0](https://github.com/RomeoDespres/reapy/releases/tag/0.6.0) - 2020-04-18
 
 ### Added
