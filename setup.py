@@ -2,10 +2,15 @@ from setuptools import setup, find_packages
 from os import path, walk, sep
 from typing import Dict, List
 
+import reapy
+
+
 here = path.abspath(path.dirname(__file__))
+
 
 with open(path.join(here, "README.md")) as f:
     long_description = f.read()
+
 
 def find_stubs(package: str) -> Dict[str, List[str]]:
     stubs = []
@@ -18,7 +23,7 @@ def find_stubs(package: str) -> Dict[str, List[str]]:
 
 
 setup(name="python-reapy",
-      version="0.6.0",
+      version=reapy.__version__,
       description="A pythonic wrapper for REAPER's ReaScript Python API",
       long_description=long_description,
       long_description_content_type="text/markdown",

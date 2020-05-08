@@ -29,3 +29,6 @@ from .tools import (
 from . import reascript_api
 from .core import *
 from .core.reaper import *
+
+
+__version__ = "0.6.0"

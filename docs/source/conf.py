@@ -16,17 +16,19 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join("..", "..")))
 
+import reapy
+
 
 # -- Project information -----------------------------------------------------
 
 project = 'reapy'
-copyright = '2019, Roméo Després'
+copyright = '2020, Roméo Després'
 author = 'Roméo Després'
 
 # The short X.Y version
-version = '0.6.0'
+version = '.'.join(reapy.__version__.split('.')[:2])
 # The full version, including alpha/beta/rc tags
-release = '0.6.0'
+release = reapy.__version__
 
 
 # -- General configuration ---------------------------------------------------
