@@ -423,6 +423,7 @@ class FXList(ReapyObjectList):
         return [self[i] for i in indices]
 
     def _get_fx_index(self, name):
+        name = name[name.find(': ') + 2:]  # Remove FX type prefix
         if isinstance(self.parent, reapy.Track):
             prefix = "TrackFX_"
             args = (self.parent.id, name, False, 0)
