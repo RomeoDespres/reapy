@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 
-## Unreleased
+## [0.7.0](https://github.com/RomeoDespres/reapy/releases/tag/0.7.0) - 2020-05-09
 
 ### Added
 
@@ -300,6 +300,7 @@ Project.play_state was buggy and has been removed.
 [`Envelope.delete_points_in_range`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.delete_points_in_range
 [`Envelope.get_derivatives`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.get_derivatives
 [`Envelope.get_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.get_value
+[`Envelope.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.has_valid_id
 [`Envelope.n_items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.n_items
 [`Envelope.n_points`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.n_points
 [`Envelope.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Envelope.name
@@ -344,6 +345,7 @@ Project.play_state was buggy and has been removed.
 [`Item.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.delete
 [`Item.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.get_info_value
 [`Item.get_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.get_take
+[`Item.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.has_valid_id
 [`Item.is_selected`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.is_selected
 [`Item.length`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.length
 [`Item.n_takes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Item.n_takes
@@ -383,6 +385,7 @@ Project.play_state was buggy and has been removed.
 [`Project.get_play_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_play_rate
 [`Project.get_selected_item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_item
 [`Project.get_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.get_selected_track
+[`Project.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.has_valid_id
 [`Project.is_dirty`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_dirty
 [`Project.is_paused`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_paused
 [`Project.is_playing`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.is_playing
@@ -439,6 +442,7 @@ Project.play_state was buggy and has been removed.
 [`Send`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Send
 [`Source.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.delete
 [`Source.filename`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.filename
+[`Source.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.has_valid_id
 [`Source.length`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.length
 [`Source.n_channels`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.n_channels
 [`Source.sample_rate`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.sample_rate
@@ -449,6 +453,7 @@ Project.play_state was buggy and has been removed.
 [`Take.beat_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.beat_to_ppq
 [`Take.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.envelopes
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value
+[`Take.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.has_valid_id
 [`Take.is_midi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.is_midi
 [`Take.item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.item
 [`Take.make_active_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.make_active_take
@@ -487,6 +492,7 @@ Project.play_state was buggy and has been removed.
 [`Track.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.envelopes
 [`Track.get_info_string`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.get_info_string
 [`Track.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.get_info_value
+[`Track.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.has_valid_id
 [`Track.icon`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.icon
 [`Track.instrument`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.instrument
 [`Track.is_selected`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.is_selected
