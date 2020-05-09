@@ -287,6 +287,17 @@ class Track(ReapyObject):
         ...
 
     @property
+    def has_valid_id(self) -> bool:
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if track has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+
+    @property
     def icon(self) -> str:
         """
         Track icon.
@@ -299,6 +310,22 @@ class Track(ReapyObject):
 
     @icon.setter
     def icon(self, filename: str) -> None:
+        ...
+
+    @property
+    def index(self) -> ty.Optional[int]:
+        """
+        Track index in GUI (0-based).
+
+        Will be ``None`` for master track.
+
+        :type: int or None
+
+        Raises
+        ------
+        InvalidObjectError
+            When track does not exist in REAPER.
+        """
         ...
 
     @property
@@ -474,7 +501,7 @@ class Track(ReapyObject):
         ...
 
     @property
-    def receives(self) -> ty.List[reapy.Send]:...
+    def receives(self) -> ty.List[reapy.Send]: ...
 
     def select(self) -> None:
         """
@@ -488,6 +515,8 @@ class Track(ReapyObject):
 
     def set_info_string(self, param_name: str, param_string: str) -> None:
         ...
+
+    def set_info_value(self, param_name: str, param_value: float) -> None: ...
 
     def solo(self) -> None:
         """Solo track (do nothing if track is already solo)."""

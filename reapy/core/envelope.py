@@ -1,3 +1,5 @@
+import warnings
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
@@ -115,6 +117,24 @@ class Envelope(ReapyObject):
             value = RPR.Envelope_FormatValue(self.id, value, "", 2048)[2]
         return value
 
+    @reapy.inside_reaper()
+    @property
+    def has_valid_id(self):
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if envelope has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+        try:
+            project_id = self.parent.project.id
+        except (OSError, AttributeError):
+            return False
+        pointer, name = self._get_pointer_and_name()
+        return bool(RPR.ValidatePtr2(project_id, pointer, name))
+
     @property
     def items(self):
         """
@@ -196,13 +216,15 @@ class EnvelopeList(ReapyObject):
         return (self.parent,)
 
     def __getitem__(self, key):
-        if isinstance(key, int):
-            callback = RPR.GetTrackEnvelope
-        elif isinstance(key, str) and not key.startswith("<"):
-            callback = RPR.GetTrackEnvelopeByName
-        else:
-            callback = RPR.GetTrackEnvelopeByChunkName
-        envelope = Envelope(self, callback(self.parent.id, key))
+        parent_type = self.parent.__class__._reapy_parent.__name__
+        attr = "Get{}Envelope".format(parent_type)
+        if isinstance(key, str):
+            if key.startswith("<") and parent_type == 'Track':
+                attr += "ByChunkName"
+            else:
+                attr += "ByName"
+        callback = getattr(RPR, attr)
+        envelope = Envelope(self.parent, callback(self.parent.id, key))
         if not envelope._is_defined:
             raise KeyError("No envelope for key {}".format(repr(key)))
         return envelope

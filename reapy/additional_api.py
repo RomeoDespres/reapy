@@ -6,9 +6,27 @@ and should not be directly used by end-users.
 """
 
 import ctypes as ct
+import re
+
+import reapy
 from reapy import reascript_api as RPR
 from reapy.reascript_api import _RPR
 
+
+def packp(t, v):
+    m = re.match('^\((\w+\*|HWND)\)0x([0-9A-F]+)$', str(v))
+    if (m != None):
+        (_t, _v) = m.groups()
+        if (_t == t or t == 'void*'):
+            a = int(_v[:8], 16)
+            b = int(_v[8:], 16);
+            p = ct.c_uint64((a << 32) | b).value
+            # if (RPR_ValidatePtr(p,t)):
+            #   return p
+            return p
+    return 0
+
+_RPR.rpr_packp = packp
 
 def packs_l(v: str, encoding="latin-1") -> ct.c_char_p:
     MAX_STRBUF = 4 * 1024 * 1024
@@ -462,3 +480,13 @@ def MIDI_SetEvt(p0, p1, p2, p3, p4, p5, p6, p7):
 #     f = CFUNCTYPE(None, c_uint64)(a)
 #     t = (rpr_packp('MediaItem_Take*', p0), )
 #     f(t[0])
+
+
+@reapy.inside_reaper()
+def ValidatePtr2(p0, p1, p2):
+    a = _RPR._ft['ValidatePtr2']
+    f = ct.CFUNCTYPE(ct.c_byte, ct.c_uint64, ct.c_uint64, ct.c_char_p)(a)
+    project = _RPR.rpr_packp('ReaProject*', p0)
+    pointer = ct.c_uint64(p1)
+    name = _RPR.rpr_packsc(p2)
+    return f(project, pointer, name)

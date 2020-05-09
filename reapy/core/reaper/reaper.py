@@ -12,6 +12,29 @@ import sys
 _ORIGINAL_PRINT = print
 
 
+def add_project_tab(make_current_project=True):
+    """Open new project tab and return it.
+
+    Parameters
+    ----------
+    make_current_project : bool
+        Whether to select new project as current project
+        (default=`True`).
+
+    Returns
+    -------
+    project : Project
+        New project.
+    """
+    if not make_current_project:
+        current_project = reapy.Project()
+        project = add_project_tab(make_current_project=True)
+        current_project.make_current_project()
+        return project
+    perform_action(40859)
+    return reapy.Project()
+
+
 def add_reascript(path, section_id=0, commit=True):
     """
     Add a ReaScript and return the new action ID.
@@ -245,13 +268,13 @@ def get_global_automation_mode():
             "write"
     """
     modes = {
-         -1: "none",
-         0: "trim/read",
-         1: "read",
-         2: "touch",
-         3: "write",
-         4: "latch",
-         5: "bypass"
+        -1: "none",
+        0: "trim/read",
+        1: "read",
+        2: "touch",
+        3: "write",
+        4: "latch",
+        5: "bypass"
     }
     override_mode = modes[RPR.GetGlobalAutomationOverride()]
     return override_mode
@@ -352,17 +375,33 @@ def has_ext_state(section, key):
     return has_ext_state
 
 
-def open_project(filepath):
+@reapy.inside_reaper()
+def open_project(filepath, in_new_tab=False, make_current_project=True):
     """
     Open project and return it.
+
+    Parameters
+    ----------
+    filepath : str
+    in_new_tab : bool, optional
+        Whether to open project in new tab (default=`False`).
+    make_current_project : bool, optional
+        Whether to make opened project current project (has no effect
+        if `in_new_tab` is `False`).
 
     Returns
     -------
     project : Project
         Opened project.
     """
+    if not make_current_project:
+        current_project = reapy.Project()
+    if in_new_tab:
+        add_project_tab(make_current_project=True)
     RPR.Main_openProject(filepath)
     project = reapy.Project()
+    if not make_current_project:
+        current_project.make_current_project()
     return project
 
 
@@ -533,13 +572,13 @@ def set_global_automation_mode(mode):
             "write"
     """
     modes = {
-         "none": -1,
-         "trim/read": 0,
-         "read": 1,
-         "touch": 2,
-         "write": 3,
-         "latch": 4,
-         "bypass": 5
+        "none": -1,
+        "trim/read": 0,
+        "read": 1,
+        "touch": 2,
+        "write": 3,
+        "latch": 4,
+        "bypass": 5
     }
     RPR.SetGlobalAutomationOverride(modes[mode])
 

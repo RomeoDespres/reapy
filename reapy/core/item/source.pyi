@@ -1,8 +1,10 @@
-from reapy import reascript_api as RPR
 import typing as ty
 
+from reapy import reascript_api as RPR
+from reapy.core import ReapyObject
 
-class Source:
+
+class Source(ReapyObject):
     id: str
 
     def __init__(self, id: str) -> None:
@@ -32,6 +34,17 @@ class Source:
             Source file name.
         """
         ...
+
+    @property
+    def has_valid_id(self) -> bool:
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if source has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
 
     def length(self, unit: str = "seconds") -> float:
         """

@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- `add_project_tab(make_current_project=True) -> Project:`
+- `Project` extended with:
+    * `close() -> None`
+    * `open(in_new_tab=False)`
+- `Track` extended with:
+    * `set_info_value(param_name: str, param_value: float) -> None`
+    * `index -> int` property
+- Parameters `in_new_tab: bool` and `make_current_project: bool` in `open_project`.
+- `has_valid_id` property on `Project`, `Track`, `Item`, `Take`, `Envelope`, and `Source`. Example use case is checking whether an object has been deleted.
+- `Take.project` property (parent project of a take).
+- `errors.InvalidObjectError` that may be raised when trying to use an object that has invalid ID.
+
+### Fixed
+
+- Several `Track` properties (e.g. `Track.name` or `Track.items`) only worked if their parent project was currently selected (see issues [#62](https://github.com/RomeoDespres/reapy/issues/62) and [#80](https://github.com/RomeoDespres/reapy/issues/80)). Now they can be retrieved regardless of the current project.
+- ReaScript function `RPR_ValidatePtr2` is bugged and always returns `False`. However, `reapy.reascript_api.ValidatePtr2` now works as intended.
+- Bug with take envelopes: `Take.envelopes[x]` always raised a `KeyError` even for valid `x`.
+- `Envelope.parent` used to return an `EnvelopeList` instead of the actual `Track` or `Take` parent.
+
 ### Changed
 
 - Getting FX by name (e.g. `track.fxs[name]`) used to work with unprefixed FX name (e.g. `'ReaComp (Cockos)'` instead of `'VST: ReaComp (Cockos)'`). Now it is the opposite, which is consistent with the prefixed value returned by `FX.name`.

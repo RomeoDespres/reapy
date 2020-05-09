@@ -50,9 +50,42 @@ class ExtensionNotFoundError(Exception):
         super().__init__(message)
 
 
+
 class InsideREAPERError(Exception):
 
     pass
+
+
+class InvalidObjectError(Exception):
+
+    """Raised when an object with invalid ID has tried to access REAPER.
+
+    Common causes of this error are closing REAPER or deleting the
+    object referred to by the aforementioned ID.
+
+    The object that caused this error is available as its ``object``
+    attribute.
+
+    Parameters
+    ----------
+    object : ReapyObject
+        Object that caused the error.
+
+    Notes
+    -----
+    Most reapy objects have a ``has_valid_id`` property that allows
+    to check for its validity.
+    """
+
+    def __init__(self, object):
+        self.object = object
+        message = (
+            "{} has an invalid ID. Common causes of this error "
+            "are closing REAPER or deleting the object referred to "
+            "by the aforementioned ID. Try checking for "
+            "object.has_valid_id`."
+        )
+        super().__init__(message.format(object))
 
 
 class OutsideREAPERError(Exception):

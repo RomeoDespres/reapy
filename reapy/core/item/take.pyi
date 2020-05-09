@@ -203,6 +203,17 @@ class Take(ReapyObject):
         ...
 
     @property
+    def has_valid_id(self) ->  bool:
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if take has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+
+    @property
     def is_active(self) -> bool:
         """
         Whether take is active.
@@ -392,6 +403,14 @@ class Take(ReapyObject):
         Take.time_to_ppq
         """
         ...
+
+    @property
+    def project(self) -> reapy.Project:
+        """
+        Take parent project.
+
+        :type: reapy.Project
+        """
 
     def _resolve_midi_unit(self,
                            pos_tuple: ty.Tuple[float, ...],

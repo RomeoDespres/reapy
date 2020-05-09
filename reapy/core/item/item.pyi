@@ -66,6 +66,17 @@ class Item(ReapyObject):
         ...
 
     @property
+    def has_valid_id(self) -> bool:
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if item has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+
+    @property
     def is_selected(self) -> bool:
         """
         Return whether item is selected.

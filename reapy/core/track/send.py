@@ -59,8 +59,9 @@ class Send(ReapyObject):
 
         :type: Track
         """
-        id_ = self.get_info('P_DESTTRACK')
-        return reapy.Track(id_)
+        pointer = self.get_info('P_DESTTRACK')
+        track_id = reapy.Track._get_id_from_pointer(pointer)
+        return reapy.Track(track_id)
 
     @reapy.inside_reaper()
     def flip_phase(self):

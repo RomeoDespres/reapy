@@ -18,7 +18,7 @@ if reapy.is_inside_reaper():
 
     from reapy import additional_api as _A_API
     for s in _A_API.__dict__:
-            exec("from reapy.additional_api import {}".format(s))
+        exec("from reapy.additional_api import {}".format(s))
 
     # Import SWS functions.
     try:

@@ -308,9 +308,22 @@ def has_ext_state(section: str, key: str) -> bool:
     ...
 
 
-def open_project(filepath: str) -> reapy.Project:
+def add_project_tab(make_current_project: bool = True) -> reapy.Project:
+    """Open new project tab."""
+    ...
+
+
+def open_project(
+    filepath: str, in_new_tab: bool = False, make_current_project: bool = True
+) -> reapy.Project:
     """
     Open project and return it.
+
+    Parameters
+    ----------
+    filepath : str
+    in_new_tab : bool, optional
+        Focus will be on new tab.
 
     Returns
     -------
@@ -345,6 +358,7 @@ class prevent_ui_refresh(contextlib.ContextDecorator):
     ...     reapy.Project.add_track()
 
     """
+
     def __enter__(self) -> None:
         ...
 

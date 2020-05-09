@@ -1,4 +1,5 @@
 import reapy
+import reapy.reascript_api as RPR
 
 
 class ReapyMetaclass(type):
@@ -37,6 +38,10 @@ class ReapyObject(metaclass=ReapyMetaclass):
     @property
     def _args(self):
         return ()
+
+    def _get_pointer_and_name(self):
+        name, pointer = self.id.split(')')
+        return int(pointer, base=16), name[1:]
 
     @property
     def _is_defined(self):

@@ -1,7 +1,7 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
-from reapy.errors import UndefinedEnvelopeError
+from reapy.errors import InvalidObjectError, UndefinedEnvelopeError
 
 
 class Track(ReapyObject):
@@ -316,6 +316,25 @@ class Track(ReapyObject):
     def GUID(self, guid_string):
         self.set_info_string("GUID", guid_string)
 
+    @reapy.inside_reaper()
+    @property
+    def has_valid_id(self):
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if track has been deleted, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+        pointer, name = self._get_pointer_and_name()
+        if self._project is None:
+            return any(
+                RPR.ValidatePtr2(p.id, pointer, name)
+                for p in reapy.get_projects()
+            )
+        return bool(RPR.ValidatePtr2(self.project.id, pointer, name))
+
     @property
     def icon(self):
         """
@@ -330,6 +349,25 @@ class Track(ReapyObject):
     @icon.setter
     def icon(self, filename):
         self.set_info_string("P_ICON", filename)
+
+    @property
+    def index(self):
+        """Track index in GUI (0-based).
+
+        Will be ``None`` for master track.
+
+        :type: int or None
+
+        Raises
+        ------
+        InvalidObjectError
+            When track does not exist in REAPER.
+        """
+        index = int(self.get_info_value('IP_TRACKNUMBER')) - 1
+        if index >= 0:
+            return index
+        if index == -1:
+            raise InvalidObjectError(self)
 
     @property
     def instrument(self):
@@ -559,7 +597,11 @@ class Track(ReapyObject):
         ]
 
     def set_info_string(self, param_name, param_string):
-        RPR.GetSetMediaTrackInfo_String(self.id, param_name, param_string, True)
+        RPR.GetSetMediaTrackInfo_String(
+            self.id, param_name, param_string, True)
+
+    def set_info_value(self, param_name, param_value):
+        RPR.SetMediaTrackInfo_Value(self.id, param_name, param_value)
 
     @reapy.inside_reaper()
     def solo(self):

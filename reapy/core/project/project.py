@@ -2,6 +2,7 @@
 
 import pickle
 import codecs
+import os
 
 import reapy
 from reapy import reascript_api as RPR
@@ -38,6 +39,7 @@ class Project(ReapyObject):
         if not id.startswith('(ReaProject*)0x'):
             id = Project._from_name(id).id
         self.id = id
+        self._filename = None
 
     def __eq__(self, other):
         if hasattr(other, 'id'):
@@ -82,6 +84,7 @@ class Project(ReapyObject):
         for track in self.tracks:
             if track.name == name:
                 return track
+        raise KeyError(name)
 
     def add_marker(self, position, name="", color=0):
         """
@@ -301,6 +304,12 @@ class Project(ReapyObject):
             can_undo = False
         return can_undo
 
+    def close(self):
+        """Close project and its correspondig tab."""
+        self._filename = os.path.join(self.path, self.name)
+        with self.make_current_project():
+            reapy.perform_action(40860)
+
     @property
     def cursor_position(self):
         """
@@ -426,7 +435,7 @@ class Project(ReapyObject):
             PROJECT_SRATE : samplerate (ignored unless PROJECT_SRATE_USE set)
             PROJECT_SRATE_USE : set to 1 if project samplerate is used
         """
-        return RPR.GetSetProjectInfo(self.id, param_name, None, False)
+        return RPR.GetSetProjectInfo(self.id, param_name, 0, False)
 
     def get_play_rate(self, position):
         """
@@ -518,6 +527,18 @@ class Project(ReapyObject):
         """
         action_id = 41588 if within_time_selection else 40362
         self.perform_action(action_id)
+
+    @property
+    def has_valid_id(self):
+        """
+        Whether ReaScript ID is still valid.
+
+        For instance, if project has been closed, ID will not be valid
+        anymore.
+
+        :type: bool
+        """
+        return bool(RPR.ValidatePtr(*self._get_pointer_and_name()))
 
     @property
     def is_dirty(self):
@@ -779,6 +800,24 @@ class Project(ReapyObject):
         """
         _, name, _ = RPR.GetProjectName(self.id, "", 2048)
         return name
+
+    def open(self, in_new_tab=False):
+        """
+        Open project, if it was closed by Project.close.
+
+        Parameters
+        ----------
+        in_new_tab : bool, optional
+            whether should be opened in new tab
+
+        Raises
+        ------
+        RuntimeError
+            If hasn't been closed by Project.close yet
+        """
+        if self._filename is None:
+            raise RuntimeError("project hasn't been closed")
+        self.id = reapy.open_project(self._filename, in_new_tab).id
 
     def pause(self):
         """
@@ -1201,4 +1240,6 @@ class _MakeCurrentProject:
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        self.current_project.make_current_project()
+        # Test for valid ID in case project has been closed since __enter__
+        if self.current_project.has_valid_id:
+            self.current_project.make_current_project()
