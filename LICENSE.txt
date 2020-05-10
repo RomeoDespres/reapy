@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2019 Roméo Després
+Copyright (c) 2019-2020 reapy contributors (list avilable at https://github.com/RomeoDespres/reapy/graphs/contributors).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
