@@ -1,109 +1,121 @@
-.. reapy documentation master file, created by
-   sphinx-quickstart on Fri Feb 15 11:18:25 2019.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
-Welcome to reapy's documentation!
-=================================
+Home
+====
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :hidden:
-   
-   Api guide <api_guide.html#://>
-   Translation Table <api_table.html#://>
-   Install or uninstall reapy <install_guide.html#://>
-   Module Index <py-modindex.html#://>
-   Index <genindex.html#://>
+   :titlesonly:
 
-.. contents:: Contents
-    :local:
-    :depth: 3
-   
-``reapy`` is a nice pythonic wrapper around the quite unpythonic `ReaScript Python API <https://www.reaper.fm/sdk/reascript/reascripthelp.html#p>`_ for `REAPER <https://www.reaper.fm/>`_.
+   getting_started
+   user_guide
+   tutorials
+   api
+   changelog
+   contributing
 
-Installation
-------------
+.. raw:: html
 
-See the `Installation guide <install_guide.html>`_ for installation instructions.
+    <style>
+        .card {
+            margin-bottom: 1rem;
+            margin-top: 1rem;
+        }
+        .card-body {
+            cursor: pointer;
+            align-items: center;
+        }
+        .card-text {
+            padding-bottom: 3rem;
+        }
+    </style>
 
-Usage
------
+``reapy`` is an open-source `Python <https://www.python.org>`_ library that allows to extend the `REAPER <https://www.reaper.fm>`_ digital audio workstation.
 
-``reapy`` has two main features: it allows nice pythonic code, and interactions with REAPER from the outside. Instead of creating a new ReaScript containing::
+From automating the tasks that are done too often to developing entire plugins for the community, it intends to help all people who wish to redesign their REAPER workflow with a simple and modern programming language.
 
-    >>> from reaper_python import *
-    >>> RPR_ShowConsoleMsg("Hello world!")
+The source code is available on the `GitHub repository <https://github.com/RomeoDespres/reapy>`_. It is distributed under the `MIT license <https://github.com/RomeoDespres/reapy/blob/master/LICENSE.txt>`_, which means you can use and modify it for any purpose provided you mention the original copyright and license.
 
-you can open your usual Python shell and type::
+.. raw:: html
 
-    >>> import reapy
-    >>> reapy.print("Hello world!")
-
-ReaScript API
-*************
-
-All ReaScript API functions are available in ``reapy`` in the sub-module ``reapy.reascript_api``. Note that in ReaScript Python API, all function names start with ``"RPR_"``. That unnecessary pseudo-namespace has been removed in ``reapy``. Thus, you shall call ``reapy.reascript_api.GetCursorPosition`` in order to trigger ``reaper_python.RPR_GetCursorPosition``. See example below::
-
-    >>> from reapy import reascript_api as RPR
-    >>> RPR.GetCursorPosition()
-    0.0
-    >>> RPR.SetEditCurPos(1, True, True)
-    >>> RPR.GetCursorPosition()
-    1.0
-
-
-``reapy`` API
-*************
-
-The purpose of ``reapy`` is to provide a more pythonic API as a substitute for ReaScript API. Below is the ``reapy`` way of executing the example above::
-
-    >>> import reapy
-    >>> project = reapy.Project() # current project
-    >>> project.cursor_position
-    0.0
-    >>> project.cursor_position = 1
-    >>> project.cursor_position
-    1.0
-
-The `Translation table <api_table.html>`_ matches ReaScript functions with their ``reapy`` counterparts.
-
-Performance
-***********
-
-When used from inside REAPER, ``reapy`` has almost identical performance than native ReaScript API. Yet when it is used from the outside, the performance is quite worse. More precisely, since external API calls are processed in a ``defer`` loop inside REAPER, there can only be around 30 to 60 of them per second. In a time-critical context, you should make use of the ``reapy.inside_reaper`` context manager.
-
-
-    >>> import reapy
-    >>> project = reapy.Project() # Current project
-    >>>
-    >>> # Unefficient (and useless) call
-    >>> bpms = [project.bpm for _ in range(1000)] # Takes at least 30 seconds...
-    >>>
-    >>> # Efficient call
-    >>> with reapy.inside_reaper():
-    ...     bpms = [project.bpm for _ in range(1000)]
-    ...
-    >>> # Takes only 0.1 second!
-
-Although this method should be sufficient in most cases, note that optimality is only reached by making use of ``reapy.tools.Program`` (see documentation `here <reapy.tools.html#reapy.tools.program.Program>`_).
-    
-API documentation
------------------
-
-Check out the `API guide <api_guide.html>`_ and the `Translation table <api_table.html>`_ for more information about how to use ``reapy``.
-
-Contributing
-------------
-
-For now, about a third of ReaScript API has a ``reapy`` counterpart, the docs are far from great, and many bugs are waiting to be found. Feel free to improve the project by checking the `contribution guide <https://github.com/RomeoDespres/reapy/blob/master/CONTRIBUTING.md>`_ !
-
-Author
-------
-
-**Roméo Després** - `RomeoDespres <https://github.com/RomeoDespres>`_
-
-License
--------
-
-This project is licensed under the MIT License - see the `LICENSE.txt <https://github.com/RomeoDespres/reapy/blob/master/LICENSE.txt>`_ file for details.
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-flex card-container">
+                <div class="card text-center intro-card shadow">
+                    <div
+                        class="card-body flex-fill"
+                        onclick="location.href='getting_started.html'"
+                    >
+                        <h5 class="card-title">Getting started</h5>
+                        <p class="card-text">
+                            All you need to begin with reapy: installation instructions, basic concepts, and links to tutorials.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-flex">
+                <div class="card text-center intro-card shadow">
+                    <div
+                        class="card-body flex-fill"
+                        onclick="location.href='user_guide.html'"
+                    >
+                        <h5 class="card-title">User guide</h5>
+                        <p class="card-text">
+                            Extensive information about the core concepts and mechanisms of reapy.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-flex">
+                <div class="card text-center intro-card shadow">
+                    <div
+                        class="card-body flex-fill"
+                        onclick="location.href='tutorials.html'"
+                    >
+                        <h5 class="card-title">Tutorials</h5>
+                        <p class="card-text">
+                            Learn by doing with these beginner examples and advanced use cases explained step-by-step.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-flex">
+                <div class="card text-center intro-card shadow">
+                    <div
+                        class="card-body flex-fill"
+                        onclick="location.href='api.html'"
+                    >
+                        <h5 class="card-title">API reference</h5>
+                        <p class="card-text">
+                            Detailed description of the entire reapy API for those who need information about specific functions, objects, or parameters.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-flex">
+                <div class="card text-center intro-card shadow">
+                    <div
+                        class="card-body flex-fill"
+                        onclick="location.href='changelog.html'"
+                    >
+                        <h5 class="card-title">Change log</h5>
+                        <p class="card-text">
+                            See what's new and learn how the API has evolved so far.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 d-flex">
+                <div class="card text-center intro-card shadow">
+                    <div
+                        class="card-body flex-fill"
+                        onclick="location.href='contributing.html'"
+                    >
+                        <h5 class="card-title">Contributing</h5>
+                        <p class="card-text">
+                            Want to improve the docs or some existing functionality? Read this guide to learn how to help the project.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

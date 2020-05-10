@@ -1,60 +1,27 @@
-# -*- coding: utf-8 -*-
-#
-# Configuration file for the Sphinx documentation builder.
-#
-# This file does only contain a selection of the most common options. For a
-# full list see the documentation:
-# http://www.sphinx-doc.org/en/master/config
-
-# -- Path setup --------------------------------------------------------------
-
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-import os
-import sys
-sys.path.insert(0, os.path.abspath(os.path.join("..", "..")))
-
 import reapy
 
 
-# -- Project information -----------------------------------------------------
-
 project = 'reapy'
-copyright = '2020, Roméo Després'
-author = 'Roméo Després'
+copyright = '2019-2020'
+author = 'reapy contributors'
 
-# The short X.Y version
-version = '.'.join(reapy.__version__.split('.')[:2])
-# The full version, including alpha/beta/rc tags
-release = reapy.__version__
-
+release = reapy.__version__  # The full version
+version = '.'.join(release.split('.')[:2])  # The short X.Y version
 
 # -- General configuration ---------------------------------------------------
 
-# If your documentation needs a minimal Sphinx version, state it here.
-#
-# needs_sphinx = '1.0'
-
-# Add any Sphinx extension module names here, as strings. They can be
-# extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
-# ones.
-
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
-    'sphinx.ext.napoleon'
 ]
 
-# Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
 # The suffix(es) of source filenames.
 # You can specify multiple suffix as a list of string:
 #
-source_suffix = '.rst'
+# source_suffix = ['.rst', '.md']
+source_suffix = ['.rst']
 
 # The master toctree document.
 master_doc = 'index'
@@ -79,15 +46,18 @@ pygments_style = None
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
+
 html_theme = 'pydata_sphinx_theme'
-# html_logo = "_static/logo.jpg"
+
+html_logo = '_static/logo.png'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#
-# html_theme_options = {}
+
+html_theme_options = {
+    "github_url": "https://github.com/RomeoDespres/reapy",
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -135,8 +105,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'reapy.tex', 'reapy Documentation',
-     'Roméo Després', 'manual'),
+    (master_doc, 'reapy.tex', u'reapy Documentation',
+     u'Roméo Després', 'manual'),
 ]
 
 
@@ -145,7 +115,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'reapy', 'reapy Documentation',
+    (master_doc, 'reapy', u'reapy Documentation',
      [author], 1)
 ]
 
@@ -156,7 +126,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'reapy', 'reapy Documentation',
+    (master_doc, 'reapy', u'reapy Documentation',
      author, 'reapy', 'One line description of project.',
      'Miscellaneous'),
 ]
