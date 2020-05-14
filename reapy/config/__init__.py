@@ -1,2 +1,2 @@
 from .config import *
-from .python_sharedlib import get_python_sharedlib
+from .shared_library import get_python_shared_library
