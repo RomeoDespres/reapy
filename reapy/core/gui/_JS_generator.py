@@ -93,7 +93,9 @@ class Parcer:
     """
 
     def __init__(
-        self, file: ty.Optional[str] = None, raw_str: ty.Optional[str] = None
+        self,
+        file: ty.Optional[str] = None,
+        raw_str: ty.Optional[str] = None
     ) -> None:
         self._re_line = re.compile(r'(?!//).*{ APIFUNC\(.+')
         self._re_parce_line = re.compile(r'".*?"')
@@ -159,8 +161,8 @@ _types_to_match: ty.Dict[str, TypeDefT] = {
             'def': '{type_}',
             'ref': 'ct.c_uint64',
             'prot': '',
-            'call': 'packp("{type_}", {arg})',
-            'ret': 'unpackp("{type_}", ret)',
+            'call': 'packp("{type_}", str({arg}))',
+            'ret': 'Pointer(unpackp("{type_}", ret), "{type_}")',
             'default': '',
         },
     'void*':
@@ -169,8 +171,8 @@ _types_to_match: ty.Dict[str, TypeDefT] = {
             # 'ref': 'ct.c_uint64',
             'ref': 'ct.c_void_p',
             'prot': '',
-            'call': 'packp("void*", {arg})',
-            'ret': 'unpackp("void*", ret)',
+            'call': 'packp("void*", str({arg}))',
+            'ret': 'VoidPtr(unpackp("void*", ret))',
             'default': '',
         },
     'void':  # noob formatting comment
@@ -288,24 +290,52 @@ Theme on ReaperForums: https://forum.cockos.com/showthread.php?t=212174
 
 import typing as ty
 import reapy
+import ctypes as ct
 if reapy.is_inside_reaper():
     from reapy.additional_api import packp, unpackp, packs_l, unpacks_l
     from reaper_python import _ft
-    import ctypes as ct
 
 MAX_STRBUF = 4 * 1024 * 1024
 
 __all__: ty.List[str] = [
+    "Pointer",
+    "VoidPtr",
     {all_}
 ]
 
 
-class Pointer(str):
-    pass
+class Pointer:
+    def __init__(self,
+        ptr: ty.Union[str, int],
+        ptr_str: str="void*"
+    ) -> None:
+        if isinstance(ptr, str):
+            self._str = ptr
+            self._int = packp(ptr_str, ptr)
+            return
+        if isinstance(ptr, int):
+            self._str = unpackp(ptr_str, ptr)
+            self._int = ptr
+            return
+        raise TypeError("expect int or str, passed %s"%ptr)
+
+    def __str__(self) -> str:
+        return self._str
+
+    def __int__(self) -> int:
+        return self._int
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, (str, Pointer)):
+            return self._str == other
+        if isinstance(other, int):
+            return self._int == other
+        return False
 
 
 class VoidPtr(Pointer):
-    pass
+    def __init__(self, ptr: ty.Union[str, int]) -> None:
+        super().__init__(ptr)
 
 {class_defs}
 
@@ -451,9 +481,10 @@ class FuncBuilder:
             calls.append(call_t.format(arg=a, call=m_call))
         return names, defs, prots, calls
 
-    def _match_out_args(self, args: ArgsT
-                        ) -> ty.Tuple[ty.List[str], ty.List[str], ty.
-                                      List[str], ty.List[str], ty.List[str]]:
+    def _match_out_args(
+        self, args: ArgsT
+    ) -> ty.Tuple[ty.List[str], ty.List[str], ty.List[str], ty.List[str],
+                  ty.List[str]]:
         """
         Returns
         -------
@@ -616,12 +647,10 @@ def generate_js_api(bin_dir: str, api_filepath: str) -> None:
 
 if __name__ == '__main__':
     import reapy
-    api_filepath = "{root}{s}JS_API.py".format(
-        root=os.path.dirname(__file__), s=os.sep
+    api_filepath = os.path.join(
+        os.path.dirname(__file__), "_JS_API_generated.py"
     )
-    bin_dir = "{root}{s}UserPlugins{s}".format(
-        root=reapy.get_resource_path(), s=os.sep
-    )
-    # print(api_filepath)
-    # print(bin_dir)
+    bin_dir = os.path.join(reapy.get_resource_path(), "UserPlugins")
+    print(api_filepath)
+    print(bin_dir)
     generate_js_api(bin_dir, api_filepath)
