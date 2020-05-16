@@ -69,6 +69,7 @@ __all__ = [
     "VoidPtr",
     "AudioWriter",
     "PCM_source",
+    "TopLevel",
     # core.reaper
     'add_reascript',
     'arm_command',
