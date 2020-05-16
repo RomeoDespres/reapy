@@ -139,6 +139,8 @@ class Parcer:
             out['args'][name] = type_
             self.types_str.add(type_)
         out['doc'] = doc[1:-1]
+        # if name == "JS_Window_GetRect":
+        # print(out)
 
         # print(out)
         return out
@@ -291,9 +293,12 @@ Theme on ReaperForums: https://forum.cockos.com/showthread.php?t=212174
 import typing as ty
 import reapy
 import ctypes as ct
+from reapy.core import ReapyObject
 if reapy.is_inside_reaper():
     from reapy.additional_api import packp, unpackp, packs_l, unpacks_l
     from reaper_python import _ft
+else:
+    from reapy.additional_api import packp, unpackp
 
 MAX_STRBUF = 4 * 1024 * 1024
 
@@ -304,11 +309,12 @@ __all__: ty.List[str] = [
 ]
 
 
-class Pointer:
-    def __init__(self,
-        ptr: ty.Union[str, int],
-        ptr_str: str="void*"
+class Pointer(ReapyObject):
+
+    def __init__(
+        self, ptr: ty.Union[str, int], ptr_str: str = "void*"
     ) -> None:
+        self.__args = ptr, ptr_str
         if isinstance(ptr, str):
             self._str = ptr
             self._int = packp(ptr_str, ptr)
@@ -317,7 +323,11 @@ class Pointer:
             self._str = unpackp(ptr_str, ptr)
             self._int = ptr
             return
-        raise TypeError("expect int or str, passed %s"%ptr)
+        raise TypeError("expect int or str, passed %s" % ptr)
+
+    @property
+    def _args(self) -> ty.Tuple[ty.Union[str, int], str]:
+        return self.__args
 
     def __str__(self) -> str:
         return self._str
@@ -334,8 +344,7 @@ class Pointer:
 
 
 class VoidPtr(Pointer):
-    def __init__(self, ptr: ty.Union[str, int]) -> None:
-        super().__init__(ptr)
+    pass
 
 {class_defs}
 
@@ -356,8 +365,8 @@ class FuncBuilder:
     def __init__(self, parcer: Parcer) -> None:
         self.parcer = parcer
         self._re_ptr = re.compile(r'[A-Z].+\*')
-        self.matched_types = self._match_types()
         self.all: ty.List[str] = []
+        self.matched_types = self._match_types()
 
     def _match_types(self) -> ty.Dict[str, TypeDefT]:
         out: ty.Dict[str, TypeDefT] = {}
@@ -367,6 +376,7 @@ class FuncBuilder:
                 continue
             if self._re_ptr.match(type_):
                 out[type_] = _types_to_match['ptr']
+                self.all.append(type_[:-1])
                 continue
             raise TypeError('Cannot match {}'.format(type_))
         return out
@@ -386,7 +396,7 @@ class FuncBuilder:
                     kwargs['want_raw'] = 'bool=False'
                 continue
             if a in opt_names:
-                odct = opt_defs.pop(-1).split(':')
+                odct = opt_defs.pop(0).split(':')
                 # print(opt_defs_c)
                 defs[odct[0]] = odct[1]
                 continue
@@ -442,10 +452,10 @@ class FuncBuilder:
                     )
                 continue
             elif a in opt_names:
-                calls.append(opt_calls.pop(-1))
+                calls.append(opt_calls.pop(0))
                 continue
             elif a in out_names:
-                calls.append(out_calls.pop(-1))
+                calls.append(out_calls.pop(0))
                 continue
             raise KeyError(a)
         return prots, ', '.join(calls)
@@ -651,6 +661,6 @@ if __name__ == '__main__':
         os.path.dirname(__file__), "_JS_API_generated.py"
     )
     bin_dir = os.path.join(reapy.get_resource_path(), "UserPlugins")
-    print(api_filepath)
-    print(bin_dir)
+    # print(api_filepath)
+    # print(bin_dir)
     generate_js_api(bin_dir, api_filepath)
