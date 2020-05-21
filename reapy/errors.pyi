@@ -35,6 +35,10 @@ class RedoError(Exception):
     ...
 
 
+class ResourceLoadError(Exception):
+    ...
+
+
 class UndefinedEnvelopeError(Exception):
     def __init__(self, index: ty.Optional[int], name: ty.Optional[str],
                  chunk_name: ty.Optional[str]) -> None:

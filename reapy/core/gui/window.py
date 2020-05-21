@@ -12,6 +12,7 @@ from .singleton import Singleton
 from .events import EventHandler, EventClient, Event
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
+from reapy.errors import ResourceLoadError
 
 GUI_SECTION = "reapy_gui"
 
@@ -98,6 +99,26 @@ class EvKeyDownSys(Event):
     @property
     def _args(self) -> ty.Tuple[float, sw_t.vKey, sw_t.vVirtKey]:
         return self.time, self.key, self.mod
+
+
+class EvFrame(Event):
+    """Fired every loop frame."""
+
+
+class EvStart(Event):
+    """Fired on mainloop start."""
+
+
+class EvExit(Event):
+    """Fired on mainloop exit."""
+
+
+class EvResized(Event):
+    """Fired on window resizing."""
+
+    def __init__(self, new_size: ty.Tuple[int, int]) -> None:
+        self.width, self.height = new_size
+        self.size = new_size
 
 
 class WM_Handler:
@@ -196,12 +217,65 @@ def mouse_pos() -> ty.Tuple[int, int]:
     return RPR.GetMousePosition(0, 0)  # type:ignore
 
 
-class EvFrame(Event):
-    """Fired every loop frame."""
+class TopCanvas(EventClient):
+    ptr: JS.VoidPtr
 
+    def __init__(
+        self,
+        toplevel: 'TopLevel',
+        size: ty.Optional[ty.Tuple[int, int]] = None
+    ) -> None:
+        self._size = size
+        self.toplevel = toplevel
+        super().__init__(self.toplevel.event_handler)
 
-class EvStart(Event):
-    """Fired on mainloop start."""
+    @reapy.inside_reaper()  # type:ignore
+    @property
+    def size(self) -> ty.Tuple[int, int]:
+        if self._size is None:
+            rect = JS.Window_GetRect(RPR.GetMainHwnd())  # type:ignore
+            l, t, r, b = JS.Window_GetViewportFromRect(*rect[1:], True)
+            if platform.system() == 'Darwin':
+                self._size = r - l, t - b
+            else:
+                self._size = r - l, b - t
+        return self._size
+
+    @property
+    def _args(self) -> ty.Tuple['TopLevel', ty.Tuple[int, int]]:
+        return self.toplevel, self.size
+
+    def on_event(self, event: Event) -> None:
+        if isinstance(event, EvStart):
+            return self.setup()
+        # if isinstance(event, EvFrame):
+        #     return self.run()
+        if isinstance(event, EvExit):
+            return self.cleanup()
+
+    def setup(self) -> None:
+        self.ptr = JS.LICE_CreateBitmap(True, *self.size)
+        sOk = JS.Composite(
+            self.toplevel.hwnd, 0, 0, *self.size, self.ptr, 0, 0, *self.size
+        )
+        codes = {
+            -1: 'windowHWND is not a window',
+            -2: 'Could not obtain the original window process',
+            -4: 'sysBitmap is not a LICE bitmap',
+            -5: 'sysBitmap is not a system bitmap',
+            -6: 'Could not obtain the window HDC'
+        }
+        if sOk != 1:
+            raise ResourceLoadError(
+                'canvas {} failed to Composite. {}:{}'.format(
+                    self, sOk, codes[sOk]
+                )
+            )
+        print(f'canvas made: {self.ptr, sOk, self.size}')
+
+    def cleanup(self) -> None:
+        print(f'destroing canvas {self.ptr}')
+        JS.LICE_DestroyBitmap(self.ptr)
 
 
 class TopLevel(EventClient):
@@ -218,6 +292,7 @@ class TopLevel(EventClient):
         height: int = 100,
         dockstate: int = 1,
         autofocus: bool = True,
+        canvas_size: ty.Optional[ty.Tuple[int, int]] = None
     ) -> None:
         super().__init__(EventHandler())
         self.name, self.x, self.y, self.width, self.height, self._dockstate = (
@@ -233,12 +308,16 @@ class TopLevel(EventClient):
         self._focused = False
         self.autofocus = autofocus
         self._wm_handler = WM_Handler(self)
+        self._last_size = (width, height)
+        self.canvas = TopCanvas(self)
 
     @property
-    def _args(self) -> ty.Tuple[str, int, int, int, int, int, bool]:
+    def _args(
+        self
+    ) -> ty.Tuple[str, int, int, int, int, int, bool, ty.Tuple[int, int]]:
         return (
             self.name, self.x, self.y, self.width, self.height,
-            self._dockstate, self.autofocus
+            self._dockstate, self.autofocus, self.canvas.size
         )
 
     @reapy.inside_reaper()  # type:ignore
@@ -278,18 +357,31 @@ class TopLevel(EventClient):
         # here self.hwnd become real. Not as verbose, as I would like.
         if self._check_for_window() <= 0:
             raise RuntimeError("can not find gui window")
-        ret, l, t, r, b = JS.Window_GetRect(self.hwnd)
-        if ret:
-            self.x, self.y, self.width, self.height = l, t, r - l, b - t
+        self.update_coords()
 
         self._wm_handler.start()
         return self.hwnd
+
+    def update_coords(self) -> None:
+        l, t, r, b = self.coordinates
+        self.x, self.y, self.width, self.height = l, t, r - l, b - t
+        if reapy.is_inside_reaper():
+            if (r - l, b - t) < self._last_size:
+                self._last_size = self.width, self.height
+                self.fire_event(EvResized(self._last_size))
+        else:
+            self._update_coords_inside()
+
+    @reapy.inside_reaper()
+    def _update_coords_inside(self) -> None:
+        self.update_coords()
 
     @reapy.inside_reaper()
     def _kill(self) -> None:
         print('exiting from _kill')
         self._running = False
         self._wm_handler.cleanup()
+        self.fire_event(EvExit(), with_canvas=True)
         reapy.set_ext_state(GUI_SECTION, self.name, "close")
         reapy.remove_reascript(self.filename)
         os.remove(self.filename)
@@ -298,12 +390,15 @@ class TopLevel(EventClient):
     def running(self) -> bool:
         return self._running
 
-    def fire_event(self, event: Event) -> None:
-        self.event_handler.fire_event(event, [self])
+    def fire_event(self, event: Event, with_canvas: bool = False) -> None:
+        clients: ty.List[EventClient] = [self]
+        if with_canvas:
+            clients.append(self.canvas)
+        self.event_handler.fire_event(event, clients)
 
     def mainloop(self, blocking: bool = True) -> None:
         # self._event_handler.register_client(self)
-        self.start(self.event_handler)
+        self.start(self.event_handler, self.canvas)
         if not reapy.is_inside_reaper():
             atexit.register(self._at_exit)
             # if not blocking:
@@ -320,17 +415,20 @@ class TopLevel(EventClient):
         self._kill()
 
     @reapy.inside_reaper()
-    def start(self, ev_handler: EventHandler) -> None:
+    def start(self, ev_handler: EventHandler, canvas: TopCanvas) -> None:
         self._running = True
         self.event_handler = ev_handler
+        self.canvas = canvas
         self._launch()
         reapy.at_exit(self._at_exit)
-        self.fire_event(EvStart())
+        self.fire_event(EvStart(), with_canvas=True)
         self._loop()
 
     @reapy.inside_reaper()
     def _loop(self) -> None:
-        if not RPR.ValidatePtr(self.hwnd, "HWND") and self._running:
+        if not RPR.ValidatePtr(  # type:ignore
+            self.hwnd, "HWND"
+        ) and self._running:
             self._kill()
             return
         try:
@@ -373,22 +471,25 @@ class TopLevel(EventClient):
 
     def on_event(self, event: Event) -> None:
         if isinstance(event, EvFrame):
+            self.update_coords()
             return self.run()
         if isinstance(event, EvKeyDownChar):
             # print('catched EvKeyDownChar')
             return self.on_key_char(event)
         if isinstance(event, EvKeyDownSys):
             return self.on_key_sys(event)
+
         # move all down
         if isinstance(event, EvStart):
             return self.setup()
+        if isinstance(event, EvExit):
+            return self.cleanup()
 
     def setup(self) -> None:
         """Called at first mainloop iteration."""
 
     def run(self) -> None:
         """Called every loop iteration."""
-        print('root run()')
 
     def cleanup(self) -> None:
         """Called at exit."""
@@ -424,12 +525,3 @@ class TopLevel(EventClient):
                 event.time, repr(event.key), repr(event.mod)
             )
         )
-
-
-if __name__ == '__main__':
-    try:
-        root = TopLevel('my_test_window')
-        root.mainloop()
-    except Exception as e:
-        print(e)
-        raise e
