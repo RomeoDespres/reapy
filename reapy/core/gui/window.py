@@ -2,9 +2,14 @@ import typing as ty
 import os
 from time import sleep
 import atexit
+import platform
+from uuid import uuid4
 
 import reapy
 from . import JS_API as JS
+from . import swell_translations as sw_t
+from .singleton import Singleton
+from .events import EventHandler, EventClient, Event
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 
@@ -34,17 +39,175 @@ main()
 """
 
 
+class EvWindowMessage(Event):
+
+    def __init__(
+        self,
+        msg: str,
+        passedthrough: bool,
+        time: float,
+        wParamLow: int,
+        wParamHigh: int,
+        lParamLow: int,
+        lParamHigh: int,
+    ) -> None:
+        self.msg = msg
+        self.passedthrough = passedthrough
+        self.time = time
+        self.wParamLow = wParamLow
+        self.wParamHigh = wParamHigh
+        self.lParamLow = lParamLow
+        self.lParamHigh = lParamHigh
+
+    @property
+    def _args(self) -> ty.Tuple[str, bool, float, int, int, int, int]:
+        return (
+            self.msg, self.passedthrough, self.time, self.wParamLow,
+            self.wParamHigh, self.lParamLow, self.lParamHigh
+        )
+
+    def __repr__(self) -> str:
+        return (
+            "WM(msg={}, passedthrough={}, time={}, wParamLow={},"
+            " wParamHigh={}, lParamLow={}, lParamHigh={},"
+        ).format(
+            self.msg, self.passedthrough, self.time, self.wParamLow,
+            self.wParamHigh, self.lParamLow, self.lParamHigh
+        )
+
+
+class EvKeyDownChar(Event):
+
+    def __init__(self, time: float, char: str, mod: sw_t.vVirtKey) -> None:
+        self.time, self.char, self.mod = time, char, sw_t.vVirtKey(mod)
+
+    @property
+    def _args(self) -> ty.Tuple[float, str, sw_t.vVirtKey]:
+        return self.time, self.char, self.mod
+
+
+class EvKeyDownSys(Event):
+
+    def __init__(
+        self, time: float, key: sw_t.vKey, mod: sw_t.vVirtKey
+    ) -> None:
+        self.time, self.key, self.mod = (
+            time, sw_t.vKey(key), sw_t.vVirtKey(mod)
+        )
+
+    @property
+    def _args(self) -> ty.Tuple[float, sw_t.vKey, sw_t.vVirtKey]:
+        return self.time, self.key, self.mod
+
+
 class WM_Handler:
+    hwnd: JS.VoidPtr
 
-    def __init__(self) -> None:
-        self.message_times: ty.Dict[str, float] = {
-            "WM_LBUTTONDOWN": 0,
-            "WM_LBUTTONUP": 0,
-            "WM_LBUTTONDBLCLK": 0,
-        }
+    def __init__(self, toplevel: 'TopLevel') -> None:
+        self.toplevel = toplevel
+        # self._event_handler = toplevel.event_handler
+        self.message_names: ty.List[str] = [
+            "WM_CAPTURECHANGED",
+            "WM_LBUTTONDOWN",
+            "WM_LBUTTONUP",
+            "WM_LBUTTONDBLCLK",
+            "WM_NCLBUTTONDOWN",
+            "WM_CHAR",
+            "WM_KEYDOWN",
+            "WM_SYSKEYDOWN",
+            "WM_ACTIVATE",
+            "WM_MOUSELEAVE",
+            "WM_MOUSEACTIVATE",
+        ]
+        self.message_times = {msg: 0.0 for msg in self.message_names}
+
+    def fire(self, event: Event) -> None:
+        self.toplevel.fire_event(event)
+
+    def start(self) -> None:
+        for msg in self.message_names:
+            self.hwnd = self.toplevel.hwnd
+            ret = JS.WindowMessage_Intercept(self.hwnd, msg, False)
+            print("%s, intercept ret: %s" % (msg, ret))
+
+    def run(self) -> None:
+        hwnd = self.hwnd
+        mess_times = self.message_times
+
+        for msg, l_time in mess_times.items():
+            (
+                pOk, passedthrough, n_time, wParamLow, wParamHigh, lParamLow,
+                lParamHigh
+            ) = JS.WindowMessage_Peek(hwnd, msg)
+            if n_time > l_time:
+                mess_times[msg] = n_time
+                msg_l = msg.lower()
+                wm = EvWindowMessage(
+                    msg, passedthrough, n_time, wParamLow, wParamHigh,
+                    lParamLow, lParamHigh
+                )
+                if hasattr(self, "on_%s" % msg_l):
+                    return getattr(self, "on_%s" % msg_l)(  # type:ignore
+                        wm
+                    )
+
+                return self.on_wm(wm)
+
+    def on_wm(self, wm: EvWindowMessage) -> None:
+        self.fire(wm)
+
+    def on_wm_keydown(self, wm: EvWindowMessage) -> None:
+        char = chr(wm.wParamLow)
+        mod = sw_t.vVirtKey(wm.lParamLow)
+        if 0b1 & wm.lParamLow:
+            if wm.wParamLow in sw_t.vKey.__members__.values():
+                self.on_wm_syskeydown(wm)
+                if wm.wParamLow not in sw_t.vNumKey.__members__.values():
+                    return
+                else:
+                    char = sw_t.vNumKey(wm.wParamLow).char()
+            if mod & sw_t.vVirtKey.SHIFT:
+                char = char.upper()
+            else:
+                char = char.lower()
+        self.fire(EvKeyDownChar(wm.time, char, mod))
+        # self.toplevel.on_key_char(wm.time, char, mod)
+
+    def on_wm_syskeydown(self, wm: EvWindowMessage) -> None:
+        if not wm.wParamLow in sw_t.vKey.__members__.values():
+            print('can not decode message: %s' % wm)
+            return
+        self.fire(
+            EvKeyDownSys(
+                wm.time, sw_t.vKey(wm.wParamLow), sw_t.vVirtKey(wm.lParamLow)
+            )
+        )
+        # self.toplevel.on_key_sys(
+        #     wm.time, sw_t.vKey(wm.wParamLow), sw_t.vVirtKey(wm.lParamLow)
+        # )
+
+    def cleanup(self) -> None:
+        JS.WindowMessage_Release(
+            self.hwnd, ','.join(tuple(self.message_names))
+        )
 
 
-class TopLevel(ReapyObject):
+def mouse_pos() -> ty.Tuple[int, int]:
+    return RPR.GetMousePosition(0, 0)  # type:ignore
+
+
+class EvFrame(Event):
+    """Fired every loop frame."""
+
+
+class EvStart(Event):
+    """Fired on mainloop start."""
+
+
+class TopLevel(EventClient):
+    _wm_handler: WM_Handler
+
+    # _object_index: ty.Dict[int, 'TopLevel'] = {}
 
     def __init__(
         self,
@@ -53,25 +216,32 @@ class TopLevel(ReapyObject):
         y: int = 100,
         width: int = 100,
         height: int = 100,
-        dockstate: int = 1
+        dockstate: int = 1,
+        autofocus: bool = True,
     ) -> None:
+        super().__init__(EventHandler())
         self.name, self.x, self.y, self.width, self.height, self._dockstate = (
             name, x, y, width, height, dockstate
         )
         self.filename = "{}_gui.lua".format(name)
         self._hwnd: ty.Optional[JS.VoidPtr] = None
-        self.wm_handler = WM_Handler()
+
         if self._check_for_window() <= 0:
             self._running = False
         else:
             self._running = True
+        self._focused = False
+        self.autofocus = autofocus
+        self._wm_handler = WM_Handler(self)
 
     @property
-    def _args(self) -> ty.Tuple[str, int, int, int, int, int]:
+    def _args(self) -> ty.Tuple[str, int, int, int, int, int, bool]:
         return (
-            self.name, self.x, self.y, self.width, self.height, self._dockstate
+            self.name, self.x, self.y, self.width, self.height,
+            self._dockstate, self.autofocus
         )
 
+    @reapy.inside_reaper()  # type:ignore
     @property
     def hwnd(self) -> JS.VoidPtr:
         if self._hwnd is None:
@@ -104,96 +274,132 @@ class TopLevel(ReapyObject):
             )
         action = reapy.add_reascript(self.filename)
         reapy.perform_action(action)
+
+        # here self.hwnd become real. Not as verbose, as I would like.
         if self._check_for_window() <= 0:
             raise RuntimeError("can not find gui window")
         ret, l, t, r, b = JS.Window_GetRect(self.hwnd)
         if ret:
             self.x, self.y, self.width, self.height = l, t, r - l, b - t
-        msgstr = ', '.join(tuple(self.wm_handler.message_times.keys()))
-        print(self.hwnd)
-        for msg in self.wm_handler.message_times.keys():
-            ret = JS.WindowMessage_Intercept(self.hwnd, msg, False)
-            print(f"{msg} intercept ret: {ret}")
+
+        self._wm_handler.start()
         return self.hwnd
 
     @reapy.inside_reaper()
     def _kill(self) -> None:
         print('exiting from _kill')
         self._running = False
-        JS.WindowMessage_Release(
-            self.hwnd, ','.join(tuple(self.wm_handler.message_times.keys()))
-        )
+        self._wm_handler.cleanup()
         reapy.set_ext_state(GUI_SECTION, self.name, "close")
         reapy.remove_reascript(self.filename)
         os.remove(self.filename)
 
     @reapy.inside_reaper()
     def running(self) -> bool:
-        # print(f'running = {self._running}, inside: {reapy.is_inside_reaper()}')
         return self._running
 
+    def fire_event(self, event: Event) -> None:
+        self.event_handler.fire_event(event, [self])
+
     def mainloop(self, blocking: bool = True) -> None:
-        self.start()
+        # self._event_handler.register_client(self)
+        self.start(self.event_handler)
         if not reapy.is_inside_reaper():
             atexit.register(self._at_exit)
+            # if not blocking:
+            #     return
             while self.running():
-                pass
+                with reapy.inside_reaper():
+                    self.event_handler.fire_queue()
 
     @reapy.inside_reaper()
     def _at_exit(self) -> None:
         self.cleanup()
+        if not self.running():
+            return
         self._kill()
 
     @reapy.inside_reaper()
-    def start(self) -> None:
+    def start(self, ev_handler: EventHandler) -> None:
         self._running = True
+        self.event_handler = ev_handler
         self._launch()
         reapy.at_exit(self._at_exit)
-        self.setup()
+        self.fire_event(EvStart())
         self._loop()
 
     @reapy.inside_reaper()
     def _loop(self) -> None:
-        if not RPR.ValidatePtr(self.hwnd, "HWND"):
-            # self.cleanup()
-            # self._kill()
+        if not RPR.ValidatePtr(self.hwnd, "HWND") and self._running:
+            self._kill()
             return
         try:
-            self.run()
-            self._handle_wm()
+            self.event_handler.fire_event(EvFrame(), [self])
+            self._handle_focus()
+            self._wm_handler.run()
+            # self._handle_wm()
             reapy.defer(self._loop)
         except KeyboardInterrupt as e:
             self._kill()
             raise e
 
-    def _handle_wm(self) -> None:
-        hwnd = self.hwnd
-        mess_times = self.wm_handler.message_times
-        for msg, l_time in mess_times.items():
-            (pOk, _, n_time, wParamLow, wParamHigh, lParamLow,
-             lParamHigh) = JS.WindowMessage_Peek(hwnd, msg)
-            if n_time > l_time:
-                print(self.hwnd)
-                print(
-                    "{} || pOk:{}, time:{}, wPL:{}, wPH:{}, lPL:{}, lPH:{}".
-                    format(
-                        msg, pOk, n_time, wParamLow, wParamHigh, lParamLow,
-                        lParamHigh
-                    )
-                )
-                mess_times[msg] = n_time
+    @property
+    def coordinates(self) -> ty.Tuple[int, int, int, int]:
+        """Normalized window rectangle, e.g. top is always less than bottom.
+
+        Returns
+        -------
+        ty.Tuple[int, int, int, int]
+            left, top, right, bottom
+        """
+        _, sl, st, sr, sb = JS.Window_GetRect(self.hwnd)
+        if platform.system() == 'Darwin':
+            return sl, sb, sr, st
+        return sl, st, sr, sb
+
+    def _handle_focus(self) -> None:
+        if not self.autofocus:
+            return
+        mouse_flags = JS.Mouse_GetState(0b10000011)
+        if mouse_flags != 0:
+            mx, my = mouse_pos()
+            sl, st, sr, sb = self.coordinates
+            if sl <= mx <= sr and st <= my <= sb:
+                self._focused = True
+                JS.Window_SetFocus(self.hwnd)
+            elif self._focused:
+                self._focused = False
+                JS.Window_SetFocus(JS.Window_FromPoint(mx, my))
+
+    def on_event(self, event: Event) -> None:
+        if isinstance(event, EvFrame):
+            return self.run()
+        if isinstance(event, EvKeyDownChar):
+            # print('catched EvKeyDownChar')
+            return self.on_key_char(event)
+        if isinstance(event, EvKeyDownSys):
+            return self.on_key_sys(event)
+        # move all down
+        if isinstance(event, EvStart):
+            return self.setup()
 
     def setup(self) -> None:
-        pass
+        """Called at first mainloop iteration."""
 
     def run(self) -> None:
-        pass
+        """Called every loop iteration."""
+        print('root run()')
 
     def cleanup(self) -> None:
-        pass
+        """Called at exit."""
 
     @property
     def dock(self) -> int:
+        """Raw reaper window dockstate.
+
+        :type: int
+            the basic rule: 0 — floating, 1 — docked
+        """
         ret = reapy.get_ext_state(GUI_SECTION, "%s_dock_out" % self.name)
         self._dockstate = int(float(ret))
         return self._dockstate
@@ -205,32 +411,25 @@ class TopLevel(ReapyObject):
             GUI_SECTION, "%s_dockstate" % self.name, str(value), False
         )
 
+    def on_key_char(self, event: EvKeyDownChar) -> None:
+        print(
+            'on_key_char(time={}, char={}, mod={})'.format(
+                event.time, event.char, event.mod.__repr__()
+            )
+        )
+
+    def on_key_sys(self, event: EvKeyDownSys) -> None:
+        print(
+            "on_key_sys(time={}, key={}, mod={})".format(
+                event.time, repr(event.key), repr(event.mod)
+            )
+        )
+
 
 if __name__ == '__main__':
     try:
         root = TopLevel('my_test_window')
         root.mainloop()
     except Exception as e:
+        print(e)
         raise e
-    # hwnd = root._launch()
-    # # RPR.DockWindowAddEx(hwnd, "my_test_window", "bottom", True)
-    # # root.dock = 0
-    # classname = JS.Window_GetClassName(root.hwnd, 100)
-    # # bg = RPR.GetThemeColor("col_arrangebg", 0)
-    # bg = RPR.GetThemeColor("col_main_bg", 0)
-    # sbm = JS.LICE_CreateBitmap(True, root.width, root.height)
-    # JS.LICE_FillRect(
-    #     sbm, 0, 0, root.width, root.height, bg | 0xff000000, 1, ''
-    # )
-    # cOK = JS.Composite(
-    #     root.hwnd, 0, 0, root.width, root.height, sbm, 0, 0, root.width,
-    #     root.height
-    # )
-    # if RPR.ValidatePtr(root.hwnd, "HWND"):
-    #     JS.Window_InvalidateRect(
-    #         root.hwnd, 0, 0, root.width, root.height, True
-    #     )
-
-    # sleep(2)
-    # # reapy.set_ext_state('reapy_gui', 'my_test_window', "close")
-    # root._kill()

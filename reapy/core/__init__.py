@@ -13,7 +13,11 @@ from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
 from .gui import JS_API as JS
 from .gui.JS_API import Pointer, VoidPtr, AudioWriter, PCM_source
-from .gui.window import TopLevel
+from .gui.window import (
+    TopLevel, EvFrame, EvWindowMessage, EvKeyDownChar, EvKeyDownSys, EvStart
+)
+from .gui.singleton import Singleton, UUID
+from .gui.events import EventClient, EventHandler, Event
 
 __all__ = [
     # core.reapy_object
@@ -69,4 +73,14 @@ __all__ = [
     "AudioWriter",
     "PCM_source",
     "TopLevel",
+    "Singleton",
+    "EvFrame",
+    "EvStart",
+    "EvWindowMessage",
+    "EvKeyDownChar",
+    "EvKeyDownSys",
+    "UUID",
+    "EventClient",
+    "EventHandler",
+    "Event",
 ]
