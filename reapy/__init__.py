@@ -7,7 +7,7 @@ def is_inside_reaper():
 
     If ``reapy`` is run from inside a REAPER instance but currently
     controls another REAPER instance on a slave machine (with
-    ``reapy.machines.select_machine``), return False.
+    ``reapy.connect``), return False.
     """
     inside = hasattr(sys.modules["__main__"], "obj")
     if not inside:
