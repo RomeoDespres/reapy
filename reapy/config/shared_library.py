@@ -144,15 +144,25 @@ def get_linked_libpython():
 
 
 def get_python_shared_library():
-    """ Return path to libpython or `None` if not found.
+    """Return path to Python shared library (.dll, .dylib or .so).
 
     Returns
     -------
-    path : str or None
+    path : str
         Path to the (hopefully) correct libpython.
+
+    Raises
+    ------
+    FileNotFoundError
+        When shared library could not be found.
     """
     for path in filter(is_valid, get_candidate_paths()):
         return path
+    raise FileNotFoundError(
+        "Could not find Python shared library. Please report this bug at "
+        "https://github.com/RomeoDespres/reapy/issues/new so that we can "
+        "support more cases."
+    )
 
 
 def get_sharedlib_suffix():
