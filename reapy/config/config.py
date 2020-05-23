@@ -116,6 +116,8 @@ def add_reascript(resource_path, script_path):
     if os.path.splitext(script_path)[1] != '.py':
         raise ValueError('{} is not a Python module.'.format(script_path))
     ini_file = os.path.join(resource_path, "reaper-kb.ini")
+    if not os.path.exists(ini_file):
+        pathlib.Path(ini_file).touch()
     # Check if ReaScript already exists
     with open(ini_file) as f:
         lines = re.findall("^SCR 4 0 .*", f.read(), re.MULTILINE)
