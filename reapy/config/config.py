@@ -2,6 +2,7 @@ from configparser import ConfigParser
 from collections import OrderedDict
 import json
 import os
+import pathlib
 import random
 import re
 import shutil
@@ -63,6 +64,8 @@ class Config(ConfigParser):
         )
         self.optionxform = str
         self.ini_file = ini_file
+        if not os.path.exists(ini_file):
+            pathlib.Path(ini_file).touch()
         self.read(self.ini_file, encoding='utf8')
 
     def write(self):
