@@ -218,7 +218,8 @@ _types_to_match: ty.Dict[str, TypeDefT] = {
             'def': 'str',
             'ref': 'ct.c_char_p',
             'prot':
-                'prot_{arg} = packs_l({arg}, size=len({arg}), encoding=encoding)',
+                ('prot_{arg} = packs_l({arg}, size=len({arg}.encode(encoding))'
+                    ', encoding=encoding)'),
             'call': 'prot_{arg}',
             'ret': 'unpacks_l(prot_{arg}, want_raw=want_raw)',
             'default': 'prot_{arg} = packs_l("", size={size}, encoding=encoding)',
@@ -303,8 +304,6 @@ else:
 MAX_STRBUF = 4 * 1024 * 1024
 
 __all__: ty.List[str] = [
-    "Pointer",
-    "VoidPtr",
     {all_}
 ]
 
@@ -365,7 +364,7 @@ class FuncBuilder:
     def __init__(self, parcer: Parcer) -> None:
         self.parcer = parcer
         self._re_ptr = re.compile(r'[A-Z].+\*')
-        self.all: ty.List[str] = []
+        self.all: ty.List[str] = ["Pointer", "VoidPtr"]
         self.matched_types = self._match_types()
 
     def _match_types(self) -> ty.Dict[str, TypeDefT]:
@@ -434,7 +433,7 @@ class FuncBuilder:
         out_names: ty.List[str], opt_calls: ty.List[str],
         out_calls: ty.List[str]
     ) -> ty.Tuple[ty.List[str], str]:
-        """        
+        """
         Returns
         -------
         Tuple[List[str], str]
@@ -629,6 +628,7 @@ class FuncBuilder:
             ),
             defs='\n'.join(defs_str)
         )
+
         # mybe some code formatter should be here
         return code
 
@@ -653,6 +653,20 @@ def generate_js_api(bin_dir: str, api_filepath: str) -> None:
     module_str = builder.build_module()
     with open(api_filepath, 'w') as f:
         f.write(module_str)
+    with open('JS_API.py', 'r') as f:
+        lines = []
+        ignore = False
+        for line in f.readlines():
+            if ignore and ']' in line:
+                line = '\n' + line
+                ignore = False
+            if not ignore:
+                lines.append(line)
+            if '__all__: ty.List[str] = [' in line:
+                ignore = True
+                lines.append(',\n    '.join('"%s"' % s for s in builder.all))
+    with open('JS_API.py', 'w') as f:
+        f.writelines(lines)
 
 
 if __name__ == '__main__':
