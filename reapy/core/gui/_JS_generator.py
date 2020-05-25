@@ -341,6 +341,9 @@ class Pointer(ReapyObject):
             return self._int == other
         return False
 
+    def __hash__(self) -> int:
+        return int(self)
+
 
 class VoidPtr(Pointer):
     pass
