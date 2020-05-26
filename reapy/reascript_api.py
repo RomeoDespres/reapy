@@ -23,7 +23,7 @@ if reapy.is_inside_reaper():
 
     # Import SWS functions.
     try:
-        sys.path.append(os.path.join(_RPR.GetResourcePath(), 'Scripts'))
+        sys.path.append(os.path.join(_RPR.RPR_GetResourcePath(), 'Scripts'))
         import sws_python as _SWS
         sws_functions = set(_SWS.__dict__) - set(_RPR.__dict__)
         __all__ += list(sws_functions)
