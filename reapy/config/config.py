@@ -363,7 +363,7 @@ def get_new_reascript_code(ini_file):
     """
     def get_random_code():
         chars = string.ascii_letters + string.digits
-        return "".join(random.choices(chars, k=40))
+        return "".join(random.choice(chars) for _ in range(40))
     with open(ini_file) as f:
         content = f.read()
     code = get_random_code()
