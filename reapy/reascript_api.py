@@ -1,6 +1,7 @@
 import reapy
 from reapy.tools import json
 
+import os
 import sys
 
 
@@ -22,12 +23,13 @@ if reapy.is_inside_reaper():
 
     # Import SWS functions.
     try:
+        sys.path.append(os.path.join(_RPR.GetResourcePath(), 'Scripts'))
         import sws_python as _SWS
         sws_functions = set(_SWS.__dict__) - set(_RPR.__dict__)
         __all__ += list(sws_functions)
         for s in sws_functions:
             exec("from sws_python import {}".format(s))
-    except ModuleNotFoundError:  # SWS is not installed
+    except ImportError:  # SWS is not installed
         pass
 else:
     if reapy.dist_api_is_enabled():

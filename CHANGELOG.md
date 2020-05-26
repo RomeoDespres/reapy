@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Fixed
+
+- SWS functions were not available from outside REAPER on portable installs (see detailed issue on the [REAPER forum](https://forum.cockos.com/showthread.php?p=2292704#post2292704)).
+
+
 ## [0.7.0](https://github.com/RomeoDespres/reapy/releases/tag/0.7.0) - 2020-05-09
 
 ### Added
