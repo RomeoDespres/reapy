@@ -27,6 +27,7 @@ from .tools import (
     reconnect
 )
 from . import reascript_api
+from .config import configure_reaper
 from .core import *
 from .core.reaper import *
 
