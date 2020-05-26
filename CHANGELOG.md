@@ -3,7 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 
-## Unreleased
+## [0.7.1](https://github.com/RomeoDespres/reapy/releases/tag/0.7.1) - 2020-05-26
 
 ### Fixed
 
