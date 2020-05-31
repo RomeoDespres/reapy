@@ -12,13 +12,19 @@ T1 = ty.TypeVar('T1')
 
 class ClassCache(ty.Dict[str, T1]):
 
-    _core: ty.Optional[types.ModuleType] = None
+    _module_name: str
+    _module: ty.Optional[types.ModuleType] = None
 
     def __missing__(self, key: str) -> T1:
         ...
 
 
-_CLASS_CACHE: ClassCache[object] = ClassCache()
+class GuiCache(ClassCache[T1]):
+    ...
+
+
+_CLASS_CACHE: ClassCache[object]
+_GUI_CACHE: GuiCache[object]
 
 
 class ReapyEncoder(json.JSONEncoder):

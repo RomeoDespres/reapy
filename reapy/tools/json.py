@@ -7,19 +7,24 @@ import sys
 
 
 class ClassCache(dict):
-
-    _core = None
+    _module_name = "reapy.core"
+    _module = None
 
     def __missing__(self, key):
-        if self._core is None:
+        if self._module is None:
             # The import is here because otherwise there is an import loop
             # and to perform import just once.
-            self._core = importlib.import_module("reapy.core")
-        self[key] = getattr(self._core, key)
+            self._module = importlib.import_module(self._module_name)
+        self[key] = getattr(self._module, key)
         return self[key]
 
 
+class GuiCache(ClassCache):
+    _module_name = "reapy.core.gui"
+
+
 _CLASS_CACHE = ClassCache()
+_GUI_CACHE = GuiCache()
 
 
 class ReapyEncoder(json.JSONEncoder):
@@ -48,8 +53,13 @@ def dumps(x):
 
 def object_hook(x):
     if "__reapy__" in x:
-        reapy_class = _CLASS_CACHE[x["class"]]
-        return reapy_class(*x["args"], **x["kwargs"])
+        if x["module"].startswith("reapy.core.gui"):
+            reapy_class = _GUI_CACHE[x["class"]]
+        else:
+            reapy_class = _CLASS_CACHE[x["class"]]
+        obj = reapy_class(*x["args"], **x["kwargs"])
+        obj.state = x["state"]
+        return obj
     elif "__callable__" in x:
         module_name, name = x["module_name"], x["name"]
         try:

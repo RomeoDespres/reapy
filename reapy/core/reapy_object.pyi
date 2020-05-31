@@ -5,9 +5,11 @@ from typing_extensions import TypedDict
 ReapyObjectDict = TypedDict(
     'ReapyObjectDict', {
         "__reapy__": bool,
+        "module": bool,
         "class": str,
-        "args": ty.Tuple[ty.Any, ...],
-        "kwargs": ty.Dict[str, ty.Any]
+        "args": ty.Tuple[object, ...],
+        "kwargs": ty.Dict[str, object],
+        "state": ty.Optional[ty.Dict[str, object]]
     }
 )
 
@@ -22,7 +24,7 @@ class ReapyObject:
         ...
 
     @property
-    def _args(self) -> ty.Tuple[ty.Any, ...]:
+    def _args(self) -> ty.Tuple[object, ...]:
         ...
 
     def _get_pointer_and_name(self) -> ty.Tuple[int, str]:
@@ -33,8 +35,15 @@ class ReapyObject:
         ...
 
     @property
-    def _kwargs(self) -> ty.Dict[str, ty.Any]:
+    def _kwargs(self) -> ty.Dict[str, object]:
         ...
+
+    @property
+    def _state(self) -> ty.Optional[ty.Dict[str, object]]:
+        ...
+
+    @_state.setter
+    def _state(self, state: ty.Optional[ty.Dict[str, object]]) -> None: ...
 
     def _to_dict(self) -> ReapyObjectDict:
         ...
@@ -44,7 +53,7 @@ class ReapyObject:
         method_name: str,
         iterables: ty.Dict[str, object],
         defaults: ty.Optional[ty.Dict[str, object]] = None
-    ):
+    ) -> ty.List[object]:
         """
         Perform object method among iterables inside reaper.
 
