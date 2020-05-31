@@ -43,9 +43,7 @@ class ReapyObject:
         self,
         method_name: str,
         iterables: ty.Dict[str, object],
-        defaults: ty.Optional[
-            ty.Dict[str, ty.Union[ty.List[object], ty.Tuple[object, ...]]]
-        ] = None
+        defaults: ty.Optional[ty.Dict[str, object]] = None
     ):
         """
         Perform object method among iterables inside reaper.
