@@ -12,13 +12,13 @@ from .project import Marker, Project, Region, TimeSelection
 from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
 from .gui import JS_API as JS
-from .gui.JS_API import Pointer, VoidPtr, AudioWriter, PCM_source
-from .gui.window import (
-    TopLevel, TopCanvas, EvFrame, EvWindowMessage, EvKeyDownChar, EvKeyDownSys,
-    EvStart, EvExit, EvResized
-)
-from .gui.singleton import Singleton, UUID
-from .gui.events import EventClient, EventHandler, Event
+# from .gui.window import (
+#     TopLevel, TopCanvas, EvFrame, EvWindowMessage, EvKeyDownChar, EvKeyDownSys,
+#     EvStart, EvExit, EvResized
+# )
+# from .gui.singleton import Singleton, UUID
+# from .gui.events import EventClient, EventHandler, Event
+from . import gui
 
 __all__ = [
     # core.reapy_object
@@ -68,23 +68,24 @@ __all__ = [
     "ToolTip",
     "Window",
     # core.gui
+    "gui",
     "JS",
-    "Pointer",
-    "VoidPtr",
-    "AudioWriter",
-    "PCM_source",
-    "TopLevel",
-    "TopCanvas",
-    "Singleton",
-    "EvFrame",
-    "EvStart",
-    "EvExit",
-    "EvResized",
-    "EvWindowMessage",
-    "EvKeyDownChar",
-    "EvKeyDownSys",
-    "UUID",
-    "EventClient",
-    "EventHandler",
-    "Event",
+    # "Pointer",
+    # "VoidPtr",
+    # "AudioWriter",
+    # "PCM_source",
+    # "TopLevel",
+    # "TopCanvas",
+    # "Singleton",
+    # "EvFrame",
+    # "EvStart",
+    # "EvExit",
+    # "EvResized",
+    # "EvWindowMessage",
+    # "EvKeyDownChar",
+    # "EvKeyDownSys",
+    # "UUID",
+    # "EventClient",
+    # "EventHandler",
+    # "Event",
 ]
