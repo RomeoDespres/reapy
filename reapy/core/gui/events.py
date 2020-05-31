@@ -1,6 +1,5 @@
 import typing as ty
 import typing_extensions as te
-from uuid import uuid4
 
 import reapy
 from reapy.core import ReapyObject
@@ -18,14 +17,14 @@ class EventQueueItem(te.TypedDict):
 
 class EventClientMeta(SingletonMeta):
 
-    def __call__(
+    def __call__(  # type:ignore
         cls, *args, uuid: ty.Optional[UUID] = None, **kwargs
     ) -> 'EventClient':
         if uuid in cls._uuid_index:
-            return super().__call__(*args, uuid=uuid, **kwargs)
+            return super().__call__(*args, uuid=uuid, **kwargs)  # type:ignore
         obj = super().__call__(*args, uuid=uuid, **kwargs)
-        obj.event_handler.register_client(obj)
-        return obj
+        obj.event_handler.register_client(obj)  # type:ignore
+        return obj  # type:ignore
 
 
 class EventClient(Singleton, metaclass=EventClientMeta):

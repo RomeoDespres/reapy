@@ -11,9 +11,8 @@ from .item import (
 from .project import Marker, Project, Region, TimeSelection
 from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
-from .gui import JS_API as JS
-from .gui.JS_API import Pointer, VoidPtr, AudioWriter, PCM_source
-from .gui.window import TopLevel
+from .gui import JS
+from . import gui
 
 __all__ = [
     # core.reapy_object
@@ -63,10 +62,6 @@ __all__ = [
     "ToolTip",
     "Window",
     # core.gui
+    "gui",
     "JS",
-    "Pointer",
-    "VoidPtr",
-    "AudioWriter",
-    "PCM_source",
-    "TopLevel",
 ]

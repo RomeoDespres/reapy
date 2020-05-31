@@ -145,3 +145,20 @@ class vKey(IntEnum):
 
     def __repr__(self) -> str:
         return "<vKey.{}: {}>".format(self.name, hex(self.value))
+
+
+class WS(IntFlag):
+    """Window Styles as hex."""
+    # only used by GetWindowLong(GWL_STYLE) -- not settable
+    VISIBLE = 0x02000000
+
+    CHILD = 0x40000000
+    DISABLED = 0x08000000
+    CLIPSIBLINGS = 0x04000000
+    CAPTION = 0x00C00000
+    VSCROLL = 0x00200000
+    HSCROLL = 0x00100000
+    SYSMENU = 0x00080000
+    THICKFRAME = 0x00040000
+    GROUP = 0x00020000
+    TABSTOP = 0x00010000

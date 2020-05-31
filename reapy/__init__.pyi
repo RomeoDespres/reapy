@@ -65,11 +65,7 @@ __all__ = [
     "Window",
     # core.gui
     "JS",
-    "Pointer",
-    "VoidPtr",
-    "AudioWriter",
-    "PCM_source",
-    "TopLevel",
+    "gui",
     # core.reaper
     'add_reascript',
     'arm_command',
