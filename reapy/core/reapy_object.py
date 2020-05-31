@@ -50,12 +50,24 @@ class ReapyObject(metaclass=ReapyMetaclass):
     def _kwargs(self):
         return {}
 
+    @property
+    def _state(self):
+        return None
+
+    @_state.setter
+    def _state(self, state):
+        if state is None:
+            return
+        self.__dict__.update(state)
+
     def _to_dict(self):
         return {
             "__reapy__": True,
+            "module": self.__class__._reapy_parent.__module__,
             "class": self.__class__._reapy_parent.__name__,
             "args": self._args,
-            "kwargs": self._kwargs
+            "kwargs": self._kwargs,
+            "state": self._state
         }
 
     @reapy.inside_reaper()
