@@ -6,7 +6,7 @@ Home
    :hidden:
    :titlesonly:
 
-   getting_started
+   getting_started/index
    user_guide
    tutorials
    api
@@ -29,9 +29,10 @@ Home
         }
     </style>
 
+
 ``reapy`` is an open-source `Python <https://www.python.org>`_ library that allows to extend the `REAPER <https://www.reaper.fm>`_ digital audio workstation.
 
-From automating the tasks that are done too often to developing entire plugins for the community, it intends to help all people who wish to redesign their REAPER workflow with a simple and modern programming language.
+From automating the too often repeated tasks to developing entire plugins for the community, it intends to help all people who wish to redesign their REAPER workflow with a simple and modern programming language.
 
 The source code is available on the `GitHub repository <https://github.com/RomeoDespres/reapy>`_. It is distributed under the `MIT license <https://github.com/RomeoDespres/reapy/blob/master/LICENSE.txt>`_, which means you can use and modify it for any purpose provided you mention the original copyright and license.
 
@@ -43,7 +44,7 @@ The source code is available on the `GitHub repository <https://github.com/Romeo
                 <div class="card text-center intro-card shadow">
                     <div
                         class="card-body flex-fill"
-                        onclick="location.href='getting_started.html'"
+                        onclick="location.href='getting_started/index.html'"
                     >
                         <h5 class="card-title">Getting started</h5>
                         <p class="card-text">
