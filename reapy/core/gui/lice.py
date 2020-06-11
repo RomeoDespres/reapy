@@ -6,8 +6,8 @@ import reapy
 from . import JS
 from reapy.core import ReapyObject
 from reapy.errors import ResourceLoadError
-from .misc import Coordinates, Dimentions, Point
-from .window_ex import Window
+from .misc import Coordinates, Dimentions, Point, Size
+from .window import Window
 
 
 class Mix(enum.Enum):
@@ -313,29 +313,27 @@ class Bitmap(ReapyObject):
 
     def __init__(
         self,
-        size: ty.Optional[ty.Tuple[int, int]] = None,
+        size: Size = Size(100, 100),
         ptr: ty.Optional[JS.VoidPtr] = None,
         fixed_corners: FixedCorners = FixedCorners(0, 0, 0, 0),
     ) -> None:
-        size = (100, 100) if size is None else size
-        self.ptr = JS.LICE_CreateBitmap(True, *size) if ptr is None else ptr
+        self.ptr = JS.LICE_CreateBitmap(True, *size.t) if ptr is None else ptr
         self.fixed_corners = fixed_corners
 
     @property
     def _args(
         self
-    ) -> ty.Tuple[ty.Optional[ty.Tuple[int, int]], ty.Optional[JS.VoidPtr],
-                  FixedCorners]:
+    ) -> ty.Tuple[ty.Optional[Size], ty.Optional[JS.VoidPtr], FixedCorners]:
         return self.size, self.ptr, self.fixed_corners
 
     @property
-    def size(self) -> ty.Tuple[int, int]:  # type:ignore
+    def size(self) -> Size:  # type:ignore
         with reapy.inside_reaper():
-            return self.width, self.height
+            return Size(self.width, self.height)
 
     @size.setter
-    def size(self, size: ty.Tuple[int, int]) -> None:
-        JS.LICE_Resize(self.ptr, *size)
+    def size(self, size: Size) -> None:
+        JS.LICE_Resize(self.ptr, *size.t)
 
     @property
     def width(self) -> int:
@@ -520,7 +518,7 @@ class Canvas(Bitmap):
 
     def __init__(
         self,
-        size: ty.Optional[ty.Tuple[int, int]] = None,
+        size: Size = Size(100, 100),
         ptr: ty.Optional[JS.VoidPtr] = None,
         fixed_corners: FixedCorners = FixedCorners(0, 0, 0, 0),
         bg_color: ty.Union[int, Color] = 0xff000000,
@@ -604,7 +602,7 @@ class PNG(Canvas):
 
     def __init__(
         self,
-        size: ty.Optional[ty.Tuple[int, int]] = None,
+        size: Size = Size(100, 100),
         ptr: ty.Optional[JS.VoidPtr] = None,
         fixed_corners: FixedCorners = FixedCorners(0, 0, 0, 0),
         bg_color: ty.Union[int, Color] = 0xff000000,
@@ -630,11 +628,6 @@ class PNG(Canvas):
             if i >= 15:
                 encoding = fallback
             ptr = JS.LICE_LoadPNGEx(filename, encoding)
-            print(
-                'loaded from "{}" with encoding "{}". Returned: {}'.format(
-                    filename, encoding, ptr
-                )
-            )
             if int(ptr) != 0:
                 return ptr
         raise ResourceLoadError(

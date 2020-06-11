@@ -2,19 +2,22 @@ from typing import List
 
 from . import JS_API as JS
 from .swell_translations import (vNumKey, vVirtKey, vKey, WS)
-from .window_ex import (WindowInfo, Window)
-from .events import (Event, EventQueueItem,
-                     EventClientMeta, EventClient, EventHandler)
-from .lice import (Mix, MixBlit, Color, _BlitArea, FixedCorners,
-                   Bitmap, Canvas, PNG, CompositedWindow)
-from .misc import (Coordinates, Dimentions, Point, Size)
-
-from .JS_API import *
-
-# JS = JS_API
+from .window import (WindowInfo, Window)
+from .events import (
+    Event, EventTarget, EventQueueItem, EventClientMeta, EventClient,
+    EventHandler, EventLoop, EvFrame, EvStart, EvExit
+)
+from .lice import (
+    Mix, MixBlit, Color, _BlitArea, FixedCorners, Bitmap, Canvas, PNG,
+    CompositedWindow
+)
+from .misc import (Coordinates, Dimentions, Point, Size, mouse_pos)
+from .widget import (
+    EvResize, EvWindowMessage, EvKeyDownChar, EvKeyDownSys, Widget, WM_Handler,
+    Layout
+)
 
 __all__: List[str] = [
-    # "JS_API",
     "JS",
     # swell_translations
     "vNumKey",
@@ -26,10 +29,15 @@ __all__: List[str] = [
     "Window",
     # events
     "Event",
+    "EventTarget",
     "EventQueueItem",
     "EventClientMeta",
     "EventClient",
     "EventHandler",
+    "EventLoop",
+    "EvFrame",
+    "EvStart",
+    "EvExit",
     # lice
     "Mix",
     "MixBlit",
@@ -45,6 +53,15 @@ __all__: List[str] = [
     "Dimentions",
     "Point",
     "Size",
+    "mouse_pos",
+    # widget
+    "EvResize",
+    "EvWindowMessage",
+    "EvKeyDownChar",
+    "EvKeyDownSys",
+    "Widget",
+    "WM_Handler",
+    "Layout",
 ]
 
-__all__.extend(JS.__all__)
+# __all__.extend(JS.__all__)

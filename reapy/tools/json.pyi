@@ -23,8 +23,13 @@ class GuiCache(ClassCache[T1]):
     ...
 
 
+class JSCache(ClassCache[T1]):
+    ...
+
+
 _CLASS_CACHE: ClassCache[object]
 _GUI_CACHE: GuiCache[object]
+_JS_CACHE: JSCache[object]
 
 
 class ReapyEncoder(json.JSONEncoder):

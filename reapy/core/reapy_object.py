@@ -52,13 +52,11 @@ class ReapyObject(metaclass=ReapyMetaclass):
 
     @property
     def _state(self):
-        return None
+        return {}
 
-    @_state.setter
-    def _state(self, state):
-        if state is None:
-            return
-        self.__dict__.update(state)
+    def _state_set(self, state):
+        for k, v in state.items():
+            setattr(self, k, v)
 
     def _to_dict(self):
         return {

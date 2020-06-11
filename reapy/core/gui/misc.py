@@ -1,6 +1,7 @@
 import typing as ty
 
 from reapy.core import ReapyObject
+from reapy import reascript_api as RPR
 
 
 class Coordinates(ReapyObject):
@@ -171,3 +172,18 @@ class Size(ReapyObject):
     @staticmethod
     def from_coordinates(coords: Coordinates) -> 'Size':
         return Size.from_dimentions(Dimentions.from_coordinates(coords))
+
+
+def mouse_pos() -> Point:
+    """Mouse position at screen.
+
+    Note
+    ----
+    I'm not sure if it should and how to return normalized value
+    e.g. invert top and bottom on MacOS
+
+    Returns
+    -------
+    ty.Tuple[int, int]
+    """
+    return Point(*RPR.GetMousePosition(0, 0))  # type:ignore
