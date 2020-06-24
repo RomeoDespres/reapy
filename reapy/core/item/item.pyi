@@ -88,6 +88,10 @@ class Item(ReapyObject):
         """
         ...
 
+    @is_selected.setter
+    def is_selected(self, value: bool) -> None:
+        ...
+
     @property
     def length(self) -> float:
         """
@@ -159,6 +163,16 @@ class Item(ReapyObject):
             Item parent project.
         """
         ...
+
+    def set_info_value(self, param_name: str, value: float) -> None:
+        """
+        Set raw item info value.
+
+        Parameters
+        ----------
+        param_name : str
+        value : float
+        """
 
     def split(self, position: float) -> ty.Tuple[Item, Item]:
         """

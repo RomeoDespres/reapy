@@ -101,6 +101,10 @@ class Item(ReapyObject):
         is_selected = bool(RPR.IsMediaItemSelected(self.id))
         return is_selected
 
+    @is_selected.setter
+    def is_selected(self, value):
+        self.set_info_value("B_UISEL", int(value))
+
     @property
     def length(self):
         """
@@ -173,6 +177,17 @@ class Item(ReapyObject):
         :type: reapy.Project
         """
         return reapy.Project(RPR.GetItemProjectContext(self.id))
+
+    def set_info_value(self, param_name, value):
+        """
+        Set raw item info value.
+        
+        Parameters
+        ----------
+        param_name : str
+        value : float
+        """
+        RPR.SetMediaItemInfo_Value(self.id, param_name, value)
 
     def split(self, position):
         """

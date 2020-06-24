@@ -487,6 +487,9 @@ class Take(ReapyObject):
         """
         RPR.MIDI_SelectAll(self.id, select)
 
+    def set_info_value(self, param_name, value):
+        RPR.SetMediaItemTakeInfo_Value(self.id, param_name, value)
+
     def sort_events(self):
         """
         Sort MIDI events on take.
@@ -521,6 +524,10 @@ class Take(ReapyObject):
         """
         return reapy.Source(RPR.GetMediaItemTake_Source(self.id))
 
+    @source.setter
+    def source(self, source):
+        RPR.SetMediaItemTake_Source(self.id, source.id)
+
     @property
     def start_offset(self):
         """
@@ -529,6 +536,10 @@ class Take(ReapyObject):
         :type: float
         """
         return self.get_info_value("D_STARTOFFS")
+
+    @start_offset.setter
+    def start_offset(self, value):
+        self.set_info_value("D_STARTOFFS", value)
 
     def time_to_ppq(self, time):
         """
