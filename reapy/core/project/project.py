@@ -340,7 +340,7 @@ class Project(ReapyObject):
         with self.make_current_project():
             RPR.ClearAllRecArmed()
 
-    def end_undo_block(self, description=""):
+    def end_undo_block(self, description="", flags: int=-1):
         """
         End undo block.
 
@@ -348,8 +348,14 @@ class Project(ReapyObject):
         ----------
         description : str
             Undo block description.
+        flags : int
+            1: track configurations
+            2: track FX
+            4: track items
+            8: project states
+            16: freeze states
         """
-        RPR.Undo_EndBlock2(self.id, description, 0)
+        RPR.Undo_EndBlock2(self.id, description, flags)
 
     @reapy.inside_reaper()
     @property

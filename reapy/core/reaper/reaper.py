@@ -700,9 +700,14 @@ class undo_block(contextlib.ContextDecorator):
     :param undo_name: Str to register undo name (shown later in Undo menu)
     :param flags: Int to pass to Undo_EndBlock
                     (leave default if you don't know what it is)
+        1: track configurations
+        2: track FX
+        4: track items
+        8: project states
+        16: freeze states
     """
 
-    def __init__(self, undo_name, flags=0):
+    def __init__(self, undo_name, flags=-1):
         self.undo_name = undo_name
         self.flags = flags
 
