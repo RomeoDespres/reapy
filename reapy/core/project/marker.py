@@ -31,6 +31,7 @@ class Marker(ReapyObject):
         for index, marker in enumerate(self.project.markers):
             if marker.index == self.index:
                 return index
+        return self.index
 
     @property
     def _kwargs(self):
