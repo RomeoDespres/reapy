@@ -340,7 +340,7 @@ class Project(ReapyObject):
         with self.make_current_project():
             RPR.ClearAllRecArmed()
 
-    def end_undo_block(self, description="", flags: int=-1):
+    def end_undo_block(self, description="", flags: int = -1):
         """
         End undo block.
 
@@ -659,6 +659,17 @@ class Project(ReapyObject):
                     track = self.master_track
                 fx, index = track.fxs[res[2]], res[3]
         return fx, index
+
+    @property
+    def loop_points(self):
+        _, _, _, startOut, endOut, _ = RPR.GetSet_LoopTimeRange2(
+            self.id, False, False, False, False, False)
+        return startOut, endOut
+
+    @loop_points.setter
+    def loop_points(self, points):
+        RPR.GetSet_LoopTimeRange2(
+            self.id, True, True, points[0], points[1], False)
 
     def make_current_project(self):
         """

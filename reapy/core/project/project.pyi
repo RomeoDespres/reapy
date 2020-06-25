@@ -512,6 +512,12 @@ class Project(ReapyObject):
         """
         ...
 
+    @property
+    def loop_points(self) -> ty.Tuple[float, float]: ...
+
+    @loop_points.setter
+    def loop_points(self, points: ty.Tuple[float, float])->None: ...
+
     def make_current_project(self) -> ty.ContextManager[None]:
         """
         Set project as current project.
@@ -642,7 +648,7 @@ class Project(ReapyObject):
         """
         ...
 
-    def open(self, in_new_tab:bool=False) -> None:
+    def open(self, in_new_tab: bool = False) -> None:
         """
         Open project, if it was closed by Project.close.
 
