@@ -27,7 +27,6 @@ class Marker(ReapyObject):
             enum_index = self._get_enum_index()
         self.enum_index = enum_index
 
-    @reapy.inside_reaper()
     def _get_enum_index(self):
         """
         Return marker index as needed by RPR.EnumProjectMarkers2.
@@ -37,9 +36,10 @@ class Marker(ReapyObject):
         reapy.errors.UndefinedMarkerError
             Description
         """
-        for marker in self.project.markers:
-            if marker.index == self.index:
-                return marker.enum_index
+        with reapy.inside_reaper():
+            for marker in self.project.markers:
+                if marker.index == self.index:
+                    return marker.enum_index
         raise reapy.errors.UndefinedMarkerError(self.index)
 
     @property
