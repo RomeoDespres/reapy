@@ -50,7 +50,6 @@ class ExtensionNotFoundError(Exception):
         super().__init__(message)
 
 
-
 class InsideREAPERError(Exception):
 
     pass
@@ -127,6 +126,13 @@ class UndefinedFXParamError(Exception):
         message = "No param named \"{}\" for FX \"{}\"".format(
             name, fx_name
         )
+        super().__init__(message)
+
+
+class UndefinedMarkerError(Exception):
+
+    def __init__(self, index):
+        message = "No marker with user-index {}".format(index)
         super().__init__(message)
 
 

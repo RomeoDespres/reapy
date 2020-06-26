@@ -708,7 +708,8 @@ class Project(ReapyObject):
             RPR.EnumProjectMarkers2(self.id, i, 0, 0, 0, 0, 0)
             for i in range(self.n_regions + self.n_markers)
         ]
-        return [reapy.Marker(self, i[0]) for i in ids if not i[3]]
+        return [reapy.Marker(self, index=i[7], enum_index=i[0]-1)
+                for i in ids if not i[3]]
 
     @property
     def master_track(self):

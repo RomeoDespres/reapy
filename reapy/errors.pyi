@@ -75,6 +75,11 @@ class UndefinedFXParamError(Exception):
         ...
 
 
+class UndefinedMarkerError(Exception):
+
+    def __init__(self, index: int): ...
+
+
 class UndoError(Exception):
     def __init__(self) -> None:
         ...

@@ -14,7 +14,8 @@ class Marker(ReapyObject):
     def __init__(self,
                  parent_project: ty.Optional[reapy.Project] = None,
                  index: ty.Optional[int] = None,
-                 parent_project_id: ty.Optional[int] = None):
+                 parent_project_id: ty.Optional[int] = None,
+                 enum_index: ty.Optional[int] = None):
         ...
 
     @reapy.inside_reaper()
