@@ -376,6 +376,10 @@ class Take(ReapyObject):
             return RPR.GetTakeName(self.id)
         return ""
 
+    @name.setter
+    def name(self, name):
+        RPR.GetSetMediaItemTakeInfo_String(self.id, "P_NAME", name, True)
+
     @property
     def notes(self):
         """

@@ -203,7 +203,7 @@ class Take(ReapyObject):
         ...
 
     @property
-    def has_valid_id(self) ->  bool:
+    def has_valid_id(self) -> bool:
         """
         Whether ReaScript ID is still valid.
 
@@ -345,6 +345,9 @@ class Take(ReapyObject):
         :type: str
         """
         ...
+
+    @name.setter
+    def name(self, name: str) -> None: ...
 
     @property
     def notes(self) -> reapy.NoteList:
