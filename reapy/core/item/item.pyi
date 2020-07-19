@@ -7,16 +7,16 @@ import typing as ty
 class Item(ReapyObject):
 
     _class_name = "Item"
-    id: int
+    id: str
 
-    def __init__(self, id: int) -> None:
+    def __init__(self, id: str) -> None:
         ...
 
     def __eq__(self, other: object) -> bool:
         ...
 
     @property
-    def _args(self) -> ty.Tuple[int]:
+    def _args(self) -> ty.Tuple[str]:
         ...
 
     @property
