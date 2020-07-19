@@ -1,7 +1,18 @@
+import typing as ty
+from typing_extensions import TypedDict
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
-import typing as ty
+
+
+class EnvelopePoint(TypedDict):
+    index: int
+    time: float
+    value: float
+    shape: int
+    tension: float
+    selected: float
 
 
 class Envelope(ReapyObject):
@@ -110,6 +121,19 @@ class Envelope(ReapyObject):
         """
         ...
 
+    def get_point(self, index: int) -> EnvelopePoint:
+        """Get EvnelopePoint as dictionary.
+
+        Parameters
+        ----------
+        index : int
+            point index
+
+        Returns
+        -------
+        EnvelopePoint
+        """
+
     @property
     def items(self) -> ty.List[reapy.AutomationItem]:
         """
@@ -118,6 +142,22 @@ class Envelope(ReapyObject):
         :type: list of reapy.AutomationItem
         """
         ...
+
+    def insert_point(self, point: EnvelopePoint, sort: bool = True) -> bool:
+        """Insert EnvelopePoint
+
+        Parameters
+        ----------
+        point : EnvelopePoint
+            index not counted
+        sort : bool, optional
+            set to False if insert many points,
+            than use self.sort_points()
+
+        Returns
+        -------
+        bool
+        """
 
     @property
     def n_items(self) -> int:
@@ -154,6 +194,26 @@ class Envelope(ReapyObject):
         :type: Take or Track
         """
         ...
+
+    def set_point(
+        self, index: int, value: EnvelopePoint, sort: bool = True
+    ) -> bool:
+        """Set envelope point.
+
+        Note
+        ----
+        Not tested yet
+
+        Parameters
+        ----------
+        index : int
+        value : EnvelopePoint
+        sort : bool, optional
+            set to False if set many points,
+            than use self.sort_points()
+        """
+
+    def sort_points(self) -> None: ...
 
 
 class EnvelopeList(ReapyObject):

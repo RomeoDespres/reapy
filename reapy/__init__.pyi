@@ -24,6 +24,7 @@ __all__ = [
     # core.envelope
     "Envelope",
     "EnvelopeList",
+    "EnvelopePoint",
     # core.fx
     "FX",
     "FXList",

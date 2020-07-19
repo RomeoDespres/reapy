@@ -1,7 +1,7 @@
 from .reapy_object import ReapyObject, ReapyObjectList
 
 from .audio_accessor import AudioAccessor
-from .envelope import Envelope, EnvelopeList
+from .envelope import Envelope, EnvelopeList, EnvelopePoint
 from .fx import FX, FXList, FXParam, FXParamsList
 from .item import CC, CCList, Item, Note, NoteList, Source, Take
 from .project import Marker, Project, Region, TimeSelection
@@ -17,6 +17,7 @@ __all__ = [
     # core.envelope
     "Envelope",
     "EnvelopeList",
+    "EnvelopePoint",
     # core.fx
     "FX",
     "FXList",

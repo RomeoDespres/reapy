@@ -1,8 +1,31 @@
 import warnings
 
+from typing_extensions import TypedDict
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
+
+
+class EnvelopePoint(TypedDict):
+    """Dictionary represents envelope point.
+
+    Members
+    -------
+    index: int
+    time: float
+    value: float
+    shape: int
+    tension: float
+    selected: float
+    """
+
+    index: int
+    time: float
+    value: float
+    shape: int
+    tension: float
+    selected: float
 
 
 class Envelope(ReapyObject):
@@ -117,6 +140,29 @@ class Envelope(ReapyObject):
             value = RPR.Envelope_FormatValue(self.id, value, "", 2048)[2]
         return value
 
+    def get_point(self, index):
+        """Get EvnelopePoint as dictionary.
+
+        Parameters
+        ----------
+        index : int
+            point index
+
+        Returns
+        -------
+        EnvelopePoint
+        """
+        (_, _, index, time, value, shape, tension,
+         selected) = RPR.GetEnvelopePoint(self.id, index, 0.0, 0.0, 0, 0.0, 1)
+        return EnvelopePoint(
+            index=index,
+            time=time,
+            value=value,
+            shape=shape,
+            tension=tension,
+            selected=selected,
+        )
+
     @reapy.inside_reaper()
     @property
     def has_valid_id(self):
@@ -134,6 +180,27 @@ class Envelope(ReapyObject):
             return False
         pointer, name = self._get_pointer_and_name()
         return bool(RPR.ValidatePtr2(project_id, pointer, name))
+
+    def insert_point(self, point, sort=True):
+        """Insert EnvelopePoint
+
+        Parameters
+        ----------
+        point : EnvelopePoint
+            index not counted
+        sort : bool, optional
+            set to False if insert many points,
+            than use self.sort_points()
+
+        Returns
+        -------
+        bool
+        """
+        (retval, _, _, _, _, _, _, _) = RPR.InsertEnvelopePoint(
+            self.id, point['time'], point['value'], point['shape'],
+            point['tension'], point['selected'], not sort
+        )
+        return retval
 
     @property
     def items(self):
@@ -183,6 +250,30 @@ class Envelope(ReapyObject):
         :type: Take or Track
         """
         return self._parent
+
+    def set_point(self, index, value, sort=True):
+        """Set envelope point.
+
+        Note
+        ----
+        Not tested yet
+
+        Parameters
+        ----------
+        index : int
+        value : EnvelopePoint
+        sort : bool, optional
+            set to False if set many points,
+            than use self.sort_points()
+        """
+        (retval, _, _, _, _, _, _, _, _) = RPR.SetEnvelopePoint(
+            self.id, index, value['time'], value['value'], value['shape'],
+            value['tension'], value['selected'], not sort
+        )
+        return bool(retval)
+
+    def sort_points(self):
+        RPR.Envelope_SortPoints(self.id)
 
 
 class EnvelopeList(ReapyObject):
