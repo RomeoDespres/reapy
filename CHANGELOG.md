@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Added
+
+- `Project.record()` method to start recording.
+
+
 ## [0.7.2](https://github.com/RomeoDespres/reapy/releases/tag/0.7.2) - 2020-05-26
 
 ### Fixed
