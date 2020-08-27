@@ -1,79 +1,86 @@
-Installation and uninstallation guide
-=====================================
-
-.. contents:: Contents
-    :local:
-    :depth: 2
-
+.. |pip| replace:: ``pip``
+.. _pip: https://pip.pypa.io/en/stable/
 
 Installation
-------------
+============
 
-pip
-***
+.. note::
 
-``reapy`` can be installed *via* ``pip`` by running::
+    Below are straightforward instructions for users that already have experience with using Python in a terminal. If you feel you need more explanation, head to `Detailed instructions`_.
 
-    pip install python-reapy
+reapy is available via ``pip``:
 
-If Python is already enabled in REAPER, and if you only wish to use ``reapy`` from inside REAPER, you're done! Otherwise, keep reading.
+.. code-block:: bash
 
-Get configuration infos
-***********************
+    $ pip install python-reapy
 
-In a terminal, run::
+One additional step is required to let REAPER know reapy is available. First, open REAPER. Then in a terminal, run:
 
-    py -m reapy
+.. code-block:: bash
 
-You should get something like::
+    $ python -c "import reapy; reapy.configure_reaper()"
 
-    C:\Users\username\AppData\Local\Programs\Python\Python37\Lib\site-packages\reapy\tools\dist_program.py:14: DisabledDistAPIWarning: Can't reach distant API. Please start REAPER, or call reapy.config.enable_dist_api() from inside REAPER to enable distant API.
-      warnings.warn(DisabledDistAPIWarning())
+Now restart REAPER, and you're all set!
 
-    ======================
-      reapy config infos
-    ======================
+Detailed instructions
+---------------------
 
-    Python DLL
-    ----------
-        C:\Users\username\AppData\Local\Programs\Python\Python37\python37.dll
+Not sure what the previous commands mean? The instructions below will guide you through all steps to get Python and reapy up and running.
 
-    Enable or disable reapy dist API
-    --------------------------------
-    Enable dist API
-         C:\Users\username\AppData\Local\Programs\Python\Python37\Lib\site-packages\reapy\reascripts\enable_dist_api.py
+Install Python
+**************
 
-    Disable dist API
-         C:\Users\username\AppData\Local\Programs\Python\Python37\Lib\site-packages\reapy\reascripts\disable_dist_api.py
+You can check if you have Python installed by opening a terminal and running:
 
-Enable Python in REAPER
-***********************
+(Windows)
 
-If Python is already enabled in REAPER, please skip this step. Otherwise, since Python is not natively enabled in REAPER, you have to configure it.
+.. code-block:: bash
 
-In REAPER, go to *Options > Preferences... > Plug-ins > ReaScript*. Check *Enable Python for use with ReaScript*, and fill *Custom path to Python dll directory* and *Force ReaScript to use specific Python .dll* with the directory path and the file name of the Python DLL as provided by the previous section.
+    py --version
 
-Restart REAPER.
+(MacOS/Linux)
 
-Enable ``reapy`` distant API
-****************************
+.. code-block:: bash
 
-If you want to be able to use ``reapy`` outside REAPER, you need to enable its distant API.
+    python --version
 
-Go to *Actions > Show action list > Reascript : Load...* and browse for the script path previously displayed in the config infos. A new Action appears called "Script: enable_dist_api.py". Double-click on it and restart REAPER.
+If Python is installed, its version gets printed on the terminal. If you get an error or if your version of Python is 2.x.x, head to the `official Python download page <https://www.python.org/downloads>`_ and install Python 3.
 
-You're all set! Check out the `API guide <api_guide.html>`_ and the `Translation table <api_table.html>`_ for more information about how to use ``reapy``.
+.. note::
+
+    Python 2 `officially died <https://www.python.org/dev/peps/pep-0373/#update-april-2014>`_ in January 2020, which is why reapy does not support it.
+
+You may have read in `REAPER official documentation <https://www.reaper.fm/sdk/reascript/reascript.php#reascript_req_py>`_ that using Python for REAPER requires additional configuration steps. Don't spend time trying to reproduce them, reapy will do it for you.
+
+Install reapy
+*************
+
+reapy can be installed with the standard Python package manager ``pip`` (documentation `here <https://pip.pypa.io/>`_). In the terminal, run:
+
+.. code-block:: bash
+
+    pip install reapy
+
+.. note::
+
+    Having both Python 2 and 3 installed may require to use ``pip3`` instead of ``pip`` . On Windows, if neither ``pip`` nor ``pip3`` works, ``py -m pip install reapy`` should do the trick.
+
+Configure REAPER
+****************
+
+REAPER has to be configured to be able to use reapy. First, open REAPER, then run the following in a terminal:
 
 
-Uninstallation
---------------
+(Windows)
 
-To uninstall ``reapy``, first get the path to ``disable_dist_api.py`` by displaying ``reapy`` config infos (see `above <#get-configuration-infos>`_ ).
+.. code-block:: bash
 
-In REAPER, go to *Actions > Show action list > Reascript : Load...* and browse for the path. A new Action appears called "Script: disable_dist_api.py". Double-click on it.
+    py -c "import reapy; reapy.configure_reaper()"
 
-Finally, run::
+(MacOS/Linux)
 
-    pip uninstall python-reapy
+.. code-block:: bash
 
-``reapy`` is now uninstalled from your machine.
+    python -c "import reapy; reapy.configure_reaper()"
+
+Finally, restart REAPER and you're good to go!
