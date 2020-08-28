@@ -16,25 +16,21 @@
 
 ## Installation
 
-1. First install from `pip`:
+If you feel you need more explanation than the straightforward instructions below, head to the detailed [installation guide](https://python-reapy.readthedocs.io/en/latest/install_guide.html).
 
-```
-pip install python-reapy
-```
+reapy is available via `pip`:
 
-2. Run:
-
-```
-python -m reapy
+```bash
+$ pip install python-reapy
 ```
 
-Paths to your Python DLL and to `reapy` configuration scripts get printed.
+One additional step is required to let REAPER know reapy is available. First, open REAPER. Then in a terminal, run:
 
-3. If you haven't enabled Python in REAPER yet, go to *Options > Preferences... > Plug-ins > ReaScript*. Check *Enable Python for use with ReaScript*, and fill *Custom path to Python dll directory* and *Force ReaScript to use specific Python .dll* with the directory path and the file name of the Python DLL.
+```bash
+$ python -c "import reapy; reapy.configure_reaper()"
+```
 
-4. Enable `reapy` dist API by running the corresponding ReaScript (*Actions > Show action list > Reascript : Load...* and browse for the script path).
-
-You're all set! You can now import `reapy` from inside or outside REAPER as any standard Python module.
+Restart REAPER, and you're all set! You can now import `reapy` from inside or outside REAPER as any standard Python module.
 
 Instead of creating a new ReaScript containing:
 
@@ -96,7 +92,7 @@ When used from inside REAPER, `reapy` has almost identical performance than nati
 ...     bpms = [project.bpm for _ in range(1000)]
 ...
 >>> # Takes only 0.1 second!
-    
+
 ```
 
 ### Documentation
@@ -114,5 +110,3 @@ For now, about a half of ReaScript API has a `reapy` counterpart, the docs are f
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
-
-
