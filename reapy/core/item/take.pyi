@@ -202,7 +202,7 @@ class Take(ReapyObject):
     def get_info_value(self, param_name: str) -> float:
         ...
 
-    def get_info_value(self, param_name: str, value: float) -> bool:
+    def set_info_value(self, param_name: str, value: float) -> bool:
         ...
 
     @property
