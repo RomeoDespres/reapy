@@ -49,9 +49,6 @@ class Item(ReapyObject):
     def get_info_value(self, param_name: str) -> float:
         ...
 
-    def set_info_value(self, param_name: str, value: float) -> bool:
-        ...
-
     def get_take(self, index: int) -> reapy.Take:
         """
         Return index-th take of item.
@@ -161,6 +158,9 @@ class Item(ReapyObject):
         project : Project
             Item parent project.
         """
+        ...
+
+    def set_info_value(self, param_name: str, value: float) -> bool:
         ...
 
     def split(self, position: float) -> ty.Tuple[Item, Item]:

@@ -202,9 +202,6 @@ class Take(ReapyObject):
     def get_info_value(self, param_name: str) -> float:
         ...
 
-    def set_info_value(self, param_name: str, value: float) -> bool:
-        ...
-
     @property
     def has_valid_id(self) ->  bool:
         """
@@ -447,6 +444,9 @@ class Take(ReapyObject):
         --------
         Take.unselect_all_midi_events
         """
+        ...
+
+    def set_info_value(self, param_name: str, value: float) -> bool:
         ...
 
     def sort_events(self) -> None:

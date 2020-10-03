@@ -218,9 +218,6 @@ class Take(ReapyObject):
     def get_info_value(self, param_name):
         return RPR.GetMediaItemTakeInfo_Value(self.id, param_name)
 
-    def set_info_value(self, param_name, value):
-        return RPR.SetMediaItemTakeInfo_Value(self.id, param_name, value)
-
     @reapy.inside_reaper()
     @property
     def has_valid_id(self):
@@ -489,6 +486,9 @@ class Take(ReapyObject):
         Take.unselect_all_midi_events
         """
         RPR.MIDI_SelectAll(self.id, select)
+
+    def set_info_value(self, param_name, value):
+        return RPR.SetMediaItemTakeInfo_Value(self.id, param_name, value)
 
     def sort_events(self):
         """

@@ -52,9 +52,6 @@ class Item(ReapyObject):
         value = RPR.GetMediaItemInfo_Value(self.id, param_name)
         return value
 
-    def set_info_value(self, param_name, value):
-        return RPR.SetMediaItemInfo_Value(self.id, param_name, value)
-
     def get_take(self, index):
         """
         Return index-th take of item.
@@ -176,6 +173,9 @@ class Item(ReapyObject):
         :type: reapy.Project
         """
         return reapy.Project(RPR.GetItemProjectContext(self.id))
+
+    def set_info_value(self, param_name, value):
+        return RPR.SetMediaItemInfo_Value(self.id, param_name, value)
 
     def split(self, position):
         """
