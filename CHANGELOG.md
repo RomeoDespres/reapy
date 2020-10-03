@@ -9,6 +9,10 @@ All notable changes to this project will be documented in this file.
 
 - `set_info_value` methods for `Item` and `Take`.
 
+### Fixed
+
+- `reapy.reconnect()` not working after REAPER crashes on macOS (see issue [#96](https://github.com/RomeoDespres/reapy/issues/96)).
+
 
 ## [0.8.0](https://github.com/RomeoDespres/reapy/releases/tag/0.8.0) - 2020-08-28
 
