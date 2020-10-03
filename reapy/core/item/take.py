@@ -218,6 +218,9 @@ class Take(ReapyObject):
     def get_info_value(self, param_name):
         return RPR.GetMediaItemTakeInfo_Value(self.id, param_name)
 
+    def set_info_value(self, param_name, value):
+        return RPR.SetMediaItemTakeInfo_Value(self.id, param_name, value)
+
     @reapy.inside_reaper()
     @property
     def has_valid_id(self):
