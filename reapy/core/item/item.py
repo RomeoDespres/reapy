@@ -174,6 +174,9 @@ class Item(ReapyObject):
         """
         return reapy.Project(RPR.GetItemProjectContext(self.id))
 
+    def set_info_value(self, param_name, value):
+        return RPR.SetMediaItemInfo_Value(self.id, param_name, value)
+
     def split(self, position):
         """
         Split item and return left and right parts.

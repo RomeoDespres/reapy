@@ -160,6 +160,9 @@ class Item(ReapyObject):
         """
         ...
 
+    def set_info_value(self, param_name: str, value: float) -> bool:
+        ...
+
     def split(self, position: float) -> ty.Tuple[Item, Item]:
         """
         Split item and return left and right parts.

@@ -446,6 +446,9 @@ class Take(ReapyObject):
         """
         ...
 
+    def set_info_value(self, param_name: str, value: float) -> bool:
+        ...
+
     def sort_events(self) -> None:
         """
         Sort MIDI events on take.

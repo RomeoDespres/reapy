@@ -487,6 +487,9 @@ class Take(ReapyObject):
         """
         RPR.MIDI_SelectAll(self.id, select)
 
+    def set_info_value(self, param_name, value):
+        return RPR.SetMediaItemTakeInfo_Value(self.id, param_name, value)
+
     def sort_events(self):
         """
         Sort MIDI events on take.
