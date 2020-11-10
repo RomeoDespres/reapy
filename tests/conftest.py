@@ -1,4 +1,6 @@
+import os
 import pathlib
+import shutil
 import subprocess
 import time
 
@@ -18,4 +20,32 @@ def reaper(request):
         time.sleep(1)
         reapy.reconnect()
         trials += 1
-    request.addfinalizer(process.terminate)
+
+    def finalizer():
+        reapy.open_project('')
+        process.terminate()
+
+    request.addfinalizer(finalizer)
+
+
+@pytest.fixture(scope='session')
+def temp_projects_dir(request):
+    temp_projects_dir = pathlib.Path(__file__).parent / 'temp_projects'
+    os.mkdir(temp_projects_dir)
+    request.addfinalizer(lambda: shutil.rmtree(temp_projects_dir))
+    return temp_projects_dir
+
+
+@pytest.fixture(scope='session')
+def open_project(temp_projects_dir):
+
+    def open_project(name, request):
+        name += '.rpp'
+        source = pathlib.Path(__file__).parent / 'projects' / name
+        destination = pathlib.Path(__file__).parent / temp_projects_dir / name
+        shutil.copy(source, destination)
+        project = reapy.open_project(str(destination))
+        request.addfinalizer(project.save)
+        return project
+
+    return open_project
