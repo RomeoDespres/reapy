@@ -12,6 +12,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - `reapy.reconnect()` not working after REAPER crashes on macOS (see issue [#96](https://github.com/RomeoDespres/reapy/issues/96)).
+- Typo in `region.end` getter (see issue [#101](https://github.com/RomeoDespres/reapy/issues/101)).
 
 
 ## [0.8.0](https://github.com/RomeoDespres/reapy/releases/tag/0.8.0) - 2020-08-28

@@ -27,7 +27,7 @@ class Region(ReapyObject):
         """
         return next(
             i for i, r in enumerate(reapy.Project(self.project_id).regions)
-            if r.index == region.index
+            if r.index == self.index
         )
 
     @property
