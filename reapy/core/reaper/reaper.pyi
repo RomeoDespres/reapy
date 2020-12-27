@@ -290,6 +290,31 @@ def get_resource_path() -> str:
     ...
 
 
+def get_user_inputs(
+    title: str,
+    captions: ty.List[str],
+    retvals_size: int = 1024
+) -> ty.Dict[str, str]:
+    """Show text inputs to user and get values from them.
+
+    Parameters
+    ----------
+    title : str
+        popup title
+    captions : List[str]
+        names for input lines
+    retvals_size : int, optional
+        how long response in characters is expected
+
+    Returns
+    -------
+    Dict[str,str]
+        dictionary of pairs {caption:response}
+
+    """
+    ...
+
+
 def has_ext_state(section: str, key: str) -> bool:
     """
     Return whether extended state exists for given section and key.

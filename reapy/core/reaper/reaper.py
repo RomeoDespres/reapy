@@ -356,6 +356,29 @@ def get_resource_path():
     return path
 
 
+def get_user_inputs(title, captions, retvals_size=1024):
+    """Show text inputs to user and get values from them.
+
+    Parameters
+    ----------
+    title : str
+        popup title
+    captions : List[str]
+        names for input lines
+    retvals_size : int, optional
+        how long response in characters is expected
+
+    Returns
+    -------
+    Dict[str,str]
+        dictionary of pairs {caption:response}
+
+    """
+    _, _, _, _, retvals_csv, _ = RPR.GetUserInputs(
+        title, len(captions), ','.join(captions), "", retvals_size)
+    return dict(zip(captions, retvals_csv.split(',')))
+
+
 def has_ext_state(section, key):
     """
     Return whether extended state exists for given section and key.
