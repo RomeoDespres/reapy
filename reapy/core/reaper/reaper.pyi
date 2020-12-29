@@ -311,7 +311,12 @@ def get_user_inputs(
     Returns
     -------
     Dict[str,str]
-        dictionary of pairs {caption: response}
+        Dictionary of pairs {caption: response}.
+
+    Raises
+    ------
+    RuntimeError
+        When user clicked the Cancel button.
     """
     ...
 

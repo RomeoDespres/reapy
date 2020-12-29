@@ -373,12 +373,20 @@ def get_user_inputs(title, captions, retvals_size=1024):
     Returns
     -------
     Dict[str,str]
-        dictionary of pairs {caption: response}
+        Dictionary of pairs {caption: response}.
+
+    Raises
+    ------
+    RuntimeError
+        When user clicked the Cancel button.
     """
-    _, _, _, _, retvals_csv, _ = RPR.GetUserInputs(
+    success, _, _, _, retvals_csv, _ = RPR.GetUserInputs(
         title, len(captions), ",".join(captions), "", retvals_size
     )
-    return dict(zip(captions, retvals_csv.split(",")))
+    if success:
+        return dict(zip(captions, retvals_csv.split(",")))
+    else:
+        raise RuntimeError('User clicked Cancel.')
 
 
 def has_ext_state(section, key):
