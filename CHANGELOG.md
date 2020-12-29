@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- `reapy.get_user_inputs()` to retrieve several inputs from user at once.
+- [`get_user_inputs`] to retrieve several inputs from user at once.
 
 
 ## [0.9.0](https://github.com/RomeoDespres/reapy/releases/tag/0.9.0) - 2020-11-10
@@ -583,6 +583,7 @@ Project.play_state was buggy and has been removed.
 [`get_projects`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_projects
 [`get_reaper_version`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_reaper_version
 [`get_resource_path`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_resource_path
+[`get_user_inputs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_user_inputs
 [`has_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.has_ext_state
 [`midi.get_active_editor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.midi.get_active_editor
 [`midi.get_input_names`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.midi.get_input_names
