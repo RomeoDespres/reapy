@@ -362,21 +362,23 @@ def get_user_inputs(title, captions, retvals_size=1024):
     Parameters
     ----------
     title : str
-        popup title
+        Popup title.
     captions : List[str]
-        names for input lines
+        Names of input fields.
     retvals_size : int, optional
-        how long response in characters is expected
+        Maximum number of characters that will be retrieved for each
+        field. User may enter more, but only the first `retvals_size`
+        will be returned. (default=1024)
 
     Returns
     -------
     Dict[str,str]
-        dictionary of pairs {caption:response}
-
+        dictionary of pairs {caption: response}
     """
     _, _, _, _, retvals_csv, _ = RPR.GetUserInputs(
-        title, len(captions), ','.join(captions), "", retvals_size)
-    return dict(zip(captions, retvals_csv.split(',')))
+        title, len(captions), ",".join(captions), "", retvals_size
+    )
+    return dict(zip(captions, retvals_csv.split(",")))
 
 
 def has_ext_state(section, key):

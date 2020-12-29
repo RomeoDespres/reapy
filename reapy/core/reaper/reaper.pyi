@@ -300,17 +300,18 @@ def get_user_inputs(
     Parameters
     ----------
     title : str
-        popup title
+        Popup title.
     captions : List[str]
-        names for input lines
+        Names of input fields.
     retvals_size : int, optional
-        how long response in characters is expected
+        Maximum number of characters that will be retrieved for each
+        field. User may enter more, but only the first `retvals_size`
+        will be returned. (default=1024)
 
     Returns
     -------
     Dict[str,str]
-        dictionary of pairs {caption:response}
-
+        dictionary of pairs {caption: response}
     """
     ...
 
