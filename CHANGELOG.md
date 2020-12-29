@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Added
+
+- `reapy.get_user_inputs()` to retrieve several inputs from user at once.
+
+
 ## [0.9.0](https://github.com/RomeoDespres/reapy/releases/tag/0.9.0) - 2020-11-10
 
 ### Added

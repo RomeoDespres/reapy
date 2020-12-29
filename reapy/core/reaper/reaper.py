@@ -356,6 +356,39 @@ def get_resource_path():
     return path
 
 
+def get_user_inputs(title, captions, retvals_size=1024):
+    """Show text inputs to user and get values from them.
+
+    Parameters
+    ----------
+    title : str
+        Popup title.
+    captions : List[str]
+        Names of input fields.
+    retvals_size : int, optional
+        Maximum number of characters that will be retrieved for each
+        field. User may enter more, but only the first `retvals_size`
+        will be returned. (default=1024)
+
+    Returns
+    -------
+    Dict[str,str]
+        Dictionary of pairs {caption: response}.
+
+    Raises
+    ------
+    RuntimeError
+        When user clicked the Cancel button.
+    """
+    success, _, _, _, retvals_csv, _ = RPR.GetUserInputs(
+        title, len(captions), ",".join(captions), "", retvals_size
+    )
+    if success:
+        return dict(zip(captions, retvals_csv.split(",")))
+    else:
+        raise RuntimeError('User clicked Cancel.')
+
+
 def has_ext_state(section, key):
     """
     Return whether extended state exists for given section and key.

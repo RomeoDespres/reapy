@@ -74,6 +74,7 @@ __all__ = [
     'get_projects',
     'get_reaper_version',
     'get_resource_path',
+    'get_user_inputs',
     'has_ext_state',
     'new_project_tab',
     'open_project',
