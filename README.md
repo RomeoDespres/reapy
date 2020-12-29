@@ -103,10 +103,6 @@ Check the [documentation](https://python-reapy.readthedocs.io/ "reapy online doc
 
 For now, about a half of ReaScript API has a `reapy` counterpart, the docs are far from great, and many bugs are waiting to be found. Feel free to improve the project by checking the [contribution guide](CONTRIBUTING.md)!
 
-## Author
-
-**Roméo Després** - [RomeoDespres](https://github.com/RomeoDespres)
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
