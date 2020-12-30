@@ -1,6 +1,15 @@
 # CHANGELOG
 
 All notable changes to this project will be documented in this file.
+## [Unreleased] - 2020-12-30
+
+### Fixed
+
+ - `reapy.configure_reaper() -> ... -> get_reaper_process_path()` not working on Windows when the user doesn't have valid privilege over the process
+
+### Changed
+
+ - `get_reaper_process_path()` Now catches `psutil.AccessDenied` Exceptions. If no Reaper process is found, but an `psutil.AccessDenied` as been catched, a message will print asking to run this script using admin privilege. 
 
 
 ## [0.9.0](https://github.com/RomeoDespres/reapy/releases/tag/0.9.0) - 2020-11-10
