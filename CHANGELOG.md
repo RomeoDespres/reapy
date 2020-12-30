@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
- - `get_reaper_process_path()` Now catches `psutil.AccessDenied` Exceptions. If no Reaper process is found, but an `psutil.AccessDenied` as been catched, a message will print asking to run this script using admin privilege. 
+ - `get_reaper_process_path()` Now catches `psutil.AccessDenied` Exceptions. If no Reaper process is found, but a `psutil.AccessDenied` has been caught, a message will print asking to run this script using admin privilege. 
 
 
 ## [0.9.0](https://github.com/RomeoDespres/reapy/releases/tag/0.9.0) - 2020-11-10
