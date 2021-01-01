@@ -6,11 +6,11 @@ from .network.machines import connect, connect_to_default_machine, reconnect
 from .extension_dependency import depends_on_sws, depends_on_extension
 
 __all__ = [
-    'inside_reaper',
-    'dist_api_is_enabled',
-    'connect',
-    'connect_to_default_machine',
-    'reconnect',
-    'depends_on_sws',
-    'depends_on_extension',
+    "inside_reaper",
+    "dist_api_is_enabled",
+    "connect",
+    "connect_to_default_machine",
+    "reconnect",
+    "depends_on_sws",
+    "depends_on_extension",
 ]

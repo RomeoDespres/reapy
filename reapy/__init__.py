@@ -28,7 +28,44 @@ from .tools import (
 )
 from . import reascript_api
 from .config import configure_reaper
-from .core import *
+from .core import (
+    # from .reapy_object
+    ReapyObject,
+    ReapyObjectList,
+    # from .project
+    Marker,
+    Project,
+    Region,
+    TimeSelection,
+    # from .audio_accessor
+    AudioAccessor,
+    # from .envelope
+    Envelope,
+    EnvelopeList,
+    EnvelopePoint,
+    # from .fx
+    FX,
+    FXList,
+    FXParam,
+    FXParamsList,
+    # from .item
+    CC,
+    CCList,
+    Item,
+    Note,
+    NoteList,
+    Source,
+    Take,
+    # from .track
+    AutomationItem,
+    Send,
+    Track,
+    TrackList,
+    # from .window
+    MIDIEditor,
+    ToolTip,
+    Window,
+)
 from .core.reaper import *
 
 

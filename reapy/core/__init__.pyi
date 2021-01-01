@@ -1,10 +1,10 @@
 from .reapy_object import ReapyObject, ReapyObjectList
 
+from .project import Marker, Project, Region, TimeSelection
 from .audio_accessor import AudioAccessor
 from .envelope import Envelope, EnvelopeList
 from .fx import FX, FXList, FXParam, FXParamsList
 from .item import CC, CCList, Item, Note, NoteList, Source, Take
-from .project import Marker, Project, Region, TimeSelection
 from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
 
@@ -12,6 +12,11 @@ __all__ = [
     # core.reapy_object
     "ReapyObject",
     "ReapyObjectList",
+    # core.project
+    "Marker",
+    "Project",
+    "Region",
+    "TimeSelection",
     # core.audio_accessor
     "AudioAccessor",
     # core.envelope
@@ -30,11 +35,6 @@ __all__ = [
     "NoteList",
     "Source",
     "Take",
-    # core.project
-    "Marker",
-    "Project",
-    "Region",
-    "TimeSelection",
     # core.track
     "AutomationItem",
     "Send",

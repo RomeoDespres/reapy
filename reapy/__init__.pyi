@@ -5,6 +5,7 @@ from .tools import (
     connect, connect_to_default_machine, dist_api_is_enabled, inside_reaper,
     reconnect
 )
+from .config import configure_reaper
 import sys
 
 
@@ -14,11 +15,16 @@ def is_inside_reaper() -> bool:
     """
     ...
 
-
 __all__ = [
+    "reascript_api",
     # core.reapy_object
     "ReapyObject",
     "ReapyObjectList",
+    # core.project
+    "Marker",
+    "Project",
+    "Region",
+    "TimeSelection",
     # core.audio_accessor
     "AudioAccessor",
     # core.envelope
@@ -37,11 +43,6 @@ __all__ = [
     "NoteList",
     "Source",
     "Take",
-    # core.project
-    "Marker",
-    "Project",
-    "Region",
-    "TimeSelection",
     # core.track
     "AutomationItem",
     "Send",
