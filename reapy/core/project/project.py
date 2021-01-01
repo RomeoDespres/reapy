@@ -899,6 +899,12 @@ class Project(ReapyObject):
         play_rate = RPR.Master_GetPlayRate(self.id)
         return play_rate
 
+    @reapy.inside_reaper()
+    def record(self):
+        """Hit record button."""
+        with self.make_current_project():
+            reapy.perform_action(1013)
+
     def redo(self):
         """
         Redo last action.

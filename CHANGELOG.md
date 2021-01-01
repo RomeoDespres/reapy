@@ -3,6 +3,33 @@
 All notable changes to this project will be documented in this file.
 
 
+## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
+
+### Added
+
+- [`get_user_inputs`] to retrieve several inputs from user at once.
+
+
+## [0.9.0](https://github.com/RomeoDespres/reapy/releases/tag/0.9.0) - 2020-11-10
+
+### Added
+
+- `set_info_value` methods for `Item` and `Take`.
+
+### Fixed
+
+- `reapy.reconnect()` not working after REAPER crashes on macOS (see issue [#96](https://github.com/RomeoDespres/reapy/issues/96)).
+- Typo in `region.end` getter (see issue [#101](https://github.com/RomeoDespres/reapy/issues/101)).
+
+
+## [0.8.0](https://github.com/RomeoDespres/reapy/releases/tag/0.8.0) - 2020-08-28
+
+### Added
+
+- `Project.record()` method to start recording.
+- `reapy.configure_reaper()` to simplify installation process. See the installation guide in the docs for details.
+
+
 ## [0.7.2](https://github.com/RomeoDespres/reapy/releases/tag/0.7.2) - 2020-05-26
 
 ### Fixed
@@ -556,6 +583,7 @@ Project.play_state was buggy and has been removed.
 [`get_projects`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_projects
 [`get_reaper_version`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_reaper_version
 [`get_resource_path`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_resource_path
+[`get_user_inputs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.get_user_inputs
 [`has_ext_state`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.reaper.has_ext_state
 [`midi.get_active_editor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.midi.get_active_editor
 [`midi.get_input_names`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.reaper.html#reapy.core.reaper.midi.get_input_names

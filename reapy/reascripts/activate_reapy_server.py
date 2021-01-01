@@ -7,10 +7,16 @@ automatically be run when importing ``reapy`` from outside, if it is
 enabled.
 """
 
-import reapy
-
-import os
+import pathlib
 import site
+import sys
+
+try:
+    import reapy
+except ImportError:
+    reapy_path = pathlib.Path(sys.path[0]).resolve().parent.parent
+    sys.path.append(str(reapy_path))
+    import reapy
 
 from reapy.tools.network import Server
 

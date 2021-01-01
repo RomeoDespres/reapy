@@ -724,6 +724,10 @@ class Project(ReapyObject):
         """
         ...
 
+    def record(self) -> None:
+        """Hit record button."""
+        ...
+
     def redo(self) -> None:
         """
         Redo last action.

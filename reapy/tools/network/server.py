@@ -19,6 +19,7 @@ class Server(Socket):
 
     def __init__(self, port):
         super().__init__()
+        self._socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.bind(("0.0.0.0", port))
         self.listen()
         self.connections = {}

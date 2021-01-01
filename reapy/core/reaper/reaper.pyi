@@ -290,6 +290,37 @@ def get_resource_path() -> str:
     ...
 
 
+def get_user_inputs(
+    title: str,
+    captions: ty.List[str],
+    retvals_size: int = 1024
+) -> ty.Dict[str, str]:
+    """Show text inputs to user and get values from them.
+
+    Parameters
+    ----------
+    title : str
+        Popup title.
+    captions : List[str]
+        Names of input fields.
+    retvals_size : int, optional
+        Maximum number of characters that will be retrieved for each
+        field. User may enter more, but only the first `retvals_size`
+        will be returned. (default=1024)
+
+    Returns
+    -------
+    Dict[str,str]
+        Dictionary of pairs {caption: response}.
+
+    Raises
+    ------
+    RuntimeError
+        When user clicked the Cancel button.
+    """
+    ...
+
+
 def has_ext_state(section: str, key: str) -> bool:
     """
     Return whether extended state exists for given section and key.

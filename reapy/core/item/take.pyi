@@ -449,7 +449,8 @@ class Take(ReapyObject):
         """
         ...
 
-    def set_info_value(self, param_name: str, value: float): ...
+    def set_info_value(self, param_name: str, value: float) -> bool:
+        ...
 
     def sort_events(self) -> None:
         """

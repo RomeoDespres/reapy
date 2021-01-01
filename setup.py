@@ -22,22 +22,25 @@ def find_stubs(package: str) -> Dict[str, List[str]]:
     return {package: stubs}
 
 
-setup(name="python-reapy",
-      version=reapy.__version__,
-      description="A pythonic wrapper for REAPER's ReaScript Python API",
-      long_description=long_description,
-      long_description_content_type="text/markdown",
-      author="Roméo Després",
-      author_email="mail.reapy@gmail.com",
-      license="MIT",
-      classifiers=[
-          "License :: OSI Approved :: MIT License",
-          "Programming Language :: Python :: 3"
-      ],
-      keywords="REAPER DAW ReaScript API wrapper music audio",
-      packages=find_packages(exclude=["docs"]),
-      package_data=find_stubs('reapy'),
-      install_requires=[
-          'typing_extensions',
-      ],
-      python_requires=">=3.0")
+setup(
+    name="python-reapy",
+    version=reapy.__version__,
+    description="A pythonic wrapper for REAPER's ReaScript Python API",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    author="Roméo Després",
+    author_email="mail.reapy@gmail.com",
+    license="MIT",
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3"
+    ],
+    keywords="REAPER DAW ReaScript API wrapper music audio",
+    packages=find_packages(exclude=["docs"]),
+    package_data=find_stubs('reapy'),
+    install_requires=[
+        'psutil',
+        'typing_extensions'
+    ],
+    python_requires=">=3.0"
+)
