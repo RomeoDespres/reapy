@@ -145,7 +145,7 @@ class Project(ReapyObject):
         region_id = RPR.AddProjectMarker2(
             self.id, True, start, end, name, -1, color
         )
-        region = reapy.Region(self, region_id)
+        region = reapy.Region(self, enum_index=region_id)
         return region
 
     @reapy.inside_reaper()
@@ -931,7 +931,7 @@ class Project(ReapyObject):
             for i in range(self.n_regions + self.n_markers)
         ]
         return [reapy.Region(self, index=i[7],
-                enum_index=i[0]) for i in ids if i[3]]
+                enum_index=i[0]-1) for i in ids if i[3]]
 
     def save(self, force_save_as=False):
         """
