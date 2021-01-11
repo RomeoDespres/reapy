@@ -930,7 +930,8 @@ class Project(ReapyObject):
             RPR.EnumProjectMarkers2(self.id, i, 0, 0, 0, 0, 0)
             for i in range(self.n_regions + self.n_markers)
         ]
-        return [reapy.Region(self, i[0]) for i in ids if i[3]]
+        return [reapy.Region(self, index=i[7],
+                enum_index=i[0]) for i in ids if i[3]]
 
     def save(self, force_save_as=False):
         """

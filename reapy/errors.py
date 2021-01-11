@@ -135,6 +135,12 @@ class UndefinedMarkerError(Exception):
         message = "No marker with user-index {}".format(index)
         super().__init__(message)
 
+class UndefinedRegionError(Exception):
+
+    def __init__(self, index):
+        message = "No region with user-index {}".format(index)
+        super().__init__(message)
+
 
 class UndoError(Exception):
 

@@ -8,7 +8,8 @@ class Region(ReapyObject):
     _class_name = "Region"
 
     def __init__(
-        self, parent_project=None, index=None, parent_project_id=None
+        self, parent_project=None, index=None,
+        parent_project_id=None, enum_index=None
     ):
         if parent_project_id is None:
             message = (
@@ -17,23 +18,34 @@ class Region(ReapyObject):
             )
             assert parent_project is not None, message
             parent_project_id = parent_project.id
+        self.project = reapy.Project(parent_project_id)
         self.project_id = parent_project_id
+        if index is None:
+            index = len(self.project.markers)
         self.index = index
+        if enum_index is None:
+            enum_index = self._get_enum_index()
+        self.enum_index = enum_index
 
     @reapy.inside_reaper()
     def _get_enum_index(self):
         """
         Return region index as needed by RPR.EnumProjectMarkers2.
+
+        Raises
+        ------
+        reapy.errors.UndefinedRegionError
         """
-        return next(
-            i for i, r in enumerate(reapy.Project(self.project_id).regions)
-            if r.index == self.index
-        )
+        for region in self.project.regions:
+            if region.index == self.index:
+                return region.enum_index
+        raise reapy.errors.UndefinedRegionError(self.index)
 
     @property
     def _kwargs(self):
         return {
-            "index": self.index, "parent_project_id": self.project_id
+            "index": self.index, "parent_project_id": self.project_id,
+            "enum_index": self.enum_index
         }
 
     def add_rendered_track(self, track):

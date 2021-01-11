@@ -79,6 +79,10 @@ class UndefinedMarkerError(Exception):
 
     def __init__(self, index: int): ...
 
+class UndefinedRegionError(Exception):
+
+    def __init__(self, index: int): ...
+
 
 class UndoError(Exception):
     def __init__(self) -> None:

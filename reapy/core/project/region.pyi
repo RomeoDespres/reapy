@@ -13,17 +13,22 @@ class Region(ReapyObject):
     def __init__(self,
                  parent_project: ty.Optional[reapy.Project] = None,
                  index: ty.Optional[int] = None,
-                 parent_project_id: ty.Optional[int] = None) -> None:
+                 parent_project_id: ty.Optional[int] = None,
+                 enum_index: ty.Optional[int] = None) -> None:
         ...
 
     def _get_enum_index(self) -> int:
         """
         Return region index as needed by RPR.EnumProjectMarkers2.
+
+        Raises
+        ------
+        reapy.errors.UndefinedRegionError
         """
         ...
 
     @property
-    def _kwargs(self) -> ty.Dict[str, int]:
+    def _kwargs(self) -> ty.Dict[str, ty.Union[str, int]]:
         ...
 
     def add_rendered_track(self, track: reapy.Track) -> None:
