@@ -92,6 +92,24 @@ class Region(ReapyObject):
         """
         ...
 
+    @property
+    def name(self) -> str:
+        """
+        Region name.
+
+        :type: str
+        """
+
+    @name.setter
+    def name(self, name: str) -> None:
+        """
+        Set region name.
+
+        Parameters
+        ----------
+        name : str
+        """
+
     def remove_rendered_track(self, track: reapy.Track) -> None:
         """
         Remove track from region render matrix for this region.

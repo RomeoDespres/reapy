@@ -106,7 +106,7 @@ class Region(ReapyObject):
         end : float
             region end in seconds.
         """
-        args = self.project_id, self.index, True, self.start, end, ""
+        args = self.project_id, self.index, True, self.start, end, self.name
         RPR.SetProjectMarker2(*args)
 
     def delete(self):
@@ -114,6 +114,35 @@ class Region(ReapyObject):
         Delete region.
         """
         RPR.DeleteProjectMarker(self.project_id, self.index, True)
+
+
+    @property
+    def name(self):
+        """
+        Region name.
+
+        :type: str
+        """
+        with reapy.inside_reaper():
+            # index = self._get_enum_index()
+            fs = RPR.SNM_CreateFastString('0' * 1024)
+            args = self.project_id, self.index, True, fs
+            RPR.SNM_GetProjectMarkerName(*args)
+            result = RPR.SNM_GetFastString(fs)
+            RPR.SNM_DeleteFastString(fs)
+        return result
+
+    @name.setter
+    def name(self, name):
+        """
+        Set region name.
+
+        Parameters
+        ----------
+        name : str
+        """
+        args = self.project_id, self.index, True, self.start, self.end, name
+        RPR.SetProjectMarker2(*args)
 
     def remove_rendered_track(self, track):
         """
@@ -190,5 +219,5 @@ class Region(ReapyObject):
             region start in seconds.
         """
         RPR.SetProjectMarker2(
-            self.project_id, self.index, 1, start, self.end, ""
+            self.project_id, self.index, 1, start, self.end, self.name
         )

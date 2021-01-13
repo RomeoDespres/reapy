@@ -36,6 +36,25 @@ class Marker(ReapyObject):
         ...
 
     @property
+    def name(self) -> str:
+        """
+        Marker name.
+
+        :type: str
+        """
+
+
+    @name.setter
+    def name(self, name: str) -> None:
+        """
+        Set marker name.
+
+        Parameters
+        ----------
+        name : str
+        """
+
+    @property
     def position(self) -> float:
         """
         Return marker position.

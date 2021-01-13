@@ -56,6 +56,34 @@ class Marker(ReapyObject):
         """
         RPR.DeleteProjectMarker(self.project_id, self.index, False)
 
+    @property
+    def name(self):
+        """
+        Marker name.
+
+        :type: str
+        """
+        with reapy.inside_reaper():
+            # index = self._get_enum_index()
+            fs = RPR.SNM_CreateFastString('0' * 1024)
+            args = self.project_id, self.index, False, fs
+            RPR.SNM_GetProjectMarkerName(*args)
+            result = RPR.SNM_GetFastString(fs)
+            RPR.SNM_DeleteFastString(fs)
+        return result
+
+    @name.setter
+    def name(self, name):
+        """
+        Set marker name.
+
+        Parameters
+        ----------
+        name : str
+        """
+        args = self.project_id, self.index, False, self.position, 0, name
+        RPR.SetProjectMarker2(*args)
+
     @reapy.inside_reaper()
     @property
     def position(self):
@@ -82,5 +110,5 @@ class Marker(ReapyObject):
             Marker position in seconds.
         """
         RPR.SetProjectMarker2(
-            self.project_id, self.index, False, position, 0, ""
+            self.project_id, self.index, False, position, 0, self.name
         )
