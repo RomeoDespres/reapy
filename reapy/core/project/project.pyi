@@ -121,6 +121,24 @@ class Project(ReapyObject):
             New region.
         """
         ...
+    
+    def import_media(self, filepath:str, addToSelectedTrack:bool=False) -> reapy.Item:
+		"""
+		Imports a file and place the media on a track.
+
+		Parameters
+		----------
+		filepath : str
+			Filepath to the file to import (relative to the REAPER project)
+		addToSelectedTrack : bool, optional
+			Instead of creating a new track, a new track will be created.
+
+		Returns
+		-------
+		item : Item
+			New imported item
+		"""
+        ...
 
     def add_track(self, index: int = 0, name: str = "") -> reapy.Track:
         """
