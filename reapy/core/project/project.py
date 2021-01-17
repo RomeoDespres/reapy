@@ -3,6 +3,7 @@
 import pickle
 import codecs
 import os
+from reapy.tools import file_handler
 
 import reapy
 from reapy import reascript_api as RPR
@@ -164,13 +165,20 @@ class Project(ReapyObject):
 		item : Item
 			New imported item
 		"""
-		
+		valid_filepath = None
+		try :
+			valid_filepath = file_handler.validate_path(filepath)
+		except FileNotFoundError as e: 
+			print(f'File could not be found "{e}"')
+			return
+
 		insertMode = 1-int(addToSelectedTrack)
 		#if no track is selected
 		if addToSelectedTrack and not len(self.selected_tracks):
 			raise IndexError("No track is selected")
+
 		#import media
-		RPR.InsertMedia(filepath, insertMode)
+		RPR.InsertMedia(valid_filepath, insertMode)
 		selectedTrack = self.selected_tracks[0]
 		#even if the file doesn't exists, an item is created, but it's length is 0.0
 		item = selectedTrack.items[0]
