@@ -175,10 +175,16 @@ class Project(ReapyObject):
             return
         
         insertMode = 1-int(addToSelectedTrack)
-        #if no track is selected
-        if addToSelectedTrack and not len(self.selected_tracks):
-            raise IndexError("No track is selected")
+        
+        if addToSelectedTrack:
+            #if no track is selected
+            if not len(self.selected_tracks):
+                raise IndexError("No track is selected")
+        else:
+            #unselect all tracks to make sure the new track will not be nested in a selected track
+            self.master_track.make_only_selected_track()
 
+        
         #import media
         RPR.InsertMedia(valid_filepath, insertMode)
         selectedTrack = self.selected_tracks[0]
