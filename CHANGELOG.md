@@ -1,6 +1,15 @@
 # CHANGELOG
 
 All notable changes to this project will be documented in this file.
+## [Unreleased] - 2021-01-18
+
+### Added
+ -  `Project.import_media()` method to import a file.
+ -  `reapy.tools.file_handler` tool containting a method (`validate_path()`) used to validate if a path is valid. 
+ It checks if a the file or folder exists.
+ If it's a path to a file, it make sure that it's in a format supported by REAPER.
+ You can specify a specific extension or a list of extensions and it will raise if the choosen file does not match
+ 
 ## [Unreleased] - 2020-12-30
 
 ### Fixed
