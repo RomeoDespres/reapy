@@ -8,6 +8,7 @@ import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 from reapy.errors import RedoError, UndoError
+from reapy.tools import file_handler
 
 
 class Project(ReapyObject):
