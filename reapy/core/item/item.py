@@ -131,6 +131,14 @@ class Item(ReapyObject):
         """
         RPR.SetMediaItemLength(self.id, length, True)
 
+    @reapy.inside_reaper()
+    def make_only_selected_item(self):
+        """
+        Make track the only selected item in parent project.
+        """
+        self.project.select_all_items(False)
+        self.is_selected = True
+
     @property
     def n_takes(self):
         """

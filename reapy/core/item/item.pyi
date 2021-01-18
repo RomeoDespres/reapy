@@ -116,6 +116,12 @@ class Item(ReapyObject):
         """
         ...
 
+    def make_only_selected_item(self) -> None:
+        """
+        Make track the only selected item in parent project.
+        """
+        ...
+
     @property
     def n_takes(self) -> int:
         """
