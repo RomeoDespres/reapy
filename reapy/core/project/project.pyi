@@ -122,7 +122,7 @@ class Project(ReapyObject):
         """
         ...
     
-    def import_media(self, filepath:str, addToSelectedTrack:bool=False) -> reapy.Item:
+    def import_media(self, filepath:str, addToSelectedTrack:bool=False, setToCursorPosition:bool=False) -> reapy.Item:
 		"""
 		Imports a file and place the media on a track.
 
@@ -132,7 +132,9 @@ class Project(ReapyObject):
 			Filepath to the file to import (relative to the REAPER project)
 		addToSelectedTrack : bool, optional
 			Instead of creating a new track, a new track will be created.
-
+		setToCursorPosition : bool, optional
+			When True, set the position of the imported Item to the cursor position
+			If False, the Item will be positionned at "00:00"
 		Returns
 		-------
 		item : Item
