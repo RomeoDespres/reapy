@@ -173,12 +173,6 @@ class Track(ReapyObject):
         item = reapy.Item(item_id)
         return item
 
-    def add_item_from_file(self, filename, forcenoMidiImp=False):
-        print('WHAT')
-       # print(RPR.__dict__)
-        return
-
-
     def add_send(self, destination=None):
         """
         Add send to track and return it.
