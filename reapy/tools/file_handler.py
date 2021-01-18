@@ -1,6 +1,8 @@
 from pathlib import Path
 import reapy
 
+#based on : http://reaper.fm/about.php#technical
+READABLE_FORMATS = ['.acid','.aiff', '.avi', 'bwf', '.cda', '.edl', '.flac', '.kar', '.midi', '.mid', '.mogg', '.mov', '.mp3', '.mp4', '.m4p', '.m4v', '.mpeg' ,'.ogg', '.ogv', '.mov', '.bwav', '.rx2', '.syx', '.w64', '.wav', '.wave', '.wv', '.wmv']
 
 def validate_path(path, ext=None, isFolder=False):
     """
@@ -32,9 +34,12 @@ def validate_path(path, ext=None, isFolder=False):
     else:
         valid = fullPath.is_file()
         if not valid : raise IsADirectoryError(fullPath_str)
+
+        file_ext = fullPath.suffix.lower()
+        if file_ext not in READABLE_FORMATS : raise TypeError(f'"{fullPath_str}" file type "{file_ext}" is not supported by REAPER')
         #validate extension
         if ext:
-            valid = True if fullPath.suffix == ext else False
+            valid = True if file_ext == ext.lower() else False
             if not valid : raise TypeError(f'"{fullPath_str}" file extension must be "{ext}" ')
             pass
     

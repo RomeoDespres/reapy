@@ -173,7 +173,7 @@ class Project(ReapyObject):
 		except FileNotFoundError as e: 
 			print(f'File could not be found "{e}"')
 			return
-
+		
 		insertMode = 1-int(addToSelectedTrack)
 		#if no track is selected
 		if addToSelectedTrack and not len(self.selected_tracks):
