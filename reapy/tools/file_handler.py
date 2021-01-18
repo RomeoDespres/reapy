@@ -12,7 +12,7 @@ def validate_path(path, ext=None, isFolder=False):
         ----------
         path : str
             Path to the file or folder (relative to the REAPER project)
-        ext : str
+        ext : str || []
             The file extension required. If it doesn't match the actual file, it will raise
         isFolder : bool, optional
             Search for a folder instead of a file
@@ -26,6 +26,7 @@ def validate_path(path, ext=None, isFolder=False):
     curProjectFolder    = Path(curProject.path)
     fullPath            = curProjectFolder / path
     fullPath_str        = fullPath.as_posix()
+    valid               = False
    #check if folder exists
     if isFolder:
         valid = fullPath.is_dir()
@@ -38,8 +39,13 @@ def validate_path(path, ext=None, isFolder=False):
         file_ext = fullPath.suffix.lower()
         if file_ext not in READABLE_FORMATS : raise TypeError(f'"{fullPath_str}" file type "{file_ext}" is not supported by REAPER')
         #validate extension
-        if ext:
-            valid = True if file_ext == ext.lower() else False
+        if ext is not None:
+            if type(ext) is str :
+                valid = True if file_ext == ext.lower() else False
+            if type(ext) is list :
+                valid = True if file_ext in ext else False
+                ext = " or ".join(ext)
+
             if not valid : raise TypeError(f'"{fullPath_str}" file extension must be "{ext}" ')
             pass
     
