@@ -989,6 +989,18 @@ class Project(ReapyObject):
 		RPR.SelectAllMediaItems(self.id, selected)
 	
 	def select_item(self, item_obj, selected=True, makeUnique=False):
+		"""
+        Select or unselect an item, depending on `selected`.
+
+        Parameters
+        ----------
+        item_obj : reapy.Item
+            The item to select
+        selected : bool [optional]
+            Whether to select or unselect the item.
+        makeUnique : bool [optional]
+            If False the Item will be added to the current selection, if True it will become the only selected item
+        """
 		if makeUnique:
 			self.select_all_items(selected=False)
 		RPR.SetMediaItemSelected(item_obj.id, selected)

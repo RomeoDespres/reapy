@@ -790,6 +790,20 @@ class Project(ReapyObject):
         """
         ...
 
+    def select_item(self, item_obj, selected:bool=True, makeUnique:bool=False) -> None:
+        """
+        Select or unselect an item, depending on `selected`.
+
+        Parameters
+        ----------
+        item_obj : reapy.Item
+            The item to select
+        selected : bool [optional]
+            Whether to select or unselect the item.
+        makeUnique : bool [optional]
+            If False the Item will be added to the current selection, if True it will become the only selected item
+        """
+        ...
     def select_all_tracks(self) -> None:
         """Select all tracks."""
         ...
