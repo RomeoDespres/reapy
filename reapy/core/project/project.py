@@ -158,7 +158,7 @@ class Project(ReapyObject):
 		filepath : str
 			Filepath to the file to import (relative to the REAPER project)
 		addToSelectedTrack : bool, optional
-			Instead of creating a new track, a new track will be created.
+			Instead of creating a new track, the selected track will be used.
 		setToCursorPosition : bool, optional
 			When True, set the position of the imported Item to the cursor position
 			If False, the Item will be positionned at "00:00"
