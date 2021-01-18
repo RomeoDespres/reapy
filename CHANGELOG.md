@@ -8,6 +8,30 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - `Item.make_only_selected_item` method
+- `Item.is_selected` setter
+- `Take.name` setter
+- `Take.source` setter
+- `Take.start_offset` setter
+- `EnvelopePoint` TypedDict for easy constructing envelope points.
+- `Envelope.get_point(index:int) -> EnvelopePoint` method
+- `Envelope.insert_point(point: EnvelopePoint, sort: bool=True) -> bool:` method
+- `Envelope.set_point(index: int, point: EnvelopePoint, sort: bool=True) -> bool:` method
+- `Project.loop_points -> Tuple[float, float]` read-write property.
+
+### Fixed
+
+- typo in `Item.__init__` stub
+- typo in `Item.set_info_value(self, param_name: str, value: float) -> None:` stub
+- typo in `Take.add_event(message: ty.Iterable[int], position: float, unit: str = "seconds") -> None:` stub
+- `Project.end_undo_block` now has flags. Also it is up to mention, that default flags are not `0` but `-1` as `0` does nothing. Still undo blocks are far way from stable… Probably because of the REAPER limitations.
+- `Project.markers` and `Project.regions` properties are fixed to be capable within new indexing system.
+- `undo_block` defaults fixed to `-1` and docstrings are updated.
+- `reapy.errors.UndefinedMarkerError` and `reapy.errors.UndefinedRegionError`
+- import psutil issue during installation — Since import reapy line is needed only for keeping the version, I've made it directly by file-parcing. Now there is no strict need to import reapy before setuptools make its work.
+
+### Changed
+
+- Markers and Regions now has different indexing system. As Markers and Regions share enum indexes, but has unique user-ID, user-id now is the main `index` of Marker or Region. So, now almost everywhere `Marker.index` or `Region.index` are used as previously. But when You need enum index for using in some raw `RPR.API*` calls — there is `Marker.enum_index` and `Region.enum_index` members.
 
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
 
