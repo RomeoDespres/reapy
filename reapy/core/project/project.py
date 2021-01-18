@@ -147,6 +147,49 @@ class Project(ReapyObject):
         )
         region = reapy.Region(self, region_id)
         return region
+        
+    def import_media(self, filepath, addToSelectedTrack=False, setToCursorPosition=False):
+        """
+        Imports a file and place the media on a track.
+
+        Parameters
+        ----------
+        filepath : str
+            Filepath to the file to import (relative to the REAPER project)
+        addToSelectedTrack : bool, optional
+            Instead of creating a new track, the selected track will be used.
+        setToCursorPosition : bool, optional
+            When True, set the position of the imported Item to the cursor position
+            If False, the Item will be positionned at "00:00"
+        Returns
+        -------
+        item : Item
+            New imported item
+        """
+        valid_filepath = None
+        try :
+            valid_filepath = file_handler.validate_path(filepath)
+        except FileNotFoundError as e: 
+            print(f'File could not be found "{e}"')
+            return
+        
+        insertMode = 1-int(addToSelectedTrack)
+        #if no track is selected
+        if addToSelectedTrack and not len(self.selected_tracks):
+            raise IndexError("No track is selected")
+
+        #import media
+        RPR.InsertMedia(valid_filepath, insertMode)
+        selectedTrack = self.selected_tracks[0]
+        #even if the file doesn't exists, an item is created, but it's length is 0.0
+        item = selectedTrack.items[0]
+        #update position 
+        if not setToCursorPosition:
+            item.position = 0.0
+        
+        #force UI update
+        reapy.update_timeline()
+        return item
 
     @reapy.inside_reaper()
     def add_track(self, index=0, name=""):
@@ -946,6 +989,25 @@ class Project(ReapyObject):
     def select_all_tracks(self):
         """Select all tracks."""
         self.perform_action(40296)
+    
+    def select_item(self, item_obj, selected=True, makeUnique=False):
+        """
+        Select or unselect an item, depending on `selected`.
+
+        Parameters
+        ----------
+        item_obj : reapy.Item
+            The item to select
+        selected : bool [optional]
+            Whether to select or unselect the item.
+        makeUnique : bool [optional]
+            If False the Item will be added to the current selection, if True it will become the only selected item
+        """
+        if makeUnique:
+            self.select_all_items(selected=False)
+        RPR.SetMediaItemSelected(item_obj.id, selected)
+        #update UI
+        reapy.update_timeline()
 
     @property
     def selected_envelope(self):
