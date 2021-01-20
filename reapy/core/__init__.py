@@ -11,7 +11,6 @@ from .project import Marker, Project, Region, TimeSelection
 from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
 from .gui import JS_API as JS
-from . import gui
 
 
 __all__ = [
@@ -62,24 +61,5 @@ __all__ = [
     "ToolTip",
     "Window",
     # core.gui
-    "gui",
     "JS",
-    "Pointer",
-    "VoidPtr",
-    "AudioWriter",
-    "PCM_source",
-    "TopLevel",
-    "TopCanvas",
-    "Singleton",
-    "EvFrame",
-    "EvStart",
-    "EvExit",
-    "EvResized",
-    "EvWindowMessage",
-    "EvKeyDownChar",
-    "EvKeyDownSys",
-    "UUID",
-    "EventClient",
-    "EventHandler",
-    "Event",
 ]

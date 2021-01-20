@@ -11,7 +11,7 @@ from .project import Marker, Project, Region, TimeSelection
 from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
 from .gui import JS_API as JS
-from .gui import Pointer, VoidPtr, AudioWriter, PCM_source
+
 
 __all__ = [
     # core.reapy_object
@@ -62,8 +62,4 @@ __all__ = [
     "Window",
     # core.gui
     "JS",
-    "Pointer",
-    "VoidPtr",
-    "AudioWriter",
-    "PCM_source",
 ]
