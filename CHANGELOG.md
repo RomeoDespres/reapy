@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Introduced [JS_ReaScriptAPI](https://github.com/juliansader/ReaExtensions):
+    * Now it can be installed and connected to the reapy API at the installation
+    * All JS_* API calls as well as other API calls from the Julian repo are automatically parced and wrapped. So, Extension is always up to date.
+    * API can be reached by `reapy.JS` module which should work within Jedi and MyPy
 - New API: now every method of `core` classes can be used within `object.map(method_name, iterables, default)`, which allows to significantly increase performance on similar calls from outside. See method doc for details.
 - API extended with following classes:
     * `CCShape` and `CCShapeFlag` enums
@@ -40,6 +44,12 @@ All notable changes to this project will be documented in this file.
     * `MIDI_SetCC`
     * `MIDI_SetEvt` improved
     * note, that all `MIDI_Set*` functions now return only boolean, as it reduced and cleaned the bindings code. Advantage that now they are truly optional.
+
+### Cahnged
+
+- Internal logic of importing modules from inside REAPER:
+    * now there is no need to import all members of `reapy.core` package into its `__init__.py`.
+    * If some sub-package (like `reapy.core.gui` or `reapy.core.gui.JS_API`) need to keep the parent namespace clean still be able to be used as from outside as from inside REAPER — it can be added as Separate Cache object in `reapy.tools.json`.
 
 
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
