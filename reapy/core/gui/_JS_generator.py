@@ -636,7 +636,7 @@ class FuncBuilder:
         return code
 
 
-def generate_js_api(bin_dir: str, api_filepath: str) -> None:
+def generate_js_api(bin_dir: str, api_filename: str) -> None:
     """
     Get ReaExtensions and generate apropriate files.
 
@@ -654,9 +654,12 @@ def generate_js_api(bin_dir: str, api_filepath: str) -> None:
     prc = Parcer(raw_str=header_raw)
     builder = FuncBuilder(prc)
     module_str = builder.build_module()
+    dir_ = os.path.dirname(os.path.abspath(__file__))
+    api_filepath = os.path.join(dir_, api_filename)
     with open(api_filepath, 'w') as f:
         f.write(module_str)
-    with open('JS_API.py', 'r') as f:
+    js_filepath = os.path.join(dir_, 'JS_API.py')
+    with open(js_filepath, 'r') as f:
         lines = []
         ignore = False
         for line in f.readlines():
@@ -668,16 +671,14 @@ def generate_js_api(bin_dir: str, api_filepath: str) -> None:
             if '__all__: ty.List[str] = [' in line:
                 ignore = True
                 lines.append(',\n    '.join('"%s"' % s for s in builder.all))
-    with open('JS_API.py', 'w') as f:
+    with open(js_filepath, 'w') as f:
         f.writelines(lines)
 
 
 if __name__ == '__main__':
     import reapy
-    api_filepath = os.path.join(
-        os.path.dirname(__file__), "_JS_API_generated.py"
-    )
+    api_filename = "_JS_API_generated.py"
     bin_dir = os.path.join(reapy.get_resource_path(), "UserPlugins")
     # print(api_filepath)
     # print(bin_dir)
-    generate_js_api(bin_dir, api_filepath)
+    generate_js_api(bin_dir, api_filename)
