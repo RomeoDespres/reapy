@@ -10,6 +10,7 @@ import typing as ty
 import re
 from reapy import reascript_api as RPR
 from reapy import is_inside_reaper
+from reapy import inside_reaper
 if is_inside_reaper():
     from reapy.reascript_api import _RPR
 
@@ -36,7 +37,7 @@ def packp(t: str, v: ty.Union[int, str]) -> int:
     m = re.match('^\((\w+\*|HWND)\)0x([0-9A-F]+)$', str(v))
     if (m != None):
         (_t, _v) = m.groups()
-            a = int(_v[:8], 16)
+        a = int(_v[:8], 16)
         if (_t == t or t == 'void*'):
             b = int(_v[8:], 16);
             p = ct.c_uint64((a << 32) | b).value
@@ -387,7 +388,7 @@ def MIDI_SetTextSysexEvt(
 #     f(t[0])
 
 
-@reapy.inside_reaper()
+@inside_reaper()
 def ValidatePtr2(p0, p1, p2):
     a = _RPR._ft['ValidatePtr2']
     f = ct.CFUNCTYPE(ct.c_byte, ct.c_uint64, ct.c_uint64, ct.c_char_p)(a)

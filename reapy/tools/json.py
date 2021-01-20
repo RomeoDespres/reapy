@@ -22,9 +22,13 @@ class ClassCache(dict):
 class GuiCache(ClassCache):
     _module_name = "reapy.core.gui"
 
+class GuiJSCache(ClassCache):
+    _module_name = "reapy.core.gui.JS_API"
+
 
 _CLASS_CACHE = ClassCache()
 _GUI_CACHE = GuiCache()
+_GUI_JS_CACHE = GuiJSCache()
 
 
 class ReapyEncoder(json.JSONEncoder):
@@ -53,7 +57,9 @@ def dumps(x):
 
 def object_hook(x):
     if "__reapy__" in x:
-        if x["module"].startswith("reapy.core.gui"):
+        if "JS_API" in x["module"]:
+            reapy_class = _GUI_JS_CACHE[x["class"]]
+        elif x["module"].startswith("reapy.core.gui"):
             reapy_class = _GUI_CACHE[x["class"]]
         else:
             reapy_class = _CLASS_CACHE[x["class"]]
