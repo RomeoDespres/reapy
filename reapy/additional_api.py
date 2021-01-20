@@ -11,6 +11,7 @@ import re
 import reapy
 from reapy import reascript_api as RPR
 from reapy.reascript_api import _RPR
+import re
 
 MAX_STRBUF = 4 * 1024 * 1024
 
@@ -18,8 +19,8 @@ def packp(t, v):
     m = re.match('^\((\w+\*|HWND)\)0x([0-9A-F]+)$', str(v))
     if (m != None):
         (_t, _v) = m.groups()
-        if (_t == t or t == 'void*'):
             a = int(_v[:8], 16)
+        if (_t == t or t == 'void*'):
             b = int(_v[8:], 16);
             p = ct.c_uint64((a << 32) | b).value
             # if (RPR_ValidatePtr(p,t)):
@@ -28,10 +29,6 @@ def packp(t, v):
     return 0
 
 _RPR.rpr_packp = packp
-
-def packs_l(v: str, encoding="latin-1") -> ct.c_char_p:
-    MAX_STRBUF = 4 * 1024 * 1024
-    return ct.create_string_buffer(str(v).encode(encoding), MAX_STRBUF)
 
 def packs_l(v: str, encoding="latin-1", size=MAX_STRBUF):
     return ct.create_string_buffer(str(v).encode(encoding), size)
