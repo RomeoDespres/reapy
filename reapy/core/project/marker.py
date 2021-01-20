@@ -1,6 +1,16 @@
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
+from typing_extensions import TypedDict
+
+
+class MarkerInfo(TypedDict):
+
+    index: int
+    enum_index: int
+    project_id: str
+    position: float
+    name: str
 
 
 class Marker(ReapyObject):
@@ -55,6 +65,32 @@ class Marker(ReapyObject):
         Delete marker.
         """
         RPR.DeleteProjectMarker(self.project_id, self.index, False)
+
+    @reapy.inside_reaper()
+    @property
+    def infos(self):
+        """Get all Region infos in one call.
+
+        Returns
+        -------
+        RegionInfo
+            index: int
+            enum_index: int
+            project_id: str
+            position: float
+            name: str
+        """
+        enum_index = self._get_enum_index()
+        args = self.project_id, enum_index, 0, 0, 0, 0, 0
+        _, _, _, _, position, _, _, index = RPR.EnumProjectMarkers2(*args)
+        out: MarkerInfo = {
+            'index': index,
+            'enum_index': enum_index,
+            'project_id': self.project_id,
+            'position': position,
+            'name': self.name,
+        }
+        return out
 
     @property
     def name(self):

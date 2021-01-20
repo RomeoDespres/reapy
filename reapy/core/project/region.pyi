@@ -2,6 +2,17 @@ import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 import typing as ty
+from typing_extensions import TypedDict
+
+
+class RegionInfo(TypedDict):
+    index: int
+    enum_index: int
+    project_id: str
+    name: str
+    start: float
+    end: float
+    rendered_tracks: ty.List['reapy.Track']
 
 
 class Region(ReapyObject):
@@ -170,5 +181,22 @@ class Region(ReapyObject):
         ----------
         start : float
             region start in seconds.
+        """
+        ...
+
+    @property
+    def infos(self) -> RegionInfo:
+        """Get all Region infos in one call.
+
+        Returns
+        -------
+        RegionInfo
+            index: int
+            enum_index: int
+            project_id: str
+            name: str
+            start: float
+            end: float
+            rendered_tracks: List[reapy.Track]
         """
         ...

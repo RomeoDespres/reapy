@@ -2,6 +2,16 @@ import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
 import typing as ty
+from typing_extensions import TypedDict
+
+
+class MarkerInfo(TypedDict):
+
+    index: int
+    enum_index: int
+    project_id: str
+    position: float
+    name: str
 
 
 class Marker(ReapyObject):
@@ -75,5 +85,20 @@ class Marker(ReapyObject):
         ----------
         position : float
             Marker position in seconds.
+        """
+        ...
+
+    @property
+    def infos(self) -> MarkerInfo:
+        """Get all Region infos in one call.
+
+        Returns
+        -------
+        RegionInfo
+            index: int
+            enum_index: int
+            project_id: str
+            position: float
+            name: str
         """
         ...

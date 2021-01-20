@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## UNRELEASED
+
+## Added
+
+- `Marker.infos` and `Region.infos` properties for efficienelly get all properties of marker or region
+- `MarkerInfo` and `RegionInfo` TypedDicts
+- `Marker.name` and `Region.name` properties. Take in a count that these properties use SWS API.
+
 
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
 

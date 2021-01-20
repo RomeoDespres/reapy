@@ -1,6 +1,18 @@
+from typing_extensions import TypedDict
+from typing import List
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
+
+
+class RegionInfo(TypedDict):
+    index: int
+    enum_index: int
+    project_id: str
+    name: str
+    start: float
+    end: float
+    rendered_tracks: List['reapy.Track']
 
 
 class Region(ReapyObject):
@@ -120,7 +132,7 @@ class Region(ReapyObject):
         """
         RPR.DeleteProjectMarker(self.project_id, self.index, True)
 
-
+    @reapy.inside_reaper()
     @property
     def name(self):
         """
@@ -128,13 +140,12 @@ class Region(ReapyObject):
 
         :type: str
         """
-        with reapy.inside_reaper():
-            # index = self._get_enum_index()
-            fs = RPR.SNM_CreateFastString('0' * 1024)
-            args = self.project_id, self.index, True, fs
-            RPR.SNM_GetProjectMarkerName(*args)
-            result = RPR.SNM_GetFastString(fs)
-            RPR.SNM_DeleteFastString(fs)
+        # index = self._get_enum_index()
+        fs = RPR.SNM_CreateFastString('0' * 1024)
+        args = self.project_id, self.index, True, fs
+        RPR.SNM_GetProjectMarkerName(*args)
+        result = RPR.SNM_GetFastString(fs)
+        RPR.SNM_DeleteFastString(fs)
         return result
 
     @name.setter
@@ -226,3 +237,33 @@ class Region(ReapyObject):
         RPR.SetProjectMarker2(
             self.project_id, self.index, 1, start, self.end, self.name
         )
+
+    @reapy.inside_reaper()
+    @property
+    def infos(self):
+        """Get all Region infos in one call.
+
+        Returns
+        -------
+        RegionInfo
+            index: int
+            enum_index: int
+            project_id: str
+            name: str
+            start: float
+            end: float
+            rendered_tracks: List[reapy.Track]
+        """
+        enum_index = self._get_enum_index()
+        args = self.project_id, enum_index, 0, 0, 0, 0, 0
+        _, _, _, _, start, end, _, index = RPR.EnumProjectMarkers2(*args)
+        out: RegionInfo = {
+            'index': index,
+            'enum_index': enum_index,
+            'project_id': self.project_id,
+            'start': start,
+            'end': end,
+            'name': self.name,
+            'rendered_tracks': self.rendered_tracks
+        }
+        return out

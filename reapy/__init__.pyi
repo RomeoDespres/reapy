@@ -40,8 +40,10 @@ __all__ = [
     "Take",
     # core.project
     "Marker",
+    "MarkerInfo",
     "Project",
     "Region",
+    "RegionInfo",
     "TimeSelection",
     # core.track
     "AutomationItem",
