@@ -11,11 +11,29 @@ import re
 import reapy
 from reapy import reascript_api as RPR
 from reapy.reascript_api import _RPR
+import typing as ty
 import re
 
 MAX_STRBUF = 4 * 1024 * 1024
 
-def packp(t, v):
+
+def packp(t: str, v: ty.Union[int, str]) -> int:
+    """
+    Pack pointer to be passed in CFUNCTYPE call.
+
+    Parameters
+    ----------
+    t : str
+        type name e.g. MediaTrack*
+    v : Union[int, str]
+        pointer itself, can be int address, str address repr
+        and unpacked pointer e.g (MediaTrack*)0x000000000000AF0E
+
+    Returns
+    -------
+    int
+        address (pointer)
+    """
     m = re.match('^\((\w+\*|HWND)\)0x([0-9A-F]+)$', str(v))
     if (m != None):
         (_t, _v) = m.groups()
@@ -27,6 +45,30 @@ def packp(t, v):
             #   return p
             return p
     return 0
+
+
+def unpackp(t: str, v: ty.Optional[int]) -> str:
+    """
+    Unpack pointer returned from CFUNCTYPE call.
+
+    Parameters
+    ----------
+    t : str
+        type name e.g. MediaTrack*
+    v : ty.Optional[int]
+        pointer address
+
+    Returns
+    -------
+    str
+        String representation of pointer
+    """
+    if v is None:
+        v = 0
+    a = int(v >> 32)
+    b = int(v & 0xFFFFFFFF)
+    return '(%s)0x%08X%08X' % (t, a, b)
+
 
 _RPR.rpr_packp = packp
 
