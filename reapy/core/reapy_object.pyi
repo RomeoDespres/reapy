@@ -43,8 +43,9 @@ class ReapyObject:
         self,
         method_name: str,
         iterables: ty.Dict[str, object],
-        defaults: ty.Optional[ty.Dict[str, object]] = None
-    ):
+        defaults: ty.Optional[ty.Dict[str, object]] = None,
+        pickled_out: bool = False
+    ) -> ty.List[object]:
         """
         Perform object method among iterables inside reaper.
 
@@ -64,6 +65,8 @@ class ReapyObject:
             str is argument name, List for mapping
         defaults : Dict[str, jsonable]
             partial arguments, that won't be changed though iteration
+        pickled_out: bool, optional
+            if True — returns pickled object
 
         Returns
         -------

@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- New API: now every method of `core` classes can be used within `object.map(method_name, iterables, default)`, which allows to significantly increase performance on similar calls from outside. See method doc for details.
+- New API: now every method of `core` classes can be used within `object.map(method_name, iterables, default, pickled_out)`, which allows to significantly increase performance on similar calls from outside. See method doc for details.
 - API extended with following classes:
     * `CCShape` and `CCShapeFlag` enums
     * `TextSysex`, `TextSysexList` classes

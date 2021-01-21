@@ -1,6 +1,7 @@
 import reapy
 import reapy.reascript_api as RPR
 from functools import partial
+from pickle import dumps
 
 
 class ReapyMetaclass(type):
@@ -64,7 +65,7 @@ class ReapyObject(metaclass=ReapyMetaclass):
         }
 
     @reapy.inside_reaper()
-    def map(self, method_name, iterables, defaults=None):
+    def map(self, method_name, iterables, defaults=None, pickled_out=False):
         """
         Perform object method among iterables inside reaper.
 
@@ -84,6 +85,8 @@ class ReapyObject(metaclass=ReapyMetaclass):
             str is argument name, List for mapping
         defaults : Dict[str, jsonable]
             partial arguments, that won't be changed though iteration
+        pickled_out: bool, optional
+            if True — returns pickled object
 
         Returns
         -------
@@ -116,7 +119,7 @@ class ReapyObject(metaclass=ReapyMetaclass):
         for values in zip(*iterables.values()):
             rest = {k: v for k, v in zip(iterables.keys(), values)}
             result.append(part_func(**rest))
-        return result
+        return result if not pickled_out else dumps(result).decode('latin-1')
 
 
 class ReapyObjectList(ReapyObject):
