@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## UNRELEASED
+
+## Added
+
+- `Project.get_track_by_guid(guid_string: str) -> reapy.Track:`
+- `Track.from_GUID(project: Optional[Union[reapy.Project, str]] = None) -> 'Track':` classmethod for retrieving tracks from any project event after their id changes.
+
+## Changed
+
+- `Track.GUID` property now returns `str` as it is the most stable way to retrieve and compare tracks GUID.
+
 
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
 
