@@ -9,6 +9,7 @@ class Region(ReapyObject):
     _class_name = "Region"
     project_id: int
     index: int
+    enum_index: int
 
     def __init__(self,
                  parent_project: ty.Optional[reapy.Project] = None,

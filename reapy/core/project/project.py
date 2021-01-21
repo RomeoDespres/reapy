@@ -116,7 +116,7 @@ class Project(ReapyObject):
         marker_id = RPR.AddProjectMarker2(
             self.id, False, position, 0, name, -1, color
         )
-        marker = reapy.Marker(self, marker_id)
+        marker = reapy.Marker(self, index=marker_id)
         return marker
 
     def add_region(self, start, end, name="", color=0):
@@ -145,7 +145,7 @@ class Project(ReapyObject):
         region_id = RPR.AddProjectMarker2(
             self.id, True, start, end, name, -1, color
         )
-        region = reapy.Region(self, enum_index=region_id)
+        region = reapy.Region(self, index=region_id)
         return region
 
     @reapy.inside_reaper()

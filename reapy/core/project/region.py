@@ -21,9 +21,15 @@ class Region(ReapyObject):
         self.project = reapy.Project(parent_project_id)
         self.project_id = parent_project_id
         if index is None:
-            index = len(self.project.regions)
+            if enum_index is None:
+                index = self.project.n_regions
+            else:
+                index = RPR.EnumProjectMarkers2(
+                    self.project_id, enum_index, 0, 0, 0, 0, 0
+                )[7]
         self.index = index
         if enum_index is None:
+            self.enum_index = None
             enum_index = self._get_enum_index()
         self.enum_index = enum_index
 
