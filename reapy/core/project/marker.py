@@ -31,9 +31,10 @@ class Marker(ReapyObject):
         self.project = reapy.Project(parent_project_id)
         self.project_id = parent_project_id
         if index is None:
-            index = len(self.project.markers)
+            index = self.project.n_markers
         self.index = index
         if enum_index is None:
+            self.enum_index = None
             enum_index = self._get_enum_index()
         self.enum_index = enum_index
 

@@ -20,6 +20,7 @@ class Marker(ReapyObject):
     project: reapy.Project
     project_id: int
     index: int
+    enum_index: int
 
     def __init__(self,
                  parent_project: ty.Optional[reapy.Project] = None,
