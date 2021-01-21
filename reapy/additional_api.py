@@ -2,7 +2,7 @@
 
 All fixes will be applied to `reapy.reascript_api` by reapy during
 the import process. Thus, this module is only intended to be used
-and should not be directly used by end-users.
+internally and should not be directly used by end-users.
 """
 
 import ctypes as ct
