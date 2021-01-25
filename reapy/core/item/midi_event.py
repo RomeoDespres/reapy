@@ -112,6 +112,8 @@ class MIDIEvent(ReapyObject):
 
     """Abstract class for MIDI events."""
 
+    _del_func_name = 'MIDI_DeleteEvt'
+
     def __init__(self, parent, index):
         """
         Create event.
@@ -130,10 +132,6 @@ class MIDIEvent(ReapyObject):
     @property
     def _args(self):
         return self.parent, self.index
-
-    @property
-    def _del_name(self):
-        return 'MIDI_DeleteEvt'
 
     @property
     def as_dict(self):
@@ -158,7 +156,7 @@ class MIDIEvent(ReapyObject):
 
     def delete(self):
         """Delete event from the take."""
-        f = getattr(RPR, self._del_name)
+        f = getattr(RPR, self._del_func_name)
         f(self.parent.id, self.index)
 
     @property
@@ -273,6 +271,8 @@ class CC(MIDIEvent):
 
     """MIDI CC event."""
 
+    _del_func_name = 'MIDI_DeleteCC'
+
     @property
     def as_dict(self):
         """
@@ -342,10 +342,6 @@ class CC(MIDIEvent):
     @channel_message.setter
     def channel_message(self, channel_message):
         self.set(channel_message=channel_message)
-
-    @property
-    def _del_name(self):
-        return 'MIDI_DeleteCC'
 
     @reapy.inside_reaper()
     @property
@@ -542,6 +538,8 @@ class Note(MIDIEvent):
 
     """MIDI note."""
 
+    _del_func_name = 'MIDI_DeleteNote'
+
     @property
     def as_dict(self):
         """
@@ -590,10 +588,6 @@ class Note(MIDIEvent):
     @channel.setter
     def channel(self, channel):
         self.set(channel=channel)
-
-    @property
-    def _del_name(self):
-        return 'MIDI_DeleteNote'
 
     @property
     def end(self):
@@ -809,9 +803,7 @@ class TextSysex(MIDIEvent):
 
     """Abstract class for Text or Sysex events."""
 
-    @property
-    def _del_name(self):
-        return 'MIDI_DeleteTextSysexEvt'
+    _del_func_name = 'MIDI_DeleteTextSysexEvt'
 
     @property
     def infos(self):
