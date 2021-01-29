@@ -191,6 +191,23 @@ class Project(ReapyObject):
         Project.time_to_beats
         """
         ...
+    def beats_to_measure(self, beats:float) -> int:
+        """
+        Convert beats(QN time) to measure.
+
+        Parameters
+        ----------
+        beats : float
+
+        Returns
+        -------
+        measure : int
+            measure of that beat.
+
+        See also
+        --------
+        Project.time_to_beats
+        """
 
     def begin_undo_block(self) -> None:
         """

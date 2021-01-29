@@ -1246,10 +1246,30 @@ class Project(ReapyObject):
 
         See also
         --------
-        Projecr.beats_to_time
+        Project.beats_to_time
         """
         beats = RPR.TimeMap2_timeToQN(self.id, time)
         return beats
+    
+    def beats_to_measure(self, beats):
+        """
+        Convert beats(QN time) to measure.
+
+        Parameters
+        ----------
+        beats : float
+
+        Returns
+        -------
+        measure : int
+            measure of that beat.
+
+        See also
+        --------
+        Project.time_to_beats
+        """
+        measure = int(RPR.TimeMap_QNToMeasures(self.id, beats, 0, 10000)[0])
+        return measure
 
     @property
     def tracks(self):
