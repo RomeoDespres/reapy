@@ -379,7 +379,6 @@ class Note(MIDIEvent):
         """
         return self.infos["start"]
     
-    @reapy.inside_reaper()
     @property
     def beat(self):
         """
@@ -389,7 +388,6 @@ class Note(MIDIEvent):
         """
         return self.parent.project.time_to_beats(self.start)
     
-    @reapy.inside_reaper()
     @property
     def measure(self):
         """
