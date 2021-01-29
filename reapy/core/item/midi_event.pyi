@@ -301,6 +301,25 @@ class Note(MIDIEvent):
         """
         ...
 
+    @reapy.inside_reaper()
+    @property
+    def beat(self) -> float:
+        """
+        Beat of the note. (absolute)
+
+        :type: float
+        """
+        ...
+
+    @reapy.inside_reaper()
+    @property
+    def measure(self) -> int:
+        """
+        Measure of the note.
+
+        :type: int
+        """
+        ...
     @property
     def velocity(self) -> int:
         """
