@@ -340,3 +340,18 @@ class NoteList(MIDIEventList[Note]):
 
     _elements_class: ty.Type[Note]
     _n_elements: str
+
+
+    def in_measure(self, measure:int) -> ty.List[Note]:
+        """
+        Returns a list of Note contained in the specified measure.
+
+        Parameters
+        ----------
+        measure : int
+
+        Returns
+        -------
+        notes : List[Note]
+            Notes in the measure.
+        """

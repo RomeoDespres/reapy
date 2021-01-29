@@ -419,3 +419,29 @@ class NoteList(MIDIEventList):
 
     _elements_class = Note
     _n_elements = "n_notes"
+
+    def in_measure(self, measure):
+        """
+        Returns a list of Note contained in the specified measure.
+
+        Parameters
+        ----------
+        measure : int
+
+        Returns
+        -------
+        notes : List[Note]
+            Notes in the measure.
+        """
+        notes = []
+        with reapy.inside_reaper():
+            measure = int(measure)
+            for n in self:
+                n_measure = n.measure
+                if n_measure < measure:
+                    continue
+                elif n_measure == measure:
+                    notes.insert(0,n)
+                else:
+                    break
+        return notes
