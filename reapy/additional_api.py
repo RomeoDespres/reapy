@@ -40,35 +40,40 @@ def unpacks_l(v,  encoding="latin-1", want_raw=False):
 
 
 def MIDI_GetEvt(take, evtidx, selectedOut, mutedOut, ppqposOut, msg, msg_sz):
-    a = _RPR._ft["MIDI_GetEvt"]
+    address = _RPR._ft["MIDI_GetEvt"]
     f = ct.CFUNCTYPE(
         ct.c_byte, ct.c_uint64, ct.c_int, ct.c_void_p, ct.c_void_p,
         ct.c_void_p, ct.c_char_p, ct.c_void_p
-    )(a)
-    t = (
+    )(address)
+    c_selected = ct.c_byte(selectedOut)
+    c_muted = ct.c_byte(mutedOut)
+    c_ppq_position = ct.c_double(ppqposOut)
+    c_msg = packs_l(msg, size=msg_sz)
+    c_msg_length = ct.c_int(msg_sz)
+    success = f(
         _RPR.rpr_packp("MediaItem_Take*", take), ct.c_int(evtidx),
-        ct.c_byte(selectedOut), ct.c_byte(mutedOut), ct.c_double(ppqposOut),
-        packs_l(msg), ct.c_int(msg_sz)
+        ct.byref(c_selected), ct.byref(c_muted), ct.byref(c_ppq_position),
+        c_msg, ct.byref(c_msg_length)
     )
-    r = f(
-        t[0], t[1], ct.byref(t[2]), ct.byref(t[3]), ct.byref(t[4]), t[5],
-        ct.byref(t[6])
-    )
+    msg_length = c_msg_length.value
+    msg = unpacks_l(c_msg, want_raw=True)[:msg_length]
     return (
-        r, take, evtidx, int(t[2].value), int(t[3].value), float(t[4].value),
-        unpacks_l(t[5]), int(t[6].value)
+        success, take, evtidx, c_selected.value, c_muted.value,
+        c_ppq_position.value, msg, msg_length
     )
 
 
 def MIDI_GetAllEvts(take, bufNeedBig, bufNeedBig_sz):
-    a = _RPR._ft["MIDI_GetAllEvts"]
-    f = ct.CFUNCTYPE(ct.c_byte, ct.c_uint64, ct.c_char_p, ct.c_void_p)(a)
-    t = (
-        _RPR.rpr_packp("MediaItem_Take*", take),
-        packs_l(bufNeedBig, size=bufNeedBig_sz), ct.c_int(bufNeedBig_sz)
+    address = _RPR._ft["MIDI_GetAllEvts"]
+    f = ct.CFUNCTYPE(ct.c_byte, ct.c_uint64, ct.c_char_p, ct.c_void_p)(address)
+    c_msg = packs_l(bufNeedBig, size=bufNeedBig_sz)
+    c_msg_length = ct.c_int(bufNeedBig_sz)
+    success = f(
+        _RPR.rpr_packp("MediaItem_Take*", take), c_msg, ct.byref(c_msg_length)
     )
-    r = f(t[0], t[1], ct.byref(t[2]))
-    return r, take, unpacks_l(t[1], want_raw=True), int(t[2].value)
+    msg_length = c_msg_length.value
+    msg = unpacks_l(c_msg, want_raw=True)[:msg_length]
+    return success, take, msg, msg_length
 
 
 def MIDI_GetHash(p0, p1, p2, p3):
@@ -85,23 +90,27 @@ def MIDI_GetHash(p0, p1, p2, p3):
 
 
 def MIDI_GetTextSysexEvt(p0, p1, p2, p3, p4, p5, p6, p7):
-    a = _RPR._ft["MIDI_GetTextSysexEvt"]
+    address = _RPR._ft["MIDI_GetTextSysexEvt"]
     f = ct.CFUNCTYPE(
         ct.c_byte, ct.c_uint64, ct.c_int, ct.c_void_p, ct.c_void_p,
         ct.c_void_p, ct.c_void_p, ct.c_char_p, ct.c_void_p
-    )(a)
-    t = (
-        _RPR.rpr_packp("MediaItem_Take*", p0), ct.c_int(p1), ct.c_byte(p2),
-        ct.c_byte(p3), ct.c_double(p4), ct.c_int(p5), packs_l(p6, size=p7),
-        ct.c_int(p7)
+    )(address)
+    c_selected = ct.c_byte(p2)
+    c_muted = ct.c_byte(p3)
+    c_ppq_position = ct.c_double(p4)
+    c_type = ct.c_int(p5)
+    c_msg = packs_l(p6, size=p7)
+    c_msg_length = ct.c_int(p7)
+    success = f(
+        _RPR.rpr_packp("MediaItem_Take*", p0), ct.c_int(p1),
+        ct.byref(c_selected), ct.byref(c_muted), ct.byref(c_ppq_position),
+        ct.byref(c_type), c_msg, ct.byref(c_msg_length)
     )
-    r = f(
-        t[0], t[1], ct.byref(t[2]), ct.byref(t[3]), ct.byref(t[4]),
-        ct.byref(t[5]), t[6], ct.byref(t[7])
-    )
+    msg_length = c_msg_length.value
+    msg = unpacks_l(c_msg, want_raw=True)[:msg_length]
     return (
-        r, p0, p1, int(t[2].value), int(t[3].value), float(t[4].value),
-        int(t[5].value), unpacks_l(t[6], want_raw=False), int(t[7].value)
+        success, p0, p1, c_selected.value, c_muted.value, c_ppq_position.value,
+        c_type.value, msg, msg_length
     )
 
 
