@@ -30,6 +30,8 @@ __all__ = [
     "NoteList",
     "Source",
     "Take",
+    # core.map
+    "map",
     # core.project
     "Marker",
     "Project",

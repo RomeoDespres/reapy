@@ -4,6 +4,7 @@ from .audio_accessor import AudioAccessor
 from .envelope import Envelope, EnvelopeList
 from .fx import FX, FXList, FXParam, FXParamsList
 from .item import CC, CCList, Item, Note, NoteList, Source, Take
+from .map import map
 from .project import Marker, Project, Region, TimeSelection
 from .track import AutomationItem, Send, Track, TrackList
 from .window import MIDIEditor, ToolTip, Window
@@ -31,6 +32,8 @@ __all__ = [
     "NoteList",
     "Source",
     "Take",
+    # core.map
+    "map",
     # core.project
     "Marker",
     "Project",
