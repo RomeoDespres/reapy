@@ -1,7 +1,5 @@
 import reapy
 import reapy.reascript_api as RPR
-from functools import partial
-from pickle import dumps
 
 
 class ReapyMetaclass(type):
@@ -63,63 +61,6 @@ class ReapyObject(metaclass=ReapyMetaclass):
             "args": self._args,
             "kwargs": self._kwargs
         }
-
-    @reapy.inside_reaper()
-    def map(self, method_name, iterables, defaults=None, pickled_out=False):
-        """
-        Perform object method among iterables inside reaper.
-
-        Note
-        ----
-        Opposite to `inside_reaper`, which saves on defered executions,
-        map saves on socket connections, so, basically, if you have complex
-        code needs to be performed at one deferred call — use `inside_reaper`,
-        if large amount of data has to be proceed within particular method —
-        use `object.map()`.
-
-        Parameters
-        ----------
-        method_name : str
-            name of the object method (self)
-        iterables : Dict[str, List[jsonable]]
-            str is argument name, List for mapping
-        defaults : Dict[str, jsonable]
-            partial arguments, that won't be changed though iteration
-        pickled_out: bool, optional
-            if True — returns pickled object
-
-        Returns
-        -------
-        List[<method result>]
-
-        Example
-        -------
-        import reapy as rpr
-        take = rpr.Project().selected_items[0].active_take
-
-        @rpr.inside_reaper()
-        def test():
-            for i in [6.0] * 1000000:
-                take.time_to_ppq(6.0)
-
-
-        def test_map():
-            take.map('time_to_ppq', iterables={'time': [6.0] * 1000000})
-
-
-        test()      # runs 140s
-        test_map()  # runs 12s as from outside as from inside
-        """
-        result = []
-        if defaults:
-            part_func = partial(getattr(self, method_name), **defaults)
-        else:
-            part_func = getattr(self, method_name)
-
-        for values in zip(*iterables.values()):
-            rest = {k: v for k, v in zip(iterables.keys(), values)}
-            result.append(part_func(**rest))
-        return result if not pickled_out else dumps(result).decode('latin-1')
 
 
 class ReapyObjectList(ReapyObject):
