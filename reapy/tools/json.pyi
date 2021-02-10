@@ -1,6 +1,7 @@
 """Encode and decode ``reapy`` objects as JSON."""
 
 import importlib
+import inspect
 import json
 import operator
 import sys
