@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 
 
+## Unreleased
+
+### Fixed
+
+- Native ReaScript functions `RPR_MIDI_GetAllEvts`, `RPR_MIDI_GetTextSysexEvt`, `RPR_MIDI_SetAllEvts`, `RPR_MIDI_SetCC`, `RPR_MIDI_SetEvt`, `RPR_MIDI_SetNote` and `RPR_MIDI_SetTextSysexEvt` used to raise errors because they tried to encode MIDI messages as UTF-8. Their counterparts in `reapy.reascript_api` are patched and work as described in the official ReaScript documentation.
+
+
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
 
 ### Added
