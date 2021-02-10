@@ -1,3 +1,4 @@
+import struct
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
@@ -264,6 +265,62 @@ class Take(ReapyObject):
         """
         return reapy.Item(RPR.GetMediaItemTake_Item(self.id))
 
+    @reapy.inside_reaper()
+    def get_midi(self, size=2*1024*1024):
+        """
+        Get all midi data of take in one call.
+
+        Parameters
+        ----------
+        size : int, optional
+            predicted size of event buffer to allocate.
+            For performance is better to set it to something a but bigger
+            than expected buffer size.
+            Event with common midi-message (3-bytes) takes 12 bytes.
+
+        Returns
+        -------
+        List[MIDIEventDict]
+            ppq: int
+            selected: bool
+            muted: bool
+            cc_shape: CCShapeFlag
+            buf: ty.List[int]
+
+        See also
+        --------
+        Take.set_midi
+        """
+        _, _, buf, buf_size = RPR.MIDI_GetAllEvts(self.id, '', size)
+        msg = buf.encode('latin-1')
+        out = []
+        i = 0
+        ppq = 0
+        length = len(msg)
+        while i < length:
+            if length - i < 9:
+                break
+            ofst, flag, len_ = (
+                struct.unpack('<I', msg[i:i + 4])[0], int(msg[i + 4]),
+                struct.unpack('<I', msg[i + 5:i + 9])[0]
+            )
+            ppq += ofst
+            buf_b = msg[i + 9:i + 9 + len_]
+            buf = [int(b) for b in buf_b]
+            i += 9 + len_
+            if len_ == 0:
+                i += 1
+                continue
+            out.append(reapy.MIDIEventDict(
+                ppq=ppq,
+                selected=bool(flag & 1),
+                muted=bool(flag & 2),
+                cc_shape=reapy.CCShapeFlag(flag & 0b11110000),
+                buf=buf
+            )
+            )
+        return out
+
     @property
     def guid(self):
         """
@@ -291,7 +348,7 @@ class Take(ReapyObject):
         -------
         MIDIEventList
         """
-        return reapy.core.item.midi_event.MIDIEventList(self)
+        return reapy.MIDIEventList(self)
 
     def midi_hash(self, notes_only=False):
         """
@@ -390,7 +447,11 @@ class Take(ReapyObject):
 
     def ppq_to_beat(self, ppq):
         """
-        Convert time in MIDI ticks (from take's start) to beats (from project's start).
+        Convert time in MIDI ticks to beats.
+
+        Note
+        ----
+        Ticks are counted from take start, beats — from project start.
 
         Parameters
         ----------
@@ -459,16 +520,13 @@ class Take(ReapyObject):
         """
         if unit == "ppq":
             return pos_tuple
-        item_start_seconds = self.item.position
+        # item_start_seconds = self.item.position
 
         def resolver(pos):
             if unit == "beats":
-                take_start_beat = self.track.project.time_to_beats(
-                    item_start_seconds
-                )
-                return self.beat_to_ppq(take_start_beat + pos)
+                return self.beat_to_ppq(pos)
             if unit == "seconds":
-                return self.time_to_ppq(item_start_seconds + pos)
+                return self.time_to_ppq(pos)
             raise ValueError('unit param should be one of seconds|beats|ppq')
         return [resolver(pos) for pos in pos_tuple]
 
@@ -489,6 +547,70 @@ class Take(ReapyObject):
 
     def set_info_value(self, param_name, value):
         return RPR.SetMediaItemTakeInfo_Value(self.id, param_name, value)
+
+    @reapy.inside_reaper()
+    def set_midi(self, midi, start=None, unit="seconds", sort=True):
+        """
+        Erase all midi from take and build new one from scratch.
+
+        Parameters
+        ----------
+        midi : List[MIDIEventDict]
+            can be taken with `Take.get_midi()` or build from scratch.
+        start : float, optional
+            if offset needed (for example, start from a particular time)
+        unit : str, optional
+            time unit: "seconds"|"beats"|"ppq"
+        sort : bool, optional
+            if sort is needed after insertion
+
+        Raises
+        ------
+        NotImplementedError
+            currently, gaps between events longer than several hours
+            are not supported.
+
+        See also
+        --------
+        Take.get_midi
+        """
+        out = b''
+        start_ppq = 0
+        if start is not None:
+            start_ppq = self._resolve_midi_unit((start,), unit)[0]
+        last_ppq = 0 - start_ppq
+        for msg in midi:
+            evt = b''
+            ofst_i = msg['ppq'] - last_ppq
+            if ofst_i > 4294967295:
+                raise NotImplementedError(
+                    'ofset larger than 4294967295 currently not supported'
+                )
+                # something done with big offset
+                # it is about many-many-many hours between events
+                # (1 hour is about 8000000 ppq in 120 bpm)
+            ofst = struct.pack('<I', int(ofst_i))
+            evt += ofst
+            last_ppq = msg['ppq']
+
+            flag = bytes(
+                [
+                    int(msg['selected']) | (int(msg['muted']) << 1)
+                    | msg['cc_shape']
+                ]
+            )
+            evt += flag
+
+            len_ = struct.pack('<I', len(msg['buf']))
+            evt += len_
+
+            buf = bytes(msg['buf'])
+            evt += buf
+            out += evt
+        packed = out.decode('latin-1')
+        RPR.MIDI_SetAllEvts(self.id, packed, len(packed))
+        if sort:
+            self.sort_events()
 
     def sort_events(self):
         """
@@ -532,6 +654,15 @@ class Take(ReapyObject):
         :type: float
         """
         return self.get_info_value("D_STARTOFFS")
+
+    @property
+    def text_sysex_events(self):
+        """
+        List of text or SysEx events.
+
+        :type: TextSysexList
+        """
+        return reapy.TextSysexList(self)
 
     def time_to_ppq(self, time):
         """
