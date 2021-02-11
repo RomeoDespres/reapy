@@ -40,7 +40,7 @@ def map(function, *iterables, constants={}, kwargs_iterable=None):
 
     Returns
     -------
-    :type: list
+    list
         The list of results of each calls. Unlike the built-in Python
         function ``map``, it does not return an iterator.
 
