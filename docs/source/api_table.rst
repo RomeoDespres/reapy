@@ -460,7 +460,7 @@ MIDI Management
 	"`MIDI_GetProjTimeFromPPQPos <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetProjTimeFromPPQPos>`_","`Take.ppq_to_time <reapy.core.html#reapy.core.Take.ppq_to_time>`_"
 	"`MIDI_GetScale <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetScale>`_",""
 	"`MIDI_GetTextSysexEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetTextSysexEvt>`_",""
-	"`MIDI_GetTrackHash <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetTrackHash>`_",""
+	"`MIDI_GetTrackHash <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetTrackHash>`_","`Track.midi_hash <reapy.core.html#reapy.core.Track.midi_hash>`_"
 	"`MIDI_InsertCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertCC>`_",""
 	"`MIDI_InsertEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertEvt>`_",""
 	"`MIDI_InsertNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertNote>`_","`Take.add_note <reapy.core.html#reapy.core.Take.add_note>`_"

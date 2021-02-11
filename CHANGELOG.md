@@ -551,6 +551,7 @@ Project.play_state was buggy and has been removed.
 [`Track.is_selected`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.is_selected
 [`Track.items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.items
 [`Track.make_only_selected_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.make_only_selected_track
+[`Track.midi_hash`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.midi_hash
 [`Track.n_envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.n_envelopes
 [`Track.n_fxs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.n_fxs
 [`Track.n_items`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Track.n_items

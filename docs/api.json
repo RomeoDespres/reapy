@@ -1843,7 +1843,7 @@
     },
     "MIDI_GetTrackHash": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Track.midi_hash"]
     },
     "MIDI_InsertCC": {
         "group": "MIDI Management",
