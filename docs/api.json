@@ -1774,6 +1774,10 @@
         "group": "MIDI Management",
         "reapy": []
     },
+    "MIDI_GetCCShape": {
+        "group": "MIDI Management",
+        "reapy": []
+    },
     "MIDI_GetEvt": {
         "group": "MIDI Management",
         "reapy": []
@@ -1867,6 +1871,10 @@
         "reapy": []
     },
     "MIDI_SetCC": {
+        "group": "MIDI Management",
+        "reapy": []
+    },
+    "MIDI_SetCCShape": {
         "group": "MIDI Management",
         "reapy": []
     },
