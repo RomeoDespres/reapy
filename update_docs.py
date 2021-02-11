@@ -170,6 +170,7 @@ def update_changelog():
     with open(changelog_path, "w") as f:
         f.writelines(log)
         f.writelines(get_changelog_links())
+        f.write('\n')
 
 
 if __name__ == "__main__":
