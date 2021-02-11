@@ -13,17 +13,18 @@ class ReapyMetaclass(type):
 
 
 class ReapyObject(metaclass=ReapyMetaclass):
-
     """Base class for reapy objects."""
 
     def __eq__(self, other):
         return repr(self) == repr(other)
 
     def __repr__(self):
+
         def to_str(x):
             if isinstance(x, str):
                 return "\"{}\"".format(x)
             return str(x)
+
         args = ", ".join(map(to_str, self._args))
         kwargs = ", ".join(
             ("{}={}".format(k, to_str(v)) for k, v in self._kwargs.items())
@@ -63,7 +64,6 @@ class ReapyObject(metaclass=ReapyMetaclass):
 
 
 class ReapyObjectList(ReapyObject):
-
     """Abstract class for list of ReapyObjects."""
 
     pass

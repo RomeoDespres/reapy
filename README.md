@@ -95,6 +95,8 @@ When used from inside REAPER, `reapy` has almost identical performance than nati
 
 ```
 
+A small overhead due to sending function and arguments over the network will still occur each time a `reapy` function is called from outside REAPER. When running the same function many times in a row (e.g. over a thousand times), using [`reapy.map`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.map) may significantly increase performance. See its documentation for more details.
+
 ### Documentation
 
 Check the [documentation](https://python-reapy.readthedocs.io/ "reapy online documentation") and especially the [API guide](https://python-reapy.readthedocs.io/en/latest/api_guide.html) and [Translation Table](https://python-reapy.readthedocs.io/en/latest/api_table.html) for more information.

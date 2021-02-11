@@ -8,11 +8,13 @@ ReapyObjectDict = TypedDict(
         "class": str,
         "args": ty.Tuple[ty.Any, ...],
         "kwargs": ty.Dict[str, ty.Any]
-    })
+    }
+)
 
 
 class ReapyObject:
     """Base class for reapy objects."""
+
     def __eq__(self, other: object) -> bool:
         ...
 
@@ -36,7 +38,6 @@ class ReapyObject:
 
     def _to_dict(self) -> ReapyObjectDict:
         ...
-
 
 class ReapyObjectList(ReapyObject):
     """Abstract class for list of ReapyObjects."""

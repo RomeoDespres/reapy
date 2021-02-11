@@ -9,7 +9,7 @@ Welcome to reapy's documentation!
 .. toctree::
    :maxdepth: 2
    :hidden:
-   
+
    Api guide <api_guide.html#://>
    Translation Table <api_table.html#://>
    Install or uninstall reapy <install_guide.html#://>
@@ -19,7 +19,7 @@ Welcome to reapy's documentation!
 .. contents:: Contents
     :local:
     :depth: 3
-   
+
 ``reapy`` is a nice pythonic wrapper around the quite unpythonic `ReaScript Python API <https://www.reaper.fm/sdk/reascript/reascripthelp.html#p>`_ for `REAPER <https://www.reaper.fm/>`_.
 
 Installation
@@ -86,8 +86,12 @@ When used from inside REAPER, ``reapy`` has almost identical performance than na
     ...
     >>> # Takes only 0.1 second!
 
-Although this method should be sufficient in most cases, note that optimality is only reached by making use of ``reapy.tools.Program`` (see documentation `here <reapy.tools.html#reapy.tools.program.Program>`_).
-    
+A small overhead due to sending function and arguments over the network will
+still occur each time a ``reapy`` function is called from outside REAPER. When
+running the same function many times in a row (e.g. over a thousand times), using
+:py:func:`reapy.map <reapy.core.map>` may significantly increase performance.
+See its documentation for more details.
+
 API documentation
 -----------------
 

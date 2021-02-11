@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Added
+
+- [`reapy.map`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.map) for efficient mapping of `reapy` functions to large iterables of arguments.
+
 ### Fixed
 
 - Native ReaScript functions `RPR_MIDI_GetAllEvts`, `RPR_MIDI_GetTextSysexEvt`, `RPR_MIDI_SetAllEvts`, `RPR_MIDI_SetCC`, `RPR_MIDI_SetEvt`, `RPR_MIDI_SetNote` and `RPR_MIDI_SetTextSysexEvt` used to raise errors because they tried to encode MIDI messages as UTF-8. Their counterparts in `reapy.reascript_api` are patched and work as described in the official ReaScript documentation.
