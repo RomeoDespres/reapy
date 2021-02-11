@@ -86,6 +86,12 @@ When used from inside REAPER, ``reapy`` has almost identical performance than na
     ...
     >>> # Takes only 0.1 second!
 
+A small overhead due to sending function and arguments over the network will
+still occur each time a ``reapy`` function is called from outside REAPER. When
+running the same function many times in a row (e.g. over a thousand times), using
+:py:func:`reapy.map <reapy.core.map>` may significantly increase performance.
+See its documentation for more details.
+
 API documentation
 -----------------
 
