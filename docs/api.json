@@ -1750,6 +1750,10 @@
         "group": "MIDI Management",
         "reapy": []
     },
+    "MIDI_DisableSort": {
+        "group": "MIDI Management",
+        "reapy": []
+    },
     "MIDI_EnumSelCC": {
         "group": "MIDI Management",
         "reapy": []

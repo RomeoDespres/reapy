@@ -440,6 +440,7 @@ MIDI Management
 	"`MIDI_DeleteEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteEvt>`_",""
 	"`MIDI_DeleteNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteNote>`_",""
 	"`MIDI_DeleteTextSysexEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteTextSysexEvt>`_",""
+	"`MIDI_DisableSort <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DisableSort>`_",""
 	"`MIDI_EnumSelCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_EnumSelCC>`_",""
 	"`MIDI_EnumSelEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_EnumSelEvts>`_",""
 	"`MIDI_EnumSelNotes <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_EnumSelNotes>`_",""
