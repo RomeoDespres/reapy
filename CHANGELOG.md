@@ -509,6 +509,7 @@ Project.play_state was buggy and has been removed.
 [`Take.is_midi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.is_midi
 [`Take.item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.item
 [`Take.make_active_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.make_active_take
+[`Take.midi_hash`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.midi_hash
 [`Take.n_cc`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_cc
 [`Take.n_envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_envelopes
 [`Take.n_fxs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_fxs

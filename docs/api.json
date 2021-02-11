@@ -1792,7 +1792,7 @@
     },
     "MIDI_GetHash": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Take.midi_hash"]
     },
     "MIDI_GetNote": {
         "group": "MIDI Management",
