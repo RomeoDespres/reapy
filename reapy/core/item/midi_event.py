@@ -164,14 +164,16 @@ class CC(MIDIEvent):
         res = list(RPR.MIDI_GetCC(
             self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         ))[3:]
+        ppq = res[2]
         res[0] = bool(res[0])
         res[1] = bool(res[1])
-        res[2] = self.parent.ppq_to_time(res[2])
+        res[2] = self.parent.ppq_to_time(ppq)
         res[-2] = res[-2], res[-1]
         res.pop()
+        res.append(ppq)
         keys = (
             "selected", "muted", "position", "channel_message", "channel",
-            "messages"
+            "messages", "ppq"
         )
         return {k: r for k, r in zip(keys, res)}
 
@@ -376,7 +378,25 @@ class Note(MIDIEvent):
             a Note.
         """
         return self.infos["start"]
+    
+    @property
+    def beat(self):
+        """
+        Beat of the note. (absolute)
 
+        :type: float
+        """
+        return self.parent.project.time_to_beats(self.start)
+    
+    @property
+    def measure(self):
+        """
+        Measure of the note.
+
+        :type: int
+        """
+        return self.parent.project.beats_to_measure(self.beat)
+    
     @property
     def velocity(self):
         """
@@ -399,3 +419,29 @@ class NoteList(MIDIEventList):
 
     _elements_class = Note
     _n_elements = "n_notes"
+
+    def in_measure(self, measure):
+        """
+        Returns a list of Note contained in the specified measure.
+
+        Parameters
+        ----------
+        measure : int
+
+        Returns
+        -------
+        notes : List[Note]
+            Notes in the measure.
+        """
+        notes = []
+        with reapy.inside_reaper():
+            measure = int(measure)
+            for n in self:
+                n_measure = n.measure
+                if n_measure < measure:
+                    continue
+                elif n_measure == measure:
+                    notes.insert(0,n)
+                else:
+                    break
+        return notes

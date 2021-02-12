@@ -1,6 +1,33 @@
 # CHANGELOG
 
 All notable changes to this project will be documented in this file.
+## [Unreleased] - 2021-01-29
+
+### Added
+ -  `Project.beats_to_measure()` to get the measure of a beat.
+ -  `Note.beat` to get the absolute beat of a note
+ -  `Note.measure` to get the measure in which the note resides
+ -  `NoteList.in_measure()` to get a list of Notes in a specified measure 
+would be used like so : `project.tracks[0].items[0].takes[0].notes.in_measure(1)`
+
+## [Unreleased] - 2021-01-18
+
+### Added
+ -  `Project.import_media()` method to import a file.
+ -  `reapy.tools.file_handler` tool containting a method (`validate_path()`) used to validate if a path is valid. 
+ It checks if a the file or folder exists.
+ If it's a path to a file, it make sure that it's in a format supported by REAPER.
+ You can specify a specific extension or a list of extensions and it will raise if the choosen file does not match
+ -  `Project.select_item()` method to select a specific item.
+## [Unreleased] - 2020-12-30
+
+### Fixed
+
+ - `reapy.configure_reaper() -> ... -> get_reaper_process_path()` not working on Windows when the user doesn't have valid privilege over the process
+
+### Changed
+
+ - `get_reaper_process_path()` Now catches `psutil.AccessDenied` Exceptions. If no Reaper process is found, but a `psutil.AccessDenied` has been caught, a message will print asking to run this script using admin privilege. 
 
 
 ## Unreleased
