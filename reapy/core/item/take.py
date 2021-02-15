@@ -1,3 +1,5 @@
+import warnings
+
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
@@ -219,6 +221,39 @@ class Take(ReapyObject):
         return RPR.GetMediaItemTakeInfo_Value(self.id, param_name)
 
     @reapy.inside_reaper()
+    def get_midi_event(self, index, max_message_length=1024):
+        """Return information about a specific MIDI event.
+
+        Parameters
+        ----------
+        index : int
+            MIDI event index in take. May be negative.
+        max_message_length : int, optional
+            Maximum number of bytes of returned MIDI message. If
+            true message is longer, output will be truncated. Too
+            high values may slow down execution (default=1024).
+
+        Returns
+        -------
+        dict
+            MIDI event data with keys ``message``, ``muted``,
+            ``ppq_position`` (counted from take start) and
+            ``selected``.
+        """
+        index = list(range(self.n_midi_events))[index]
+        success, _, _, selected, muted, ppq_position, msg, _ = RPR.MIDI_GetEvt(
+            self.id, index, False, False, 0, "", max_message_length
+        )
+        if not success:
+            raise RuntimeError("Couldn't retrieve event data.")
+        return {
+            "message": list(msg.encode("latin-1")),
+            "muted": bool(muted),
+            "ppq_position": ppq_position,
+            "selected": bool(selected),
+        }
+
+    @reapy.inside_reaper()
     @property
     def has_valid_id(self):
         """
@@ -291,6 +326,11 @@ class Take(ReapyObject):
         -------
         MIDIEventList
         """
+        deprecation_message = (
+            "Take.midi_events is deprecated in favor of "
+            "Take.get_midi_event(). Use the latter instead."
+        )
+        warnings.warn(FutureWarning(deprecation_message))
         return reapy.core.item.midi_event.MIDIEventList(self)
 
     @property

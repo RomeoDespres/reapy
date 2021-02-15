@@ -448,7 +448,7 @@ MIDI Management
 	"`MIDI_GetAllEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetAllEvts>`_",""
 	"`MIDI_GetCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetCC>`_",""
 	"`MIDI_GetCCShape <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetCCShape>`_",""
-	"`MIDI_GetEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetEvt>`_",""
+	"`MIDI_GetEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetEvt>`_","`Take.get_midi_event <reapy.core.html#reapy.core.Take.get_midi_event>`_"
 	"`MIDI_GetGrid <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetGrid>`_","`Take.midi_grid <reapy.core.html#reapy.core.Take.midi_grid>`_"
 	"`MIDI_GetHash <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetHash>`_","`Take.midi_hash <reapy.core.html#reapy.core.Take.midi_hash>`_"
 	"`MIDI_GetNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetNote>`_","`Take.notes <reapy.core.html#reapy.core.Take.notes>`_; `Note <reapy.core.html#reapy.core.Note>`_"

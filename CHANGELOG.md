@@ -9,10 +9,15 @@ All notable changes to this project will be documented in this file.
 
 - [`reapy.map`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.map) for efficient mapping of `reapy` functions to large iterables of arguments.
 - [`Take.midi_grid`] to retrieve grid properties of the most recent MIDI editor for a take.
+- [`Take.get_midi_event`] to retrieve MIDI event data by index. This functions intends to replace `Take.midi_events` which is deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
 
 ### Fixed
 
 - Native ReaScript functions `RPR_MIDI_GetAllEvts`, `RPR_MIDI_GetTextSysexEvt`, `RPR_MIDI_SetAllEvts`, `RPR_MIDI_SetCC`, `RPR_MIDI_SetEvt`, `RPR_MIDI_SetNote` and `RPR_MIDI_SetTextSysexEvt` used to raise errors because they tried to encode MIDI messages as UTF-8. Their counterparts in `reapy.reascript_api` are patched and work as described in the official ReaScript documentation.
+
+### Deprecated
+
+- `Take.midi_events` because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
 
 
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
@@ -506,6 +511,7 @@ Project.play_state was buggy and has been removed.
 [`Take.beat_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.beat_to_ppq
 [`Take.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.envelopes
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value
+[`Take.get_midi_event`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_midi_event
 [`Take.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.has_valid_id
 [`Take.is_midi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.is_midi
 [`Take.item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.item
