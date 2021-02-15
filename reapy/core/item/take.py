@@ -293,6 +293,26 @@ class Take(ReapyObject):
         """
         return reapy.core.item.midi_event.MIDIEventList(self)
 
+    @property
+    def midi_grid(self):
+        """
+        Return most recent MIDI editor grid properties for this take.
+
+        Returns
+        -------
+        size : float
+            Grid size in quarter notes.
+        swing : float
+            Grid swing from 0 to 1.
+        note_length : float or None
+            Note length in quarter notes. Defaults to None when set to
+            match grid.
+        """
+        size, _, swing, note_length = RPR.MIDI_GetGrid(self.id, 0, 0)
+        if note_length == 0:
+            note_length = None
+        return size, swing, note_length
+
     def midi_hash(self, notes_only=False):
         """
         Get hash of MIDI-data to compare with later.

@@ -266,6 +266,10 @@ class Take(ReapyObject):
         """
         ...
 
+    @property
+    def midi_grid(self) -> ty.Tuple[float, float, ty.Optional[float]]:
+        ...
+
     def midi_hash(self, notes_only: bool = False) -> str:
         """
         Get hash of MIDI-data to compare with later.

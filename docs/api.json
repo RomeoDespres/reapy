@@ -1788,7 +1788,7 @@
     },
     "MIDI_GetGrid": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Take.midi_grid"]
     },
     "MIDI_GetHash": {
         "group": "MIDI Management",

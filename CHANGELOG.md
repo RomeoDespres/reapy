@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ### Added
 
 - [`reapy.map`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.map) for efficient mapping of `reapy` functions to large iterables of arguments.
+- [`Take.midi_grid`] to retrieve grid properties of the most recent MIDI editor for a take.
 
 ### Fixed
 
@@ -509,6 +510,7 @@ Project.play_state was buggy and has been removed.
 [`Take.is_midi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.is_midi
 [`Take.item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.item
 [`Take.make_active_take`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.make_active_take
+[`Take.midi_grid`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.midi_grid
 [`Take.midi_hash`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.midi_hash
 [`Take.n_cc`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_cc
 [`Take.n_envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_envelopes
