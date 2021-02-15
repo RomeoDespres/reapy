@@ -237,6 +237,17 @@ class Project(ReapyObject):
         """
         return self.time_signature[0]
 
+    @reapy.inside_reaper()
+    @property
+    def bpm_at_marker(self):
+        """
+        Project BPM (beats per minute) at the marker position.
+
+        :type: float
+        """
+        return RPR.Master_GetTempo()
+
+
     @bpm.setter
     def bpm(self, bpm):
         """
