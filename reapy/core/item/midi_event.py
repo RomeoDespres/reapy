@@ -1,3 +1,5 @@
+import warnings
+
 import reapy
 import reapy.reascript_api as RPR
 from reapy.core import ReapyObject, ReapyObjectList
@@ -62,6 +64,11 @@ class MIDIEvent(ReapyObject):
             improved efficiency when adding several notes, then call
             ``Take.sort_events`` at the end.
         """
+        deprecation_message = (
+            "MIDIEvent.set is deprecated in favor of Take.set_midi_event(). "
+            "Use the latter instead."
+        )
+        warnings.warn(FutureWarning(deprecation_message))
         take = self.parent
         if position:
             position = take._resolve_midi_unit((position,), unit)[0]

@@ -1884,7 +1884,7 @@
     },
     "MIDI_SetEvt": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Take.set_midi_event"]
     },
     "MIDI_SetItemExtents": {
         "group": "MIDI Management",

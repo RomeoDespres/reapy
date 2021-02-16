@@ -456,6 +456,16 @@ class Take(ReapyObject):
     def set_info_value(self, param_name: str, value: float) -> bool:
         ...
 
+    def set_midi_event(
+        self,
+        index: int,
+        message: ty.Optional[ty.Union[ty.List[int], bytes, str]],
+        muted: ty.Optional[bool],
+        ppq_position: ty.Optional[float],
+        selected: ty.Optional[bool],
+        sort: ty.Optional[bool]
+    ) -> None:
+
     def sort_events(self) -> None:
         """
         Sort MIDI events on take.

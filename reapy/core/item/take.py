@@ -550,6 +550,52 @@ class Take(ReapyObject):
     def set_info_value(self, param_name, value):
         return RPR.SetMediaItemTakeInfo_Value(self.id, param_name, value)
 
+    @reapy.inside_reaper()
+    def set_midi_event(
+        self, index, message=None, muted=None, ppq_position=None,
+        selected=None, sort=True
+    ):
+        """Set MIDI event information.
+
+        Parameters that are unspecified or set to ``None`` will not
+        be modified.
+
+        Parameters
+        ----------
+        index : int
+            MIDI event index in take. May be negative.
+        message : list of int, bytes or str (optional)
+            New MIDI message. The preferred input type is list of int.
+            Strings should be the Latin-1 encoding of the byte
+            sequence.
+        muted : bool, optional
+            Whether to mute event.
+        ppq_position : float, optional
+            New PPQ position counted from take start.
+        selected : bool, optional
+            Whether to select event.
+        sort : bool, optional
+            Whether to sort take events after setting data
+            (default=``True``). When ``True`` and ``ppq_position``
+            is not ``None``, event index is likely to change. When
+            calling ``Take.set_midi_event`` several times in a row,
+            performance may be improved by setting it to ``False``.
+            However, users should make sure to sort events afterwards
+            because unsorted events may cause bugs.
+        """
+        index = list(range(self.n_midi_events))[index]
+        if isinstance(message, list):
+            message = bytes(message)
+        if isinstance(message, bytes):
+            message = message.decode("latin1")
+        message_size = None if message is None else len(message)
+        success = RPR.MIDI_SetEvt(
+            self.id, index, selected, muted, ppq_position, message,
+            message_size, not sort
+        )
+        if not success:
+            raise RuntimeError("Couldn't set event data.")
+
     def sort_events(self):
         """
         Sort MIDI events on take.

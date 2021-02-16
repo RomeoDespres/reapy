@@ -469,7 +469,7 @@ MIDI Management
 	"`MIDI_SetAllEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetAllEvts>`_",""
 	"`MIDI_SetCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetCC>`_",""
 	"`MIDI_SetCCShape <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetCCShape>`_",""
-	"`MIDI_SetEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetEvt>`_",""
+	"`MIDI_SetEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetEvt>`_","`Take.set_midi_event <reapy.core.html#reapy.core.Take.set_midi_event>`_"
 	"`MIDI_SetItemExtents <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetItemExtents>`_",""
 	"`MIDI_SetNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetNote>`_",""
 	"`MIDI_SetTextSysexEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetTextSysexEvt>`_",""

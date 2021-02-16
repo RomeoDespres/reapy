@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - [`reapy.map`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.map) for efficient mapping of `reapy` functions to large iterables of arguments.
 - [`Take.midi_grid`] to retrieve grid properties of the most recent MIDI editor for a take.
 - [`Take.get_midi_event`] to retrieve MIDI event data by index. This functions intends to replace `Take.midi_events` which is deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
+- [`Take.set_midi_event`] to set MIDI event data by index. This function intends to replace `MIDIEvent.set` which is deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
 
 ### Fixed
 
@@ -528,6 +529,7 @@ Project.play_state was buggy and has been removed.
 [`Take.ppq_to_beat`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_beat
 [`Take.ppq_to_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_time
 [`Take.select_all_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.select_all_midi_events
+[`Take.set_midi_event`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.set_midi_event
 [`Take.sort_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.sort_events
 [`Take.source`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.source
 [`Take.time_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.time_to_ppq
