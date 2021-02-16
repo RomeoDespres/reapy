@@ -405,7 +405,8 @@ class Take(ReapyObject):
 
         :type: int
         """
-        return RPR.MIDI_CountEvts(self.id, 1, 1, 1)[0]
+        n_notes, n_cc, n_text_sysex = RPR.MIDI_CountEvts(self.id, 1, 1, 1)[2:]
+        return 2*n_notes + n_cc + n_text_sysex
 
     @property
     def n_notes(self):

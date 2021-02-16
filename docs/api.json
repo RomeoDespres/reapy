@@ -1731,7 +1731,8 @@
         "reapy": [
             "Take.n_cc",
             "Take.n_notes",
-            "Take.n_text_sysex"
+            "Take.n_text_sysex",
+            "Take.n_midi_events"
         ]
     },
     "MIDI_DeleteCC": {

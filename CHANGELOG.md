@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 
 - Native ReaScript functions `RPR_MIDI_GetAllEvts`, `RPR_MIDI_GetTextSysexEvt`, `RPR_MIDI_SetAllEvts`, `RPR_MIDI_SetCC`, `RPR_MIDI_SetEvt`, `RPR_MIDI_SetNote` and `RPR_MIDI_SetTextSysexEvt` used to raise errors because they tried to encode MIDI messages as UTF-8. Their counterparts in `reapy.reascript_api` are patched and work as described in the official ReaScript documentation.
+- [`Take.n_midi_events`] used to ignore note ends and thus return wrong value.
 
 ### Deprecated
 
@@ -525,6 +526,7 @@ Project.play_state was buggy and has been removed.
 [`Take.n_cc`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_cc
 [`Take.n_envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_envelopes
 [`Take.n_fxs`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_fxs
+[`Take.n_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_midi_events
 [`Take.n_notes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_notes
 [`Take.n_text_sysex`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_text_sysex
 [`Take.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.name
