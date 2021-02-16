@@ -18,7 +18,10 @@ All notable changes to this project will be documented in this file.
 
 ### Deprecated
 
-- `Take.midi_events` because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
+The following are deprecated because of the instability of index-based methods for MIDI events (see discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862):
+
+- `Take.midi_events`
+- `MIDIEvent.set`
 
 
 ## [0.10.0](https://github.com/RomeoDespres/reapy/releases/tag/0.10.0) - 2020-12-29
