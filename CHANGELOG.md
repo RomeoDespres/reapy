@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 
 - [`reapy.map`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.map) for efficient mapping of `reapy` functions to large iterables of arguments.
 - [`Take.midi_grid`] to retrieve grid properties of the most recent MIDI editor for a take.
-- [`Take.get_midi_event`] to retrieve MIDI event data by index. This functions intends to replace `Take.midi_events` which is deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
+- [`Take.get_midi_event`] to retrieve MIDI event data by index. This function intends to replace `Take.midi_events` which is deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
 - [`Take.set_midi_event`] to set MIDI event data by index. This function intends to replace `MIDIEvent.set` which is deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
 
 ### Fixed
