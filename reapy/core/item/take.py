@@ -217,6 +217,30 @@ class Take(ReapyObject):
         """
         return reapy.FXList(self)
 
+    @reapy.inside_reaper()
+    def get_first_selected_event_index(self, after=None):
+        """Return index of first selected MIDI event after index.
+
+        Return value is ``None`` if no such event exists.
+
+        Parameters
+        ----------
+        after : int, optional
+            If specified, the first selected MIDI event index that is
+            strictly higher than ``after`` will be returned
+            (default=``None``). May be negative.
+
+        Returns
+        -------
+        int or None
+            First selected MIDI event index after ``after``. Defaults
+            to ``None`` if no such event exists.
+        """
+        after = -1 if after is None else list(range(self.n_midi_events))[after]
+        index = RPR.MIDI_EnumSelEvts(self.id, after)
+        if index != -1:
+            return index
+
     def get_info_value(self, param_name):
         return RPR.GetMediaItemTakeInfo_Value(self.id, param_name)
 

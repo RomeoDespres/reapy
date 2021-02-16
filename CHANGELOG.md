@@ -11,6 +11,7 @@ All notable changes to this project will be documented in this file.
 - [`Take.midi_grid`] to retrieve grid properties of the most recent MIDI editor for a take.
 - [`Take.get_midi_event`] to retrieve MIDI event data by index. This function intends to replace `Take.midi_events` which is deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
 - [`Take.set_midi_event`] to set MIDI event data by index. This function intends to replace `MIDIEvent.set` which is deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
+- [`Take.get_first_selected_event_index`]
 
 ### Fixed
 
@@ -515,6 +516,7 @@ Project.play_state was buggy and has been removed.
 [`Take.add_note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_note
 [`Take.beat_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.beat_to_ppq
 [`Take.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.envelopes
+[`Take.get_first_selected_event_index`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_first_selected_event_index
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value
 [`Take.get_midi_event`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_midi_event
 [`Take.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.has_valid_id

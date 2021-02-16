@@ -1761,7 +1761,7 @@
     },
     "MIDI_EnumSelEvts": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Take.get_first_selected_event_index"]
     },
     "MIDI_EnumSelNotes": {
         "group": "MIDI Management",

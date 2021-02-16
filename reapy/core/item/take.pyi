@@ -198,6 +198,10 @@ class Take(ReapyObject):
         :type: FXList
         """
         ...
+    def get_first_selected_event_index(
+        self, after: ty.Optional[int]
+    ): -> ty.Optional[int]
+        ...
 
     def get_info_value(self, param_name: str) -> float:
         ...
