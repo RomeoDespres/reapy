@@ -1773,7 +1773,7 @@
     },
     "MIDI_GetAllEvts": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Take.get_midi_events"]
     },
     "MIDI_GetCC": {
         "group": "MIDI Management",

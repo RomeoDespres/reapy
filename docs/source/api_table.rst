@@ -445,7 +445,7 @@ MIDI Management
 	"`MIDI_EnumSelEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_EnumSelEvts>`_","`Take.get_first_selected_event_index <reapy.core.html#reapy.core.Take.get_first_selected_event_index>`_"
 	"`MIDI_EnumSelNotes <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_EnumSelNotes>`_",""
 	"`MIDI_EnumSelTextSysexEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_EnumSelTextSysexEvts>`_",""
-	"`MIDI_GetAllEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetAllEvts>`_",""
+	"`MIDI_GetAllEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetAllEvts>`_","`Take.get_midi_events <reapy.core.html#reapy.core.Take.get_midi_events>`_"
 	"`MIDI_GetCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetCC>`_",""
 	"`MIDI_GetCCShape <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetCCShape>`_",""
 	"`MIDI_GetEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetEvt>`_","`Take.get_midi_event <reapy.core.html#reapy.core.Take.get_midi_event>`_"

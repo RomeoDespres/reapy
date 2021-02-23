@@ -1,3 +1,4 @@
+import struct
 import warnings
 
 import reapy
@@ -276,6 +277,81 @@ class Take(ReapyObject):
             "ppq_position": ppq_position,
             "selected": bool(selected),
         }
+
+    @reapy.inside_reaper()
+    def get_midi_events(self):
+        """Return list of all MIDI events on take.
+
+        Returns
+        -------
+        list of dict
+            List of MIDI events data. Each event is represented by a
+            dict with keys ``message``, ``muted``, ``ppq_position``
+            (counted from take start) and ``selected``. Control
+            change, channel pressure, and pitch events have an
+            additional ``shape`` key. Events with ``shape == 'bezier'``
+            also have a ``bezier_tension`` key.
+
+        See also
+        --------
+        Take.get_midi_event
+        Take.set_midi_event
+        Take.set_midi_events
+        """
+        class MIDIEvents:
+
+            shapes = {
+                0b0000000: "square",
+                0b0010000: "linear",
+                0b0100000: "slow start/end",
+                0b0110000: "fast start",
+                0b1000000: "fast end",
+                0b1010000: "bezier"
+            }
+
+            def __iter__(self):
+                self.it = iter(data.encode("latin1"))
+                self.ppq_position = 0
+                return self
+
+            def __next__(self):
+                self.ppq_position += struct.unpack("<I", self.read(4))[0]
+                flag = self.read(1)[0]
+                message_length = struct.unpack("<I", self.read(4))[0]
+                if message_length == 0:
+                    return next(self)
+                event = {
+                    "message": list(self.read(message_length)),
+                    "muted": bool(flag & 2),
+                    "ppq_position": self.ppq_position,
+                    "selected": bool(flag & 1)
+                }
+                status = event["message"][0]
+                if 0xb0 <= status <= 0xbf or 0xd0 <= status <= 0xef:
+                    # Message is control change, aftertouch or pitch
+                    event["shape"] = self.shapes[flag & 0b1110000]
+                    if event["shape"] == "bezier":  # Also get Bezier shape
+                        bezier_tension = bytes(next(self)["message"][-4:])
+                        bezier_tension = struct.unpack("f", bezier_tension)[0]
+                        event["bezier_tension"] = bezier_tension
+                return event
+
+            def read(self, n):
+                return bytes([next(self.it) for _ in range(n)])
+
+        max_length, length = 2**12, 2**12
+        while length == max_length:
+            max_length *= 2
+            success, _,  data, length = RPR.MIDI_GetAllEvts(
+                self.id, "", max_length
+            )
+        if success:
+            # Return all events except last one which is an automatically
+            # inserted "all notes off" that can not be retrieved with
+            # get_midi_event(-1).
+            return list(MIDIEvents())[:-1]
+        else:
+            raise RuntimeError("Couldn't retrieve take data.")
 
     @reapy.inside_reaper()
     @property

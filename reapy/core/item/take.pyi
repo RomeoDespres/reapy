@@ -209,6 +209,9 @@ class Take(ReapyObject):
     def get_midi_event(self, index: int, max_message_length: int) -> dict:
         ...
 
+    def get_midi_events(self) -> ty.List[dict]:
+        ...
+
     @property
     def has_valid_id(self) ->  bool:
         """
