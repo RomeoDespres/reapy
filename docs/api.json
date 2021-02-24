@@ -1741,7 +1741,7 @@
     },
     "MIDI_DeleteEvt": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Take.delete_midi_event"]
     },
     "MIDI_DeleteNote": {
         "group": "MIDI Management",
