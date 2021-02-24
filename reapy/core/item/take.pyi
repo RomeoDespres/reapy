@@ -472,6 +472,7 @@ class Take(ReapyObject):
         selected: ty.Optional[bool],
         sort: ty.Optional[bool]
     ) -> None:
+        ...
 
     def sort_events(self) -> None:
         """
