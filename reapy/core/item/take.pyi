@@ -224,6 +224,9 @@ class Take(ReapyObject):
     def get_midi_events(self) -> ty.List[dict]:
         ...
 
+    def get_note(self, index: int) -> dict:
+        ...
+
     @property
     def has_valid_id(self) ->  bool:
         """

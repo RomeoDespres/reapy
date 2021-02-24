@@ -19,6 +19,12 @@ The new functions below replace the `MIDIEvent` class and `Take.midi_events`. Th
 - [`Take.delete_midi_event`]
 - [`Take.get_first_selected_event_index`] to iterate through selected MIDI events.
 
+#### MIDI notes
+
+The new functions below replace the `Note` class and `Take.notes`. Those are deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
+
+- [`Take.get_note`]
+
 #### Other
 
 - [`reapy.map`](https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.map) for efficient mapping of `reapy` functions to large iterables of arguments.
@@ -438,7 +444,6 @@ Project.play_state was buggy and has been removed.
 [`Marker.delete`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Marker.delete
 [`Marker`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Marker
 [`NormalizedFXParam.format_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.NormalizedFXParam.format_value
-[`Note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Note
 [`Project.add_marker`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_marker
 [`Project.add_region`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_region
 [`Project.add_track`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Project.add_track
@@ -534,6 +539,7 @@ Project.play_state was buggy and has been removed.
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value
 [`Take.get_midi_event`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_midi_event
 [`Take.get_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_midi_events
+[`Take.get_note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_note
 [`Take.has_valid_id`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.has_valid_id
 [`Take.is_midi`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.is_midi
 [`Take.item`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.item
@@ -547,7 +553,6 @@ Project.play_state was buggy and has been removed.
 [`Take.n_notes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_notes
 [`Take.n_text_sysex`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.n_text_sysex
 [`Take.name`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.name
-[`Take.notes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.notes
 [`Take.ppq_to_beat`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_beat
 [`Take.ppq_to_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_time
 [`Take.select_all_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.select_all_midi_events

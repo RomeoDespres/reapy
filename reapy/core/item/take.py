@@ -409,6 +409,24 @@ class Take(ReapyObject):
             raise RuntimeError("Couldn't retrieve take data.")
 
     @reapy.inside_reaper()
+    def get_note(self, index):
+        index = list(range(self.n_notes))[index]
+        result = RPR.MIDI_GetNote(self.id, index, 0, 0, 0, 0, 0, 0, 0)
+        success, _, _, selected, muted, start, end, chan, pitch, vel = result
+        if success:
+            return {
+                "channel": chan,
+                "muted": bool(muted),
+                "pitch": pitch,
+                "ppq_length": int(end) - int(start),
+                "ppq_position": int(start),
+                "selected": bool(selected),
+                "velocity": vel
+            }
+        raise RuntimeError("Couldn't retrieve note data.")
+
+
+    @reapy.inside_reaper()
     @property
     def has_valid_id(self):
         """
@@ -602,6 +620,11 @@ class Take(ReapyObject):
 
         :type: NoteList
         """
+        deprecation_message = (
+            "Take.notes is deprecated in favor of "
+            "Take.get_note(). Use the latter instead."
+        )
+        warnings.warn(FutureWarning(deprecation_message))
         return reapy.NoteList(self)
 
     def ppq_to_beat(self, ppq):

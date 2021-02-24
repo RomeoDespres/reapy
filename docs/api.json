@@ -1798,8 +1798,7 @@
     "MIDI_GetNote": {
         "group": "MIDI Management",
         "reapy": [
-            "Take.notes",
-            "Note"
+            "Take.get_note"
         ]
     },
     "MIDI_GetPPQPosFromProjQN": {
