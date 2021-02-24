@@ -15,6 +15,7 @@ The new functions below replace the `MIDIEvent` class and `Take.midi_events`. Th
 - [`Take.get_midi_events`] to retrieve all MIDI events at once.
 - [`Take.set_midi_event`] to set MIDI event data by index.
 - [`Take.set_midi_events`] to replace all MIDI events at once.
+- [`Take.add_midi_event`]
 - [`Take.delete_midi_event`]
 - [`Take.get_first_selected_event_index`] to iterate through selected MIDI events.
 
@@ -33,6 +34,7 @@ The new functions below replace the `MIDIEvent` class and `Take.midi_events`. Th
 The following are deprecated because of the instability of index-based methods for MIDI events (see discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862)):
 
 - `Take.midi_events`
+- `Take.add_event`
 - `MIDIEvent.set`
 
 
@@ -523,6 +525,7 @@ Project.play_state was buggy and has been removed.
 [`Source.type`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Source.type
 [`Take.add_audio_accessor`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_audio_accessor
 [`Take.add_fx`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_fx
+[`Take.add_midi_event`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_midi_event
 [`Take.add_note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_note
 [`Take.beat_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.beat_to_ppq
 [`Take.delete_midi_event`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.delete_midi_event

@@ -80,6 +80,15 @@ class Take(ReapyObject):
         """
         ...
 
+    def add_midi_event(
+        self,
+        message: ty.Iterable[int],
+        ppq_position: int,
+        muted: ty.Optional[bool],
+        selected: ty.Optional[bool]
+    ) -> None:
+        ...
+
     def add_note(self,
                  start: float,
                  end: float,

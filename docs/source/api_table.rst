@@ -462,7 +462,7 @@ MIDI Management
 	"`MIDI_GetTextSysexEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetTextSysexEvt>`_",""
 	"`MIDI_GetTrackHash <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_GetTrackHash>`_","`Track.midi_hash <reapy.core.html#reapy.core.Track.midi_hash>`_"
 	"`MIDI_InsertCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertCC>`_",""
-	"`MIDI_InsertEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertEvt>`_",""
+	"`MIDI_InsertEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertEvt>`_","`Take.add_midi_event <reapy.core.html#reapy.core.Take.add_midi_event>`_"
 	"`MIDI_InsertNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertNote>`_","`Take.add_note <reapy.core.html#reapy.core.Take.add_note>`_"
 	"`MIDI_InsertTextSysexEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertTextSysexEvt>`_",""
 	"`MIDI_SelectAll <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SelectAll>`_","`Take.select_all_midi_events <reapy.core.html#reapy.core.Take.select_all_midi_events>`_; `Take.unselect_all_midi_events <reapy.core.html#reapy.core.Take.unselect_all_midi_events>`_"

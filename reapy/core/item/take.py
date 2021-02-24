@@ -59,6 +59,11 @@ class Take(ReapyObject):
         --------
         Take.add_note
         """
+        deprecation_message = (
+            "Take.add_event is deprecated in favor of "
+            "Take.add_midi_event(). Use the latter instead."
+        )
+        warnings.warn(FutureWarning(deprecation_message))
         ppqpos = self._resolve_midi_unit((position,), unit)[0]
         bytestr = self._midi_to_bytestr(message)
         RPR.MIDI_InsertEvt(
@@ -95,6 +100,44 @@ class Take(ReapyObject):
             raise ValueError("Can't find FX named {}".format(name))
         fx = reapy.FX(self, index)
         return fx
+
+    def add_midi_event(
+        self, message, ppq_position, muted=False, selected=False
+    ):
+        """Add MIDI event to take.
+
+        Parameters
+        ----------
+        message : iterable of int
+            Event MIDI message.
+        ppq_position : int
+            Event position in MIDI ticks (counted from take start).
+        muted : bool, optional
+            Whether to mute event. Default is ``False``.
+        selected : bool, optional
+            Whether to select event. Default is ``False``.
+
+        Notes
+        -----
+        Inserting notes with this function is doable but uneasy
+        because inserting a note-on event triggers the creation of a
+        note-off event just one MIDI tick later. This note-off event
+        must then be edited a posteriori with ``Take.set_midi_event``.
+        ``Take.add_note`` is easier to use and should be preferred.
+
+        See also
+        --------
+        Take.add_note
+        Take.delete_midi_event
+        Take.get_midi_event
+        Take.set_midi_event
+        """
+        message = bytes(message).decode("latin1")
+        success = RPR.MIDI_InsertEvt(
+            self.id, selected, muted, ppq_position, message, len(message)
+        )
+        if not success:
+            raise RuntimeError("Couldn't create event.")
 
     @reapy.inside_reaper()
     def add_note(

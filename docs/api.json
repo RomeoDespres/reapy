@@ -1852,7 +1852,7 @@
     },
     "MIDI_InsertEvt": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Take.add_midi_event"]
     },
     "MIDI_InsertNote": {
         "group": "MIDI Management",
