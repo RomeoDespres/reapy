@@ -198,6 +198,9 @@ class Take(ReapyObject):
     def delete_midi_event(self, index: int) -> None:
         ...
 
+    def delete_note(self, index: int) -> None:
+        ...
+
     @property
     def envelopes(self) -> reapy.EnvelopeList:
         ...

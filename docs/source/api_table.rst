@@ -438,7 +438,7 @@ MIDI Management
 	"`MIDI_CountEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_CountEvts>`_","`Take.n_cc <reapy.core.html#reapy.core.Take.n_cc>`_; `Take.n_notes <reapy.core.html#reapy.core.Take.n_notes>`_; `Take.n_text_sysex <reapy.core.html#reapy.core.Take.n_text_sysex>`_; `Take.n_midi_events <reapy.core.html#reapy.core.Take.n_midi_events>`_"
 	"`MIDI_DeleteCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteCC>`_",""
 	"`MIDI_DeleteEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteEvt>`_","`Take.delete_midi_event <reapy.core.html#reapy.core.Take.delete_midi_event>`_"
-	"`MIDI_DeleteNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteNote>`_",""
+	"`MIDI_DeleteNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteNote>`_","`Take.delete_note <reapy.core.html#reapy.core.Take.delete_note>`_"
 	"`MIDI_DeleteTextSysexEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DeleteTextSysexEvt>`_",""
 	"`MIDI_DisableSort <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_DisableSort>`_",""
 	"`MIDI_EnumSelCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_EnumSelCC>`_",""

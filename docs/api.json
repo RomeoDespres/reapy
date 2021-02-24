@@ -1745,7 +1745,9 @@
     },
     "MIDI_DeleteNote": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": [
+          "Take.delete_note"
+        ]
     },
     "MIDI_DeleteTextSysexEvt": {
         "group": "MIDI Management",

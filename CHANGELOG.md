@@ -24,6 +24,7 @@ The new functions below replace the `MIDIEvent` class and `Take.midi_events`. Th
 The new functions below replace the `Note` class and `Take.notes`. Those are deprecated because of the instability of index-based methods. See discussion in [#81](https://github.com/RomeoDespres/reapy/pull/81#issuecomment-775458862).
 
 - [`Take.get_note`]
+- [`Take.delete_note`]
 
 #### Other
 
@@ -534,6 +535,7 @@ Project.play_state was buggy and has been removed.
 [`Take.add_note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.add_note
 [`Take.beat_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.beat_to_ppq
 [`Take.delete_midi_event`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.delete_midi_event
+[`Take.delete_note`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.delete_note
 [`Take.envelopes`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.envelopes
 [`Take.get_first_selected_event_index`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_first_selected_event_index
 [`Take.get_info_value`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.get_info_value

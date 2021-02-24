@@ -260,6 +260,18 @@ class Take(ReapyObject):
         index = list(range(self.n_midi_events))[index]
         RPR.MIDI_DeleteEvt(self.id, index)
 
+    @reapy.inside_reaper()
+    def delete_note(self, index):
+        """Delete MIDI note by index.
+
+        Parameters
+        ----------
+        index : int
+            MIDI note index in take. May be negative.
+        """
+        index = list(range(self.n_notes))[index]
+        RPR.MIDI_DeleteNote(self.id, index)
+
     @property
     def envelopes(self):
         return reapy.EnvelopeList(self)
