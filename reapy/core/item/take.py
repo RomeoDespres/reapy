@@ -697,6 +697,95 @@ class Take(ReapyObject):
         if not success:
             raise RuntimeError("Couldn't set event data.")
 
+    @reapy.inside_reaper()
+    def set_midi_events(self, events):
+        """Erase and replace all events on take.
+
+        Parameters
+        ----------
+        events : iterable of dict
+            Time-sorted iterable of MIDI events. Each MIDI event is
+            represented by a ``dict`` with the following keys:
+
+            - ``ppq_position`` (*int*) – Event position in MIDI ticks,
+              counted from take start.
+            - ``message`` (*list of int*) – Event MIDI message.
+            - ``muted`` (*bool, optional*) – Whether event is muted.
+              Default is ``False``.
+            - ``selected`` (*bool, optional*) – Wether event is
+              selected. Default is ``False``.
+            - ``shape`` (*{'square', 'linear', 'slow start/end',
+              'fast start', 'fast end', 'bezier'}, optional*) – Event
+              shape. Will be ignored for events where shape can not be
+              set (e.g. MIDI notes). Default is ``square``.
+            - ``bezier_tension`` (*float, optional*) – Event shape
+              Bezier tension. Will be ignored if ``shape`` is not
+              ``bezier``. Default is ``0``.
+
+        Raises
+        ------
+        ValueError
+            When ``events`` is not time-sorted or when an event has a
+            negative ``ppq_position``.
+
+        See also
+        --------
+        Take.get_midi_event
+        Take.set_midi_event
+        Take.get_midi_events
+        """
+        def generate_bytes(events):
+            shapes = {
+                "square": 0b0000000,
+                "linear": 0b0010000,
+                "slow start/end": 0b0100000,
+                "fast start": 0b0110000,
+                "fast end": 0b1000000,
+                "bezier": 0b1010000
+            }
+            last_ppq_position = 0
+            bezier_message = (
+                b"\x00\x00\x00\x00\x00\x0c\x00\x00\x00\xc3\xbf\x0fCCBZ "
+            )
+            for i, event in enumerate(events):
+                ppq_position = event["ppq_position"]
+                if ppq_position < 0:
+                    msg = "Event {} has negative ppq_position={}."
+                    raise ValueError(msg.format(i, ppq_position))
+                offset = int(event["ppq_position"]) - last_ppq_position
+                if offset < 0:
+                    msg = (
+                        "Input iterable is not time-sorted. Event {} has "
+                        "ppq_position={} while event {} has ppq_position={}."
+                    )
+                    msg = msg.format(i, ppq_position, i - 1, last_ppq_position)
+                    raise ValueError(msg)
+                last_ppq_position += offset
+                while offset >= 2**31:
+                    offset -= 2**31 - 1
+                    yield from b"\xff\xff\xff\x7f\x00\x00\x00\x00\x00"
+                yield from struct.pack("<I", offset)
+                flag = 0
+                if event.get("selected", False):
+                    flag |= 1
+                if event.get("muted", False):
+                    flag |= 2
+                shape = event.get("shape", "square")
+                flag |= shapes[shape]
+                yield flag
+                yield from struct.pack("<I", len(event["message"]))
+                yield from event["message"]
+                if shape == "bezier":
+                    yield from bezier_message
+                    yield from struct.pack("f", event.get("bezier_tension", 0))
+        item_end = int(self.time_to_ppq(self.item.position + self.item.length))
+        all_notes_off = {"ppq_position": item_end, "message": [176, 123, 0]}
+        data = bytes(generate_bytes(events + [all_notes_off])).decode("latin1")
+        success = RPR.MIDI_SetAllEvts(self.id, data, len(data))
+        if not success:
+            raise RuntimeError("Couldn't set take data.")
+        self.sort_events()  # Fix missing note off events
+
     def sort_events(self):
         """
         Sort MIDI events on take.

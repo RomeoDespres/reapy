@@ -474,6 +474,9 @@ class Take(ReapyObject):
     ) -> None:
         ...
 
+    def set_midi_events(self, events: ty.Iterable[dict]) -> None:
+        ...
+
     def sort_events(self) -> None:
         """
         Sort MIDI events on take.

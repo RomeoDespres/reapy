@@ -1873,7 +1873,7 @@
     },
     "MIDI_SetAllEvts": {
         "group": "MIDI Management",
-        "reapy": []
+        "reapy": ["Take.set_midi_events"]
     },
     "MIDI_SetCC": {
         "group": "MIDI Management",

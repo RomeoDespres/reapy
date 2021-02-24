@@ -466,7 +466,7 @@ MIDI Management
 	"`MIDI_InsertNote <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertNote>`_","`Take.add_note <reapy.core.html#reapy.core.Take.add_note>`_"
 	"`MIDI_InsertTextSysexEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_InsertTextSysexEvt>`_",""
 	"`MIDI_SelectAll <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SelectAll>`_","`Take.select_all_midi_events <reapy.core.html#reapy.core.Take.select_all_midi_events>`_; `Take.unselect_all_midi_events <reapy.core.html#reapy.core.Take.unselect_all_midi_events>`_"
-	"`MIDI_SetAllEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetAllEvts>`_",""
+	"`MIDI_SetAllEvts <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetAllEvts>`_","`Take.set_midi_events <reapy.core.html#reapy.core.Take.set_midi_events>`_"
 	"`MIDI_SetCC <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetCC>`_",""
 	"`MIDI_SetCCShape <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetCCShape>`_",""
 	"`MIDI_SetEvt <https://www.reaper.fm/sdk/reascript/reascripthelp.html#MIDI_SetEvt>`_","`Take.set_midi_event <reapy.core.html#reapy.core.Take.set_midi_event>`_"

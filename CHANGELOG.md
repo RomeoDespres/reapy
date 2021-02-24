@@ -14,6 +14,7 @@ The new functions below replace the `MIDIEvent` class and `Take.midi_events`. Th
 - [`Take.get_midi_event`] to retrieve MIDI event data by index.
 - [`Take.get_midi_events`] to retrieve all MIDI events at once.
 - [`Take.set_midi_event`] to set MIDI event data by index.
+- [`Take.set_midi_events`] to replace all MIDI events at once.
 - [`Take.get_first_selected_event_index`] to iterate through selected MIDI events.
 
 #### Other
@@ -546,6 +547,7 @@ Project.play_state was buggy and has been removed.
 [`Take.ppq_to_time`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.ppq_to_time
 [`Take.select_all_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.select_all_midi_events
 [`Take.set_midi_event`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.set_midi_event
+[`Take.set_midi_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.set_midi_events
 [`Take.sort_events`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.sort_events
 [`Take.source`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.source
 [`Take.time_to_ppq`]: https://python-reapy.readthedocs.io/en/latest/reapy.core.html#reapy.core.Take.time_to_ppq
