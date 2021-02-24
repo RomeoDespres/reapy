@@ -246,17 +246,13 @@ class Take(ReapyObject):
         return RPR.GetMediaItemTakeInfo_Value(self.id, param_name)
 
     @reapy.inside_reaper()
-    def get_midi_event(self, index, max_message_length=1024):
+    def get_midi_event(self, index):
         """Return information about a specific MIDI event.
 
         Parameters
         ----------
         index : int
             MIDI event index in take. May be negative.
-        max_message_length : int, optional
-            Maximum number of bytes of returned MIDI message. If
-            true message is longer, output will be truncated. Too
-            high values may slow down execution (default=1024).
 
         Returns
         -------
@@ -266,9 +262,13 @@ class Take(ReapyObject):
             ``selected``.
         """
         index = list(range(self.n_midi_events))[index]
-        success, _, _, selected, muted, ppq_position, msg, _ = RPR.MIDI_GetEvt(
-            self.id, index, False, False, 0, "", max_message_length
-        )
+        max_length = length = 2**8
+        while length == max_length or length == 0:
+            max_length *= 2
+            result = RPR.MIDI_GetEvt(
+                self.id, index, False, False, 0, "", max_length
+            )
+            success, _, _, selected, muted, ppq_position, msg, length = result
         if not success:
             raise RuntimeError("Couldn't retrieve event data.")
         return {
@@ -339,7 +339,7 @@ class Take(ReapyObject):
             def read(self, n):
                 return bytes([next(self.it) for _ in range(n)])
 
-        max_length, length = 2**12, 2**12
+        max_length = length = 2**12
         while length == max_length:
             max_length *= 2
             success, _,  data, length = RPR.MIDI_GetAllEvts(
