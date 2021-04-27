@@ -429,6 +429,20 @@ class Note(MIDIEvent):
             self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         )[9]
 
+    @velocity.setter
+    def velocity(self, new_vel):
+        n_infos = self.infos
+        RPR.MIDI_SetNote(   self.parent.id,
+                            self.index,
+                            -1,
+                            n_infos['muted'],
+                            -1,
+                            -1,
+                            -1,
+                            -1,
+                            new_vel,
+                            -1
+                        )
 
 class NoteList(MIDIEventList):
 
