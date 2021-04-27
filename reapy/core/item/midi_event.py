@@ -352,14 +352,14 @@ class Note(MIDIEvent):
         n_infos = self.infos
         RPR.MIDI_SetNote(   self.parent.id,
                             self.index,
-                            n_infos['selected'],
-                            self.infos["muted"],
-                            self.infos["start"],
-                            self.infos["end"],
-                            self.infos["channel"],
+                            -1,
+                            n_infos['muted'],
+                            -1,
+                            -1,
+                            -1,
                             new_pitch,
-                            self.infos["velocity"],
-                            False
+                            -1,
+                            -1
                         )
 
     @property
