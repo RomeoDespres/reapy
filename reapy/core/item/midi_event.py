@@ -13,7 +13,7 @@ class MIDIEvent(ReapyObject):
 
         Parameters
         ----------
-        parent : Take
+        parent :  
             Take to which the event belongs.
         index : int
             Event index. It is specific to the event type, which means
@@ -346,6 +346,21 @@ class Note(MIDIEvent):
         return RPR.MIDI_GetNote(
             self.parent.id, self.index, 0, 0, 0, 0, 0, 0, 0
         )[8]
+
+    @pitch.setter
+    def pitch(self, new_pitch):
+        n_infos = self.infos
+        RPR.MIDI_SetNote(   self.parent.id,
+                            self.index,
+                            n_infos['selected'],
+                            self.infos["muted"],
+                            self.infos["start"],
+                            self.infos["end"],
+                            self.infos["channel"],
+                            new_pitch,
+                            self.infos["velocity"],
+                            False
+                        )
 
     @property
     def selected(self):
