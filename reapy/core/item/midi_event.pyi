@@ -301,6 +301,25 @@ class Note(MIDIEvent):
         """
         ...
 
+    @reapy.inside_reaper()
+    @property
+    def beat(self) -> float:
+        """
+        Beat of the note. (absolute)
+
+        :type: float
+        """
+        ...
+
+    @reapy.inside_reaper()
+    @property
+    def measure(self) -> int:
+        """
+        Measure of the note.
+
+        :type: int
+        """
+        ...
     @property
     def velocity(self) -> int:
         """
@@ -321,3 +340,18 @@ class NoteList(MIDIEventList[Note]):
 
     _elements_class: ty.Type[Note]
     _n_elements: str
+
+
+    def in_measure(self, measure:int) -> ty.List[Note]:
+        """
+        Returns a list of Note contained in the specified measure.
+
+        Parameters
+        ----------
+        measure : int
+
+        Returns
+        -------
+        notes : List[Note]
+            Notes in the measure.
+        """

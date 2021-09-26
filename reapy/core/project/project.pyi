@@ -121,6 +121,26 @@ class Project(ReapyObject):
             New region.
         """
         ...
+    
+    def import_media(self, filepath:str, addToSelectedTrack:bool=False, setToCursorPosition:bool=False) -> reapy.Item:
+		"""
+		Imports a file and place the media on a track.
+
+		Parameters
+		----------
+		filepath : str
+			Filepath to the file to import (relative to the REAPER project)
+		addToSelectedTrack : bool, optional
+			Instead of creating a new track, the selected track will be used.
+		setToCursorPosition : bool, optional
+			When True, set the position of the imported Item to the cursor position
+			If False, the Item will be positionned at "00:00"
+		Returns
+		-------
+		item : Item
+			New imported item
+		"""
+        ...
 
     def add_track(self, index: int = 0, name: str = "") -> reapy.Track:
         """
@@ -171,6 +191,23 @@ class Project(ReapyObject):
         Project.time_to_beats
         """
         ...
+    def beats_to_measure(self, beats:float) -> int:
+        """
+        Convert beats(QN time) to measure.
+
+        Parameters
+        ----------
+        beats : float
+
+        Returns
+        -------
+        measure : int
+            measure of that beat.
+
+        See also
+        --------
+        Project.time_to_beats
+        """
 
     def begin_undo_block(self) -> None:
         """
@@ -770,6 +807,20 @@ class Project(ReapyObject):
         """
         ...
 
+    def select_item(self, item_obj, selected:bool=True, makeUnique:bool=False) -> None:
+        """
+        Select or unselect an item, depending on `selected`.
+
+        Parameters
+        ----------
+        item_obj : reapy.Item
+            The item to select
+        selected : bool [optional]
+            Whether to select or unselect the item.
+        makeUnique : bool [optional]
+            If False the Item will be added to the current selection, if True it will become the only selected item
+        """
+        ...
     def select_all_tracks(self) -> None:
         """Select all tracks."""
         ...

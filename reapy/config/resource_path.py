@@ -43,16 +43,40 @@ def get_reaper_process_path():
         When zero or more than one REAPER instances are currently
         running.
     """
+    processes = []
+    """ 
+    #BEFORE FIX -----
     processes = [
-        p for p in psutil.process_iter(['name', 'exe'])
-        if os.path.splitext(p.info['name'])[0].lower() == 'reaper'
-    ]
+         p for p in psutil.process_iter(['name', 'exe'])
+         if os.path.splitext(p.info['name'])[0].lower() == 'reaper'
+     ]
+
+     p.info['name'] could return 'None' without knowing why the name could not be fetch.
+     Using p.name() will raise if the process name could not be fetched because of a privilege error
+     -----------------
+     """
+    adminDenied = False
+    #for each running processes
+    for p in psutil.process_iter(['name', 'exe']):
+        try :
+            #get process name without extension
+            pName = os.path.splitext(p.name())[0].lower()
+            #save process if reaper is running
+            if pName == 'reaper' :
+                processes.append(p)
+        #catch if there's an 'Access denied' when trying to get infos on a process
+        except psutil.AccessDenied:
+            adminDenied = True
+   
     if not processes:
-        raise RuntimeError('No REAPER instance is currently running.')
+        errMsg = 'No REAPER instance is currently running.' if not adminDenied else 'No REAPER instance is currently running, try running this script with admin privileges'
+        raise RuntimeError(errMsg)
+        
     elif len(processes) > 1:
         raise RuntimeError(
             'More than one REAPER instance is currently running.'
         )
+        
     return processes[0].info['exe']
 
 
