@@ -475,7 +475,9 @@ class Track(ReapyObject):
     def midi_note_names(self):
         with reapy.inside_reaper():
             names = [
-                RPR.GetTrackMIDINoteName(self.id, i, 0) for i in range(128)
+                RPR.GetTrackMIDINoteName(  # type:ignore
+                    self.index, i, 0
+                ) for i in range(128)
             ]
         return names
 

@@ -280,3 +280,27 @@ def ValidatePtr2(p0, p1, p2):
     pointer = ct.c_uint64(p1)
     name = _RPR.rpr_packsc(p2)
     return f(project, pointer, name)
+
+
+def GetTrackMIDINoteName(track_idx: int, pitch: int, chan: int) -> str:
+    a = _RPR._ft['GetTrackMIDINoteName']
+    f = ct.CFUNCTYPE(ct.c_char_p, ct.c_int, ct.c_int, ct.c_int)(a)
+    t = (ct.c_int(track_idx), ct.c_int(pitch), ct.c_int(chan))
+    r = f(t[0], t[1], t[2])
+    return '' if not r else str(r.decode())
+
+
+def GetTrackMIDINoteNameEx(
+    project: str, track: str, pitch: int, chan: int
+) -> str:
+    a = _RPR._ft['GetTrackMIDINoteNameEx']
+    f = ct.CFUNCTYPE(
+        ct.c_char_p, ct.c_uint64, ct.c_uint64, ct.c_int, ct.c_int
+    )(a)
+    t = (
+        packp('ReaProject*',
+              project), packp('MediaTrack*',
+                              track), ct.c_int(pitch), ct.c_int(chan)
+    )
+    r = f(t[0], t[1], t[2], t[3])
+    return '' if not r else str(r.decode())
