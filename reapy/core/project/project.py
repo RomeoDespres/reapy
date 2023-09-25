@@ -699,10 +699,10 @@ class Project(ReapyObject):
         :type: list of reapy.Marker
         """
         ids = [
-            RPR.EnumProjectMarkers2(self.id, i, 0, 0, 0, 0, 0)
+            RPR.EnumProjectMarkers2(self.id, i, 0, 0, 0, 0, 0)        
             for i in range(self.n_regions + self.n_markers)
-        ]
-        return [reapy.Marker(self, i[0]) for i in ids if not i[3]]
+        ]  
+        return [reapy.Marker(parent_project=self, index=i[2]) for i in ids if not i[3]]
 
     @property
     def master_track(self):

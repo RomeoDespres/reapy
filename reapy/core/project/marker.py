@@ -6,6 +6,8 @@ from reapy.core import ReapyObject
 class Marker(ReapyObject):
 
     _class_name = "Marker"
+    _name = "NAME_ME"
+    user_id = None
 
     def __init__(
         self, parent_project=None, index=None, parent_project_id=None
@@ -42,7 +44,7 @@ class Marker(ReapyObject):
         """
         Delete marker.
         """
-        RPR.DeleteProjectMarker(self.project_id, self.index, False)
+        RPR.DeleteProjectMarker(self.project_id, self.user_id, False)
 
     @reapy.inside_reaper()
     @property
@@ -68,6 +70,42 @@ class Marker(ReapyObject):
         position : float
             Marker position in seconds.
         """
+        self._position = position
         RPR.SetProjectMarker2(
-            self.project_id, self.index, False, position, 0, ""
+            self.project_id, self.index, False, position, 0,self._name
         )
+
+  
+    def user_id(self):
+        """
+        Return marker position.
+
+        Returns
+        -------
+        position : float
+            Marker position in seconds.
+        """
+        index = self._get_enum_index()
+        return RPR.EnumProjectMarkers2(self.project_id, index, 0, 0, 0, 0, 0)[7]
+
+    @reapy.inside_reaper()
+    @property
+    def name(self):
+        """
+        Return the marker label
+
+        THAT IS NOT WORKING ATM THEREFORE WILL RETURN AN EMPTY STRING 
+
+        Returns
+        -------
+        position : float
+            Marker position in seconds.
+        """
+        return ""
+
+
+
+    @name.setter
+    def name(self, name: str) -> None: 
+        self._name = name
+        RPR.SetProjectMarker2(self.project_id, self.user_id(), False, self.position, 0, name)
