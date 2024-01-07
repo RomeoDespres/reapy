@@ -30,9 +30,10 @@ class Marker(ReapyObject):
         """
         Return marker index as needed by RPR.EnumProjectMarkers2.
         """
-        for index, marker in enumerate(self.project.markers):
-            if marker.index == self.index:
-                return index
+        return self.index
+        # for index, marker in enumerate(self.project.markers):
+        #     if marker.index == self.index:
+        #         return index
 
     @property
     def _kwargs(self):
