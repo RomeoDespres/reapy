@@ -622,7 +622,7 @@ class Track(ReapyObject):
         """Toggle solo on track."""
         selected_tracks = self.project.selected_tracks
         self.make_only_selected_track()
-        self.project.perform_action(7)
+        self.project.perform_action(40281)
         self.project.selected_tracks = selected_tracks
 
     @reapy.inside_reaper()

@@ -1945,7 +1945,7 @@
     "Master_GetTempo": {
         "group": "Transport Management",
         "reapy": [
-            "Project.bpm"
+            "Project.bpm_at_cursor"
         ]
     },
     "Master_NormalizePlayRate": {

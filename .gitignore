@@ -6,3 +6,4 @@ docs/Makefile
 python_reapy.egg-info/
 *.sublime-workspace
 *.sublime-project
+build
