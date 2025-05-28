@@ -44,7 +44,9 @@ class CaseInsensitiveDict(OrderedDict):
             self._dict[key.lower()] = value
 
     def __contains__(self, key):
-        return key.lower() in self._dict
+        if isinstance(key, str):
+            return key.lower() in self._dict
+        return key in self._dict
 
     def __getitem__(self, key):
         return self._dict[key.lower()]
