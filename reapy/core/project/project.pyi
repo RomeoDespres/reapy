@@ -990,6 +990,46 @@ class Project(ReapyObject):
         """
         ...
 
+    def time_to_measure(self, time: float) -> ty.Tuple(float, float, float):
+        """
+        Returns the current measure, as well as the Beginning and Ending beats of that measure
+
+        Parameters
+        ----------
+        time : float
+            Time in seconds.
+
+        Returns
+        -------
+        measure : float
+            The measure the given timestamp is in
+        beat_start: the starting beat of that measure
+        beat_end: the ending beat of that measure     
+        """
+        ...
+
+    def measure_to_time(self, measure: float)  -> ty.Tuple(float, float, float, float):
+        """
+        Returns the start end end times of the given measure
+
+        Parameters
+        ----------
+        time : float
+            Time in seconds.
+
+        Returns
+        -------
+        beat_start : float
+            The starting beat of the measure
+        beat_end : float
+            The ending beat of the measure
+        time_start : float
+            The starting time of the measure (in s)
+        time_end : float
+            The ending time of the measure (in s)    
+        """
+        ...
+
     @property
     def tracks(self) -> reapy.TrackList:
         """

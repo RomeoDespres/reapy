@@ -3,7 +3,8 @@
 import pickle
 import codecs
 import os
-
+import typing as ty
+import math
 import reapy
 from reapy import reascript_api as RPR
 from reapy.core import ReapyObject
@@ -208,6 +209,34 @@ class Project(ReapyObject):
         """
         time = RPR.TimeMap2_QNToTime(self.id, beats)
         return time
+    
+    @reapy.inside_reaper()
+    def time_to_measure(self, time: float):
+        """
+        Returns the current measure, as well as the Beginning and Ending beats of that measure
+
+        Parameters
+        ----------
+        time : float
+            Time in seconds.
+
+        Returns
+        -------
+        measure : float
+            The measure the given timestamp is in
+        beat_start: the starting beat of that measure
+        beat_end: the ending beat of that measure
+        """
+        
+        qn = RPR.TimeMap2_timeToQN(self.id, time)
+        measureInfo = RPR.TimeMap_QNToMeasures(self.id, qn, 0, 0)
+        return math.floor(measureInfo[0]), measureInfo[3], measureInfo[4]
+
+    @reapy.inside_reaper()
+    def measure_to_time(self, measure: float):
+        info = RPR.TimeMap_GetMeasureInfo(self.id, measure, 0, 0, 0, 0, 0)
+        return (info[3], info[4], self.beats_to_time(info[3]),
+                self.beats_to_time(info[4]))
 
     def begin_undo_block(self):
         """
@@ -236,6 +265,17 @@ class Project(ReapyObject):
         :type: float
         """
         return self.time_signature[0]
+        
+    @reapy.inside_reaper()
+    @property
+    def bpm_at_cursor(self):
+        """
+        Project BPM (beats per minute) at the marker position.
+
+        :type: float
+        """                 
+        with self.make_current_project():
+            return RPR.Master_GetTempo()    
 
     @bpm.setter
     def bpm(self, bpm):
@@ -688,10 +728,10 @@ class Project(ReapyObject):
         :type: list of reapy.Marker
         """
         ids = [
-            RPR.EnumProjectMarkers2(self.id, i, 0, 0, 0, 0, 0)
+            RPR.EnumProjectMarkers2(self.id, i, 0, 0, 0, 0, 0)        
             for i in range(self.n_regions + self.n_markers)
-        ]
-        return [reapy.Marker(self, i[0]) for i in ids if not i[3]]
+        ]  
+        return [reapy.Marker(parent_project=self, index=i[2]) for i in ids if not i[3]]
 
     @property
     def master_track(self):

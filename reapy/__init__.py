@@ -32,4 +32,4 @@ from .core import *
 from .core.reaper import *
 
 
-__version__ = "0.10.0"
+__version__ = "0.12.0"
