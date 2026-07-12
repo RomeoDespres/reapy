@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "python-reapy"
+version = "1.0.0"
+description = "A pythonic wrapper for REAPER's ReaScript Python API, forked from the original by Roméo Després"
+readme = "README.md"
+authors = [
+    {name = "Ingo Henkel" },
+    { name = "Roméo Després", email = "mail.reapy@gmail.com" }
+]
+license = { text = "MIT" }
+classifiers = [
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3"
+]
+keywords = ["REAPER", "DAW", "ReaScript", "API", "wrapper", "music", "audio"]
+requires-python = ">=3.0"
+dependencies = [
+    "psutil",
+    "typing_extensions"
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["reapy"]
+
+[tool.hatch.build.targets.sdist]
+exclude = ["docs"]
