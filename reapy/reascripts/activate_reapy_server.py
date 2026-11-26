@@ -22,14 +22,19 @@ from reapy.tools.network import Server
 
 
 def run_main_loop():
-    # Get new connections
-    SERVER.accept()
-    # Process API call requests
-    requests = SERVER.get_requests()
-    results = SERVER.process_requests(requests)
-    SERVER.send_results(results)
-    # Run main_loop again
-    reapy.defer(run_main_loop)
+    try:
+        # Get new connections
+        SERVER.accept()
+        # Process API call requests
+        requests = SERVER.get_requests()
+        results = SERVER.process_requests(requests)
+        SERVER.send_results(results)
+    except Exception as e:
+        # Never let one bad client kill the server loop: log and keep serving.
+        reapy.print("reapy server: ignored error:", repr(e))
+    finally:
+        # Run main_loop again
+        reapy.defer(run_main_loop)
 
 
 def get_new_reapy_server():

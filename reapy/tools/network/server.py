@@ -81,8 +81,17 @@ class Server(Socket):
     @Socket._non_blocking
     def accept(self, *args, **kwargs):
         connection, address = super().accept()
+        try:
+            connection.send("{}".format(address).encode("ascii"))
+        except OSError:
+            # Client went away before the handshake (e.g. a timed-out or killed
+            # client). Drop it instead of crashing the server's main loop.
+            try:
+                connection.close()
+            except OSError:
+                pass
+            return None
         self.connections[address] = connection
-        connection.send("{}".format(address).encode("ascii"))
         return connection, address
 
     def disconnect(self, address):

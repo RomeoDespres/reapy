@@ -1,5 +1,6 @@
 from configparser import ConfigParser
 from collections import OrderedDict
+import io
 import json
 import os
 import pathlib
@@ -35,23 +36,58 @@ WEB_INTERFACE_PORT = 2307
 
 class CaseInsensitiveDict(OrderedDict):
 
-    """OrderedDict with case-insensitive keys."""
+    """OrderedDict with case-insensitive keys (original case is kept)."""
 
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._dict = OrderedDict(*args, **kwargs)
-        for key, value in self._dict.items():
-            self._dict[key.lower()] = value
+        super().__init__()
+        self._keys = {}
+        self.update(*args, **kwargs)
 
-    def __contains__(self, key):
-        return key.lower() in self._dict
-
-    def __getitem__(self, key):
-        return self._dict[key.lower()]
+    @staticmethod
+    def _norm(key):
+        return key.lower() if isinstance(key, str) else key
 
     def __setitem__(self, key, value):
-        super().__setitem__(key, value)
-        self._dict[key.lower()] = value
+        norm = self._norm(key)
+        original = self._keys.setdefault(norm, key)
+        super().__setitem__(original, value)
+
+    def __getitem__(self, key):
+        try:
+            return super().__getitem__(self._keys[self._norm(key)])
+        except KeyError:
+            raise KeyError(key) from None
+
+    def __contains__(self, key):
+        return self._norm(key) in self._keys
+
+    def __delitem__(self, key):
+        try:
+            original = self._keys.pop(self._norm(key))
+        except KeyError:
+            raise KeyError(key) from None
+        super().__delitem__(original)
+
+    def get(self, key, default=None):
+        return self[key] if key in self else default
+
+    def setdefault(self, key, default=None):
+        if key not in self:
+            self[key] = default
+        return self[key]
+
+    def pop(self, key, *default):
+        if key in self:
+            value = self[key]
+            del self[key]
+            return value
+        if default:
+            return default[0]
+        raise KeyError(key)
+
+    def update(self, *args, **kwargs):
+        for key, value in dict(*args, **kwargs).items():
+            self[key] = value
 
 
 class Config(ConfigParser):
@@ -75,9 +111,12 @@ class Config(ConfigParser):
             shutil.copy(self.ini_file, before_reapy_file)
         # Backup current config
         shutil.copy(self.ini_file, self.ini_file + '.bak')
-        # Write config
+        # Format the whole config before opening the file, so an error while
+        # formatting cannot leave REAPER with a truncated (empty) .ini file.
+        buffer = io.StringIO()
+        super().write(buffer, False)
         with open(self.ini_file, "w", encoding='utf8') as f:
-            super().write(f, False)
+            f.write(buffer.getvalue())
 
 
 def add_reascript(resource_path, script_path):
