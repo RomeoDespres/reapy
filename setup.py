@@ -1,11 +1,22 @@
 from setuptools import setup, find_packages
 from os import path, walk, sep
 from typing import Dict, List
-
-import reapy
+import re
 
 
 here = path.abspath(path.dirname(__file__))
+
+
+def read_version() -> str:
+    # Read the version without importing reapy, whose runtime dependencies
+    # (e.g. psutil) are not installed in isolated build environments.
+    with open(path.join(here, "reapy", "__init__.py")) as f:
+        match = re.search(
+            r"^__version__ = [\"']([^\"']+)[\"']", f.read(), re.M
+        )
+    if match is None:
+        raise RuntimeError("Unable to find reapy.__version__")
+    return match.group(1)
 
 
 with open(path.join(here, "README.md")) as f:
@@ -24,7 +35,7 @@ def find_stubs(package: str) -> Dict[str, List[str]]:
 
 setup(
     name="python-reapy",
-    version=reapy.__version__,
+    version=read_version(),
     description="A pythonic wrapper for REAPER's ReaScript Python API",
     long_description=long_description,
     long_description_content_type="text/markdown",
