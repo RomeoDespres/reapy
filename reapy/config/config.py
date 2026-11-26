@@ -84,9 +84,16 @@ class Config(ConfigParser):
             shutil.copy(self.ini_file, before_reapy_file)
         # Backup current config
         shutil.copy(self.ini_file, self.ini_file + '.bak')
-        # Write config
-        with open(self.ini_file, "w", encoding='utf8') as f:
-            super().write(f, False)
+        # Write config to a temporary file first and swap it in, so that
+        # an error while writing never leaves ini_file truncated.
+        tmp_file = self.ini_file + '.reapy-tmp'
+        try:
+            with open(tmp_file, "w", encoding='utf8') as f:
+                super().write(f, False)
+            os.replace(tmp_file, self.ini_file)
+        finally:
+            if os.path.exists(tmp_file):
+                os.remove(tmp_file)
 
 
 def add_reascript(resource_path, script_path):
