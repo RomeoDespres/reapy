@@ -35,23 +35,32 @@ WEB_INTERFACE_PORT = 2307
 
 class CaseInsensitiveDict(OrderedDict):
 
-    """OrderedDict with case-insensitive keys."""
+    """OrderedDict with case-insensitive keys.
+
+    Non-string keys (such as ``configparser.UNNAMED_SECTION``, a
+    sentinel object that ``ConfigParser`` looks up since Python 3.13)
+    are used as-is.
+    """
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._dict = OrderedDict(*args, **kwargs)
-        for key, value in self._dict.items():
-            self._dict[key.lower()] = value
+        self._dict = OrderedDict()
+        for key, value in OrderedDict(*args, **kwargs).items():
+            self._dict[self._normalize(key)] = value
+
+    @staticmethod
+    def _normalize(key):
+        return key.lower() if isinstance(key, str) else key
 
     def __contains__(self, key):
-        return key.lower() in self._dict
+        return self._normalize(key) in self._dict
 
     def __getitem__(self, key):
-        return self._dict[key.lower()]
+        return self._dict[self._normalize(key)]
 
     def __setitem__(self, key, value):
         super().__setitem__(key, value)
-        self._dict[key.lower()] = value
+        self._dict[self._normalize(key)] = value
 
 
 class Config(ConfigParser):
